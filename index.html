@@ -69,10 +69,37 @@ a{color:var(--cyan);text-decoration:none}
   .btn-grad>span{padding:9px 13px;font-size:12.5px}
   .btn-grad.lg>span{white-space:normal;text-align:center;padding:12px 18px;font-size:14px}
 }
-/* cover */
-.cover{padding:108px 0 44px;border-bottom:1px solid var(--hair)}
-.cover .grid{display:grid;grid-template-columns:1.25fr .85fr;gap:44px;align-items:center}
-@media(max-width:880px){.cover .grid{grid-template-columns:1fr}}
+/* full-bleed hero (NexaCore Hero) — generated backdrop + slow drift, fades into the page */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:120px 20px 90px;overflow:hidden;text-align:center}
+.hero-bg{position:absolute;inset:0;overflow:hidden;z-index:0}
+.hero-img{position:absolute;inset:-7%;background:#080b16 center/cover no-repeat;animation:drift 38s ease-in-out infinite alternate}
+@keyframes drift{from{transform:scale(1) translate(0,0)}to{transform:scale(1.13) translate(1.6%,-1.8%)}}
+/* scrim is DARKEST at the centre, where the text sits — the artwork stays visible at the edges */
+.hero-tint{position:absolute;inset:0;background:radial-gradient(64% 56% at 50% 48%,rgba(12,15,28,.88) 0%,rgba(12,15,28,.74) 55%,rgba(12,15,28,.42) 100%),linear-gradient(180deg,rgba(12,15,28,.72) 0%,rgba(12,15,28,.3) 34%,rgba(12,15,28,.62) 74%,var(--bg) 100%)}
+.hero-fade{position:absolute;bottom:0;left:0;right:0;height:190px;z-index:2;pointer-events:none;background:linear-gradient(to bottom,transparent,var(--bg))}
+.hero-in{position:relative;z-index:3;max-width:940px;display:flex;flex-direction:column;align-items:center;gap:22px}
+.hero-eyebrow{font-size:clamp(14px,1.7vw,18px);font-weight:700;background:var(--gradB);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.01em}
+.hero h1{font-size:clamp(38px,5.6vw,68px);font-weight:900;line-height:1.05;letter-spacing:-.025em;color:#fff}
+.hero h1 .dim{color:#8b97b5;text-decoration:line-through;text-decoration-thickness:5px;text-decoration-color:rgba(254,136,27,.85)}
+.hero h1 .go{background:var(--gradB);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{font-size:clamp(15px,1.35vw,19px);color:#b9c4dc;max-width:660px;line-height:1.65}
+.hero-sub b{color:#fff;font-weight:600}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:4px}
+.hero-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 28px;margin-top:10px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);font-family:var(--grot);font-size:10.5px;letter-spacing:.18em;color:#8b97b5}
+.hero-meta b{color:#dbe3f2;font-weight:600}
+.hero-cue{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:600;color:#8b97b5}
+.hero-cue span{font-size:19px;line-height:1;animation:cue 2.2s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(6px);opacity:1}}
+.hero-eyebrow,.hero h1,.hero-sub,.hero-btns,.hero-meta{animation:blurin 1s ease both}
+.hero h1{animation-delay:.12s}.hero-sub{animation-delay:.26s}
+.hero-btns{animation-delay:.4s}.hero-meta{animation-delay:.52s}
+@media(max-width:700px){.hero{min-height:auto;padding:110px 18px 70px}.hero-cue{display:none}}
+/* section backdrops (NexaCore TrustedSection / PrecisionSection) */
+.bg-art{position:relative;isolation:isolate}
+.bg-art::before{content:'';position:absolute;inset:0;z-index:-2;background:#0c0f1c var(--art) center/cover no-repeat}
+/* mirrored so the backdrop's contours climb right→left, the same way the RTL staircase does */
+.bg-art.flip::before{transform:scaleX(-1)}
+.bg-art::after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,var(--bg) 0%,rgba(12,15,28,.68) 20%,rgba(12,15,28,.68) 80%,var(--bg) 100%)}
 .kicker{font-family:var(--grot);font-size:12px;letter-spacing:.26em;color:var(--violet);font-weight:500;margin-bottom:18px}
 h1.giant{font-size:clamp(40px,5.2vw,68px);font-weight:900;line-height:1.05;letter-spacing:-.02em;margin-bottom:20px}
 h1.giant .dim{color:#6f7c99;text-decoration:line-through;text-decoration-thickness:5px;text-decoration-color:rgba(244,114,182,.6)}
@@ -350,30 +377,28 @@ footer .src-line{margin-top:8px;line-height:1.8}
   </div>
 </div>
 
-<!-- COVER -->
-<header class="cover">
-  <div class="wrap">
-    <div class="grid">
-      <div>
-        <div class="kicker">INTERNAL REPORT · BRAINSTORM EDITION · 08.2026</div>
-        <h1 class="giant">מפסיקים <span class="dim">להצהיר</span>.<br>מתחילים <span class="go">להוכיח</span>.</h1>
-        <p class="lede">דוח מודיעין שוק פנימי: סרקנו 10 גופי הכשרה, את מנועי המיצוב המובילים בעולם ואת מפת הדאטה הישראלית. המסקנה חדה — התואר "המומחה הלאומי ל-AI" עדיין פנוי, <b>ומי שמוכיח ראשון, לוקח אותו.</b></p>
-        <div class="meta-row"><span>DATE · <b>11.08.2026</b></span><span>SCANS · <b>3</b></span><span>COMPETITORS · <b>10</b></span><span>IDEAS · <b>16</b></span></div>
-        <div class="cov-btns">
-          <a class="btn-grad lg" href="#bank"><span>סמנו עד 3 רעיונות ושלחו לקבוצה ↓</span></a>
-          <a class="btn-g" href="#reco">קפצו להצעת המיקוד</a>
-        </div>
-      </div>
-      <div class="cov-art rv">
-        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3CXkMvQYD6UJmnBIXDcObKys6dv/hf_20260812_112959_4fe3a3ee-3707-4915-ab04-b9716971ffbc_min.webp" alt="איור שער — מכ&quot;ם שוק סורק: צמתי דאטה מחוברים ונקודת חריגה אחת" style="background:radial-gradient(60% 60% at 42% 34%, rgba(56,189,248,.22), rgba(139,92,246,.12) 60%, transparent), #080b16" onerror="this.style.opacity='0'">
-        <div class="cov-cap"><span>MARKET RADAR · THE DIFFERENTIATION IDEA BANK</span><span>2026</span></div>
-      </div>
-    </div>
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg">
+    <div class="hero-img" style="background-image:url('https://d8j0ntlcm91z4.cloudfront.net/user_3CXkMvQYD6UJmnBIXDcObKys6dv/hf_20260812_181611_585f219d-3d95-4584-8487-c990c429049f_min.webp')"></div>
+    <div class="hero-tint"></div>
   </div>
+  <div class="hero-fade"></div>
+  <div class="hero-in">
+    <span class="hero-eyebrow">INTERNAL REPORT · BRAINSTORM EDITION · 08.2026</span>
+    <h1>מפסיקים <span class="dim">להצהיר</span> על מומחיות.<br>מתחילים <span class="go">להוכיח</span> אותה.</h1>
+    <p class="hero-sub">דוח מודיעין שוק פנימי: סרקנו 10 גופי הכשרה, את מנועי המיצוב המובילים בעולם ואת מפת הדאטה הישראלית. המסקנה חדה — התואר "המומחה הלאומי ל-AI" עדיין פנוי, <b>ומי שמוכיח ראשון, לוקח אותו.</b></p>
+    <div class="hero-btns">
+      <a class="btn-grad lg" href="#bank"><span>סמנו עד 3 רעיונות ושלחו לקבוצה ↓</span></a>
+      <a class="btn-g" href="#reco">קפצו להצעת המיקוד</a>
+    </div>
+    <div class="hero-meta"><span>DATE · <b>11.08.2026</b></span><span>SCANS · <b>3</b></span><span>COMPETITORS · <b>10</b></span><span>IDEAS · <b>16</b></span></div>
+  </div>
+  <a class="hero-cue" href="#snapshot">גללו לממצאים<span>⌄</span></a>
 </header>
 
 <!-- MARKET SNAPSHOT -->
-<div class="wrap mapwrap">
+<div class="wrap mapwrap" id="snapshot">
   <div class="mi-head rv"><h2>מפת המצב — הצמא, הפער וההזדמנות</h2><span>MARKET SNAPSHOT · VERIFIED 11.08.2026</span></div>
 
   <div class="snap-act rv">
@@ -879,7 +904,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
 </section>
 
 <!-- ROADMAP -->
-<section style="padding-top:0" id="roadmap">
+<section class="bg-art flip" id="roadmap" style="padding:70px 0 64px;--art:url('https://d8j0ntlcm91z4.cloudfront.net/user_3CXkMvQYD6UJmnBIXDcObKys6dv/hf_20260812_181613_b658c9cf-afe6-4f34-9b81-95efd1a26f7a_min.webp')">
   <div class="wrap">
     <div class="shead"><span class="snum">07</span><h2>90 יום מהצהרה להוכחה</h2><span class="rule"></span></div>
     <p class="ssub">כל שלב עומד על מה שנבנה לפניו — ולכן הסדר חשוב לא פחות מהתוכן. המספרים מפנים לכרטיסים בבנק הרעיונות.</p>
@@ -941,7 +966,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
 </section>
 
 <!-- RECO -->
-<section style="padding-top:0;padding-bottom:70px" id="reco">
+<section class="bg-art" id="reco" style="padding:66px 0 78px;--art:url('https://d8j0ntlcm91z4.cloudfront.net/user_3CXkMvQYD6UJmnBIXDcObKys6dv/hf_20260812_181613_b658c9cf-afe6-4f34-9b81-95efd1a26f7a_min.webp')">
   <div class="wrap">
     <div class="shead"><span class="snum">08</span><h2>הצעת המיקוד לפתיחה — לדיון</h2><span class="rule"></span></div>
     <div class="reco rv">
