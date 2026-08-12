@@ -25,29 +25,52 @@
   --t-tools:#3fd0ee; --t-intel:#b9a3fd; --t-research:#fbbf24; --t-meta:#f981bd;
   --wa:#25d366; --grot:'Space Grotesk','Heebo',sans-serif;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 30px rgba(0,0,0,.35);
-  /* veloce brand gradient — brightened for dark bg */
-  --grad:linear-gradient(to left,#F09A5C,#B57BDB,#6E77F5);
+  /* NexaCore brand gradients — "to left" so the blue stop leads in RTL */
+  --gradA:linear-gradient(to left,rgb(28,78,255),rgb(172,36,255) 50%,rgb(254,136,27));
+  --gradB:linear-gradient(to left,rgb(43,167,255),rgb(202,69,255) 50%,rgb(254,136,27));
+  --grad:var(--gradB);
+  --nx-blue:rgb(28,78,255); --nx-purple:rgb(200,111,255);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:'Heebo',-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
 body.has-bar{padding-bottom:96px}
 .wrap{max-width:1140px;margin:0 auto;padding:0 22px}
-section{padding:52px 0;scroll-margin-top:70px}
+section{padding:52px 0;scroll-margin-top:98px}
 a{color:var(--cyan);text-decoration:none}
 .rv{opacity:0;transform:translateY(16px);filter:blur(14px);transition:opacity .85s ease,transform .85s ease,filter .85s ease}
 .rv.in{opacity:1;transform:none;filter:blur(0)}
 @keyframes blurin{from{opacity:0;filter:blur(16px);transform:translateY(12px)}to{opacity:1;filter:blur(0);transform:none}}
 .grot{font-family:var(--grot);letter-spacing:.14em;text-transform:uppercase}
-/* masthead */
-.mast{position:sticky;top:0;z-index:50;background:rgba(12,15,28,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--hair)}
-.mast .in{max-width:1140px;margin:0 auto;padding:11px 22px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.m-brand{font-weight:700;font-size:14px}
-.m-brand small{display:block;font-family:var(--grot);font-size:9.5px;letter-spacing:.22em;color:var(--muted);font-weight:500}
-.m-cta{font-size:12.5px;font-weight:700;color:#0c0f1c;background:var(--ink);border-radius:8px;padding:7px 14px;white-space:nowrap;transition:opacity .15s}
-.m-cta:hover{opacity:.85;color:#0c0f1c}
+/* floating pill navbar (NexaCore) — shrinks on scroll */
+.mast{position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:0 16px;pointer-events:none}
+.mast .in{pointer-events:auto;width:100%;max-width:1120px;background:rgba(17,22,41,.93);backdrop-filter:blur(20px);border:1px solid var(--hair);border-radius:18px;box-shadow:0 10px 34px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:8px 8px 8px 20px;transition:max-width .5s ease-in-out,padding .5s ease-in-out}
+.mast.shrunk .in{max-width:800px;padding:6px 6px 6px 16px}
+.m-brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16.5px;letter-spacing:-.02em;color:var(--ink);flex:0 0 auto}
+.m-brand svg{width:28px;height:28px;flex:0 0 auto}
+.m-brand small{display:block;font-family:var(--grot);font-size:9px;letter-spacing:.16em;color:var(--muted);font-weight:500}
+.m-links{display:flex;align-items:center;gap:2px;transition:gap .5s ease-in-out}
+.mast.shrunk .m-links{gap:0}
+.m-links a{font-size:13.5px;color:var(--ink2);border-radius:11px;padding:9px 14px;transition:background .15s,color .15s,padding .5s ease-in-out}
+.m-links a:hover{background:rgba(255,255,255,.08);color:var(--ink)}
+.mast.shrunk .m-links a{padding:7px 9px}
+.m-right{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+@media(max-width:940px){.m-links{display:none}.m-brand small{display:none}}
+/* gradient-border pill button (NexaCore ContactButton) */
+.btn-grad{position:relative;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;padding:1px;background:var(--gradA);flex:0 0 auto}
+.btn-grad>span{display:block;border-radius:11px;padding:10px 20px;background:var(--nx-blue);color:#fff;font-size:13.5px;font-weight:700;white-space:nowrap;transition:background .3s}
+.btn-grad:hover>span{background:var(--gradA)}
+.btn-grad.lg>span{padding:13px 24px;font-size:15px}
+@media(max-width:560px){
+  .mast{top:10px;padding:0 10px}
+  .mast .in{gap:10px;padding:6px 6px 6px 14px}
+  .m-brand{font-size:14px;gap:8px}
+  .m-brand svg{width:24px;height:24px}
+  .btn-grad>span{padding:9px 13px;font-size:12.5px}
+  .btn-grad.lg>span{white-space:normal;text-align:center;padding:12px 18px;font-size:14px}
+}
 /* cover */
-.cover{padding:58px 0 44px;border-bottom:1px solid var(--hair)}
+.cover{padding:108px 0 44px;border-bottom:1px solid var(--hair)}
 .cover .grid{display:grid;grid-template-columns:1.25fr .85fr;gap:44px;align-items:center}
 @media(max-width:880px){.cover .grid{grid-template-columns:1fr}}
 .kicker{font-family:var(--grot);font-size:12px;letter-spacing:.26em;color:var(--violet);font-weight:500;margin-bottom:18px}
@@ -122,8 +145,10 @@ h1.giant .go{background:var(--grad);-webkit-background-clip:text;background-clip
 .fillh .base{display:block;color:#39435c}
 .fillh .over{position:absolute;inset:0;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;clip-path:inset(0 0 0 100%);transition:clip-path .1s linear}
 /* section head */
-.shead{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
-.snum{font-family:var(--grot);font-size:13px;letter-spacing:.2em;color:var(--violet);font-weight:700;flex:0 0 auto}
+.shead{display:flex;align-items:center;gap:15px;margin-bottom:10px;flex-wrap:wrap}
+/* section chip (NexaCore) — off-white pill + tick-circle glyph, adapted to dark */
+.snum{display:inline-flex;align-items:center;gap:8px;font-family:var(--grot);font-size:12px;letter-spacing:.16em;color:var(--ink);font-weight:700;background:rgba(255,255,255,.06);border:1px solid var(--hair);border-radius:36px;padding:7px 15px;flex:0 0 auto}
+.snum::before{content:'';width:15px;height:15px;flex:0 0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 16'%3E%3Ccircle cx='8.5' cy='8' r='6.6' fill='none' stroke='%23c86fff' stroke-width='1.5'/%3E%3Crect x='8' y='0' width='1.1' height='3' fill='%23c86fff'/%3E%3Crect x='8' y='13' width='1.1' height='3' fill='%23c86fff'/%3E%3Crect x='0' y='7.5' width='3' height='1.1' fill='%23c86fff'/%3E%3Crect x='14' y='7.5' width='3' height='1.1' fill='%23c86fff'/%3E%3C/svg%3E") center/contain no-repeat}
 .shead h2{font-size:clamp(23px,3.4vw,32px);font-weight:800;letter-spacing:-.01em}
 .shead .rule{flex:1;height:1px;background:var(--hair);align-self:center}
 .ssub{color:var(--ink2);font-size:15.5px;max-width:760px;margin-bottom:28px}
@@ -190,13 +215,13 @@ td small{display:block;color:var(--muted);font-weight:400;font-size:12.5px;margi
 .matrix-note{font-size:13.5px;color:var(--ink2);margin-top:10px}
 .matrix-note b{color:var(--ink)}
 /* ideas */
-.filters{position:sticky;top:52px;z-index:20;background:rgba(12,15,28,.94);backdrop-filter:blur(10px);padding:12px 0;margin-bottom:20px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--hair)}
+.filters{position:sticky;top:86px;z-index:20;background:rgba(12,15,28,.94);backdrop-filter:blur(10px);padding:12px 0;margin-bottom:20px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--hair)}
 .fbtn{border:1px solid var(--hair-2);background:transparent;color:var(--ink2);border-radius:8px;padding:8px 15px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
 .fbtn:hover{border-color:var(--cyan);color:var(--ink)}
 .fbtn.active{background:var(--ink);border-color:var(--ink);color:#0c0f1c}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:860px){.cards{grid-template-columns:1fr}}
-.card{position:relative;background:var(--panel);border:1px solid var(--hair);border-top:2px solid var(--muted);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;scroll-margin-top:116px;transition:transform .2s,border-color .2s;box-shadow:var(--shadow)}
+.card{position:relative;background:var(--panel);border:1px solid var(--hair);border-top:2px solid var(--muted);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;scroll-margin-top:152px;transition:transform .2s,border-color .2s;box-shadow:var(--shadow)}
 .card:hover{transform:translateY(-2px);border-color:var(--hair-2)}
 .card.cat-tools{border-top-color:var(--c-tools)}
 .card.cat-intel{border-top-color:var(--c-intel)}
@@ -237,7 +262,26 @@ td small{display:block;color:var(--muted);font-weight:400;font-size:12.5px;margi
 .farrow{color:var(--cyan);font-size:19px;font-weight:900}
 .fly-loop{margin-top:14px;text-align:center;font-size:14px;color:var(--ink2)}
 .fly-loop b{color:var(--green)}
-/* roadmap */
+/* roadmap staircase (NexaCore PrecisionSection) — mirrored for RTL: ascends right → left */
+.stair{position:relative;width:100%;height:430px;margin-top:12px}
+.pillar{position:absolute;width:212px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.p-chip{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.05));border:1px solid var(--hair-2);border-radius:20px;padding:10px 17px;font-size:15px;font-weight:800;color:var(--ink);white-space:nowrap;backdrop-filter:blur(8px)}
+.p-chip svg{width:17px;height:17px;flex:0 0 auto}
+.p-when{font-family:var(--grot);font-size:10px;letter-spacing:.14em;color:var(--muted);font-weight:600;margin-top:9px}
+.p-desc{font-size:12.5px;color:var(--ink2);line-height:1.5;margin-top:7px}
+.p-line{width:1px;height:180px;margin-top:12px;background:linear-gradient(rgb(254,136,27),rgb(172,36,255) 25%,rgb(247,159,255) 50%,rgb(255,214,0) 66%,rgb(254,136,27) 84%,rgba(254,136,27,0) 102%)}
+.p-items{position:absolute;top:calc(100% - 178px);right:calc(50% + 13px);display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:right}
+.p-items span{font-size:13px;color:var(--ink2);padding:5px 0;white-space:nowrap}
+.p-items span b{color:var(--ink);font-weight:700}
+.stair-mob{display:none;flex-direction:column;gap:8px;margin-top:10px}
+.pm{display:flex;flex-direction:column;align-items:flex-start}
+.pm-row{display:flex;align-items:stretch;gap:14px;padding-inline-start:22px}
+.pm-line{width:1px;flex:0 0 auto;min-height:96px;background:linear-gradient(rgb(254,136,27),rgb(172,36,255) 25%,rgb(247,159,255) 50%,rgb(255,214,0) 66%,rgb(254,136,27) 84%,rgba(254,136,27,0) 102%)}
+.pm-items{display:flex;flex-direction:column;gap:2px;padding:6px 0}
+.pm-items span{font-size:13px;color:var(--ink2);padding:4px 0}
+.pm-items span b{color:var(--ink);font-weight:700}
+/* the staircase needs real horizontal room — below this it becomes a vertical list */
+@media(max-width:1080px){.stair{display:none}.stair-mob{display:flex}}
 .phases{border-top:1px solid var(--hair)}
 .phase{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--hair)}
 @media(max-width:700px){.phase{grid-template-columns:1fr}}
@@ -283,10 +327,26 @@ footer .src-line{margin-top:8px;line-height:1.8}
 </head>
 <body>
 
-<div class="mast">
+<div class="mast" id="mast">
   <div class="in">
-    <div class="m-brand">היחידה ללימודי חוץ<small>APPLIED AI · MARKET INTELLIGENCE</small></div>
-    <a class="m-cta" href="#bank">🗳️ לסימון הרעיונות</a>
+    <div class="m-brand">
+      <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <defs><linearGradient id="nxg" x1="2" y1="26" x2="26" y2="2" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="rgb(28,78,255)"/><stop offset=".5" stop-color="rgb(172,36,255)"/><stop offset="1" stop-color="rgb(254,136,27)"/>
+        </linearGradient></defs>
+        <circle cx="14" cy="14" r="11" stroke="url(#nxg)" stroke-width="2.5"/>
+      </svg>
+      <span>היחידה ללימודי חוץ<small>APPLIED AI · MARKET INTELLIGENCE</small></span>
+    </div>
+    <nav class="m-links">
+      <a href="#findings">הממצאים</a>
+      <a href="#gaps">מפת הפערים</a>
+      <a href="#bank">בנק הרעיונות</a>
+      <a href="#roadmap">מפת הדרכים</a>
+    </nav>
+    <div class="m-right">
+      <a class="btn-grad" href="#bank"><span>סמנו את הטופ שלכם</span></a>
+    </div>
   </div>
 </div>
 
@@ -300,7 +360,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
         <p class="lede">דוח מודיעין שוק פנימי: סרקנו 10 גופי הכשרה, את מנועי המיצוב המובילים בעולם ואת מפת הדאטה הישראלית. המסקנה חדה — התואר "המומחה הלאומי ל-AI" עדיין פנוי, <b>ומי שמוכיח ראשון, לוקח אותו.</b></p>
         <div class="meta-row"><span>DATE · <b>11.08.2026</b></span><span>SCANS · <b>3</b></span><span>COMPETITORS · <b>10</b></span><span>IDEAS · <b>16</b></span></div>
         <div class="cov-btns">
-          <a class="btn-p" href="#bank">סמנו עד 3 רעיונות ושלחו לקבוצה ↓</a>
+          <a class="btn-grad lg" href="#bank"><span>סמנו עד 3 רעיונות ושלחו לקבוצה ↓</span></a>
           <a class="btn-g" href="#reco">קפצו להצעת המיקוד</a>
         </div>
       </div>
@@ -389,7 +449,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
 </div>
 
 <!-- FINDINGS -->
-<section>
+<section id="findings">
   <div class="wrap">
     <div class="shead"><span class="snum">01</span><h2>חמישה ממצאים שמגדירים את ההזדמנות</h2><span class="rule"></span></div>
     <p class="ssub">שלוש סריקות עומק (11.8.2026): אתרי המתחרים בישראל, מנגנוני המיצוב של הגופים המובילים בעולם, ומפת הדאטה והמחקר הישראלית. כל ממצא אומת מול מקור.</p>
@@ -446,7 +506,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
 </section>
 
 <!-- GAP TABLE -->
-<section style="padding-top:0">
+<section style="padding-top:0" id="gaps">
   <div class="wrap">
     <div class="shead"><span class="snum">03</span><h2>מפת הפערים — מה אין לאף אחד</h2><span class="rule"></span></div>
     <p class="ssub">נבדק בפועל באתרי המתחרים. השורה הירוקה — איפה אנחנו יכולים לעמוד בעוד רבעון.</p>
@@ -819,41 +879,62 @@ footer .src-line{margin-top:8px;line-height:1.8}
 </section>
 
 <!-- ROADMAP -->
-<section style="padding-top:0">
+<section style="padding-top:0" id="roadmap">
   <div class="wrap">
     <div class="shead"><span class="snum">07</span><h2>90 יום מהצהרה להוכחה</h2><span class="rule"></span></div>
-    <div class="phases">
-      <div class="phase rv">
-        <div class="when">שבועות 1–2<small>אפס עד מעט פיתוח</small></div>
-        <div>
-          <h4>מהיום — מדברים כמו מומחים</h4>
-          <p>משיקים את הקצב לפני הכלים: התדריך השבועי יוצא, נוהל הפרשנות נכנס לתוקף, והפרסום הישראלי הראשון עולה.</p>
-          <span class="chip i">6 · המכ"ם</span><span class="chip i">8 · פרשנות 24 שע'</span><span class="chip r">13 · החתך הישראלי #1</span>
-        </div>
+    <p class="ssub">כל שלב עומד על מה שנבנה לפניו — ולכן הסדר חשוב לא פחות מהתוכן. המספרים מפנים לכרטיסים בבנק הרעיונות.</p>
+
+    <div class="stair rv">
+      <div class="pillar" style="right:0;bottom:2%">
+        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מדברים כמו מומחים</span>
+        <span class="p-when">שבועות 1–2 · אפס פיתוח</span>
+        <span class="p-desc">משיקים קצב לפני כלים: תדריך שבועי, נוהל פרשנות, ופרסום ישראלי ראשון.</span>
+        <span class="p-line"></span>
+        <span class="p-items"><span><b>6</b> · המכ"ם</span><span><b>8</b> · פרשנות 24 שע'</span><span><b>13</b> · החתך הישראלי</span></span>
       </div>
-      <div class="phase rv">
-        <div class="when">ימים 14–45<small>הבנייה המרכזית</small></div>
-        <div>
-          <h4>מהיום — מוכיחים</h4>
-          <p>הדגל עולה לאוויר: מבחן השליטה מתחיל לאסוף לידים ודאטה. סביבו — הכלים המהירים שמזינים קמפיינים.</p>
-          <span class="chip t">1 · מדד השליטה ⭐</span><span class="chip t">3 · מחשבון שכר</span><span class="chip i">7 · המילון</span><span class="chip i">10 · ספריית פרומפטים</span>
-        </div>
+      <div class="pillar" style="right:24%;bottom:9.5%">
+        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מוכיחים</span>
+        <span class="p-when">ימים 14–45 · הבנייה המרכזית</span>
+        <span class="p-desc">הדגל עולה לאוויר: מבחן השליטה מתחיל לאסוף לידים ודאטה.</span>
+        <span class="p-line"></span>
+        <span class="p-items"><span><b>1</b> · מדד השליטה ⭐</span><span><b>3</b> · מחשבון שכר</span><span><b>7</b> · המילון</span><span><b>10</b> · ספריית פרומפטים</span></span>
       </div>
-      <div class="phase rv">
-        <div class="when">ימים 45–90<small>ההרחבה</small></div>
-        <div>
-          <h4>מהיום — ויראליים</h4>
-          <p>הכלי עם תקרת השיתוף הגבוהה ביותר יוצא, המדד החודשי מתחיל לתקתק, וחוויית הלמידה נטעמת באתר.</p>
-          <span class="chip t">2 · ה-AI בא על התפקיד שלך?</span><span class="chip i">9 · מדד המשרות</span><span class="chip t">4 · מגרש אימונים</span>
-        </div>
+      <div class="pillar" style="right:48%;bottom:17%">
+        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>ויראליים</span>
+        <span class="p-when">ימים 45–90 · ההרחבה</span>
+        <span class="p-desc">הכלי עם תקרת השיתוף הגבוהה יוצא, והמדד החודשי מתחיל לתקתק.</span>
+        <span class="p-line"></span>
+        <span class="p-items"><span><b>2</b> · בודק חשיפה</span><span><b>9</b> · מדד המשרות</span><span><b>4</b> · מגרש אימונים</span></span>
       </div>
-      <div class="phase rv">
-        <div class="when">רבעון 2<small>קציר הדאטה</small></div>
-        <div>
-          <h4>מהיום — מצוטטים</h4>
-          <p>הדאטה שנצבר הופך למחקרים שאף אחד אחר לא יכול לפרסם — והם שקובעים את המיצוב לשנים.</p>
-          <span class="chip r">11 · הדוח השנתי</span><span class="chip r">12 · פרמיה מחוץ להייטק</span><span class="chip m">15 · מדד B2B</span><span class="chip t">5 · עובד דיגיטלי</span><span class="chip m">16 · הסמכה (בחינה)</span><span class="chip r">14 · שקיפות (פיילוט)</span>
-        </div>
+      <div class="pillar" style="right:72%;bottom:24.5%">
+        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מצוטטים</span>
+        <span class="p-when">רבעון 2 · קציר הדאטה</span>
+        <span class="p-desc">הדאטה שנצבר הופך למחקרים שאף אחד אחר לא יכול לפרסם.</span>
+        <span class="p-line"></span>
+        <span class="p-items"><span><b>11</b> · הדוח השנתי</span><span><b>12</b> · פרמיית השכר</span><span><b>15</b> · מדד B2B</span><span><b>5</b> · עובד דיגיטלי</span><span><b>16</b> · הסמכה</span><span><b>14</b> · שקיפות</span></span>
+      </div>
+    </div>
+
+    <div class="stair-mob">
+      <div class="pm rv">
+        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מדברים כמו מומחים</span>
+        <span class="p-when">שבועות 1–2 · אפס פיתוח</span>
+        <div class="pm-row"><span class="pm-line"></span><span class="pm-items"><span><b>6</b> · המכ"ם</span><span><b>8</b> · פרשנות 24 שע'</span><span><b>13</b> · החתך הישראלי</span></span></div>
+      </div>
+      <div class="pm rv">
+        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מוכיחים</span>
+        <span class="p-when">ימים 14–45 · הבנייה המרכזית</span>
+        <div class="pm-row"><span class="pm-line"></span><span class="pm-items"><span><b>1</b> · מדד השליטה ⭐</span><span><b>3</b> · מחשבון שכר</span><span><b>7</b> · המילון</span><span><b>10</b> · ספריית פרומפטים</span></span></div>
+      </div>
+      <div class="pm rv">
+        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>ויראליים</span>
+        <span class="p-when">ימים 45–90 · ההרחבה</span>
+        <div class="pm-row"><span class="pm-line"></span><span class="pm-items"><span><b>2</b> · בודק חשיפה</span><span><b>9</b> · מדד המשרות</span><span><b>4</b> · מגרש אימונים</span></span></div>
+      </div>
+      <div class="pm rv">
+        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מצוטטים</span>
+        <span class="p-when">רבעון 2 · קציר הדאטה</span>
+        <div class="pm-row"><span class="pm-line"></span><span class="pm-items"><span><b>11</b> · הדוח השנתי</span><span><b>12</b> · פרמיית השכר</span><span><b>15</b> · מדד B2B</span><span><b>5</b> · עובד דיגיטלי</span><span><b>16</b> · הסמכה</span><span><b>14</b> · שקיפות</span></span></div>
       </div>
     </div>
   </div>
@@ -951,6 +1032,10 @@ document.getElementById('vcp').addEventListener('click',async e=>{
   try{await navigator.clipboard.writeText(buildMsg());e.target.textContent='✓ הועתק';
     setTimeout(()=>{e.target.textContent='📋 העתק';},1800);}catch(err){alert(buildMsg());}
 });
+// navbar pill shrinks past 20px of scroll (NexaCore)
+const mastEl=document.getElementById('mast');
+const onMast=()=>mastEl.classList.toggle('shrunk',scrollY>20);
+addEventListener('scroll',onMast,{passive:true});onMast();
 // reveal on scroll — blur-in with per-group stagger (veloce BlurIn)
 const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){const el=x.target;el.classList.add('in');io.unobserve(el);setTimeout(()=>{el.style.transitionDelay='';},1500);}}),{threshold:.12});
 const rvGroups=new Map();
