@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>דוח הבידול 2026 — האקדמיה ל-AI | סיעור מוחות</title>
+<meta name="description" content="דוח מודיעין שוק פנימי: 16 מהלכים שהופכים את האקדמיה לבינה מלאכותית יישומית מהצהרת מומחיות — להוכחת מומחיות.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="דוח הבידול 2026 — האקדמיה ל-AI">
+<meta property="og:description" content="דוח מודיעין שוק + בנק 16 רעיונות. סמנו את המועדפים שלכם ושלחו לקבוצה 🗳️">
+<meta property="og:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_3CXkMvQYD6UJmnBIXDcObKys6dv/hf_20260812_112959_4fe3a3ee-3707-4915-ab04-b9716971ffbc.png">
+<meta property="og:url" content="https://shayvazana-oss.github.io/bidul-ai-academy/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0f1c; --panel:#111629; --panel-2:#151b31;
+  --hair:rgba(255,255,255,.11); --hair-2:rgba(255,255,255,.2);
+  --ink:#eef2fa; --ink2:#b7c2d9; --muted:#8b98b5;
+  --violet:#a78bfa; --violet-d:#8b5cf6; --cyan:#38bdf8; --green:#34d399; --orange:#f59e0b; --pink:#f472b6;
+  --c-tools:#0891b2; --c-intel:#8b5cf6; --c-research:#d97706; --c-meta:#db2777;
+  --t-tools:#3fd0ee; --t-intel:#b9a3fd; --t-research:#fbbf24; --t-meta:#f981bd;
+  --wa:#25d366; --grot:'Space Grotesk','Heebo',sans-serif;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 30px rgba(0,0,0,.35);
+  /* veloce brand gradient — brightened for dark bg */
+  --grad:linear-gradient(to left,#F09A5C,#B57BDB,#6E77F5);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+body.has-bar{padding-bottom:96px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+section{padding:52px 0;scroll-margin-top:70px}
+a{color:var(--cyan);text-decoration:none}
+.rv{opacity:0;transform:translateY(16px);filter:blur(14px);transition:opacity .85s ease,transform .85s ease,filter .85s ease}
+.rv.in{opacity:1;transform:none;filter:blur(0)}
+@keyframes blurin{from{opacity:0;filter:blur(16px);transform:translateY(12px)}to{opacity:1;filter:blur(0);transform:none}}
+.grot{font-family:var(--grot);letter-spacing:.14em;text-transform:uppercase}
+/* masthead */
+.mast{position:sticky;top:0;z-index:50;background:rgba(12,15,28,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--hair)}
+.mast .in{max-width:1140px;margin:0 auto;padding:11px 22px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.m-brand{font-weight:700;font-size:14px}
+.m-brand small{display:block;font-family:var(--grot);font-size:9.5px;letter-spacing:.22em;color:var(--muted);font-weight:500}
+.m-cta{font-size:12.5px;font-weight:700;color:#0c0f1c;background:var(--ink);border-radius:8px;padding:7px 14px;white-space:nowrap;transition:opacity .15s}
+.m-cta:hover{opacity:.85;color:#0c0f1c}
+/* cover */
+.cover{padding:58px 0 44px;border-bottom:1px solid var(--hair)}
+.cover .grid{display:grid;grid-template-columns:1.25fr .85fr;gap:44px;align-items:center}
+@media(max-width:880px){.cover .grid{grid-template-columns:1fr}}
+.kicker{font-family:var(--grot);font-size:12px;letter-spacing:.26em;color:var(--violet);font-weight:500;margin-bottom:18px}
+h1.giant{font-size:clamp(40px,5.2vw,68px);font-weight:900;line-height:1.05;letter-spacing:-.02em;margin-bottom:20px}
+h1.giant .dim{color:#6f7c99;text-decoration:line-through;text-decoration-thickness:5px;text-decoration-color:rgba(244,114,182,.6)}
+h1.giant .go{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover .kicker{animation:blurin .8s ease both}
+.cover h1.giant{animation:blurin .95s ease .1s both}
+.cover .lede{animation:blurin .95s ease .24s both}
+.cover .meta-row,.cover .cov-btns{animation:blurin .95s ease .38s both}
+.lede{font-size:17px;font-weight:400;color:var(--ink2);max-width:560px;margin-bottom:26px}
+.lede b{color:var(--ink);font-weight:600}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 26px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:12px 0;font-family:var(--grot);font-size:10.5px;letter-spacing:.18em;color:var(--muted)}
+.meta-row b{color:var(--ink2);font-weight:500}
+.cov-btns{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.btn-p{background:var(--green);color:#04241a;font-weight:800;font-size:14px;border-radius:10px;padding:12px 20px;transition:opacity .15s;box-shadow:var(--shadow)}
+.btn-p:hover{opacity:.88;color:#04241a}
+.btn-g{border:1px solid var(--hair-2);color:var(--ink2);font-weight:600;font-size:14px;border-radius:10px;padding:12px 20px;transition:border-color .15s,color .15s}
+.btn-g:hover{border-color:var(--cyan);color:var(--ink)}
+.cov-art{position:relative;border:1px solid var(--hair);border-radius:14px;overflow:hidden;background:#080b16;box-shadow:var(--shadow)}
+.cov-art img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;transform:scale(1.1)}
+.cov-cap{display:flex;justify-content:space-between;border-top:1px solid var(--hair);padding:10px 14px;font-family:var(--grot);font-size:9.5px;letter-spacing:.2em;color:var(--muted)}
+/* market map infographic — dark inset panel, like the reference image */
+.mapwrap{padding:36px 0 10px;border-bottom:1px solid var(--hair)}
+.mi-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.mi-head h2{font-size:clamp(20px,2.8vw,26px);font-weight:800;letter-spacing:-.01em}
+.mi-head span{font-family:var(--grot);font-size:10.5px;letter-spacing:.16em;color:var(--muted);font-weight:500}
+.mi-scroll{overflow-x:auto;padding-bottom:4px}
+.mapinfo{position:relative;width:1000px;height:560px;margin:0 auto;background:linear-gradient(180deg,#141c3a,#0e1428);border:1px solid var(--hair-2);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.mi-svg{position:absolute;inset:0;width:100%;height:100%}
+.mi-legend{position:absolute;top:18px;left:22px;display:flex;flex-direction:column;gap:7px;font-size:11.5px;font-weight:500;color:#dbe3f2;z-index:3}
+.mi-legend .li{display:flex;flex-direction:row-reverse;align-items:center;gap:8px}
+.mi-legend .sq{width:10px;height:10px;border-radius:2px;flex:0 0 auto;display:inline-block}
+.mi-call{position:absolute;z-index:3;max-width:252px}
+.mi-country{font-family:var(--grot);font-size:11.5px;letter-spacing:.1em;color:#eef2fa;font-weight:700;margin-bottom:7px}
+.mi-row{display:flex;align-items:center;gap:14px}
+.mi-dia{flex:0 0 auto;width:33px;height:33px;border:2px solid var(--mc);border-radius:5px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;background:rgba(12,15,28,.55)}
+.mi-dia span{transform:rotate(-45deg);font-size:14px;line-height:1}
+.mi-num{font-family:'Bebas Neue',var(--grot);font-size:60px;line-height:.88;color:var(--mc);letter-spacing:.015em;white-space:nowrap}
+.mi-num i{font-style:normal;font-family:'Heebo',sans-serif;font-weight:800;font-size:25px;letter-spacing:0}
+.mi-cap{font-size:13.5px;color:#c3cde0;margin-top:8px;line-height:1.55;max-width:236px;font-weight:500}
+.mi-src{display:block;font-family:var(--grot);font-size:9.5px;letter-spacing:.14em;color:#8a96b3;margin-top:5px}
+.mi-note{font-size:13.5px;color:var(--ink2);margin-top:10px}
+.mi-note b{color:var(--ink)}
+/* scroll-fill statement (veloce TextFillSection) */
+.fillsec{padding:82px 0 72px}
+.fill-k{font-size:10.5px;color:var(--muted);text-align:center;margin-bottom:18px}
+.fillh{position:relative;max-width:840px;margin:0 auto;text-align:center;font-size:clamp(25px,4.2vw,44px);font-weight:900;line-height:1.5;letter-spacing:-.01em}
+.fillh .base{display:block;color:#39435c}
+.fillh .over{position:absolute;inset:0;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;clip-path:inset(0 0 0 100%);transition:clip-path .1s linear}
+/* section head */
+.shead{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+.snum{font-family:var(--grot);font-size:13px;letter-spacing:.2em;color:var(--violet);font-weight:700;flex:0 0 auto}
+.shead h2{font-size:clamp(23px,3.4vw,32px);font-weight:800;letter-spacing:-.01em}
+.shead .rule{flex:1;height:1px;background:var(--hair);align-self:center}
+.ssub{color:var(--ink2);font-size:15.5px;max-width:760px;margin-bottom:28px}
+/* findings */
+.findings{border-top:1px solid var(--hair)}
+.finding{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--hair)}
+.finding .n{font-family:var(--grot);font-size:22px;font-weight:700;color:var(--violet)}
+.finding h3{font-size:16.5px;font-weight:700;margin-bottom:4px}
+.finding p{font-size:14.5px;color:var(--ink2)}
+.finding p b{color:var(--ink)}
+.finding .src{display:inline-block;font-family:var(--grot);font-size:10.5px;letter-spacing:.12em;color:var(--muted);margin-top:8px}
+.formula{margin-top:30px;background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:22px 24px;text-align:center}
+.formula .fl{font-family:var(--grot);font-size:10px;letter-spacing:.24em;color:var(--green);margin-bottom:8px}
+.formula .fb{font-size:clamp(15px,2.4vw,20px);font-weight:800;line-height:1.55}
+.formula .fb span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+/* chart */
+.chart{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:22px;box-shadow:var(--shadow)}
+.chart .ct{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chart .ct h3{font-size:15.5px;font-weight:700}
+.chart .ct span{font-family:var(--grot);font-size:10.5px;letter-spacing:.14em;color:var(--muted);font-weight:500}
+.brow{display:grid;grid-template-columns:130px 1fr 96px;align-items:center;gap:12px;padding:10px 0;border-top:1px dashed var(--hair)}
+.brow:first-of-type{border-top:none}
+.brow .bl{font-size:14px;font-weight:700;color:var(--ink)}
+.brow .bl small{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.track{height:12px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden}
+.fill{height:100%;border-radius:6px;background:var(--violet-d);box-shadow:0 0 14px rgba(139,92,246,.5);min-width:5px}
+.fill.us{background:var(--green);box-shadow:0 0 14px rgba(52,211,153,.5)}
+.bv{font-size:14px;font-weight:800;text-align:left;direction:ltr}
+.bv.us{color:var(--green)}
+.chart .note{font-size:13px;color:var(--ink2);margin-top:12px}
+@media(max-width:560px){.brow{grid-template-columns:96px 1fr 70px}.brow .bl{font-size:12px}}
+/* table */
+.tbl-scroll{overflow-x:auto;border:1px solid var(--hair);border-radius:12px;background:var(--panel);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;min-width:680px;font-size:14.5px}
+th{color:var(--ink);font-family:'Heebo',sans-serif;font-weight:800;font-size:14px;letter-spacing:.02em;padding:14px;text-align:right;border-bottom:1px solid var(--hair-2);white-space:nowrap;background:rgba(255,255,255,.05)}
+td{padding:13px 14px;border-bottom:1px solid var(--hair);color:var(--ink2);vertical-align:top;font-size:14.5px}
+tr:last-child td{border-bottom:none}
+td .yes{color:var(--green);font-weight:800;font-size:15px}
+td .no{color:var(--muted);font-weight:700;font-size:15px}
+td .part{color:var(--t-research);font-weight:700;font-size:14.5px}
+tr.us td{background:rgba(52,211,153,.09);color:var(--ink);font-weight:700;border-top:1px solid rgba(52,211,153,.45)}
+td small{display:block;color:var(--muted);font-weight:400;font-size:12.5px;margin-top:2px}
+.tbl-note{font-size:13.5px;color:var(--ink2);margin-top:10px}
+/* matrix */
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:2px;font-size:13px;color:var(--ink2)}
+.legend .li{display:inline-flex;align-items:center;gap:7px}
+.legend .dot{width:11px;height:11px;border-radius:50%}
+.matrix-scroll{overflow-x:auto;padding-top:54px;padding-bottom:6px;direction:ltr}
+.matrix{direction:ltr;position:relative;min-width:640px;height:440px;background:var(--panel);border:1px solid var(--hair);border-radius:12px;box-shadow:var(--shadow)}
+.matrix .q{position:absolute;width:50%;height:50%}
+.matrix .q.tl{left:0;top:0;background:rgba(52,211,153,.06);border-top-left-radius:12px}
+.matrix .divx{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--hair-2)}
+.matrix .divy{position:absolute;top:50%;left:0;right:0;height:1px;background:var(--hair-2)}
+.qlabel{position:absolute;direction:rtl;font-size:12px;font-weight:700;color:var(--muted);background:rgba(12,15,28,.62);padding:4px 10px;border-radius:7px;border:1px solid var(--hair)}
+.qlabel.win{color:var(--green);border-color:rgba(52,211,153,.4)}
+.axis{position:absolute;direction:rtl;font-size:11.5px;color:var(--muted);font-weight:600}
+.axis.x{bottom:8px;left:50%;transform:translateX(-50%)}
+.axis.y{writing-mode:vertical-rl;top:50%;left:8px;transform:translateY(-50%)}
+.mdot{position:absolute;width:31px;height:31px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;cursor:pointer;transform:translate(-50%,50%);box-shadow:0 0 0 2px var(--panel),0 0 16px rgba(0,0,0,.5);transition:transform .15s;z-index:2;text-decoration:none}
+.mdot:hover{transform:translate(-50%,50%) scale(1.22);z-index:6;box-shadow:0 0 0 2px var(--panel),0 0 18px rgba(2,132,199,.45)}
+.mdot.dark{color:#0c0f1c}
+.mdot::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);direction:rtl;white-space:nowrap;background:#1c2440;color:var(--ink);font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:9px;border:1px solid var(--hair-2);opacity:0;pointer-events:none;transition:opacity .15s;z-index:9;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.mdot:hover::after{opacity:1}
+.matrix-note{font-size:13.5px;color:var(--ink2);margin-top:10px}
+.matrix-note b{color:var(--ink)}
+/* ideas */
+.filters{position:sticky;top:52px;z-index:20;background:rgba(12,15,28,.94);backdrop-filter:blur(10px);padding:12px 0;margin-bottom:20px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--hair)}
+.fbtn{border:1px solid var(--hair-2);background:transparent;color:var(--ink2);border-radius:8px;padding:8px 15px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.fbtn:hover{border-color:var(--cyan);color:var(--ink)}
+.fbtn.active{background:var(--ink);border-color:var(--ink);color:#0c0f1c}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.cards{grid-template-columns:1fr}}
+.card{position:relative;background:var(--panel);border:1px solid var(--hair);border-top:2px solid var(--muted);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;scroll-margin-top:116px;transition:transform .2s,border-color .2s;box-shadow:var(--shadow)}
+.card:hover{transform:translateY(-2px);border-color:var(--hair-2)}
+.card.cat-tools{border-top-color:var(--c-tools)}
+.card.cat-intel{border-top-color:var(--c-intel)}
+.card.cat-research{border-top-color:var(--c-research)}
+.card.cat-meta{border-top-color:var(--c-meta)}
+.card.voted{border-color:rgba(52,211,153,.6);box-shadow:0 0 0 1px rgba(52,211,153,.45),var(--shadow)}
+.card.flash{animation:flash 1.6s ease}
+@keyframes flash{0%,60%{box-shadow:0 0 0 3px var(--cyan)}100%{box-shadow:none}}
+.card .top{display:flex;align-items:flex-start;gap:12px}
+.card .idx{flex:0 0 auto;font-family:var(--grot);font-size:20px;font-weight:700;line-height:1.35}
+.card h3{font-size:16.5px;font-weight:800;line-height:1.3;flex:1;padding-left:44px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:3px}
+.tag{font-size:11.5px;font-weight:700;border-radius:5px;padding:2px 8px;white-space:nowrap}
+.tag.tools{background:rgba(8,145,178,.18);color:var(--t-tools)}
+.tag.intel{background:rgba(139,92,246,.18);color:var(--t-intel)}
+.tag.research{background:rgba(217,119,6,.2);color:var(--t-research)}
+.tag.meta{background:rgba(219,39,119,.18);color:var(--t-meta)}
+.tag.star{background:rgba(52,211,153,.16);color:var(--green)}
+.tag.viral{background:rgba(56,189,248,.16);color:var(--cyan)}
+.card .what{font-size:14.5px;color:var(--ink2)}
+.card .what b{color:var(--ink)}
+.krow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kv{border:1px solid var(--hair);border-radius:9px;padding:8px 12px;font-size:13px;color:var(--ink2)}
+.kv b{display:block;font-family:var(--grot);font-size:10px;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:3px}
+.kv .score{color:var(--ink);font-weight:700}
+.proof{font-size:13px;color:var(--ink2);border-inline-start:2px solid var(--hair-2);padding-inline-start:10px}
+.proof b{color:var(--ink)}
+.first{font-size:13.5px;border:1px dashed rgba(56,189,248,.42);border-radius:9px;padding:9px 12px;color:var(--ink2);background:rgba(56,189,248,.06)}
+.first b{color:var(--cyan)}
+.vote{position:absolute;top:14px;left:14px;z-index:3;border:1px solid var(--hair-2);background:var(--bg);color:var(--ink2);border-radius:8px;padding:7px 13px;font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
+.vote:hover{border-color:var(--green);color:var(--ink)}
+.vote.on{background:rgba(52,211,153,.16);border-color:var(--green);color:var(--green)}
+/* flywheel */
+.fly{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px}
+.fnode{background:var(--panel);border:1px solid var(--hair);border-radius:10px;padding:12px 16px;font-size:13.5px;font-weight:700;text-align:center;transition:border-color .2s;box-shadow:var(--shadow)}
+.fnode:hover{border-color:var(--cyan)}
+.fnode small{display:block;font-weight:400;font-size:12.5px;color:var(--muted)}
+.farrow{color:var(--cyan);font-size:19px;font-weight:900}
+.fly-loop{margin-top:14px;text-align:center;font-size:14px;color:var(--ink2)}
+.fly-loop b{color:var(--green)}
+/* roadmap */
+.phases{border-top:1px solid var(--hair)}
+.phase{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--hair)}
+@media(max-width:700px){.phase{grid-template-columns:1fr}}
+.phase .when{font-weight:800;color:var(--cyan);font-size:15px}
+.phase .when small{display:block;color:var(--muted);font-weight:600;font-size:11.5px;margin-top:2px}
+.phase h4{font-size:15.5px;font-weight:800;margin-bottom:5px}
+.phase p{font-size:14px;color:var(--ink2)}
+.chip{display:inline-block;font-size:12.5px;font-weight:700;border-radius:7px;padding:3px 10px;margin:4px 4px 0 0;border:1px solid var(--hair-2);color:var(--ink2)}
+.chip.t{border-color:rgba(8,145,178,.55);color:var(--t-tools)}
+.chip.i{border-color:rgba(139,92,246,.55);color:var(--t-intel)}
+.chip.r{border-color:rgba(217,119,6,.55);color:var(--t-research)}
+.chip.m{border-color:rgba(219,39,119,.55);color:var(--t-meta)}
+/* reco */
+.reco{background:var(--panel);border:1px solid rgba(52,211,153,.4);border-radius:14px;padding:26px;box-shadow:var(--shadow)}
+.reco h3{font-size:20px;font-weight:900;margin-bottom:10px}
+.reco h3 span{color:var(--green)}
+.reco p{font-size:14.5px;color:var(--ink2);margin-bottom:14px}
+.reco p b{color:var(--ink)}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+@media(max-width:700px){.trio{grid-template-columns:1fr}}
+.t-card{border:1px solid var(--hair-2);border-radius:11px;padding:14px}
+.t-card .t-n{font-family:var(--grot);font-size:9.5px;letter-spacing:.18em;color:var(--green);margin-bottom:5px}
+.t-card h5{font-size:14px;font-weight:800;margin-bottom:4px}
+.t-card p{font-size:13px;color:var(--ink2);margin:0}
+.cta-vote{margin-top:6px;border:1px dashed rgba(52,211,153,.45);border-radius:11px;padding:15px 18px;font-size:14px;color:var(--ink2);background:rgba(52,211,153,.06)}
+.cta-vote b{color:var(--green)}
+/* votebar */
+.votebar{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(12,15,28,.95);backdrop-filter:blur(14px);border-top:1px solid rgba(52,211,153,.4);transform:translateY(110%);transition:transform .3s ease;padding:12px 16px calc(12px + env(safe-area-inset-bottom));box-shadow:0 -8px 24px rgba(0,0,0,.4)}
+.votebar.show{transform:none}
+.votebar .inner{max-width:1140px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.votebar .count{font-size:14px;font-weight:800}
+.votebar .count b{color:var(--green)}
+.votebar .picked{font-size:12.5px;color:var(--ink2);flex:1;min-width:120px}
+.vb-btn{border:none;border-radius:10px;padding:11px 18px;font-family:inherit;font-size:14px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform .12s}
+.vb-btn:active{transform:scale(.97)}
+.vb-btn.wa{background:var(--wa);color:#04220f}
+.vb-btn.cp{background:var(--panel-2);color:var(--ink);border:1px solid var(--hair-2)}
+@media(max-width:560px){.votebar .picked{display:none}}
+footer{border-top:1px solid var(--hair);padding:28px 0 46px;font-size:13px;color:var(--muted)}
+footer p{max-width:900px}
+footer .src-line{margin-top:8px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<div class="mast">
+  <div class="in">
+    <div class="m-brand">היחידה ללימודי חוץ<small>APPLIED AI · MARKET INTELLIGENCE</small></div>
+    <a class="m-cta" href="#bank">🗳️ לסימון הרעיונות</a>
+  </div>
+</div>
+
+<!-- COVER -->
+<header class="cover">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="kicker">INTERNAL REPORT · BRAINSTORM EDITION · 08.2026</div>
+        <h1 class="giant">מפסיקים <span class="dim">להצהיר</span>.<br>מתחילים <span class="go">להוכיח</span>.</h1>
+        <p class="lede">דוח מודיעין שוק פנימי: סרקנו 10 גופי הכשרה, את מנועי המיצוב המובילים בעולם ואת מפת הדאטה הישראלית. המסקנה חדה — התואר "המומחה הלאומי ל-AI" עדיין פנוי, <b>ומי שמוכיח ראשון, לוקח אותו.</b></p>
+        <div class="meta-row"><span>DATE · <b>11.08.2026</b></span><span>SCANS · <b>3</b></span><span>COMPETITORS · <b>10</b></span><span>IDEAS · <b>16</b></span></div>
+        <div class="cov-btns">
+          <a class="btn-p" href="#bank">סמנו עד 3 רעיונות ושלחו לקבוצה ↓</a>
+          <a class="btn-g" href="#reco">קפצו להצעת המיקוד</a>
+        </div>
+      </div>
+      <div class="cov-art rv">
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3CXkMvQYD6UJmnBIXDcObKys6dv/hf_20260812_112959_4fe3a3ee-3707-4915-ab04-b9716971ffbc_min.webp" alt="איור שער — מכ&quot;ם שוק סורק: צמתי דאטה מחוברים ונקודת חריגה אחת" style="background:radial-gradient(60% 60% at 42% 34%, rgba(56,189,248,.22), rgba(139,92,246,.12) 60%, transparent), #080b16" onerror="this.style.opacity='0'">
+        <div class="cov-cap"><span>MARKET RADAR · THE DIFFERENTIATION IDEA BANK</span><span>2026</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MARKET MAP INFOGRAPHIC -->
+<div class="wrap mapwrap">
+  <div class="mi-head rv"><h2>מפת המצב — הצמא, הפער וההזדמנות</h2><span>MARKET SNAPSHOT · VERIFIED 11.08.2026</span></div>
+  <div class="mi-scroll rv">
+    <div class="mapinfo">
+      <svg class="mi-svg" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <pattern id="mi-dots" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="1.6" cy="1.6" r="1.6" fill="rgba(169,180,204,.08)"/></pattern>
+          <radialGradient id="mi-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(56,189,248,.2)"/><stop offset="100%" stop-color="rgba(56,189,248,0)"/></radialGradient>
+        </defs>
+        <rect width="1000" height="560" fill="url(#mi-dots)"/>
+        <path d="M-40 430 C60 370 220 390 270 460 C300 520 200 590 80 590 L-40 590 Z" fill="rgba(32,44,78,.5)"/>
+        <path d="M700 60 C830 20 970 90 1010 190 C1040 290 930 350 840 300 C750 250 620 110 700 60 Z" fill="rgba(32,44,78,.42)"/>
+        <ellipse cx="505" cy="270" rx="200" ry="230" fill="url(#mi-glow)"/>
+        <g transform="translate(468,70) scale(1.05)">
+          <path d="M14 14 L52 4 L58 22 L52 44 L56 80 L50 120 L56 168 L48 210 L54 244 L34 392 L24 330 L8 246 L18 206 L24 160 L26 110 L22 60 Z" fill="#2e77d0" stroke="rgba(125,211,252,.85)" stroke-width="1.6" stroke-linejoin="round"/>
+        </g>
+        <text x="548" y="300" fill="rgba(238,242,250,.6)" font-size="13" font-weight="600" letter-spacing="2">ישראל</text>
+        <g stroke="rgba(238,242,250,.35)" stroke-width="1.4" fill="none" stroke-dasharray="1 7" stroke-linecap="round">
+          <polyline points="712,96 640,96 525,112"/>
+          <polyline points="722,262 610,262 512,228"/>
+          <polyline points="634,476 570,476 508,462"/>
+          <polyline points="284,168 420,168 492,238"/>
+          <polyline points="284,330 430,330 500,340"/>
+          <polyline points="284,492 440,492 505,478"/>
+        </g>
+        <g fill="rgba(255,255,255,.14)">
+          <circle cx="525" cy="112" r="8"/><circle cx="512" cy="228" r="8"/><circle cx="508" cy="462" r="8"/>
+          <circle cx="492" cy="238" r="8"/><circle cx="500" cy="340" r="8"/><circle cx="505" cy="478" r="8"/>
+        </g>
+        <g fill="#fff">
+          <circle cx="525" cy="112" r="3"/><circle cx="512" cy="228" r="3"/><circle cx="508" cy="462" r="3"/>
+          <circle cx="492" cy="238" r="3"/><circle cx="500" cy="340" r="3"/><circle cx="505" cy="478" r="3"/>
+        </g>
+      </svg>
+      <div class="mi-legend">
+        <span class="li"><i class="sq" style="background:#2e77d0"></i><span>דאטה על ישראל · מקורות בינלאומיים</span></span>
+        <span class="li"><i class="sq" style="background:#eef2fa"></i><span>סריקת המתחרים שלנו · 11.08.26</span></span>
+      </div>
+      <div class="mi-call" style="top:30px;right:34px;--mc:#f59e0b">
+        <div class="mi-country">שימוש ב-CLAUDE לנפש · מקום 1 בעולם</div>
+        <div class="mi-row"><span class="mi-dia"><span>🧠</span></span><span class="mi-num"><i>פי</i> <b data-count="4.9" data-dec="1">4.9</b></span></div>
+        <div class="mi-cap">מהממוצע העולמי — יותר מכל מדינה אחרת<span class="mi-src">ANTHROPIC ECONOMIC INDEX</span></div>
+      </div>
+      <div class="mi-call" style="top:205px;right:22px;--mc:#38bdf8">
+        <div class="mi-country">חשיפה ל-GENAI</div>
+        <div class="mi-row"><span class="mi-dia"><span>👥</span></span><span class="mi-num"><b data-count="67">67</b><i>%</i></span></div>
+        <div class="mi-cap">מהעובדים בישראל — במקצועות חשופים ל-GenAI<span class="mi-src">BANK OF ISRAEL · 2025</span></div>
+      </div>
+      <div class="mi-call" style="bottom:38px;right:110px;--mc:#34d399">
+        <div class="mi-country">אימוץ בפועל בעסקים</div>
+        <div class="mi-row"><span class="mi-dia"><span>🏢</span></span><span class="mi-num"><b data-count="28">28</b><i>%</i></span></div>
+        <div class="mi-cap">בלבד משתמשים ב-AI בפועל — הפער הזה הוא המוצר שלנו<span class="mi-src">CBS · IDI</span></div>
+      </div>
+      <div class="mi-call" style="top:64px;left:26px;--mc:#f87171">
+        <div class="mi-country">מחקר / דאטה מקורי אצל מתחרים</div>
+        <div class="mi-row"><span class="mi-dia"><span>🔬</span></span><span class="mi-num"><b>0</b></span></div>
+        <div class="mi-cap">מתוך 10 גופי הכשרה שנסקרו<span class="mi-src">COMPETITOR SCAN</span></div>
+      </div>
+      <div class="mi-call" style="bottom:196px;left:26px;--mc:#a78bfa">
+        <div class="mi-country">כלים אינטראקטיביים בשוק המוסדי</div>
+        <div class="mi-row"><span class="mi-dia"><span>🛠️</span></span><span class="mi-num"><b data-count="1">1</b></span></div>
+        <div class="mi-cap">חידון 5 שאלות (ג'ון ברייס). כל השאר: טפסי ליד<span class="mi-src">JOHN BRYCE</span></div>
+      </div>
+      <div class="mi-call" style="bottom:16px;left:26px;--mc:#eef2fa">
+        <div class="mi-country">המחיר השקוף היחיד בשוק</div>
+        <div class="mi-row"><span class="mi-dia"><span>🏷️</span></span><span class="mi-num"><i>₪</i><b data-count="590">590</b></span></div>
+        <div class="mi-cap">לכל קורס, גלוי באתר — אף מתחרה לא מפרסם מחיר<span class="mi-src">ONLY US · TODAY</span></div>
+      </div>
+    </div>
+  </div>
+  <p class="mi-note">צמא עולמי-שיא (פי 4.9) מול יכולת נמוכה בפועל (28%) — ואפס מתחרים שמוכיחים משהו. <b>זה החלון.</b></p>
+</div>
+
+<!-- FINDINGS -->
+<section>
+  <div class="wrap">
+    <div class="shead"><span class="snum">01</span><h2>חמישה ממצאים שמגדירים את ההזדמנות</h2><span class="rule"></span></div>
+    <p class="ssub">שלוש סריקות עומק (11.8.2026): אתרי המתחרים בישראל, מנגנוני המיצוב של הגופים המובילים בעולם, ומפת הדאטה והמחקר הישראלית. כל ממצא אומת מול מקור.</p>
+    <div class="findings">
+      <div class="finding rv"><div class="n">01</div><div>
+        <h3>אף אחד לא מוכיח מומחיות — כולם רק טוענים לה</h3>
+        <p>מתוך 10 גופי הכשרה שנסקרו — ג'ון ברייס, HackerU, טכניון, ת"א, סלע, נטקראפט, רייכמן ועוד — <b>לאף אחד אין מחקר מקורי, ולרוב אין אפילו כלי אינטראקטיבי אחד.</b> הכלי המתוחכם ביותר בשוק המוסדי כולו: חידון התאמה בן 5 שאלות. אף גוף לא מפרסם מחירים — ואנחנו כבר היום שקופים ב-₪590.</p>
+        <span class="src">COMPETITOR SCAN · 10 SITES</span>
+      </div></div>
+      <div class="finding rv"><div class="n">02</div><div>
+        <h3>הטריטוריה של "AI לעובד הרגיל" פנויה לחלוטין</h3>
+        <p>כל הדאטה הישראלי הקיים (רשות החדשנות, מדד נאמן, בנק ישראל) מדבר לקובעי מדיניות — לא לעובדים. GotFriends מדדו פרמיית שכר של <b>~9% למיומנויות AI — אבל רק בהייטק.</b> אף אחד בישראל לא מודד מה AI שווה למשווקת, למנהלת חשבונות, לאיש מכירות — בדיוק הקהל שלנו.</p>
+        <span class="src">DATA MAPPING · GOTFRIENDS 2025 · NEAMAN INDEX</span>
+      </div></div>
+      <div class="finding rv"><div class="n">03</div><div>
+        <h3>התוכן המוסדי מת — והמאיים האמיתי הוא לא מכללה</h3>
+        <p>הכתבה האחרונה של היחידה ללימודי המשך בטכניון: <b>לפני 17 חודשים.</b> מי ששולט בתוכן AI בעברית הוא Let's AI — גוף עצמאי עם פרסום יומי וקהילה של 25 אלף חברים — אבל בלי גב מוסדי, בלי תעודות מוכרות ובלי גרם אחד של דאטה מקורי. הפער הזה הוא בדיוק המקום שלנו.</p>
+        <span class="src">PUBLISH-DATE CHECK · 11.08.26</span>
+      </div></div>
+      <div class="finding rv"><div class="n">04</div><div>
+        <h3>ישראל צמאה — והפער הוא שוק ההכשרה</h3>
+        <p>ישראל מקום 1 בעולם בשימוש ב-Claude לנפש (פי 4.9 מהממוצע), 67% מהעובדים במקצועות חשופים ל-GenAI — אבל רק <b>28% מהעסקים</b> משתמשים בפועל. הפער בין הסקרנות לבין היכולת הוא בדיוק המוצר שאנחנו מוכרים.</p>
+        <span class="src">ANTHROPIC · BANK OF ISRAEL · CBS/IDI</span>
+      </div></div>
+      <div class="finding rv"><div class="n">05</div><div>
+        <h3>החלון פתוח — ונסגר</h3>
+        <p>שירות התעסוקה מקים בימים אלה מרכז מחקר לאומי ל-AI ושוק העבודה ("מב"ט"), והתאחדות התעשיינים פותחת מרכז הטמעת AI לתעשייה. מי שיתפוס את עמדת "המומחה הלאומי להכשרת AI" <b>בחודשים הקרובים</b> — יחזיק בה כשכולם יתעוררו.</p>
+        <span class="src">MAARIV · PC.CO.IL · 2026</span>
+      </div></div>
+    </div>
+    <div class="formula rv">
+      <div class="fl">THE POSITIONING FORMULA</div>
+      <div class="fb">מיצוב מומחים = <span>כלים שנוגעים בך אישית</span> + <span>דאטה שאין לאף אחד אחר</span> + <span>קצב שאי אפשר להתעלם ממנו</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT FRESHNESS CHART -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="shead"><span class="snum">02</span><h2>טריות התוכן — מי חי ומי קפוא</h2><span class="rule"></span></div>
+    <p class="ssub">זמן שעבר מאז פרסום תוכן ה-AI האחרון באתר, נכון ל-11.8.2026. הפער בין הגופים המוסדיים לבין Let's AI הוא בדיוק החור שאנחנו נכנסים אליו.</p>
+    <div class="chart rv">
+      <div class="ct"><h3>חודשים מאז פרסום התוכן האחרון</h3><span>VERIFIED 11.08.2026</span></div>
+      <div class="brow"><div class="bl">Let's AI<small>עצמאי · פרסום יומי</small></div><div class="track"><div class="fill" style="width:1%"></div></div><div class="bv">יומי</div></div>
+      <div class="brow"><div class="bl">ת"א — להב<small>אקדמי + פודקאסט</small></div><div class="track"><div class="fill" style="width:3%"></div></div><div class="bv">טרי</div></div>
+      <div class="brow"><div class="bl">ג'ון ברייס<small>מגזין, ללא שם כותב</small></div><div class="track"><div class="fill" style="width:6%"></div></div><div class="bv">~חודש</div></div>
+      <div class="brow"><div class="bl">HackerU<small>בלוג פעיל</small></div><div class="track"><div class="fill" style="width:6%"></div></div><div class="bv">~חודש</div></div>
+      <div class="brow"><div class="bl">טכניון<small>לימודי המשך</small></div><div class="track"><div class="fill" style="width:100%"></div></div><div class="bv">17 חוד'</div></div>
+      <div class="brow"><div class="bl">אנחנו — יעד<small>המכ"ם, תדריך שבועי</small></div><div class="track"><div class="fill us" style="width:2%"></div></div><div class="bv us">שבועי</div></div>
+      <div class="note">סלע, נטקראפט ורייכמן FORE — ללא תוכן AI מתוארך כלל, ולכן אינם מוצגים. מקור: בדיקת תאריכי פרסום באתרי המתחרים.</div>
+    </div>
+  </div>
+</section>
+
+<!-- GAP TABLE -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="shead"><span class="snum">03</span><h2>מפת הפערים — מה אין לאף אחד</h2><span class="rule"></span></div>
+    <p class="ssub">נבדק בפועל באתרי המתחרים. השורה הירוקה — איפה אנחנו יכולים לעמוד בעוד רבעון.</p>
+    <div class="tbl-scroll rv">
+      <table>
+        <thead><tr><th>גוף</th><th>כלים חיים</th><th>תוכן שוטף</th><th>מחקר מקורי</th><th>מחיר שקוף</th></tr></thead>
+        <tbody>
+          <tr><td><b>ג'ון ברייס</b><small>המתחרה המוסדי החזק</small></td><td><span class="part">חידון 5 שאלות</span></td><td><span class="part">~חודשי</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td><b>HackerU / ThriveDX</b></td><td><span class="no">✗</span></td><td><span class="part">בלוג פעיל</span></td><td><span class="part">טבלאות שכר</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td><b>טכניון — לימודי המשך</b></td><td><span class="no">✗</span></td><td><span class="no">קפוא 17 חודשים</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td><b>ת"א — להב</b></td><td><span class="no">✗</span></td><td><span class="part">טרי, אקדמי</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td><b>סלע · נטקראפט · רייכמן</b></td><td><span class="no">✗</span></td><td><span class="no">מיושן / אין</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td><b>Let's AI</b><small>המאיים התוכני — עצמאי</small></td><td><span class="part">מדריך כלים</span></td><td><span class="yes">✓ יומי + 25K</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr class="us"><td><b>היחידה ללימודי חוץ — בעוד רבעון</b></td><td><span class="yes">✓ מבחן + 3 כלים</span></td><td><span class="yes">✓ תדריך שבועי</span></td><td><span class="yes">✓ ראשונים בישראל</span></td><td><span class="yes">✓ ₪590 כבר היום</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-note">שקיפות המחיר שלנו (₪590 לכל קורס) היא כבר עכשיו בידול מלא בשוק שבו אף גוף לא מפרסם מחיר — שווה להבליט, לא להסתיר.</p>
+  </div>
+</section>
+
+<!-- MATRIX -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="shead"><span class="snum">04</span><h2>מפת ההחלטה — אימפקט מול מאמץ</h2><span class="rule"></span></div>
+    <p class="ssub">כל עיגול = רעיון (לחיצה קופצת לכרטיס). המאמץ בימי עבודה עם Claude Code. ריחוף מציג את השם.</p>
+    <div class="legend">
+      <span class="li"><span class="dot" style="background:var(--c-tools)"></span>כלים חיים</span>
+      <span class="li"><span class="dot" style="background:var(--c-intel)"></span>מרכז מודיעין</span>
+      <span class="li"><span class="dot" style="background:var(--c-research)"></span>מחקר מקורי</span>
+      <span class="li"><span class="dot" style="background:var(--c-meta)"></span>מהלכי-על</span>
+    </div>
+    <div class="matrix-scroll">
+      <div class="matrix">
+        <div class="q tl"></div>
+        <div class="divx"></div><div class="divy"></div>
+        <span class="qlabel win" style="top:12px;left:12px">★ ניצחונות מהירים</span>
+        <span class="qlabel" style="top:12px;right:12px">מהלכים אסטרטגיים</span>
+        <span class="qlabel" style="bottom:34px;left:12px">מילוי חכם</span>
+        <span class="qlabel" style="bottom:34px;right:12px">לא עכשיו</span>
+        <span class="axis x">מאמץ בימי עבודה · שמאל = ימים בודדים · ימין = חודשים</span>
+        <span class="axis y">אימפקט מיצובי · גבוה למעלה</span>
+        <a class="mdot" href="#idea-6"  style="left:6%;bottom:84%;background:var(--c-intel)"    data-tip="6 · המכ&quot;ם — תדריך שבועי · יום הקמה">6</a>
+        <a class="mdot" href="#idea-8"  style="left:4%;bottom:54%;background:var(--c-intel)"    data-tip="8 · פרשנות 24 שעות · אפס פיתוח">8</a>
+        <a class="mdot dark" href="#idea-13" style="left:11%;bottom:60%;background:var(--c-research)" data-tip="13 · החתך הישראלי · 2 ימים לגיליון">13</a>
+        <a class="mdot" href="#idea-10" style="left:10%;bottom:26%;background:var(--c-intel)"   data-tip="10 · ספריית פרומפטים · יומיים">10</a>
+        <a class="mdot" href="#idea-3"  style="left:16%;bottom:64%;background:var(--c-tools)"   data-tip="3 · מחשבון פרמיית השכר · 3 ימים">3</a>
+        <a class="mdot" href="#idea-7"  style="left:16%;bottom:46%;background:var(--c-intel)"   data-tip="7 · מילון ה-AI העברי · 3 ימים">7</a>
+        <a class="mdot" href="#idea-4"  style="left:21%;bottom:50%;background:var(--c-tools)"   data-tip="4 · מגרש אימוני פרומפטים · 4 ימים">4</a>
+        <a class="mdot" href="#idea-15" style="left:25%;bottom:34%;background:var(--c-meta)"    data-tip="15 · מדד מוכנות לעסקים B2B · 5 ימים">15</a>
+        <a class="mdot" href="#idea-1"  style="left:29%;bottom:92%;background:var(--c-tools)"   data-tip="1 · מדד השליטה ב-AI — הדגל · 6 ימים">1</a>
+        <a class="mdot" href="#idea-9"  style="left:31%;bottom:74%;background:var(--c-intel)"   data-tip="9 · מדד משרות ה-AI · 6 ימים">9</a>
+        <a class="mdot" href="#idea-5"  style="left:27%;bottom:42%;background:var(--c-tools)"   data-tip="5 · עובד דיגיטלי חי · 6 ימים">5</a>
+        <a class="mdot" href="#idea-2"  style="left:43%;bottom:88%;background:var(--c-tools)"   data-tip="2 · ה-AI בא על התפקיד שלך? · 9 ימים">2</a>
+        <a class="mdot dark" href="#idea-14" style="left:48%;bottom:38%;background:var(--c-research)" data-tip="14 · שקיפות בוגרים · 10 ימים + הנהלה">14</a>
+        <a class="mdot dark" href="#idea-12" style="left:57%;bottom:78%;background:var(--c-research)" data-tip="12 · פרמיית ה-AI מחוץ להייטק · 12 ימים">12</a>
+        <a class="mdot dark" href="#idea-11" style="left:80%;bottom:90%;background:var(--c-research)" data-tip="11 · הדוח השנתי · רבעון">11</a>
+        <a class="mdot" href="#idea-16" style="left:93%;bottom:70%;background:var(--c-meta)"    data-tip="16 · הסמכה ארצית · חודשים">16</a>
+      </div>
+    </div>
+    <p class="matrix-note">קו האמצע האנכי ≈ 10 ימי עבודה; הקו האופקי = סף "משנה מיצוב". ריכוז העיגולים ברביע הירוק הוא הנקודה החשובה בדוח: <b>רוב הבידול כאן זול להשגה.</b></p>
+  </div>
+</section>
+
+<!-- IDEAS -->
+<section style="padding-top:0" id="bank">
+  <div class="wrap">
+    <div class="shead"><span class="snum">05</span><h2>בנק הרעיונות — סמנו את הטופ שלכם</h2><span class="rule"></span></div>
+    <p class="ssub">כל כרטיס: מה בונים, למה זה ממצב, איך זה מייצר לידים, וכמה זה עולה בזמן. לחצו <b>☆ בחר</b> על עד 3 רעיונות — ולמטה יופיע כפתור לשליחת הבחירה שלכם לקבוצה.</p>
+
+    <div class="filters" id="filters">
+      <button class="fbtn active" data-f="all">הכל (16)</button>
+      <button class="fbtn" data-f="tools">🛠 כלים חיים (5)</button>
+      <button class="fbtn" data-f="intel">📡 מרכז מודיעין (5)</button>
+      <button class="fbtn" data-f="research">📊 מחקר מקורי (4)</button>
+      <button class="fbtn" data-f="meta">♟ מהלכי-על (2)</button>
+    </div>
+
+    <div class="cards" id="cards">
+
+      <div class="card cat-tools" id="idea-1" data-cat="tools" data-name='מדד השליטה ב-AI — המבחן הלאומי'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-tools)">01</span>
+          <div><h3>"מדד השליטה ב-AI" — המבחן הלאומי</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span><span class="tag star">★ שלישיית הפתיחה</span><span class="tag viral">⚡ הדגל</span></div></div></div>
+        <p class="what">מבחן חינמי בעברית, 8–10 דקות, שמודד שליטה ב-AI בשלושה ממדים: ידע, שימוש בפועל, ויכולת פרומפטינג (נבדקת ע"י AI בזמן אמת). התוצאה: ציון + דירוג על סולם עברי — <b>סקפטי ← מתנסה ← מיישם ← מוביל ← מומחה</b> — ודוח פערים אישי שמנתב לקורס המתאים. <b>מנוע אחד, שלושה תוצרים:</b> ליד איכותי, ניתוב לקורס, ודאטה מצטבר שהופך לדוח הלאומי (רעיון 11).</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — "המבחן של ישראל"</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">5/5 — אימייל תמורת ציון</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~6 ימים, אתה + Claude Code</span></div>
+          <div class="kv"><b>MARKET</b><span class="score">אין מקבילה בעברית — נבדק</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> Section הפכו מבחן זהה לשתי הודעות לעיתונות ארציות בארה"ב, למוצר B2B ולדוח שנתי מצוטט ("רק 10% מכוח העבודה שולט ב-AI").</p>
+        <p class="first"><b>צעד ראשון:</b> פגישת אפיון 30 דק' — 25 שאלות, 5 רמות, 3 תרחישי פרומפט. שלד עובד תוך שבוע.</p>
+      </div>
+
+      <div class="card cat-tools" id="idea-2" data-cat="tools" data-name='ה-AI בא על התפקיד שלך? — בודק חשיפה'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-tools)">02</span>
+          <div><h3>"ה-AI בא על התפקיד שלך?" — בודק חשיפה למקצוע</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span><span class="tag viral">⚡ התקרה הוויראלית הגבוהה בבנק</span></div></div></div>
+        <p class="what">מקלידים מקצוע — מקבלים בעברית: אחוז חשיפה ל-AI, אילו משימות בתפקיד כבר מתבצעות ע"י AI היום, מה נשאר אנושי, והשוואה בין שני מקצועות. מבוסס על מחקרי חשיפה בינלאומיים (Frey-Osborne, Microsoft, דאטה פתוח של Anthropic) ממופים למשלחי היד של הלמ"ס. <b>כל דף תוצאה מסתיים במשפט אחד: "וזה הקורס שסוגר לך את הפער".</b></p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — כלי שמשתפים</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">5/5 — פחד+תקווה+פתרון</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~9 ימים (כולל דאטה)</span></div>
+          <div class="kv"><b>SEO</b><span class="score">דף לכל מקצוע = זנב ארוך</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> WillRobotsTakeMyJob — אתר של אדם אחד על דאטה ציבורי חינמי — סוקר ב-Fox News, Business Insider ו-Fortune ומחזיק קהל כבר 9 שנים.</p>
+        <p class="first"><b>צעד ראשון:</b> להצליב את טבלת החשיפה של מיקרוסופט עם 30 המקצועות הנפוצים בלמ"ס — יום עבודה אחד, ויש MVP.</p>
+      </div>
+
+      <div class="card cat-tools" id="idea-3" data-cat="tools" data-name='מחשבון פרמיית ה-AI לשכר'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-tools)">03</span>
+          <div><h3>מחשבון פרמיית ה-AI לשכר</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span></div></div></div>
+        <p class="what">בוחרים מקצוע ושכר נוכחי — מקבלים כמה שווה תוספת מיומנות AI בתחום, על בסיס הדאטה הקיים (GotFriends: פרמיה של ~9% בהייטק; סקרי MDLI ו-Ethosia; AvodaData הממשלתי). מוצג במסגור הכספי הישן והטוב: <b>שכר היום ← שכר עם מיומנות AI ← עלות הקורס ₪590 ← החזר תוך X חודשים.</b></p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">5/5 — מדבר כסף</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~3 ימים</span></div>
+          <div class="kv"><b>CAMPAIGNS</b><span class="score">מושלם לוואטסאפ/פייסבוק</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> HubSpot Website Grader — 4 מיליון בדיקות, 40 אלף באקלינקים — הכלי־חינמי שבנה חברה של מיליארדים. אותו עיקרון, בגרסת שכר ישראלית.</p>
+        <p class="first"><b>צעד ראשון:</b> טבלת בסיס של 20 מקצועות עם טווחי שכר ממקורות קיימים — חצי יום.</p>
+      </div>
+
+      <div class="card cat-tools" id="idea-4" data-cat="tools" data-name='מגרש אימוני פרומפטים עם ציון חי'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-tools)">04</span>
+          <div><h3>מגרש אימוני פרומפטים — עם ציון חי</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span></div></div></div>
+        <p class="what">משימה אמיתית קטנה ("נסח מייל ללקוח כועס"), המבקר כותב פרומפט — ו-AI נותן ציון, משוב, וגרסה משופרת לצידו. <b>זו הטעימה הראשונה של השיעור:</b> המבקר חווה בדיוק איך מרגיש ללמוד אצלנו, עוד לפני שנרשם. לוח שיאים משותף = מנגנון שיתוף מובנה.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — חוויה, לא הבטחה</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~4 ימים</span></div>
+          <div class="kv"><b>RETENTION</b><span class="score">אתגר שבועי מתחלף</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> Coursera מפעילה 15+ חידוני מיומנות כתבנית קבועה — כי משתמש שקיבל ציון סומך על ההמלצה שאחריו.</p>
+        <p class="first"><b>צעד ראשון:</b> אתגר אחד + רובריקת שיפוט אחת. עמוד אחד. יומיים.</p>
+      </div>
+
+      <div class="card cat-tools" id="idea-5" data-cat="tools" data-name='עובד דיגיטלי חי בדף הבית'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-tools)">05</span>
+          <div><h3>עובד דיגיטלי חי בדף הבית</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span></div></div></div>
+        <p class="what">סוכן AI אמיתי משובץ באתר, שמבצע מול המבקר משימה רב-שלבית בשידור חי — מקבל בקשה, מתכנן, מבצע, מדווח. מעליו כיתוב אחד: <b>"את זה בדיוק תדע לבנות בעצמך אחרי 60 שעות."</b> הדגמה חיה של פרויקט הגמר של קורס הדגל — במקום לתאר אותו.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — אפקט וואו</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">3/5</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~6 ימים</span></div>
+          <div class="kv"><b>COURSE LINK</b><span class="score">ישיר — מהנדס AI אג'נטי</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> העיקרון של כל דמו מוצר טוב: show, don't tell. אף מכללה בישראל לא מראה סוכן חי.</p>
+        <p class="first"><b>צעד ראשון:</b> לבחור משימת דמו אחת בטוחה ותחומה (למשל: מחקר מתחרים מהיר) ולבנות אותה כ-flow סגור.</p>
+      </div>
+
+      <div class="card cat-intel" id="idea-6" data-cat="intel" data-name='המכ״ם — תדריך ה-AI השבועי'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-intel)">06</span>
+          <div><h3>"המכ"ם" — תדריך ה-AI השבועי של ישראל</h3>
+          <div class="badges"><span class="tag intel">מודיעין</span><span class="tag star">★ שלישיית הפתיחה — מתחילים כאן</span></div></div></div>
+        <p class="what">כל יום ראשון: 5 דקות קריאה בעברית — מה קרה השבוע ב-AI, <b>ומה זה אומר לעסק ולקריירה שלך בישראל.</b> נפתח תמיד ב"מכתב המומחה" קצר וחתום של ד"ר בדיחי — דעה, לא סיכום. מתפרסם באתר + ניוזלטר + ערוץ וואטסאפ שקט. זה הנכס שממנו כל שאר הרעיונות מקבלים הפצה.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — קצב = סמכות</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — רשימת תפוצה חיה</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">יום הקמה + 2-3 שע'/שבוע</span></div>
+          <div class="kv"><b>GAP</b><span class="score">אף מכללה לא עושה זאת</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> The Batch של DeepLearning.AI — הניוזלטר שבנה אימפריית קורסים; המודל של Ethan Mollick (מאות אלפי מנויים): מהירות + קול אישי מנצחים בלוג מוסדי.</p>
+        <p class="first"><b>צעד ראשון:</b> לאשר שם ופורמט, ד"ר בדיחי מקליט 10 דקות — והגיליון הראשון יוצא השבוע. אפס פיתוח.</p>
+      </div>
+
+      <div class="card cat-intel" id="idea-7" data-cat="intel" data-name='מילון ה-AI העברי המוסמך'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-intel)">07</span>
+          <div><h3>מילון ה-AI העברי המוסמך</h3>
+          <div class="badges"><span class="tag intel">מודיעין</span></div></div></div>
+        <p class="what">150+ מונחי AI בעברית ברורה — Agentic, RAG, MCP, Fine-tuning — כל מונח: הגדרה, דוגמה ישראלית מהשטח, ומתי תפגוש אותו בקורסים שלנו. מתוחזק ומעודכן עם כל גל חדש. <b>מילון האקדמיה ללשון העברית בתחום — משנת 2004.</b> ההגדרה שגוגל (ומנועי ה-AI) יצטטו תהיה שלנו.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — "ההגדרה לפי..."</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">3/5 — SEO ארוך טווח</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~3 ימים + תחזוקה קלה</span></div>
+          <div class="kv"><b>AI-SEO</b><span class="score">מקור שצ'אטבוטים מצטטים</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> נבדק — אין גורם מוסמך מתוחזק בעברית; הטוב ביותר כיום הוא בלוג. טריטוריה פתוחה לגמרי.</p>
+        <p class="first"><b>צעד ראשון:</b> 40 המונחים הראשונים מתוך הסילבוסים הקיימים — הידע כבר אצלכם, צריך רק לפרסם.</p>
+      </div>
+
+      <div class="card cat-intel" id="idea-8" data-cat="intel" data-name='פרשנות 24 השעות'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-intel)">08</span>
+          <div><h3>פרשנות 24 השעות — קול מומחה בזמן אמת</h3>
+          <div class="badges"><span class="tag intel">מודיעין</span></div></div></div>
+        <p class="what">נוהל קבוע: בכל השקת ענק (מודל חדש, רגולציה, מוצר) — תוך 24 שעות עולה פרשנות קצרה בעברית בחתימת ד"ר בדיחי: מה קרה, מה זה אומר לעסקים בישראל, מה לעשות מחר. מופץ גם ללינקדאין ולתקשורת. <b>עם הזמן, עיתונאים לומדים למי מתקשרים כשמשהו קורה ב-AI.</b></p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — מהירות = מומחיות</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">3/5</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">אפס פיתוח — משמעת בלבד</span></div>
+          <div class="kv"><b>PR</b><span class="score">בונה מעמד "המקור"</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> Ethan Mollick בנה מאות אלפי מנויים על עיקרון אחד: להיות ראשון + אמין אחרי כל השקה. בעברית אין אף גורם מוסדי כזה.</p>
+        <p class="first"><b>צעד ראשון:</b> תבנית קבועה של 4 פסקאות + התחייבות פנימית ל-SLA של 24 שעות. זהו.</p>
+      </div>
+
+      <div class="card cat-intel" id="idea-9" data-cat="intel" data-name='מדד משרות ה-AI של ישראל'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-intel)">09</span>
+          <div><h3>מדד משרות ה-AI של ישראל — דשבורד חי</h3>
+          <div class="badges"><span class="tag intel">מודיעין</span><span class="tag viral">⚡ נכס ציטוט חודשי</span></div></div></div>
+        <p class="what">ספירה חודשית מסודרת של משרות AI בלוחות הדרושים <b>בעברית</b> (AllJobs, דרושים, JobMaster): כמה משרות, באילו תפקידים, באילו ענפים, אילו מיומנויות מבוקשות. מוצג כדשבורד חי + עדכון חודשי קבוע. מדד נאמן של הטכניון עוקב רק אחרי לינקדאין ורק אחרי מפתחים — <b>השוק העברי הרחב פנוי.</b></p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — דאטה שאין לאחרים</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">3/5</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~6 ימים + חצי יום/חודש</span></div>
+          <div class="kv"><b>NOTE</b><span class="score">ספירה ידנית — בלי סקרייפינג</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> כל מדד חודשי עקבי הופך לשורת ציטוט קבועה בתקשורת ("על פי מדד היחידה ללימודי חוץ, החודש נפתחו X משרות AI").</p>
+        <p class="first"><b>צעד ראשון:</b> להגדיר פרוטוקול ספירה (10 מילות מפתח, 3 לוחות, אותו יום בחודש) ולהריץ ספירת בסיס ראשונה.</p>
+      </div>
+
+      <div class="card cat-intel" id="idea-10" data-cat="intel" data-name='ספריית הפרומפטים של המקצועות'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-intel)">10</span>
+          <div><h3>ספריית הפרומפטים של המקצועות</h3>
+          <div class="badges"><span class="tag intel">מודיעין</span></div></div></div>
+        <p class="what">ספרייה חינמית ופתוחה של פרומפטים מוכנים לפי מקצוע ישראלי: לרואת חשבון, לאיש מכירות, למנהלת משרד, לעורך דין. כל פרומפט נבדק ומתועד. <b>נתינה של ערך אמיתי בחינם היא קיצור הדרך הכי מהיר לאמון</b> — ומי שהפרומפט עבד לו, רוצה את הקורס המלא.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">3/5</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — שיתוף טבעי בוואטסאפ</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~2 ימים</span></div>
+          <div class="kv"><b>SEO</b><span class="score">"פרומפטים ל..." — חיפושים חמים</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> ספריות הפרומפטים החינמיות של Wharton/Mollick הן מהנכסים המשותפים ביותר ברשת — נדיבות שמתורגמת לסמכות.</p>
+        <p class="first"><b>צעד ראשון:</b> 25 פרומפטים ל-5 מקצועות, ישירות מחומרי הקורסים הקיימים.</p>
+      </div>
+
+      <div class="card cat-research" id="idea-11" data-cat="research" data-name='דוח מיומנויות ה-AI של ישראל (שנתי)'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-research)">11</span>
+          <div><h3>"דוח מיומנויות ה-AI של ישראל" — המחקר השנתי</h3>
+          <div class="badges"><span class="tag research">מחקר</span><span class="tag viral">⚡ מנוע היח"צ המרכזי</span></div></div></div>
+        <p class="what">דוח שנתי חינמי: רמת השליטה ב-AI של העובד הישראלי — לפי הדאטה המצטבר ממבחן השליטה (רעיון 1) + סקר משלים של 500–1,000 משיבים. גרפים מוכנים להורדה, תקציר לעיתונאים, הודעה לתקשורת. <b>אף גוף בישראל לא מפרסם דאטה כזה. מי שמפרסם ראשון — קובע את השיח.</b></p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — מונופול ציטוטים</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — הורדה בהרשמה</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">רבעון (במקביל לשוטף)</span></div>
+          <div class="kv"><b>DEPENDS</b><span class="score">נבנה על רעיון 1</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> ה-AI Index של סטנפורד מצוטט ב-NYT, בלומברג וגרדיאן; הדוח של Section הפך לשתי הודעות ארציות. גרסה ישראלית = חדשות בכל ערוץ כלכלי.</p>
+        <p class="first"><b>צעד ראשון:</b> להגדיר את 5 השאלות שהדוח יענה עליהן — ולוודא שמבחן השליטה אוסף בדיוק אותן.</p>
+      </div>
+
+      <div class="card cat-research" id="idea-12" data-cat="research" data-name='פרמיית ה-AI מחוץ להייטק'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-research)">12</span>
+          <div><h3>מחקר הדגל: פרמיית ה-AI מחוץ להייטק</h3>
+          <div class="badges"><span class="tag research">מחקר</span></div></div></div>
+        <p class="what">המספר שאף אחד בישראל לא מדד: <b>כמה שווה מיומנות AI בשכר של משווקת, מנהל חשבונות, אשת מכירות, מנהל תפעול.</b> GotFriends מדדו 9% — רק בהייטק, ועצרו. סקר ייעודי בקרב מעסיקים ובוגרים בשוק הרחב יפיק את הכותרת ששייכת לנו: "מיומנות AI שווה X% לשכר — גם מחוץ להייטק".</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — המספר של השוק שלנו</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — מזין כל קמפיין</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~12 ימים כולל סקר</span></div>
+          <div class="kv"><b>EDGE</b><span class="score">אלפי סטודנטים = מדגם נגיש</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> כל קמפיין עתידי שלנו יוכל לצטט את המחקר של עצמנו — הנכס השיווקי שכולם ישאלו "למה לא עשינו את זה קודם".</p>
+        <p class="first"><b>צעד ראשון:</b> שאלון 10 שאלות למאגר הבוגרים + 200 מעסיקים מרשימת השותפים.</p>
+      </div>
+
+      <div class="card cat-research" id="idea-13" data-cat="research" data-name='החתך הישראלי — הדאטה העולמי בעברית'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-research)">13</span>
+          <div><h3>"החתך הישראלי" — הדאטה העולמי, בעברית</h3>
+          <div class="badges"><span class="tag research">מחקר</span><span class="tag star">★ שלישיית הפתיחה</span></div></div></div>
+        <p class="what">אחת לרבעון: ניתוח בעברית של מה שהדאטה הגלובלי הפתוח אומר <b>על ישראל</b> — Anthropic Economic Index (ישראל מקום 1 בעולם בשימוש לנפש — פי 4.9!), מדד סטנפורד, OECD. הכותרות כבר קיימות, פשוט אף אחד לא כותב אותן בעברית כמו שצריך. <b>דוח ראשון אפשרי תוך יומיים — עוד לפני שיש לנו דאטה משלנו.</b></p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — סמכות מיידית</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">3/5</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~2 ימים לגיליון</span></div>
+          <div class="kv"><b>SPEED</b><span class="score">הפרסום הראשון — השבוע</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> נבדק — קיים רק תרגום אחד של מדד סטנפורד לעברית, בלי לוקליזציה ישראלית. הנישה ריקה.</p>
+        <p class="first"><b>צעד ראשון:</b> גיליון #1: "ישראל — אלופת העולם בשימוש ב-AI. אז למה רק 28% מהעסקים מרוויחים מזה?"</p>
+      </div>
+
+      <div class="card cat-research" id="idea-14" data-cat="research" data-name='שקיפות בוגרים — המספרים האמיתיים'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-research)">14</span>
+          <div><h3>שקיפות בוגרים — המספרים האמיתיים</h3>
+          <div class="badges"><span class="tag research">מחקר</span></div></div></div>
+        <p class="what">פרסום יזום ומבוקר של תוצאות בוגרים: אחוז השמה, שינוי שכר, שביעות רצון — כולל המתודולוגיה. הדאטה הממשלתי (AvodaData) מפגר ב-5 שנים ולא מכסה הכשרות מקצועיות; גלובס תוקף באופן קבוע הבטחות לא מבוקרות של מכללות. <b>הראשון שמפרסם מספרים אמיתיים עם מתודולוגיה — הופך את השקיפות עצמה לבידול.</b></p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — אמון = מותג</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — משכנע מתלבטים</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~10 ימים + אישור הנהלה</span></div>
+          <div class="kv"><b>RISK</b><span class="score">דורש עמידה מאחורי המספרים</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> בשוק שבו התקשורת חושדת בכולם, שקיפות היא חסינות — ונשק נגד כל מתחרה שמסתיר.</p>
+        <p class="first"><b>צעד ראשון:</b> פיילוט שקט על קורס אחד: סקר בוגרים 6 חודשים אחרי סיום, ואז החלטת הנהלה.</p>
+      </div>
+
+      <div class="card cat-meta" id="idea-15" data-cat="meta" data-name='מדד מוכנות ה-AI לעסקים (B2B)'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-meta)">15</span>
+          <div><h3>מדד מוכנות ה-AI לעסקים (B2B)</h3>
+          <div class="badges"><span class="tag meta">מהלך-על</span></div></div></div>
+        <p class="what">שאלון עצמי לעסקים: 6 צירים (אסטרטגיה, דאטה, כלים, אנשים, תהליכים, אבטחה) ← ציון + דירוג ("מוביל / רודף / מדשדש / חשוף") + השוואה לעסקים דומים בישראל. התוצאה מזמינה פגישה — <b>וזה בדיוק הצינור להכשרות הארגוניות ולשותפויות (IAI/ELTA, HUBTEC).</b> הדאטה המצטבר: "מדד מוכנות העסקים הישראלי".</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 בעולם ה-B2B</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — פגישות ארגוניות</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~5 ימים</span></div>
+          <div class="kv"><b>SYNERGY</b><span class="score">מזין את מערך המכירות</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> Cisco הפכה שאלון כזה למדד עולמי מצוטט (רק 13% "Pacesetters"); PwC ממירה אותו ישירות לפגישות ייעוץ עם 500+ ארגונים.</p>
+        <p class="first"><b>צעד ראשון:</b> 18 שאלות, 6 צירים, דוח PDF אוטומטי — ולתת אותו קודם ל-10 לקוחות B2B קיימים.</p>
+      </div>
+
+      <div class="card cat-meta" id="idea-16" data-cat="meta" data-name='הסמכת "כשיר AI" — הסטנדרט הארצי'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-meta)">16</span>
+          <div><h3>הסמכת "כשיר AI" — הסטנדרט שהמעסיקים ידרשו</h3>
+          <div class="badges"><span class="tag meta">מהלך-על</span></div></div></div>
+        <p class="what">ההימור הגדול של הבנק: בחינת כשירות AI בעברית — תקן שמעסיקים יכולים לדרוש בגיוס ("דרוש: כשירות AI רמה 3"). נבנית על סולם הרמות של מבחן השליטה (רעיון 1), משווקת דרך השותפים התעשייתיים. <b>מי שקובע את הסטנדרט — כולם עוברים דרכו.</b> מהלך של חודשים, אבל הוא הופך אותנו ממכללה לרגולטור-בפועל של השוק.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — משנה קטגוריה</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — כל נבחן = ליד</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">חודשים + שותפים</span></div>
+          <div class="kv"><b>GATE</b><span class="score">מתחיל רק אחרי רעיונות 1+11</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> נבדק — אין שום בחינת כשירות AI בעברית. בעולם, מי שהחזיק תקן (PMP, CPA) החזיק שוק שלם.</p>
+        <p class="first"><b>צעד ראשון:</b> שיחה אחת עם שותף תעשייתי גדול: "אם היה תקן — הייתם דורשים אותו בגיוס?"</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FLYWHEEL -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="shead"><span class="snum">06</span><h2>גלגל התנופה של המומחיות</h2><span class="rule"></span></div>
+    <p class="ssub">הסוד של Section, סטנפורד ו-HubSpot הוא לא רעיון בודד — זה מעגל שמזין את עצמו. כל רעיון בבנק יושב באחת מחמש התחנות:</p>
+    <div class="fly rv">
+      <div class="fnode">🛠 כלים חיים באתר<small>רעיונות 1–5, 15</small></div>
+      <span class="farrow">←</span>
+      <div class="fnode">🧬 דאטה ייחודי נצבר<small>כל שימוש = שורת דאטה</small></div>
+      <span class="farrow">←</span>
+      <div class="fnode">📊 מדדים ודוחות<small>רעיונות 9, 11–14</small></div>
+      <span class="farrow">←</span>
+      <div class="fnode">📰 התקשורת מצטטת<small>+ תדריך ופרשנות: 6, 8, 13</small></div>
+      <span class="farrow">←</span>
+      <div class="fnode">🎓 טראפיק, אמון, נרשמים<small>וכל נרשם מזין עוד דאטה</small></div>
+    </div>
+    <p class="fly-loop">כל סיבוב של הגלגל מוזיל את הליד הבא ומעלה את מחיר הכניסה למתחרים. <b>המתחרים יצטרכו לבנות את כל המעגל — לא כלי אחד — כדי להשיג אותנו.</b></p>
+  </div>
+</section>
+
+<!-- STATEMENT (scroll fill) -->
+<section class="fillsec">
+  <div class="wrap">
+    <div class="grot fill-k">THE BOTTOM LINE</div>
+    <h2 class="fillh" id="fillh">
+      <span class="base">מפסיקים להצהיר — מתחילים להוכיח. כלי חי, דאטה שאין לאף אחד, וקצב שאי אפשר להתעלם ממנו — עד שהשוק כולו מצטט אותנו.</span>
+      <span class="over" id="fillover" aria-hidden="true">מפסיקים להצהיר — מתחילים להוכיח. כלי חי, דאטה שאין לאף אחד, וקצב שאי אפשר להתעלם ממנו — עד שהשוק כולו מצטט אותנו.</span>
+    </h2>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="shead"><span class="snum">07</span><h2>90 יום מהצהרה להוכחה</h2><span class="rule"></span></div>
+    <div class="phases">
+      <div class="phase rv">
+        <div class="when">שבועות 1–2<small>אפס עד מעט פיתוח</small></div>
+        <div>
+          <h4>מהיום — מדברים כמו מומחים</h4>
+          <p>משיקים את הקצב לפני הכלים: התדריך השבועי יוצא, נוהל הפרשנות נכנס לתוקף, והפרסום הישראלי הראשון עולה.</p>
+          <span class="chip i">6 · המכ"ם</span><span class="chip i">8 · פרשנות 24 שע'</span><span class="chip r">13 · החתך הישראלי #1</span>
+        </div>
+      </div>
+      <div class="phase rv">
+        <div class="when">ימים 14–45<small>הבנייה המרכזית</small></div>
+        <div>
+          <h4>מהיום — מוכיחים</h4>
+          <p>הדגל עולה לאוויר: מבחן השליטה מתחיל לאסוף לידים ודאטה. סביבו — הכלים המהירים שמזינים קמפיינים.</p>
+          <span class="chip t">1 · מדד השליטה ⭐</span><span class="chip t">3 · מחשבון שכר</span><span class="chip i">7 · המילון</span><span class="chip i">10 · ספריית פרומפטים</span>
+        </div>
+      </div>
+      <div class="phase rv">
+        <div class="when">ימים 45–90<small>ההרחבה</small></div>
+        <div>
+          <h4>מהיום — ויראליים</h4>
+          <p>הכלי עם תקרת השיתוף הגבוהה ביותר יוצא, המדד החודשי מתחיל לתקתק, וחוויית הלמידה נטעמת באתר.</p>
+          <span class="chip t">2 · ה-AI בא על התפקיד שלך?</span><span class="chip i">9 · מדד המשרות</span><span class="chip t">4 · מגרש אימונים</span>
+        </div>
+      </div>
+      <div class="phase rv">
+        <div class="when">רבעון 2<small>קציר הדאטה</small></div>
+        <div>
+          <h4>מהיום — מצוטטים</h4>
+          <p>הדאטה שנצבר הופך למחקרים שאף אחד אחר לא יכול לפרסם — והם שקובעים את המיצוב לשנים.</p>
+          <span class="chip r">11 · הדוח השנתי</span><span class="chip r">12 · פרמיה מחוץ להייטק</span><span class="chip m">15 · מדד B2B</span><span class="chip t">5 · עובד דיגיטלי</span><span class="chip m">16 · הסמכה (בחינה)</span><span class="chip r">14 · שקיפות (פיילוט)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECO -->
+<section style="padding-top:0;padding-bottom:70px" id="reco">
+  <div class="wrap">
+    <div class="shead"><span class="snum">08</span><h2>הצעת המיקוד לפתיחה — לדיון</h2><span class="rule"></span></div>
+    <div class="reco rv">
+      <h3>שלישיית הפתיחה: <span>6 ← 1 ← 13</span></h3>
+      <p>לא מתחילים מהרעיון הכי גדול — מתחילים מהשילוב שמניע את גלגל התנופה הכי מהר: <b>המכ"ם</b> נותן קצב ונוכחות כבר השבוע באפס פיתוח; <b>מדד השליטה</b> הוא מנוע הלידים-דאטה-יח"צ המרכזי; <b>החתך הישראלי</b> נותן פרסום דאטה מיידי — עוד לפני שנאסף גרם דאטה משלנו. שלושתם יחד: קצב + כלי + דאטה = הנוסחה המלאה, תוך פחות מחודש.</p>
+      <div class="trio">
+        <div class="t-card"><div class="t-n">MOVE 1 · השבוע</div><h5>המכ"ם — התדריך השבועי</h5><p>יום הקמה אחד. הגיליון הראשון בחתימת ד"ר בדיחי יוצא עוד השבוע.</p></div>
+        <div class="t-card"><div class="t-n">MOVE 2 · שבועיים</div><h5>מדד השליטה ב-AI</h5><p>~6 ימי בנייה עם Claude Code. מהיום הראשון: לידים + דאטה לדוח השנתי.</p></div>
+        <div class="t-card"><div class="t-n">MOVE 3 · תוך חודש</div><h5>החתך הישראלי #1</h5><p>"ישראל אלופת העולם בשימוש ב-AI" — הכותרת מחכה שמישהו יכתוב אותה בעברית.</p></div>
+      </div>
+      <div class="cta-vote">🗳️ <b>עכשיו תורכם:</b> מסכימים עם השלישייה? חושבים אחרת? סמנו למעלה ★ על עד 3 רעיונות — ולחצו על הכפתור הירוק למטה כדי לשלוח את הבחירה שלכם לקבוצה. נדון בתוצאות בישיבה.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>מתודולוגיה:</b> הדוח מבוסס על שלוש סריקות מחקר שבוצעו ב-11.8.2026 — סריקת 10 אתרי גופי הכשרה ישראליים, ניתוח מנגנוני מיצוב של גופים מובילים בעולם, ומיפוי מקורות הדאטה והמחקר על AI בישראל. כל נתון אומת מול מקור ראשוני.</p>
+    <p class="src-line"><b>מקורות עיקריים:</b> Anthropic Economic Index · Stanford HAI AI Index · Section AI Proficiency Report · בנק ישראל (דוח 2024) · למ"ס + המכון הישראלי לדמוקרטיה · GotFriends 2025 · רשות החדשנות · מדד נאמן (טכניון) · HubSpot · WillRobotsTakeMyJob · אתרי המתחרים כפי שנבדקו בפועל.</p>
+    <p style="margin-top:10px">האקדמיה לבינה מלאכותית יישומית · היחידה ללימודי חוץ · הוכן ע"י שלום · אוגוסט 2026</p>
+  </div>
+</footer>
+
+<div class="votebar" id="votebar">
+  <div class="inner">
+    <span class="count">נבחרו <b id="vcount">0</b> רעיונות</span>
+    <span class="picked" id="vpicked"></span>
+    <button class="vb-btn wa" id="vwa">💬 שלח לקבוצה בוואטסאפ</button>
+    <button class="vb-btn cp" id="vcp">📋 העתק</button>
+  </div>
+</div>
+
+<script>
+const btns=document.querySelectorAll('.fbtn');
+const cards=document.querySelectorAll('.card');
+btns.forEach(b=>b.addEventListener('click',()=>{
+  btns.forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  const f=b.dataset.f;
+  cards.forEach(c=>{c.style.display=(f==='all'||c.dataset.cat===f)?'':'none'});
+}));
+document.querySelectorAll('.mdot').forEach(d=>d.addEventListener('click',()=>{
+  const id=d.getAttribute('href').slice(1);
+  const el=document.getElementById(id);
+  if(!el)return;
+  document.querySelector('.fbtn[data-f="all"]').click();
+  setTimeout(()=>{el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');},50);
+}));
+const picks=new Map();
+const bar=document.getElementById('votebar');
+const vcount=document.getElementById('vcount');
+const vpicked=document.getElementById('vpicked');
+function refresh(){
+  vcount.textContent=picks.size;
+  vpicked.textContent=[...picks.keys()].map(k=>'#'+k).join(' · ');
+  bar.classList.toggle('show',picks.size>0);
+  document.body.classList.toggle('has-bar',picks.size>0);
+}
+document.querySelectorAll('.card .vote').forEach(btn=>{
+  const card=btn.closest('.card');
+  const id=card.id.replace('idea-','');
+  btn.addEventListener('click',()=>{
+    if(picks.has(id)){
+      picks.delete(id);
+      btn.classList.remove('on');btn.textContent='☆ בחר';
+      card.classList.remove('voted');
+    }else{
+      if(picks.size>=3){alert('אפשר לבחור עד 3 רעיונות — הסירו אחד כדי להוסיף אחר 🙂');return;}
+      picks.set(id,card.dataset.name);
+      btn.classList.add('on');btn.textContent='★ נבחר';
+      card.classList.add('voted');
+    }
+    refresh();
+  });
+});
+function buildMsg(){
+  let m='🧠 סיעור מוחות — בידול האקדמיה ל-AI\nהטופ שלי:\n';
+  [...picks.entries()].forEach(([id,name])=>{m+='★ '+id+' · '+name+'\n';});
+  m+='\nלמה דווקא אלה: ';
+  return m;
+}
+document.getElementById('vwa').addEventListener('click',()=>{
+  if(!picks.size)return;
+  window.open('https://wa.me/?text='+encodeURIComponent(buildMsg()),'_blank');
+});
+document.getElementById('vcp').addEventListener('click',async e=>{
+  if(!picks.size)return;
+  try{await navigator.clipboard.writeText(buildMsg());e.target.textContent='✓ הועתק';
+    setTimeout(()=>{e.target.textContent='📋 העתק';},1800);}catch(err){alert(buildMsg());}
+});
+// reveal on scroll — blur-in with per-group stagger (veloce BlurIn)
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){const el=x.target;el.classList.add('in');io.unobserve(el);setTimeout(()=>{el.style.transitionDelay='';},1500);}}),{threshold:.12});
+const rvGroups=new Map();
+document.querySelectorAll('.rv').forEach(el=>{
+  const p=el.parentElement,i=rvGroups.get(p)||0;rvGroups.set(p,i+1);
+  el.style.transitionDelay=(Math.min(i,5)*.09)+'s';
+  io.observe(el);
+});
+// map infographic — count-up numbers
+const mapEl=document.querySelector('.mapinfo');
+if(mapEl){
+  const ease=t=>1-Math.pow(1-t,3);
+  const mio=new IntersectionObserver(es=>{if(es[0].isIntersecting){mio.disconnect();
+    mapEl.querySelectorAll('.mi-num b[data-count]').forEach(b=>{
+      const target=parseFloat(b.dataset.count),dec=+(b.dataset.dec||0),t0=performance.now(),D=1400;
+      const step=now=>{const p=Math.min(1,(now-t0)/D);b.textContent=(target*ease(p)).toFixed(dec);if(p<1)requestAnimationFrame(step);};
+      requestAnimationFrame(step);
+    });
+  }},{threshold:.35});
+  mio.observe(mapEl);
+}
+// statement — scroll-driven gradient fill (veloce TextFillSection, RTL: fills right-to-left)
+const fillH=document.getElementById('fillh'),fillOver=document.getElementById('fillover');
+if(fillH){
+  const onFill=()=>{
+    const r=fillH.getBoundingClientRect(),h=innerHeight;
+    const start=h*.85,end=h*.3;
+    let p=(start-r.top)/(start-end)*100;p=Math.max(0,Math.min(100,p));
+    fillOver.style.clipPath='inset(0 0 0 '+(100-p)+'%)';
+  };
+  addEventListener('scroll',onFill,{passive:true});onFill();
+}
+</script>
+</body>
+</html>
