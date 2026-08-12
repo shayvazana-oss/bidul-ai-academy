@@ -70,27 +70,50 @@ h1.giant .go{background:var(--grad);-webkit-background-clip:text;background-clip
 .cov-art{position:relative;border:1px solid var(--hair);border-radius:14px;overflow:hidden;background:#080b16;box-shadow:var(--shadow)}
 .cov-art img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;transform:scale(1.1)}
 .cov-cap{display:flex;justify-content:space-between;border-top:1px solid var(--hair);padding:10px 14px;font-family:var(--grot);font-size:9.5px;letter-spacing:.2em;color:var(--muted)}
-/* market map infographic — dark inset panel, like the reference image */
-.mapwrap{padding:36px 0 10px;border-bottom:1px solid var(--hair)}
-.mi-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+/* market snapshot — three-act narrative (demand → gap → supply) */
+.mapwrap{padding:36px 0 14px;border-bottom:1px solid var(--hair)}
+.mi-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:18px}
 .mi-head h2{font-size:clamp(20px,2.8vw,26px);font-weight:800;letter-spacing:-.01em}
 .mi-head span{font-family:var(--grot);font-size:10.5px;letter-spacing:.16em;color:var(--muted);font-weight:500}
-.mi-scroll{overflow-x:auto;padding-bottom:4px}
-.mapinfo{position:relative;width:1000px;height:560px;margin:0 auto;background:linear-gradient(180deg,#141c3a,#0e1428);border:1px solid var(--hair-2);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
-.mi-svg{position:absolute;inset:0;width:100%;height:100%}
-.mi-legend{position:absolute;top:18px;left:22px;display:flex;flex-direction:column;gap:7px;font-size:11.5px;font-weight:500;color:#dbe3f2;z-index:3}
-.mi-legend .li{display:flex;flex-direction:row-reverse;align-items:center;gap:8px}
-.mi-legend .sq{width:10px;height:10px;border-radius:2px;flex:0 0 auto;display:inline-block}
-.mi-call{position:absolute;z-index:3;max-width:252px}
-.mi-country{font-family:var(--grot);font-size:11.5px;letter-spacing:.1em;color:#eef2fa;font-weight:700;margin-bottom:7px}
-.mi-row{display:flex;align-items:center;gap:14px}
-.mi-dia{flex:0 0 auto;width:33px;height:33px;border:2px solid var(--mc);border-radius:5px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;background:rgba(12,15,28,.55)}
-.mi-dia span{transform:rotate(-45deg);font-size:14px;line-height:1}
-.mi-num{font-family:'Bebas Neue',var(--grot);font-size:60px;line-height:.88;color:var(--mc);letter-spacing:.015em;white-space:nowrap}
-.mi-num i{font-style:normal;font-family:'Heebo',sans-serif;font-weight:800;font-size:25px;letter-spacing:0}
-.mi-cap{font-size:13.5px;color:#c3cde0;margin-top:8px;line-height:1.55;max-width:236px;font-weight:500}
-.mi-src{display:block;font-family:var(--grot);font-size:9.5px;letter-spacing:.14em;color:#8a96b3;margin-top:5px}
-.mi-note{font-size:13.5px;color:var(--ink2);margin-top:10px}
+.snap-act{background:linear-gradient(180deg,#141c3a,#0e1428);border:1px solid var(--hair-2);border-radius:14px;padding:22px 24px 24px;box-shadow:var(--shadow)}
+.snap-act.hero{border-color:rgba(245,158,11,.42)}
+.act-lbl{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.act-lbl .an{font-family:var(--grot);font-size:11px;letter-spacing:.2em;color:var(--muted);font-weight:700;flex:0 0 auto}
+.act-lbl h3{font-size:17px;font-weight:800;color:#eef2fa;flex:0 0 auto}
+.act-lbl .rule{flex:1;height:1px;background:var(--hair)}
+.sgrid{display:grid;gap:22px}
+.sgrid.c2{grid-template-columns:1fr 1fr}
+.sgrid.c3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:780px){.sgrid.c2,.sgrid.c3{grid-template-columns:1fr}}
+.scell{display:flex;align-items:flex-start;gap:15px}
+.sdia{flex:0 0 auto;width:34px;height:34px;border:2px solid var(--mc);border-radius:5px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;background:rgba(12,15,28,.5);margin-top:7px}
+.sdia span{transform:rotate(-45deg);font-size:15px;line-height:1}
+.sfig{font-family:'Bebas Neue',var(--grot);font-size:56px;line-height:.85;color:var(--mc);letter-spacing:.015em;white-space:nowrap}
+.sfig i{font-style:normal;font-family:'Heebo',sans-serif;font-weight:800;font-size:23px;letter-spacing:0}
+.scap{font-size:13.5px;color:#c3cde0;line-height:1.55;margin-top:9px;font-weight:500}
+.scap b{color:#eef2fa;font-weight:700}
+.ssrc{display:block;font-family:var(--grot);font-size:9.5px;letter-spacing:.14em;color:#8a96b3;margin-top:6px}
+/* connector between acts */
+.snap-link{display:flex;align-items:center;justify-content:center;gap:14px;padding:13px 0;color:var(--muted);font-size:13px;font-weight:700}
+.snap-link::before,.snap-link::after{content:'';width:56px;height:1px;background:var(--hair-2)}
+/* the gap bar — the actual insight */
+.gb-row{display:grid;grid-template-columns:200px 1fr 64px;align-items:center;gap:16px;margin-bottom:12px}
+@media(max-width:780px){.gb-row{grid-template-columns:130px 1fr 52px;gap:10px}}
+.gb-lbl{font-size:13.5px;color:#dbe3f2;font-weight:600;line-height:1.4}
+.gb-lbl small{display:block;font-size:11.5px;color:#8a96b3;font-weight:400}
+.gb-track{position:relative;height:34px;background:rgba(255,255,255,.05);border-radius:7px;overflow:hidden}
+.gb-fill{height:100%;border-radius:7px;transition:width 1.1s cubic-bezier(.22,1,.36,1)}
+.gb-fill.a{background:linear-gradient(to left,#38bdf8,#0ea5e9);box-shadow:0 0 16px rgba(56,189,248,.4)}
+.gb-fill.b{background:linear-gradient(to left,#34d399,#059669);box-shadow:0 0 16px rgba(52,211,153,.35)}
+.gb-gap{position:absolute;top:0;bottom:0;border:1px dashed rgba(245,158,11,.75);background:rgba(245,158,11,.14);border-radius:7px;display:flex;align-items:center;justify-content:center;transition:width 1.1s cubic-bezier(.22,1,.36,1) .25s}
+.gb-gap span{font-size:12.5px;font-weight:800;color:#fbbf24;white-space:nowrap}
+/* narrow screens: the gap region is too small for its label — the reading line below still explains it */
+@media(max-width:900px){.gb-gap span{display:none}}
+.gb-val{font-family:'Bebas Neue',var(--grot);font-size:32px;line-height:1;text-align:left;direction:ltr}
+.gb-val.a{color:#38bdf8}.gb-val.b{color:#34d399}
+.gb-read{margin-top:14px;padding-top:14px;border-top:1px solid var(--hair);font-size:14.5px;color:#dbe3f2;line-height:1.6}
+.gb-read b{color:#fbbf24;font-weight:800}
+.mi-note{font-size:13.5px;color:var(--ink2);margin-top:14px}
 .mi-note b{color:var(--ink)}
 /* scroll-fill statement (veloce TextFillSection) */
 .fillsec{padding:82px 0 72px}
@@ -289,77 +312,79 @@ footer .src-line{margin-top:8px;line-height:1.8}
   </div>
 </header>
 
-<!-- MARKET MAP INFOGRAPHIC -->
+<!-- MARKET SNAPSHOT -->
 <div class="wrap mapwrap">
   <div class="mi-head rv"><h2>מפת המצב — הצמא, הפער וההזדמנות</h2><span>MARKET SNAPSHOT · VERIFIED 11.08.2026</span></div>
-  <div class="mi-scroll rv">
-    <div class="mapinfo">
-      <svg class="mi-svg" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <pattern id="mi-dots" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="1.6" cy="1.6" r="1.6" fill="rgba(169,180,204,.08)"/></pattern>
-          <radialGradient id="mi-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(56,189,248,.2)"/><stop offset="100%" stop-color="rgba(56,189,248,0)"/></radialGradient>
-        </defs>
-        <rect width="1000" height="560" fill="url(#mi-dots)"/>
-        <path d="M-40 430 C60 370 220 390 270 460 C300 520 200 590 80 590 L-40 590 Z" fill="rgba(32,44,78,.5)"/>
-        <path d="M700 60 C830 20 970 90 1010 190 C1040 290 930 350 840 300 C750 250 620 110 700 60 Z" fill="rgba(32,44,78,.42)"/>
-        <ellipse cx="505" cy="270" rx="200" ry="230" fill="url(#mi-glow)"/>
-        <g transform="translate(468,70) scale(1.05)">
-          <path d="M14 14 L52 4 L58 22 L52 44 L56 80 L50 120 L56 168 L48 210 L54 244 L34 392 L24 330 L8 246 L18 206 L24 160 L26 110 L22 60 Z" fill="#2e77d0" stroke="rgba(125,211,252,.85)" stroke-width="1.6" stroke-linejoin="round"/>
-        </g>
-        <text x="548" y="300" fill="rgba(238,242,250,.6)" font-size="13" font-weight="600" letter-spacing="2">ישראל</text>
-        <g stroke="rgba(238,242,250,.35)" stroke-width="1.4" fill="none" stroke-dasharray="1 7" stroke-linecap="round">
-          <polyline points="712,96 640,96 525,112"/>
-          <polyline points="722,262 610,262 512,228"/>
-          <polyline points="634,476 570,476 508,462"/>
-          <polyline points="284,168 420,168 492,238"/>
-          <polyline points="284,330 430,330 500,340"/>
-          <polyline points="284,492 440,492 505,478"/>
-        </g>
-        <g fill="rgba(255,255,255,.14)">
-          <circle cx="525" cy="112" r="8"/><circle cx="512" cy="228" r="8"/><circle cx="508" cy="462" r="8"/>
-          <circle cx="492" cy="238" r="8"/><circle cx="500" cy="340" r="8"/><circle cx="505" cy="478" r="8"/>
-        </g>
-        <g fill="#fff">
-          <circle cx="525" cy="112" r="3"/><circle cx="512" cy="228" r="3"/><circle cx="508" cy="462" r="3"/>
-          <circle cx="492" cy="238" r="3"/><circle cx="500" cy="340" r="3"/><circle cx="505" cy="478" r="3"/>
-        </g>
-      </svg>
-      <div class="mi-legend">
-        <span class="li"><i class="sq" style="background:#2e77d0"></i><span>דאטה על ישראל · מקורות בינלאומיים</span></span>
-        <span class="li"><i class="sq" style="background:#eef2fa"></i><span>סריקת המתחרים שלנו · 11.08.26</span></span>
+
+  <div class="snap-act rv">
+    <div class="act-lbl"><span class="an">01</span><h3>הביקוש — ישראל הכי צמאה בעולם</h3><span class="rule"></span></div>
+    <div class="sgrid c2">
+      <div class="scell" style="--mc:#f59e0b">
+        <span class="sdia"><span>🧠</span></span>
+        <div>
+          <div class="sfig"><i>פי</i> <b data-count="4.9" data-dec="1">4.9</b></div>
+          <div class="scap">שימוש ב-Claude לנפש מעל הממוצע העולמי — <b>מקום 1 בעולם.</b> יותר מכל מדינה אחרת<span class="ssrc">ANTHROPIC ECONOMIC INDEX</span></div>
+        </div>
       </div>
-      <div class="mi-call" style="top:30px;right:34px;--mc:#f59e0b">
-        <div class="mi-country">שימוש ב-CLAUDE לנפש · מקום 1 בעולם</div>
-        <div class="mi-row"><span class="mi-dia"><span>🧠</span></span><span class="mi-num"><i>פי</i> <b data-count="4.9" data-dec="1">4.9</b></span></div>
-        <div class="mi-cap">מהממוצע העולמי — יותר מכל מדינה אחרת<span class="mi-src">ANTHROPIC ECONOMIC INDEX</span></div>
-      </div>
-      <div class="mi-call" style="top:205px;right:22px;--mc:#38bdf8">
-        <div class="mi-country">חשיפה ל-GENAI</div>
-        <div class="mi-row"><span class="mi-dia"><span>👥</span></span><span class="mi-num"><b data-count="67">67</b><i>%</i></span></div>
-        <div class="mi-cap">מהעובדים בישראל — במקצועות חשופים ל-GenAI<span class="mi-src">BANK OF ISRAEL · 2025</span></div>
-      </div>
-      <div class="mi-call" style="bottom:38px;right:110px;--mc:#34d399">
-        <div class="mi-country">אימוץ בפועל בעסקים</div>
-        <div class="mi-row"><span class="mi-dia"><span>🏢</span></span><span class="mi-num"><b data-count="28">28</b><i>%</i></span></div>
-        <div class="mi-cap">בלבד משתמשים ב-AI בפועל — הפער הזה הוא המוצר שלנו<span class="mi-src">CBS · IDI</span></div>
-      </div>
-      <div class="mi-call" style="top:64px;left:26px;--mc:#f87171">
-        <div class="mi-country">מחקר / דאטה מקורי אצל מתחרים</div>
-        <div class="mi-row"><span class="mi-dia"><span>🔬</span></span><span class="mi-num"><b>0</b></span></div>
-        <div class="mi-cap">מתוך 10 גופי הכשרה שנסקרו<span class="mi-src">COMPETITOR SCAN</span></div>
-      </div>
-      <div class="mi-call" style="bottom:196px;left:26px;--mc:#a78bfa">
-        <div class="mi-country">כלים אינטראקטיביים בשוק המוסדי</div>
-        <div class="mi-row"><span class="mi-dia"><span>🛠️</span></span><span class="mi-num"><b data-count="1">1</b></span></div>
-        <div class="mi-cap">חידון 5 שאלות (ג'ון ברייס). כל השאר: טפסי ליד<span class="mi-src">JOHN BRYCE</span></div>
-      </div>
-      <div class="mi-call" style="bottom:16px;left:26px;--mc:#eef2fa">
-        <div class="mi-country">המחיר השקוף היחיד בשוק</div>
-        <div class="mi-row"><span class="mi-dia"><span>🏷️</span></span><span class="mi-num"><i>₪</i><b data-count="590">590</b></span></div>
-        <div class="mi-cap">לכל קורס, גלוי באתר — אף מתחרה לא מפרסם מחיר<span class="mi-src">ONLY US · TODAY</span></div>
+      <div class="scell" style="--mc:#38bdf8">
+        <span class="sdia"><span>👥</span></span>
+        <div>
+          <div class="sfig"><b data-count="67">67</b><i>%</i></div>
+          <div class="scap">מהעובדים בישראל נמצאים במקצועות <b>חשופים ל-GenAI</b> — כלומר העבודה שלהם כבר משתנה<span class="ssrc">BANK OF ISRAEL · 2025</span></div>
+        </div>
       </div>
     </div>
   </div>
+
+  <div class="snap-link rv">אבל הצמא הזה לא מתורגם ליכולת</div>
+
+  <div class="snap-act hero rv" id="gapviz">
+    <div class="act-lbl"><span class="an">02</span><h3>הפער — וזה בדיוק המוצר שלנו</h3><span class="rule"></span></div>
+    <div class="gb-row">
+      <span class="gb-lbl">חשופים ל-GenAI<small>מי שהעבודה שלו כבר משתנה</small></span>
+      <div class="gb-track"><div class="gb-fill a" data-w="67" style="width:0"></div></div>
+      <span class="gb-val a">67%</span>
+    </div>
+    <div class="gb-row">
+      <span class="gb-lbl">משתמשים ב-AI בפועל<small>עסקים שבאמת מיישמים</small></span>
+      <div class="gb-track">
+        <div class="gb-fill b" data-w="28" style="width:0"></div>
+        <div class="gb-gap" data-w="39" style="right:28%;width:0"><span>הפער — 39 נקודות אחוז</span></div>
+      </div>
+      <span class="gb-val b">28%</span>
+    </div>
+    <p class="gb-read">קראו את זה כך: כמעט <b>שני שלישים</b> מהעובדים כבר חשופים ל-AI, אבל רק רבע מהעסקים מצליחים להשתמש בו. <b>39 נקודות האחוז שביניהם הן אנשים שרוצים ולא יודעים איך</b> — וזה בדיוק מה שקורס מלמד.</p>
+  </div>
+
+  <div class="snap-link rv">ומי סוגר להם את הפער היום? כמעט אף אחד</div>
+
+  <div class="snap-act rv">
+    <div class="act-lbl"><span class="an">03</span><h3>ההיצע — מה שהשוק המוסדי נותן היום</h3><span class="rule"></span></div>
+    <div class="sgrid c3">
+      <div class="scell" style="--mc:#f87171">
+        <span class="sdia"><span>🔬</span></span>
+        <div>
+          <div class="sfig"><b>0</b></div>
+          <div class="scap">גופי הכשרה שמפרסמים <b>מחקר או דאטה מקורי</b> — מתוך 10 שנסקרו<span class="ssrc">COMPETITOR SCAN</span></div>
+        </div>
+      </div>
+      <div class="scell" style="--mc:#a78bfa">
+        <span class="sdia"><span>🛠️</span></span>
+        <div>
+          <div class="sfig"><b data-count="1">1</b></div>
+          <div class="scap"><b>כלי אינטראקטיבי אחד</b> בכל השוק המוסדי — חידון 5 שאלות. כל השאר: טפסי ליד<span class="ssrc">JOHN BRYCE</span></div>
+        </div>
+      </div>
+      <div class="scell" style="--mc:#34d399">
+        <span class="sdia"><span>🏷️</span></span>
+        <div>
+          <div class="sfig"><i>₪</i><b data-count="590">590</b></div>
+          <div class="scap">המחיר השקוף היחיד בשוק — <b>שלנו, כבר היום.</b> אף מתחרה לא מפרסם מחיר<span class="ssrc">ONLY US · TODAY</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <p class="mi-note">צמא עולמי-שיא (פי 4.9) מול יכולת נמוכה בפועל (28%) — ואפס מתחרים שמוכיחים משהו. <b>זה החלון.</b></p>
 </div>
 
@@ -934,19 +959,26 @@ document.querySelectorAll('.rv').forEach(el=>{
   el.style.transitionDelay=(Math.min(i,5)*.09)+'s';
   io.observe(el);
 });
-// map infographic — count-up numbers
-const mapEl=document.querySelector('.mapinfo');
-if(mapEl){
-  const ease=t=>1-Math.pow(1-t,3);
-  const mio=new IntersectionObserver(es=>{if(es[0].isIntersecting){mio.disconnect();
-    mapEl.querySelectorAll('.mi-num b[data-count]').forEach(b=>{
-      const target=parseFloat(b.dataset.count),dec=+(b.dataset.dec||0),t0=performance.now(),D=1400;
-      const step=now=>{const p=Math.min(1,(now-t0)/D);b.textContent=(target*ease(p)).toFixed(dec);if(p<1)requestAnimationFrame(step);};
-      requestAnimationFrame(step);
-    });
-  }},{threshold:.35});
-  mio.observe(mapEl);
-}
+// market snapshot — count-up numbers + gap-bar reveal, per act
+const ease=t=>1-Math.pow(1-t,3);
+const sio=new IntersectionObserver(es=>es.forEach(x=>{
+  if(!x.isIntersecting)return;
+  sio.unobserve(x.target);
+  x.target.querySelectorAll('.sfig b[data-count]').forEach(b=>{
+    const target=parseFloat(b.dataset.count),dec=+(b.dataset.dec||0),t0=performance.now(),D=1400;
+    const step=now=>{const p=Math.min(1,(now-t0)/D);b.textContent=(target*ease(p)).toFixed(dec);if(p<1)requestAnimationFrame(step);};
+    requestAnimationFrame(step);
+  });
+  x.target.querySelectorAll('[data-w]').forEach(el=>{el.style.width=el.dataset.w+'%';});
+}),{threshold:.3});
+document.querySelectorAll('.snap-act').forEach(a=>sio.observe(a));
+// safety net: if IntersectionObserver never fires (hidden tab, reduced motion, old browser),
+// force everything visible so the report is never blank
+setTimeout(()=>{
+  document.querySelectorAll('.rv:not(.in)').forEach(el=>{el.style.transitionDelay='0s';el.classList.add('in');});
+  document.querySelectorAll('[data-w]').forEach(el=>{if(!parseFloat(el.style.width))el.style.width=el.dataset.w+'%';});
+  document.querySelectorAll('.sfig b[data-count]').forEach(b=>{b.textContent=(+b.dataset.count).toFixed(+(b.dataset.dec||0));});
+},2600);
 // statement — scroll-driven gradient fill (veloce TextFillSection, RTL: fills right-to-left)
 const fillH=document.getElementById('fillh'),fillOver=document.getElementById('fillover');
 if(fillH){
