@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>דוח הבידול 2026 — האקדמיה ל-AI | סיעור מוחות</title>
-<meta name="description" content="דוח מודיעין שוק פנימי: 16 מהלכים שהופכים את האקדמיה לבינה מלאכותית יישומית מהצהרת מומחיות — להוכחת מומחיות.">
+<title>הצעת מיצוב 2026 — האקדמיה לבינה מלאכותית יישומית</title>
+<meta name="description" content="מחקר שוק והצעת מיצוב: איך האקדמיה לבינה מלאכותית יישומית עוברת מהצהרת מומחיות להוכחת מומחיות, ומה נדרש כדי להתחיל.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="דוח הבידול 2026 — האקדמיה ל-AI">
-<meta property="og:description" content="דוח מודיעין שוק + בנק 16 רעיונות. סמנו את המועדפים שלכם ושלחו לקבוצה 🗳️">
+<meta property="og:title" content="הצעת מיצוב 2026 — האקדמיה לבינה מלאכותית יישומית">
+<meta property="og:description" content="מחקר שוק בן שלוש סריקות, הזדמנות מיצוב פתוחה, והמלצה לשלושה מהלכי פתיחה.">
 <meta property="og:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_3CXkMvQYD6UJmnBIXDcObKys6dv/hf_20260812_112959_4fe3a3ee-3707-4915-ab04-b9716971ffbc.png">
 <meta property="og:url" content="https://shayvazana-oss.github.io/bidul-ai-academy/">
 <meta name="twitter:card" content="summary_large_image">
@@ -94,6 +94,28 @@ a{color:var(--cyan);text-decoration:none}
 .hero h1{animation-delay:.12s}.hero-sub{animation-delay:.26s}
 .hero-btns{animation-delay:.4s}.hero-meta{animation-delay:.52s}
 @media(max-width:700px){.hero{min-height:auto;padding:110px 18px 70px}.hero-cue{display:none}}
+/* executive summary — the first thing a decision-maker reads */
+.execwrap{padding:54px 0 6px}
+.exec{position:relative;background:var(--panel);border:1px solid var(--hair-2);border-radius:16px;padding:30px 34px 26px;box-shadow:var(--shadow);overflow:hidden}
+.exec::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:3px;background:var(--gradA)}
+.exec h2{font-size:clamp(21px,3vw,28px);font-weight:800;letter-spacing:-.01em;margin-bottom:10px}
+.exec-lede{font-size:15.5px;color:var(--ink2);max-width:840px;line-height:1.7;margin-bottom:22px}
+.exec-lede b{color:var(--ink);font-weight:700}
+.exec-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:0;border-top:1px solid var(--hair)}
+@media(max-width:840px){.exec-grid{grid-template-columns:1fr}}
+.exec-cell{padding:20px 24px 6px;border-inline-start:1px dashed var(--hair)}
+.exec-cell:first-child{border-inline-start:none;padding-inline-start:0}
+@media(max-width:840px){.exec-cell{border-inline-start:none;padding-inline-start:0;padding-top:18px}}
+.exec-h{font-family:var(--grot);font-size:10.5px;letter-spacing:.16em;color:var(--nx-purple);font-weight:700;margin-bottom:14px}
+.exec-moves{display:flex;flex-direction:column;gap:13px}
+.exec-move{display:flex;gap:12px;font-size:14.5px;color:var(--ink2);line-height:1.5}
+.exec-move i{flex:0 0 auto;width:23px;height:23px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid var(--hair-2);font-style:normal;font-family:var(--grot);font-size:11.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;justify-content:center;margin-top:2px}
+.exec-move b{color:var(--ink);font-weight:700}
+.exec-facts{display:flex;flex-direction:column;gap:12px}
+.exec-fact{display:flex;align-items:baseline;gap:11px;font-size:14.5px;color:var(--ink2);line-height:1.5}
+.exec-fact strong{font-family:'Bebas Neue',var(--grot);font-size:30px;line-height:.9;color:var(--mc);flex:0 0 auto;min-width:64px}
+.exec-ask{margin-top:20px;border:1px dashed rgba(52,211,153,.5);background:rgba(52,211,153,.06);border-radius:12px;padding:15px 18px;font-size:15px;color:var(--ink2);line-height:1.6}
+.exec-ask b{color:var(--green);font-weight:800}
 /* section backdrops (NexaCore TrustedSection / PrecisionSection) */
 .bg-art{position:relative;isolation:isolate}
 .bg-art::before{content:'';position:absolute;inset:0;z-index:-2;background:#0c0f1c var(--art) center/cover no-repeat}
@@ -366,13 +388,13 @@ footer .src-line{margin-top:8px;line-height:1.8}
       <span>היחידה ללימודי חוץ<small>APPLIED AI · MARKET INTELLIGENCE</small></span>
     </div>
     <nav class="m-links">
+      <a href="#summary">תקציר</a>
       <a href="#findings">הממצאים</a>
-      <a href="#gaps">מפת הפערים</a>
-      <a href="#bank">בנק הרעיונות</a>
       <a href="#roadmap">מפת הדרכים</a>
+      <a href="#bank">נספח · 16 מהלכים</a>
     </nav>
     <div class="m-right">
-      <a class="btn-grad" href="#bank"><span>סמנו את הטופ שלכם</span></a>
+      <a class="btn-grad" href="#reco"><span>להמלצה</span></a>
     </div>
   </div>
 </div>
@@ -385,24 +407,52 @@ footer .src-line{margin-top:8px;line-height:1.8}
   </div>
   <div class="hero-fade"></div>
   <div class="hero-in">
-    <span class="hero-eyebrow">INTERNAL REPORT · BRAINSTORM EDITION · 08.2026</span>
+    <span class="hero-eyebrow">מחקר שוק והצעת מיצוב · אוגוסט 2026</span>
     <h1>מפסיקים <span class="dim">להצהיר</span> על מומחיות.<br>מתחילים <span class="go">להוכיח</span> אותה.</h1>
-    <p class="hero-sub">דוח מודיעין שוק פנימי: סרקנו 10 גופי הכשרה, את מנועי המיצוב המובילים בעולם ואת מפת הדאטה הישראלית. המסקנה חדה — התואר "המומחה הלאומי ל-AI" עדיין פנוי, <b>ומי שמוכיח ראשון, לוקח אותו.</b></p>
+    <p class="hero-sub">סרקנו 10 גופי הכשרה בישראל, את מנועי המיצוב המובילים בעולם ואת מפת הדאטה הישראלית. המסקנה חדה — עמדת "המומחה הלאומי להכשרת AI" עדיין פנויה, <b>ומי שמוכיח ראשון, לוקח אותה.</b></p>
     <div class="hero-btns">
-      <a class="btn-grad lg" href="#bank"><span>סמנו עד 3 רעיונות ושלחו לקבוצה ↓</span></a>
-      <a class="btn-g" href="#reco">קפצו להצעת המיקוד</a>
+      <a class="btn-grad lg" href="#summary"><span>לתקציר המנהלים ↓</span></a>
+      <a class="btn-g" href="#roadmap">למפת הדרכים</a>
     </div>
     <div class="hero-meta"><span>DATE · <b>11.08.2026</b></span><span>SCANS · <b>3</b></span><span>COMPETITORS · <b>10</b></span><span>IDEAS · <b>16</b></span></div>
   </div>
-  <a class="hero-cue" href="#snapshot">גללו לממצאים<span>⌄</span></a>
+  <a class="hero-cue" href="#summary">גללו לתקציר<span>⌄</span></a>
 </header>
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="wrap execwrap" id="summary">
+  <div class="exec rv">
+    <div class="shead" style="margin-bottom:6px"><span class="snum">תקציר מנהלים</span></div>
+    <h2>ההזדמנות, ההמלצה, והמשאב הנדרש</h2>
+    <p class="exec-lede">ישראל היא השוק הצמא ביותר בעולם ל-AI, אבל שוק ההכשרה המקומי עדיין <b>מצהיר</b> על מומחיות במקום <b>להוכיח</b> אותה: מתוך 10 גופי הכשרה שנסקרו, לאף אחד אין מחקר או דאטה מקורי, ובכל השוק המוסדי קיים כלי אינטראקטיבי אחד בלבד. המשמעות היא שעמדת "המומחה הלאומי להכשרת AI" פנויה — <b>וניתן לתפוס אותה במשאבים פנימיים, לא בתקציב מדיה.</b></p>
+    <div class="exec-grid">
+      <div class="exec-cell">
+        <div class="exec-h">ההמלצה · שלושה מהלכי פתיחה</div>
+        <div class="exec-moves">
+          <div class="exec-move"><i>1</i><span><b>תדריך AI שבועי בחתימת מומחה.</b> קצב ונוכחות קבועים — הנכס שממנו כל השאר מקבל הפצה. יוצא תוך שבוע, ללא פיתוח.</span></div>
+          <div class="exec-move"><i>2</i><span><b>"מדד השליטה ב-AI" — מבחן ארצי חינמי.</b> מנוע אחד שמייצר שלושה תוצרים: לידים איכותיים, ניתוב לקורס, ודאטה מצטבר שהופך לדוח מצוטט.</span></div>
+          <div class="exec-move"><i>3</i><span><b>"החתך הישראלי" — פרסום דאטה רבעוני.</b> ניתוח בעברית של מה שהדאטה העולמי אומר על ישראל. מאפשר סמכות מיידית עוד לפני שנאסף דאטה משלנו.</span></div>
+        </div>
+      </div>
+      <div class="exec-cell">
+        <div class="exec-h">הבסיס העובדתי · אומת 11.08.2026</div>
+        <div class="exec-facts">
+          <div class="exec-fact" style="--mc:#f59e0b"><strong>×4.9</strong><span>שימוש ב-Claude לנפש מעל הממוצע העולמי — <b>ישראל מקום 1</b></span></div>
+          <div class="exec-fact" style="--mc:#38bdf8"><strong>67<span style="font-size:18px">%</span></strong><span>מהעובדים במקצועות חשופים ל-GenAI — מול <b>28% בלבד</b> מהעסקים שמיישמים בפועל</span></div>
+          <div class="exec-fact" style="--mc:#f87171"><strong>0</strong><span>מתוך 10 גופי ההכשרה שנסקרו מפרסמים מחקר או דאטה מקורי</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="exec-ask">🎯 <b>מה נדרש:</b> כ-9 ימי עבודה לשלושת מהלכי הפתיחה, במשאבים פנימיים וללא רכש חיצוני. המהלך הראשון יכול לצאת השבוע. <b>הבקשה: אישור להתחיל.</b></div>
+  </div>
+</div>
 
 <!-- MARKET SNAPSHOT -->
 <div class="wrap mapwrap" id="snapshot">
-  <div class="mi-head rv"><h2>מפת המצב — הצמא, הפער וההזדמנות</h2><span>MARKET SNAPSHOT · VERIFIED 11.08.2026</span></div>
+  <div class="mi-head rv"><h2>מפת המצב — הביקוש, הפער וההזדמנות</h2><span>MARKET SNAPSHOT · VERIFIED 11.08.2026</span></div>
 
   <div class="snap-act rv">
-    <div class="act-lbl"><span class="an">01</span><h3>הביקוש — ישראל הכי צמאה בעולם</h3><span class="rule"></span></div>
+    <div class="act-lbl"><span class="an">01</span><h3>הביקוש — ישראל מובילה עולמית בשימוש ב-AI</h3><span class="rule"></span></div>
     <div class="sgrid c2">
       <div class="scell" style="--mc:#f59e0b">
         <span class="sdia"><span>🧠</span></span>
@@ -490,12 +540,12 @@ footer .src-line{margin-top:8px;line-height:1.8}
         <span class="src">DATA MAPPING · GOTFRIENDS 2025 · NEAMAN INDEX</span>
       </div></div>
       <div class="finding rv"><div class="n">03</div><div>
-        <h3>התוכן המוסדי מת — והמאיים האמיתי הוא לא מכללה</h3>
-        <p>הכתבה האחרונה של היחידה ללימודי המשך בטכניון: <b>לפני 17 חודשים.</b> מי ששולט בתוכן AI בעברית הוא Let's AI — גוף עצמאי עם פרסום יומי וקהילה של 25 אלף חברים — אבל בלי גב מוסדי, בלי תעודות מוכרות ובלי גרם אחד של דאטה מקורי. הפער הזה הוא בדיוק המקום שלנו.</p>
+        <h3>הקצב המוסדי איטי — והשחקן המוביל בתוכן אינו מוסד אקדמי</h3>
+        <p>הפרסום האחרון של היחידה ללימודי המשך בטכניון בנושא: <b>לפני 17 חודשים.</b> מי שמוביל בתוכן AI בעברית הוא Let's AI — גוף עצמאי עם פרסום יומי וקהילה של 25 אלף חברים — אך ללא גב מוסדי, ללא תעודות מוכרות וללא דאטה מקורי. <b>השילוב של קצב פרסום עם סמכות מוסדית ודאטה מקורי אינו קיים היום בשוק</b> — וזו העמדה שאנחנו יכולים לתפוס.</p>
         <span class="src">PUBLISH-DATE CHECK · 11.08.26</span>
       </div></div>
       <div class="finding rv"><div class="n">04</div><div>
-        <h3>ישראל צמאה — והפער הוא שוק ההכשרה</h3>
+        <h3>הביקוש קיים — הפער הוא ביכולת היישום</h3>
         <p>ישראל מקום 1 בעולם בשימוש ב-Claude לנפש (פי 4.9 מהממוצע), 67% מהעובדים במקצועות חשופים ל-GenAI — אבל רק <b>28% מהעסקים</b> משתמשים בפועל. הפער בין הסקרנות לבין היכולת הוא בדיוק המוצר שאנחנו מוכרים.</p>
         <span class="src">ANTHROPIC · BANK OF ISRAEL · CBS/IDI</span>
       </div></div>
@@ -515,7 +565,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
 <!-- CONTENT FRESHNESS CHART -->
 <section style="padding-top:0">
   <div class="wrap">
-    <div class="shead"><span class="snum">02</span><h2>טריות התוכן — מי חי ומי קפוא</h2><span class="rule"></span></div>
+    <div class="shead"><span class="snum">02</span><h2>קצב הפרסום בשוק</h2><span class="rule"></span></div>
     <p class="ssub">זמן שעבר מאז פרסום תוכן ה-AI האחרון באתר, נכון ל-11.8.2026. הפער בין הגופים המוסדיים לבין Let's AI הוא בדיוק החור שאנחנו נכנסים אליו.</p>
     <div class="chart rv">
       <div class="ct"><h3>חודשים מאז פרסום התוכן האחרון</h3><span>VERIFIED 11.08.2026</span></div>
@@ -541,10 +591,10 @@ footer .src-line{margin-top:8px;line-height:1.8}
         <tbody>
           <tr><td><b>ג'ון ברייס</b><small>המתחרה המוסדי החזק</small></td><td><span class="part">חידון 5 שאלות</span></td><td><span class="part">~חודשי</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
           <tr><td><b>HackerU / ThriveDX</b></td><td><span class="no">✗</span></td><td><span class="part">בלוג פעיל</span></td><td><span class="part">טבלאות שכר</span></td><td><span class="no">✗</span></td></tr>
-          <tr><td><b>טכניון — לימודי המשך</b></td><td><span class="no">✗</span></td><td><span class="no">קפוא 17 חודשים</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td><b>טכניון — לימודי המשך</b></td><td><span class="no">✗</span></td><td><span class="no">עדכון אחרון: 17 חוד'</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
           <tr><td><b>ת"א — להב</b></td><td><span class="no">✗</span></td><td><span class="part">טרי, אקדמי</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
-          <tr><td><b>סלע · נטקראפט · רייכמן</b></td><td><span class="no">✗</span></td><td><span class="no">מיושן / אין</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
-          <tr><td><b>Let's AI</b><small>המאיים התוכני — עצמאי</small></td><td><span class="part">מדריך כלים</span></td><td><span class="yes">✓ יומי + 25K</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td><b>סלע · נטקראפט · רייכמן</b></td><td><span class="no">✗</span></td><td><span class="no">לא נמצא תוכן מתוארך</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td><b>Let's AI</b><small>גוף עצמאי — המוביל בתוכן</small></td><td><span class="part">מדריך כלים</span></td><td><span class="yes">✓ יומי + 25K</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
           <tr class="us"><td><b>היחידה ללימודי חוץ — בעוד רבעון</b></td><td><span class="yes">✓ מבחן + 3 כלים</span></td><td><span class="yes">✓ תדריך שבועי</span></td><td><span class="yes">✓ ראשונים בישראל</span></td><td><span class="yes">✓ ₪590 כבר היום</span></td></tr>
         </tbody>
       </table>
@@ -599,8 +649,8 @@ footer .src-line{margin-top:8px;line-height:1.8}
 <!-- IDEAS -->
 <section style="padding-top:0" id="bank">
   <div class="wrap">
-    <div class="shead"><span class="snum">05</span><h2>בנק הרעיונות — סמנו את הטופ שלכם</h2><span class="rule"></span></div>
-    <p class="ssub">כל כרטיס: מה בונים, למה זה ממצב, איך זה מייצר לידים, וכמה זה עולה בזמן. לחצו <b>☆ בחר</b> על עד 3 רעיונות — ולמטה יופיע כפתור לשליחת הבחירה שלכם לקבוצה.</p>
+    <div class="shead"><span class="snum">05</span><h2>בנק הרעיונות — 16 מהלכים אפשריים</h2><span class="rule"></span></div>
+    <p class="ssub">נספח מלא. כל כרטיס: מה בונים, למה זה ממצב, איך זה מייצר לידים, וכמה זה עולה בזמן עבודה. <b>הערה על הציונים:</b> דירוגי האימפקט והלידים הם הערכה פנימית בסולם 1–5 לצורך תיעדוף, ולא נתון נמדד. אומדני הזמן מבוססים על בנייה במשאבים פנימיים. ניתן לסמן רעיונות מועדפים ולשלוח אותם חזרה אלינו.</p>
 
     <div class="filters" id="filters">
       <button class="fbtn active" data-f="all">הכל (16)</button>
@@ -968,7 +1018,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
 <!-- RECO -->
 <section class="bg-art" id="reco" style="padding:66px 0 78px;--art:url('https://d8j0ntlcm91z4.cloudfront.net/user_3CXkMvQYD6UJmnBIXDcObKys6dv/hf_20260812_181613_b658c9cf-afe6-4f34-9b81-95efd1a26f7a_min.webp')">
   <div class="wrap">
-    <div class="shead"><span class="snum">08</span><h2>הצעת המיקוד לפתיחה — לדיון</h2><span class="rule"></span></div>
+    <div class="shead"><span class="snum">08</span><h2>ההמלצה — שלושת מהלכי הפתיחה</h2><span class="rule"></span></div>
     <div class="reco rv">
       <h3>שלישיית הפתיחה: <span>6 ← 1 ← 13</span></h3>
       <p>לא מתחילים מהרעיון הכי גדול — מתחילים מהשילוב שמניע את גלגל התנופה הכי מהר: <b>המכ"ם</b> נותן קצב ונוכחות כבר השבוע באפס פיתוח; <b>מדד השליטה</b> הוא מנוע הלידים-דאטה-יח"צ המרכזי; <b>החתך הישראלי</b> נותן פרסום דאטה מיידי — עוד לפני שנאסף גרם דאטה משלנו. שלושתם יחד: קצב + כלי + דאטה = הנוסחה המלאה, תוך פחות מחודש.</p>
@@ -977,7 +1027,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
         <div class="t-card"><div class="t-n">MOVE 2 · שבועיים</div><h5>מדד השליטה ב-AI</h5><p>~6 ימי בנייה עם Claude Code. מהיום הראשון: לידים + דאטה לדוח השנתי.</p></div>
         <div class="t-card"><div class="t-n">MOVE 3 · תוך חודש</div><h5>החתך הישראלי #1</h5><p>"ישראל אלופת העולם בשימוש ב-AI" — הכותרת מחכה שמישהו יכתוב אותה בעברית.</p></div>
       </div>
-      <div class="cta-vote">🗳️ <b>עכשיו תורכם:</b> מסכימים עם השלישייה? חושבים אחרת? סמנו למעלה ★ על עד 3 רעיונות — ולחצו על הכפתור הירוק למטה כדי לשלוח את הבחירה שלכם לקבוצה. נדון בתוצאות בישיבה.</div>
+      <div class="cta-vote"><b>הצעד הבא:</b> אישור שלושת מהלכי הפתיחה מאפשר יציאה לדרך השבוע. אם יש העדפה אחרת מתוך בנק הרעיונות — ניתן לסמן מהלכים בנספח ולשלוח אותם חזרה, ונתאים את סדר העדיפויות.</div>
     </div>
   </div>
 </section>
@@ -986,16 +1036,16 @@ footer .src-line{margin-top:8px;line-height:1.8}
   <div class="wrap">
     <p><b>מתודולוגיה:</b> הדוח מבוסס על שלוש סריקות מחקר שבוצעו ב-11.8.2026 — סריקת 10 אתרי גופי הכשרה ישראליים, ניתוח מנגנוני מיצוב של גופים מובילים בעולם, ומיפוי מקורות הדאטה והמחקר על AI בישראל. כל נתון אומת מול מקור ראשוני.</p>
     <p class="src-line"><b>מקורות עיקריים:</b> Anthropic Economic Index · Stanford HAI AI Index · Section AI Proficiency Report · בנק ישראל (דוח 2024) · למ"ס + המכון הישראלי לדמוקרטיה · GotFriends 2025 · רשות החדשנות · מדד נאמן (טכניון) · HubSpot · WillRobotsTakeMyJob · אתרי המתחרים כפי שנבדקו בפועל.</p>
-    <p style="margin-top:10px">האקדמיה לבינה מלאכותית יישומית · היחידה ללימודי חוץ · הוכן ע"י שלום · אוגוסט 2026</p>
+    <p style="margin-top:10px">האקדמיה לבינה מלאכותית יישומית · היחידה ללימודי חוץ · אוגוסט 2026</p>
   </div>
 </footer>
 
 <div class="votebar" id="votebar">
   <div class="inner">
-    <span class="count">נבחרו <b id="vcount">0</b> רעיונות</span>
+    <span class="count">סומנו <b id="vcount">0</b> רעיונות</span>
     <span class="picked" id="vpicked"></span>
-    <button class="vb-btn wa" id="vwa">💬 שלח לקבוצה בוואטסאפ</button>
-    <button class="vb-btn cp" id="vcp">📋 העתק</button>
+    <button class="vb-btn cp" id="vcp">העתקת הבחירה</button>
+    <button class="vb-btn wa" id="vwa">שליחה בוואטסאפ</button>
   </div>
 </div>
 
@@ -1043,7 +1093,7 @@ document.querySelectorAll('.card .vote').forEach(btn=>{
   });
 });
 function buildMsg(){
-  let m='🧠 סיעור מוחות — בידול האקדמיה ל-AI\nהטופ שלי:\n';
+  let m='הצעת מיצוב 2026 — האקדמיה לבינה מלאכותית יישומית\nהמהלכים שסימנתי:\n';
   [...picks.entries()].forEach(([id,name])=>{m+='★ '+id+' · '+name+'\n';});
   m+='\nלמה דווקא אלה: ';
   return m;
