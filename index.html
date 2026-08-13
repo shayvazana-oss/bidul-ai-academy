@@ -74,18 +74,30 @@ a{color:var(--cyan);text-decoration:none}
 .hero-bg{position:absolute;inset:0;overflow:hidden;z-index:0}
 .hero-img{position:absolute;inset:-7%;background:#080b16 center/cover no-repeat;animation:drift 38s ease-in-out infinite alternate}
 @keyframes drift{from{transform:scale(1) translate(0,0)}to{transform:scale(1.13) translate(1.6%,-1.8%)}}
-/* scrim is DARKEST at the centre, where the text sits — the artwork stays visible at the edges */
-.hero-tint{position:absolute;inset:0;background:radial-gradient(64% 56% at 50% 48%,rgba(12,15,28,.88) 0%,rgba(12,15,28,.74) 55%,rgba(12,15,28,.42) 100%),linear-gradient(180deg,rgba(12,15,28,.72) 0%,rgba(12,15,28,.3) 34%,rgba(12,15,28,.62) 74%,var(--bg) 100%)}
+/* scrim is DARKEST where the copy sits (right side in RTL) — artwork stays visible on the left */
+.hero-tint{position:absolute;inset:0;background:radial-gradient(72% 64% at 70% 48%,rgba(12,15,28,.91) 0%,rgba(12,15,28,.8) 58%,rgba(12,15,28,.38) 100%),linear-gradient(180deg,rgba(12,15,28,.72) 0%,rgba(12,15,28,.3) 34%,rgba(12,15,28,.62) 74%,var(--bg) 100%)}
+/* copy re-centres below 900px, so the scrim follows it back to the middle */
+@media(max-width:900px){.hero-tint{background:radial-gradient(78% 58% at 50% 46%,rgba(12,15,28,.9) 0%,rgba(12,15,28,.8) 58%,rgba(12,15,28,.44) 100%),linear-gradient(180deg,rgba(12,15,28,.72) 0%,rgba(12,15,28,.34) 34%,rgba(12,15,28,.62) 74%,var(--bg) 100%)}}
 .hero-fade{position:absolute;bottom:0;left:0;right:0;height:190px;z-index:2;pointer-events:none;background:linear-gradient(to bottom,transparent,var(--bg))}
-.hero-in{position:relative;z-index:3;max-width:940px;display:flex;flex-direction:column;align-items:center;gap:22px}
+.hero-in{position:relative;z-index:3;width:100%;max-width:1180px;display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(30px,4vw,58px);align-items:center;text-align:start}
+.hero-copy{display:flex;flex-direction:column;align-items:flex-start;gap:21px}
+.hero-media{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--hair-2);box-shadow:0 22px 64px rgba(0,0,0,.55);aspect-ratio:16/10;background:#05070f}
+.hero-media video{display:block;width:100%;height:100%;object-fit:cover}
+.hero-media::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(205deg,transparent 52%,rgba(12,15,28,.55));border-radius:20px}
+@media(max-width:900px){
+  .hero-in{grid-template-columns:1fr;gap:30px;text-align:center;max-width:640px}
+  .hero-copy{align-items:center}
+  .hero-media{max-width:440px;width:100%;margin:0 auto}
+}
 .hero-eyebrow{font-size:clamp(14px,1.7vw,18px);font-weight:700;background:var(--gradB);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.01em}
 .hero h1{font-size:clamp(38px,5.6vw,68px);font-weight:900;line-height:1.05;letter-spacing:-.025em;color:#fff}
 .hero h1 .dim{color:#8b97b5;text-decoration:line-through;text-decoration-thickness:5px;text-decoration-color:rgba(254,136,27,.85)}
 .hero h1 .go{background:var(--gradB);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero-sub{font-size:clamp(15px,1.35vw,19px);color:#b9c4dc;max-width:660px;line-height:1.65}
 .hero-sub b{color:#fff;font-weight:600}
-.hero-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:4px}
-.hero-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 28px;margin-top:10px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);font-family:var(--grot);font-size:10.5px;letter-spacing:.18em;color:#8b97b5}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:10px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);font-family:var(--grot);font-size:10.5px;letter-spacing:.18em;color:#8b97b5;width:100%}
+@media(max-width:900px){.hero-btns,.hero-meta{justify-content:center}}
 .hero-meta b{color:#dbe3f2;font-weight:600}
 .hero-cue{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:600;color:#8b97b5}
 .hero-cue span{font-size:19px;line-height:1;animation:cue 2.2s ease-in-out infinite}
@@ -412,14 +424,19 @@ footer .src-line{margin-top:8px;line-height:1.8}
   </div>
   <div class="hero-fade"></div>
   <div class="hero-in">
-    <span class="hero-eyebrow">מחקר שוק והצעת מיצוב · אוגוסט 2026</span>
-    <h1>מפסיקים <span class="dim">להצהיר</span> על מומחיות.<br>מתחילים <span class="go">להוכיח</span> אותה.</h1>
-    <p class="hero-sub">סרקנו 10 גופי הכשרה בישראל, את מנועי המיצוב המובילים בעולם ואת מפת הדאטה הישראלית. המסקנה חדה — עמדת "המומחה הלאומי להכשרת AI" עדיין פנויה, <b>ומי שמוכיח ראשון, לוקח אותה.</b></p>
-    <div class="hero-btns">
-      <a class="btn-grad lg" href="#summary"><span>לתקציר המנהלים ↓</span></a>
-      <a class="btn-g" href="#roadmap">למפת הדרכים</a>
+    <div class="hero-copy">
+      <span class="hero-eyebrow">מחקר שוק והצעת מיצוב · אוגוסט 2026</span>
+      <h1>מפסיקים <span class="dim">להצהיר</span> על מומחיות.<br>מתחילים <span class="go">להוכיח</span> אותה.</h1>
+      <p class="hero-sub">סרקנו 10 גופי הכשרה בישראל, את מנועי המיצוב המובילים בעולם ואת מפת הדאטה הישראלית. המסקנה חדה — עמדת "המומחה הלאומי להכשרת AI" עדיין פנויה, <b>ומי שמוכיח ראשון, לוקח אותה.</b></p>
+      <div class="hero-btns">
+        <a class="btn-grad lg" href="#summary"><span>לתקציר המנהלים ↓</span></a>
+        <a class="btn-g" href="#roadmap">למפת הדרכים</a>
+      </div>
+      <div class="hero-meta"><span>DATE · <b>11.08.2026</b></span><span>SCANS · <b>3</b></span><span>COMPETITORS · <b>10</b></span><span>IDEAS · <b>16</b></span></div>
     </div>
-    <div class="hero-meta"><span>DATE · <b>11.08.2026</b></span><span>SCANS · <b>3</b></span><span>COMPETITORS · <b>10</b></span><span>IDEAS · <b>16</b></span></div>
+    <div class="hero-media">
+      <video src="assets/hero-clip.mp4" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="metadata" aria-label="אנימציה: דיוקן קווי תלת-ממדי שמתפורר לחלקיקי דאטה"></video>
+    </div>
   </div>
   <a class="hero-cue" href="#summary">גללו לתקציר<span>⌄</span></a>
 </header>
