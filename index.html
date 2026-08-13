@@ -156,7 +156,12 @@ h1.giant .go{background:var(--grad);-webkit-background-clip:text;background-clip
 .sgrid{display:grid;gap:22px}
 .sgrid.c2{grid-template-columns:1fr 1fr}
 .sgrid.c3{grid-template-columns:repeat(3,1fr)}
+.sgrid.c4{grid-template-columns:repeat(4,1fr);gap:18px}
+.sgrid.c4 .sfig{font-size:46px}
+.sgrid.c4 .scap{font-size:12.5px;max-width:none}
+@media(max-width:1080px){.sgrid.c4{grid-template-columns:1fr 1fr}}
 @media(max-width:780px){.sgrid.c2,.sgrid.c3{grid-template-columns:1fr}}
+@media(max-width:620px){.sgrid.c4{grid-template-columns:1fr}}
 .scell{display:flex;align-items:flex-start;gap:15px}
 .sdia{flex:0 0 auto;width:34px;height:34px;border:2px solid var(--mc);border-radius:5px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;background:rgba(12,15,28,.5);margin-top:7px}
 .sdia span{transform:rotate(-45deg);font-size:15px;line-height:1}
@@ -491,36 +496,44 @@ footer .src-line{margin-top:8px;line-height:1.8}
     <p class="gb-read">קראו את זה כך: כמעט <b>שני שלישים</b> מהעובדים כבר חשופים ל-AI, אבל רק רבע מהעסקים מצליחים להשתמש בו. <b>39 נקודות האחוז שביניהם הן אנשים שרוצים ולא יודעים איך</b> — וזה בדיוק מה שקורס מלמד.</p>
   </div>
 
-  <div class="snap-link rv">ומי סוגר להם את הפער היום? כמעט אף אחד</div>
+  <div class="snap-link rv">והפער הזה אינו ייחודי לישראל</div>
 
   <div class="snap-act rv">
-    <div class="act-lbl"><span class="an">03</span><h3>ההיצע — מה שהשוק המוסדי נותן היום</h3><span class="rule"></span></div>
-    <div class="sgrid c3">
-      <div class="scell" style="--mc:#f87171">
-        <span class="sdia"><span>🔬</span></span>
+    <div class="act-lbl"><span class="an">03</span><h3>העולם — אותו פער בדיוק, בקנה מידה גלובלי</h3><span class="rule"></span></div>
+    <div class="sgrid c4">
+      <div class="scell" style="--mc:#38bdf8">
+        <span class="sdia"><span>🌐</span></span>
         <div>
-          <div class="sfig"><b>0</b></div>
-          <div class="scap">גופי הכשרה שמפרסמים <b>מחקר או דאטה מקורי</b> — מתוך 10 שנסקרו<span class="ssrc">COMPETITOR SCAN</span></div>
+          <div class="sfig"><b data-count="88">88</b><i>%</i></div>
+          <div class="scap">מהארגונים בעולם מדווחים על <b>שימוש קבוע ב-AI</b> בלפחות תחום פעילות אחד<span class="ssrc">STANFORD HAI · AI INDEX 2026</span></div>
         </div>
       </div>
-      <div class="scell" style="--mc:#a78bfa">
-        <span class="sdia"><span>🛠️</span></span>
+      <div class="scell" style="--mc:#f87171">
+        <span class="sdia"><span>📉</span></span>
         <div>
-          <div class="sfig"><b data-count="1">1</b></div>
-          <div class="scap"><b>כלי אינטראקטיבי אחד</b> בכל השוק המוסדי — חידון 5 שאלות. כל השאר: טפסי ליד<span class="ssrc">JOHN BRYCE</span></div>
+          <div class="sfig"><b data-count="39">39</b><i>%</i></div>
+          <div class="scap">בלבד מדווחים על <b>השפעה מדידה על שורת הרווח.</b> האימוץ כמעט אוניברסלי — הערך עדיין לא<span class="ssrc">MCKINSEY · STATE OF AI</span></div>
+        </div>
+      </div>
+      <div class="scell" style="--mc:#f59e0b">
+        <span class="sdia"><span>💰</span></span>
+        <div>
+          <div class="sfig"><b data-count="56">56</b><i>%</i></div>
+          <div class="scap"><b>פרמיית שכר</b> למשרות שדורשות מיומנויות AI — לעומת 25% שנה קודם. מניתוח כמיליארד מודעות דרושים<span class="ssrc">PWC GLOBAL AI JOBS BAROMETER 2025</span></div>
         </div>
       </div>
       <div class="scell" style="--mc:#34d399">
-        <span class="sdia"><span>🏷️</span></span>
+        <span class="sdia"><span>🎓</span></span>
         <div>
-          <div class="sfig"><i>₪</i><b data-count="590">590</b></div>
-          <div class="scap">המחיר השקוף היחיד בשוק — <b>שלנו, כבר היום.</b> אף מתחרה לא מפרסם מחיר<span class="ssrc">ONLY US · TODAY</span></div>
+          <div class="sfig"><b data-count="59">59</b><i>%</i></div>
+          <div class="scap">מכוח העבודה העולמי <b>יזדקק להכשרה מחדש עד 2030</b> כדי לעמוד בקצב שינוי המיומנויות<span class="ssrc">WEF · FUTURE OF JOBS 2025</span></div>
         </div>
       </div>
     </div>
+    <p class="gb-read" style="margin-top:20px">הפער בין אימוץ ליכולת אינו סיפור ישראלי — הוא גלובלי, והוא נמדד באותם ממדים. <b>התשובה שהשוק העולמי מצביע עליה היא הכשרה</b> — וזה בדיוק השוק שאנחנו כבר פועלים בו.</p>
   </div>
 
-  <p class="mi-note">צמא עולמי-שיא (פי 4.9) מול יכולת נמוכה בפועל (28%) — ואפס מתחרים שמוכיחים משהו. <b>זה החלון.</b></p>
+  <p class="mi-note">ישראל מובילה בביקוש (פי 4.9), נמוכה ביישום (28%), והפער הזה חוזר בכל העולם — 88% אימוץ מול 39% ערך מדיד. <b>מי שיודע לסגור אותו מחזיק בשוק.</b></p>
 </div>
 
 <!-- FINDINGS -->
@@ -1035,7 +1048,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
 <footer>
   <div class="wrap">
     <p><b>מתודולוגיה:</b> הדוח מבוסס על שלוש סריקות מחקר שבוצעו ב-11.8.2026 — סריקת 10 אתרי גופי הכשרה ישראליים, ניתוח מנגנוני מיצוב של גופים מובילים בעולם, ומיפוי מקורות הדאטה והמחקר על AI בישראל. כל נתון אומת מול מקור ראשוני.</p>
-    <p class="src-line"><b>מקורות עיקריים:</b> Anthropic Economic Index · Stanford HAI AI Index · Section AI Proficiency Report · בנק ישראל (דוח 2024) · למ"ס + המכון הישראלי לדמוקרטיה · GotFriends 2025 · רשות החדשנות · מדד נאמן (טכניון) · HubSpot · WillRobotsTakeMyJob · אתרי המתחרים כפי שנבדקו בפועל.</p>
+    <p class="src-line"><b>מקורות עיקריים:</b> Stanford HAI — AI Index 2026 · McKinsey — State of AI · PwC — Global AI Jobs Barometer 2025 · World Economic Forum — Future of Jobs 2025 · Anthropic Economic Index · Section AI Proficiency Report · בנק ישראל · למ"ס + המכון הישראלי לדמוקרטיה · GotFriends 2025 · רשות החדשנות · מדד נאמן (טכניון) · HubSpot · WillRobotsTakeMyJob · אתרי המתחרים כפי שנבדקו בפועל.</p>
     <p style="margin-top:10px">האקדמיה לבינה מלאכותית יישומית · היחידה ללימודי חוץ · אוגוסט 2026</p>
   </div>
 </footer>
