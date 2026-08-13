@@ -79,18 +79,25 @@ a{color:var(--cyan);text-decoration:none}
 /* copy re-centres below 900px, so the scrim follows it back to the middle */
 @media(max-width:900px){.hero-tint{background:radial-gradient(78% 58% at 50% 46%,rgba(12,15,28,.9) 0%,rgba(12,15,28,.8) 58%,rgba(12,15,28,.44) 100%),linear-gradient(180deg,rgba(12,15,28,.72) 0%,rgba(12,15,28,.34) 34%,rgba(12,15,28,.62) 74%,var(--bg) 100%)}}
 .hero-fade{position:absolute;bottom:0;left:0;right:0;height:190px;z-index:2;pointer-events:none;background:linear-gradient(to bottom,transparent,var(--bg))}
-.hero-in{position:relative;z-index:3;width:100%;max-width:1180px;display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(30px,4vw,58px);align-items:center;text-align:start}
-.hero-copy{display:flex;flex-direction:column;align-items:flex-start;gap:21px}
-/* the clip is light-on-black, so `screen` drops its black entirely and only the glow composites
-   onto the hero art; the mask feathers the frame edges so nothing reads as a video box */
-.hero-media{position:relative;aspect-ratio:4/3;background:none;border:0;overflow:visible;transform:scale(1.34) translateX(-8%)}
-.hero-media video{display:block;width:100%;height:100%;object-fit:cover;mix-blend-mode:screen;
-  -webkit-mask-image:radial-gradient(62% 68% at 50% 47%,#000 34%,rgba(0,0,0,.6) 60%,transparent 82%);
-  mask-image:radial-gradient(62% 68% at 50% 47%,#000 34%,rgba(0,0,0,.6) 60%,transparent 82%)}
+.hero-in{position:relative;z-index:3;width:100%;max-width:1180px;text-align:start}
+.hero-copy{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:21px;max-width:620px}
+/* soft local halo behind the copy only — guarantees legibility whatever the backdrop does */
+.hero-copy::before{content:'';position:absolute;inset:-34px -46px;z-index:-1;pointer-events:none;
+  background:radial-gradient(72% 74% at 58% 50%,rgba(7,10,20,.72) 0%,rgba(7,10,20,.5) 52%,rgba(7,10,20,0) 82%)}
+/* the clip lives in the BACKDROP, not in the content grid: it is light-on-black, so `screen`
+   erases its black and only the light composites onto the hero art. It sits under .hero-tint,
+   so it can never reduce the contrast of the copy. A wide radial mask feathers every edge. */
+.hero-vid{position:absolute;top:50%;left:0;transform:translate(-23%,-50%);
+  width:min(78vw,1080px);aspect-ratio:16/9;object-fit:cover;
+  mix-blend-mode:screen;opacity:.92;
+  -webkit-mask-image:radial-gradient(56% 60% at 47% 50%,#000 18%,rgba(0,0,0,.72) 44%,rgba(0,0,0,.28) 66%,transparent 84%);
+  mask-image:radial-gradient(56% 60% at 47% 50%,#000 18%,rgba(0,0,0,.72) 44%,rgba(0,0,0,.28) 66%,transparent 84%)}
 @media(max-width:900px){
-  .hero-in{grid-template-columns:1fr;gap:30px;text-align:center;max-width:640px}
-  .hero-copy{align-items:center}
-  .hero-media{max-width:440px;width:100%;margin:0 auto;transform:none}
+  .hero-vid{top:44%;left:50%;transform:translate(-50%,-50%);width:132vw;opacity:.55}
+}
+@media(max-width:900px){
+  .hero-in{text-align:center;max-width:640px}
+  .hero-copy{align-items:center;max-width:none;margin:0 auto}
 }
 .hero-eyebrow{font-size:clamp(14px,1.7vw,18px);font-weight:700;background:var(--gradB);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.01em}
 .hero h1{font-size:clamp(38px,5.6vw,68px);font-weight:900;line-height:1.05;letter-spacing:-.025em;color:#fff}
@@ -423,6 +430,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
 <header class="hero">
   <div class="hero-bg">
     <div class="hero-img" style="background-image:url('https://d8j0ntlcm91z4.cloudfront.net/user_3CXkMvQYD6UJmnBIXDcObKys6dv/hf_20260812_181611_585f219d-3d95-4584-8487-c990c429049f_min.webp')"></div>
+    <video class="hero-vid" src="assets/hero-clip.mp4" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>
     <div class="hero-tint"></div>
   </div>
   <div class="hero-fade"></div>
@@ -436,9 +444,6 @@ footer .src-line{margin-top:8px;line-height:1.8}
         <a class="btn-g" href="#roadmap">למפת הדרכים</a>
       </div>
       <div class="hero-meta"><span>DATE · <b>11.08.2026</b></span><span>SCANS · <b>3</b></span><span>COMPETITORS · <b>10</b></span><span>IDEAS · <b>16</b></span></div>
-    </div>
-    <div class="hero-media">
-      <video src="assets/hero-clip.mp4" poster="assets/hero-poster.jpg" autoplay loop muted playsinline preload="metadata" aria-label="אנימציה: דיוקן קווי תלת-ממדי שמתפורר לחלקיקי דאטה"></video>
     </div>
   </div>
   <a class="hero-cue" href="#summary">גללו לתקציר<span>⌄</span></a>
