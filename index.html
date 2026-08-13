@@ -81,9 +81,12 @@ a{color:var(--cyan);text-decoration:none}
 .hero-fade{position:absolute;bottom:0;left:0;right:0;height:190px;z-index:2;pointer-events:none;background:linear-gradient(to bottom,transparent,var(--bg))}
 .hero-in{position:relative;z-index:3;width:100%;max-width:1180px;display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(30px,4vw,58px);align-items:center;text-align:start}
 .hero-copy{display:flex;flex-direction:column;align-items:flex-start;gap:21px}
-.hero-media{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--hair-2);box-shadow:0 22px 64px rgba(0,0,0,.55);aspect-ratio:16/10;background:#05070f}
-.hero-media video{display:block;width:100%;height:100%;object-fit:cover}
-.hero-media::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(205deg,transparent 52%,rgba(12,15,28,.55));border-radius:20px}
+/* the clip is light-on-black, so `screen` drops its black entirely and only the glow composites
+   onto the hero art; the mask feathers the frame edges so nothing reads as a video box */
+.hero-media{position:relative;aspect-ratio:4/3;background:none;border:0;overflow:visible}
+.hero-media video{display:block;width:100%;height:100%;object-fit:cover;mix-blend-mode:screen;
+  -webkit-mask-image:radial-gradient(62% 68% at 50% 47%,#000 34%,rgba(0,0,0,.6) 60%,transparent 82%);
+  mask-image:radial-gradient(62% 68% at 50% 47%,#000 34%,rgba(0,0,0,.6) 60%,transparent 82%)}
 @media(max-width:900px){
   .hero-in{grid-template-columns:1fr;gap:30px;text-align:center;max-width:640px}
   .hero-copy{align-items:center}
