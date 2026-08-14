@@ -327,6 +327,19 @@ td small{display:block;color:var(--muted);font-weight:400;font-size:12.5px;margi
 .proof b{color:var(--ink)}
 .first{font-size:13.5px;border:1px dashed rgba(56,189,248,.42);border-radius:9px;padding:9px 12px;color:var(--ink2);background:rgba(56,189,248,.06)}
 .first b{color:var(--cyan)}
+/* v2 — feedback round: revision markers */
+.tag.rev{background:rgba(167,139,250,.18);color:var(--violet)}
+.tag.merged{background:rgba(255,255,255,.08);color:var(--ink2)}
+.tag.warn{background:rgba(245,158,11,.18);color:var(--orange)}
+.revnote{font-size:13px;line-height:1.6;color:var(--ink2);background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.3);border-radius:9px;padding:10px 12px}
+.revnote b{color:var(--violet)}
+.chgstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.chgstrip .cs{border:1px solid var(--hair);border-radius:11px;padding:13px 15px;background:var(--panel)}
+.chgstrip .cs b{display:block;font-family:var(--grot);font-size:10px;letter-spacing:.12em;color:var(--muted);font-weight:600;margin-bottom:6px}
+.chgstrip .cs span{font-size:14px;color:var(--ink);font-weight:700;line-height:1.5}
+.chgstrip .cs em{font-style:normal;color:var(--ink2);font-weight:400;font-size:12.5px}
+@media(max-width:900px){.chgstrip{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.chgstrip{grid-template-columns:1fr}}
 .vote{position:absolute;top:14px;left:14px;z-index:3;border:1px solid var(--hair-2);background:var(--bg);color:var(--ink2);border-radius:8px;padding:7px 13px;font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
 .vote:hover{border-color:var(--green);color:var(--ink)}
 .vote.on{background:rgba(52,211,153,.16);border-color:var(--green);color:var(--green)}
@@ -418,7 +431,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
       <a href="#summary">תקציר</a>
       <a href="#findings">הממצאים</a>
       <a href="#roadmap">מפת הדרכים</a>
-      <a href="#bank">נספח · 16 מהלכים</a>
+      <a href="#bank">נספח · 13 מהלכים</a>
     </nav>
     <div class="m-right">
       <a class="btn-grad" href="#reco"><span>להמלצה</span></a>
@@ -443,7 +456,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
         <a class="btn-grad lg" href="#summary"><span>לתקציר המנהלים ↓</span></a>
         <a class="btn-g" href="#roadmap">למפת הדרכים</a>
       </div>
-      <div class="hero-meta"><span>DATE · <b>11.08.2026</b></span><span>SCANS · <b>3</b></span><span>COMPETITORS · <b>10</b></span><span>IDEAS · <b>16</b></span></div>
+      <div class="hero-meta"><span>DATE · <b>11.08.2026</b></span><span>SCANS · <b>3</b></span><span>COMPETITORS · <b>10</b></span><span>IDEAS · <b>13</b></span><span>REV · <b>2</b></span></div>
     </div>
   </div>
   <a class="hero-cue" href="#summary">גללו לתקציר<span>⌄</span></a>
@@ -452,16 +465,17 @@ footer .src-line{margin-top:8px;line-height:1.8}
 <!-- EXECUTIVE SUMMARY -->
 <div class="wrap execwrap" id="summary">
   <div class="exec rv">
-    <div class="shead" style="margin-bottom:6px"><span class="snum">תקציר מנהלים</span></div>
+    <div class="shead" style="margin-bottom:6px"><span class="snum">תקציר מנהלים · גרסה 2</span></div>
     <h2>ההזדמנות, ההמלצה, והמשאב הנדרש</h2>
     <p class="exec-lede">ישראל היא השוק הצמא ביותר בעולם ל-AI, אבל שוק ההכשרה המקומי עדיין <b>מצהיר</b> על מומחיות במקום <b>להוכיח</b> אותה: מתוך 10 גופי הכשרה שנסקרו, לאף אחד אין מחקר או דאטה מקורי, ובכל השוק המוסדי קיים כלי אינטראקטיבי אחד בלבד. המשמעות היא שעמדת "המומחה הלאומי להכשרת AI" פנויה — <b>וניתן לתפוס אותה במשאבים פנימיים, לא בתקציב מדיה.</b></p>
+    <p class="exec-lede" style="margin-top:-8px"><b>מה חדש בגרסה זו:</b> אחרי סבב פידבק שותפים, הבנק ירד מ-16 ל-13 מהלכים ושלישיית הפתיחה הוחלפה. העיקרון שהנחה את הסבב: <b>כל מהלך שאי אפשר לעמוד מאחורי המספר שהוא מפרסם — יורד או משתנה.</b> מסמך שקורא לשוק להפסיק להצהיר לא יכול להיפתח בהבטחת שכר שאין לה בסיס.</p>
     <div class="exec-grid">
       <div class="exec-cell">
         <div class="exec-h">ההמלצה · שלושה מהלכי פתיחה</div>
         <div class="exec-moves">
-          <div class="exec-move"><i>1</i><span><b>תדריך AI שבועי בחתימת מומחה.</b> קצב ונוכחות קבועים — הנכס שממנו כל השאר מקבל הפצה. יוצא תוך שבוע, ללא פיתוח.</span></div>
-          <div class="exec-move"><i>2</i><span><b>"מדד השליטה ב-AI" — מבחן ארצי חינמי.</b> מנוע אחד שמייצר שלושה תוצרים: לידים איכותיים, ניתוב לקורס, ודאטה מצטבר שהופך לדוח מצוטט.</span></div>
-          <div class="exec-move"><i>3</i><span><b>"החתך הישראלי" — פרסום דאטה רבעוני.</b> ניתוח בעברית של מה שהדאטה העולמי אומר על ישראל. מאפשר סמכות מיידית עוד לפני שנאסף דאטה משלנו.</span></div>
+          <div class="exec-move"><i>6</i><span><b>"המכ"ם" — תדריך AI שבועי בשלוש רמות קריאה.</b> קצב ונוכחות קבועים, כולל מדור "החתך הישראלי" החודשי. יוצא תוך שבוע, ללא פיתוח.</span></div>
+          <div class="exec-move"><i>4</i><span><b>מגרש אימוני הפרומפטים — והספרייה שהוא מייצר.</b> המהלך המוסכם ביותר בסבב: טראפיק אורגני, חוויית לימוד לפני הרשמה, והרובריקה שמדד השליטה יעמוד עליה. ~5 ימים.</span></div>
+          <div class="exec-move"><i>1</i><span><b>"מדד השליטה ב-AI" — מסלול ראשון + ציון יעילות.</b> המבחן היחיד שמודד גם כמה טוקנים עלתה התשובה. מנוע לידים, ניתוב לקורס, ודאטה לדוח.</span></div>
         </div>
       </div>
       <div class="exec-cell">
@@ -473,7 +487,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
         </div>
       </div>
     </div>
-    <div class="exec-ask">🎯 <b>מה נדרש:</b> כ-9 ימי עבודה לשלושת מהלכי הפתיחה, במשאבים פנימיים וללא רכש חיצוני. המהלך הראשון יכול לצאת השבוע. <b>הבקשה: אישור להתחיל.</b></div>
+    <div class="exec-ask">🎯 <b>מה נדרש:</b> כ-11 ימי עבודה לשלושת מהלכי הפתיחה (במבחן — מסלול ראשון בלבד), במשאבים פנימיים וללא רכש חיצוני. המהלך הראשון יוצא השבוע באפס פיתוח. <b>הבקשה: אישור להתחיל בשלושת אלה.</b></div>
   </div>
 </div>
 
@@ -645,7 +659,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
 <section style="padding-top:0">
   <div class="wrap">
     <div class="shead"><span class="snum">04</span><h2>מפת ההחלטה — אימפקט מול מאמץ</h2><span class="rule"></span></div>
-    <p class="ssub">כל עיגול = רעיון (לחיצה קופצת לכרטיס). המאמץ בימי עבודה עם Claude Code. ריחוף מציג את השם.</p>
+    <p class="ssub">כל עיגול = רעיון (לחיצה קופצת לכרטיס). המאמץ בימי עבודה עם Claude Code. ריחוף מציג את השם. <b>עודכן בגרסה 2:</b> 10, 12 ו-13 אינם מופיעים — הם אוחדו לתוך 4, 14 ו-6 בהתאמה, ומיקומם של 1, 2, 3, 5, 9 ו-11 השתנה בעקבות הפידבק.</p>
     <div class="legend">
       <span class="li"><span class="dot" style="background:var(--c-tools)"></span>כלים חיים</span>
       <span class="li"><span class="dot" style="background:var(--c-intel)"></span>מרכז מודיעין</span>
@@ -662,22 +676,19 @@ footer .src-line{margin-top:8px;line-height:1.8}
         <span class="qlabel" style="bottom:34px;right:12px">לא עכשיו</span>
         <span class="axis x">מאמץ בימי עבודה · שמאל = ימים בודדים · ימין = חודשים</span>
         <span class="axis y">אימפקט מיצובי · גבוה למעלה</span>
-        <a class="mdot" href="#idea-6"  style="left:6%;bottom:84%;background:var(--c-intel)"    data-tip="6 · המכ&quot;ם — תדריך שבועי · יום הקמה">6</a>
-        <a class="mdot" href="#idea-8"  style="left:4%;bottom:54%;background:var(--c-intel)"    data-tip="8 · פרשנות 24 שעות · אפס פיתוח">8</a>
-        <a class="mdot dark" href="#idea-13" style="left:11%;bottom:60%;background:var(--c-research)" data-tip="13 · החתך הישראלי · 2 ימים לגיליון">13</a>
-        <a class="mdot" href="#idea-10" style="left:10%;bottom:26%;background:var(--c-intel)"   data-tip="10 · ספריית פרומפטים · יומיים">10</a>
-        <a class="mdot" href="#idea-3"  style="left:16%;bottom:64%;background:var(--c-tools)"   data-tip="3 · מחשבון פרמיית השכר · 3 ימים">3</a>
-        <a class="mdot" href="#idea-7"  style="left:16%;bottom:46%;background:var(--c-intel)"   data-tip="7 · מילון ה-AI העברי · 3 ימים">7</a>
-        <a class="mdot" href="#idea-4"  style="left:21%;bottom:50%;background:var(--c-tools)"   data-tip="4 · מגרש אימוני פרומפטים · 4 ימים">4</a>
-        <a class="mdot" href="#idea-15" style="left:25%;bottom:34%;background:var(--c-meta)"    data-tip="15 · מדד מוכנות לעסקים B2B · 5 ימים">15</a>
-        <a class="mdot" href="#idea-1"  style="left:29%;bottom:92%;background:var(--c-tools)"   data-tip="1 · מדד השליטה ב-AI — הדגל · 6 ימים">1</a>
-        <a class="mdot" href="#idea-9"  style="left:31%;bottom:74%;background:var(--c-intel)"   data-tip="9 · מדד משרות ה-AI · 6 ימים">9</a>
-        <a class="mdot" href="#idea-5"  style="left:27%;bottom:42%;background:var(--c-tools)"   data-tip="5 · עובד דיגיטלי חי · 6 ימים">5</a>
-        <a class="mdot" href="#idea-2"  style="left:43%;bottom:88%;background:var(--c-tools)"   data-tip="2 · ה-AI בא על התפקיד שלך? · 9 ימים">2</a>
-        <a class="mdot dark" href="#idea-14" style="left:48%;bottom:38%;background:var(--c-research)" data-tip="14 · שקיפות בוגרים · 10 ימים + הנהלה">14</a>
-        <a class="mdot dark" href="#idea-12" style="left:57%;bottom:78%;background:var(--c-research)" data-tip="12 · פרמיית ה-AI מחוץ להייטק · 12 ימים">12</a>
-        <a class="mdot dark" href="#idea-11" style="left:80%;bottom:90%;background:var(--c-research)" data-tip="11 · הדוח השנתי · רבעון">11</a>
-        <a class="mdot" href="#idea-16" style="left:93%;bottom:70%;background:var(--c-meta)"    data-tip="16 · הסמכה ארצית · חודשים">16</a>
+        <a class="mdot" href="#idea-6"  style="left:6%;bottom:86%;background:var(--c-intel)"    data-tip="6 · המכ&quot;ם — תדריך שבועי · יום הקמה">6</a>
+        <a class="mdot" href="#idea-8"  style="left:4%;bottom:62%;background:var(--c-intel)"    data-tip="8 · פרשנות 24 שעות בתורנות · אפס פיתוח">8</a>
+        <a class="mdot" href="#idea-5"  style="left:10%;bottom:30%;background:var(--c-tools)"   data-tip="5 · הדגמת הסוכן — דמו מתוסרט · יומיים">5</a>
+        <a class="mdot" href="#idea-7"  style="left:15%;bottom:56%;background:var(--c-intel)"   data-tip="7 · מילון ה-AI העברי · 3 ימים">7</a>
+        <a class="mdot" href="#idea-3"  style="left:17%;bottom:44%;background:var(--c-tools)"   data-tip="3 · מחשבון הזמן החוזר · 3 ימים">3</a>
+        <a class="mdot" href="#idea-4"  style="left:24%;bottom:72%;background:var(--c-tools)"   data-tip="4 · מגרש הפרומפטים + הספרייה · 5 ימים">4</a>
+        <a class="mdot" href="#idea-9"  style="left:27%;bottom:46%;background:var(--c-intel)"   data-tip="9 · מדד הדרישות · 5 ימים · דורש הכרעה">9</a>
+        <a class="mdot" href="#idea-15" style="left:30%;bottom:38%;background:var(--c-meta)"    data-tip="15 · מדד מוכנות B2B (אדם בלולאה) · 5 ימים">15</a>
+        <a class="mdot" href="#idea-2"  style="left:34%;bottom:80%;background:var(--c-tools)"   data-tip="2 · מפת ה-AI בתפקיד שלך · 7 ימים">2</a>
+        <a class="mdot" href="#idea-1"  style="left:40%;bottom:94%;background:var(--c-tools)"   data-tip="1 · מדד השליטה — מסלולים + יעילות · 8 ימים">1</a>
+        <a class="mdot dark" href="#idea-14" style="left:52%;bottom:50%;background:var(--c-research)" data-tip="14 · שקיפות בוגרים (כולל 12) · 10 ימים + הנהלה">14</a>
+        <a class="mdot dark" href="#idea-11" style="left:76%;bottom:76%;background:var(--c-research)" data-tip="11 · דוח הנבחנים · רבעון">11</a>
+        <a class="mdot" href="#idea-16" style="left:93%;bottom:72%;background:var(--c-meta)"    data-tip="16 · הסמכות לפי מקצוע · חודשים">16</a>
       </div>
     </div>
     <p class="matrix-note">קו האמצע האנכי ≈ 10 ימי עבודה; הקו האופקי = סף "משנה מיצוב". ריכוז העיגולים ברביע הירוק הוא הנקודה החשובה בדוח: <b>רוב הבידול כאן זול להשגה.</b></p>
@@ -687,109 +698,122 @@ footer .src-line{margin-top:8px;line-height:1.8}
 <!-- IDEAS -->
 <section style="padding-top:0" id="bank">
   <div class="wrap">
-    <div class="shead"><span class="snum">05</span><h2>בנק הרעיונות — 16 מהלכים אפשריים</h2><span class="rule"></span></div>
-    <p class="ssub">נספח מלא. כל כרטיס: מה בונים, למה זה ממצב, איך זה מייצר לידים, וכמה זה עולה בזמן עבודה. <b>הערה על הציונים:</b> דירוגי האימפקט והלידים הם הערכה פנימית בסולם 1–5 לצורך תיעדוף, ולא נתון נמדד. אומדני הזמן מבוססים על בנייה במשאבים פנימיים. ניתן לסמן רעיונות מועדפים ולשלוח אותם חזרה אלינו.</p>
+    <div class="shead"><span class="snum">05</span><h2>בנק הרעיונות — 13 מהלכים אחרי סבב הפידבק</h2><span class="rule"></span></div>
+    <p class="ssub">גרסה 2. הבנק ירד מ-16 ל-13 מהלכים בעקבות סבב פידבק שותפים — שלושה רעיונות אוחדו לתוך אחרים, וחמישה הוגדרו מחדש. בכל כרטיס ששונה מופיעה שורה סגולה: <b>מה השתנה ולמה</b>. <b>הערה על הציונים:</b> דירוגי האימפקט והלידים הם הערכה פנימית בסולם 1–5 לצורך תיעדוף, ולא נתון נמדד. אומדני הזמן מבוססים על בנייה במשאבים פנימיים.</p>
+
+    <div class="chgstrip rv">
+      <div class="cs"><b>אוחדו</b><span>10 ← 4 · 13 ← 6 · 12 ← 14<em><br>שלושה נכסים כפולים הפכו לשלושה חלקים בתוך מהלכים קיימים.</em></span></div>
+      <div class="cs"><b>הוגדרו מחדש</b><span>2 · 3 · 9 · 11 · 16<em><br>כל מקום שבו הבטחנו יותר ממה שאפשר להוכיח.</em></span></div>
+      <div class="cs"><b>הוכרעו</b><span>5 · 15<em><br>שתי שאלות פתוחות — "חי או מתוסרט?" ו"אוטומטי או אנושי?" — נסגרו.</em></span></div>
+      <div class="cs"><b>חודדו</b><span>1 · 6 · 8<em><br>מסלולים, מדד יעילות, רמות תקציר ותורנות כתיבה.</em></span></div>
+    </div>
 
     <div class="filters" id="filters">
-      <button class="fbtn active" data-f="all">הכל (16)</button>
+      <button class="fbtn active" data-f="all">הכל (13)</button>
       <button class="fbtn" data-f="tools">🛠 כלים חיים (5)</button>
-      <button class="fbtn" data-f="intel">📡 מרכז מודיעין (5)</button>
-      <button class="fbtn" data-f="research">📊 מחקר מקורי (4)</button>
+      <button class="fbtn" data-f="intel">📡 מרכז מודיעין (4)</button>
+      <button class="fbtn" data-f="research">📊 מחקר מקורי (2)</button>
       <button class="fbtn" data-f="meta">♟ מהלכי-על (2)</button>
     </div>
 
     <div class="cards" id="cards">
 
-      <div class="card cat-tools" id="idea-1" data-cat="tools" data-name='מדד השליטה ב-AI — המבחן הלאומי'>
+      <div class="card cat-tools" id="idea-1" data-cat="tools" data-name='מדד השליטה ב-AI — מבחן לפי מסלולים'>
         <button class="vote">☆ בחר</button>
         <div class="top"><span class="idx" style="color:var(--t-tools)">01</span>
-          <div><h3>"מדד השליטה ב-AI" — המבחן הלאומי</h3>
-          <div class="badges"><span class="tag tools">כלי חי</span><span class="tag star">★ שלישיית הפתיחה</span><span class="tag viral">⚡ הדגל</span></div></div></div>
-        <p class="what">מבחן חינמי בעברית, 8–10 דקות, שמודד שליטה ב-AI בשלושה ממדים: ידע, שימוש בפועל, ויכולת פרומפטינג (נבדקת ע"י AI בזמן אמת). התוצאה: ציון + דירוג על סולם עברי — <b>סקפטי ← מתנסה ← מיישם ← מוביל ← מומחה</b> — ודוח פערים אישי שמנתב לקורס המתאים. <b>מנוע אחד, שלושה תוצרים:</b> ליד איכותי, ניתוב לקורס, ודאטה מצטבר שהופך לדוח הלאומי (רעיון 11).</p>
+          <div><h3>"מדד השליטה ב-AI" — מבחן לפי מסלולים, עם ציון יעילות</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span><span class="tag star">★ שלישיית הפתיחה</span><span class="tag viral">⚡ הדגל</span><span class="tag rev">v2 · חודד</span></div></div></div>
+        <p class="what">מבחן חינמי בעברית, 8–10 דקות, <b>בארבעה מסלולים נפרדים</b> — כללי/עסקי, פייתון, אלגוריתמיקה ומודלים, ובניית אתרים ומוצר — כך שכל נבחן נמדד מול משימות מהעולם שלו ולא מול מבחן גנרי. שלושה ממדים: ידע, שימוש בפועל, ואיכות פרומפטינג (נבדקת ע"י AI בזמן אמת), על סולם עברי — <b>סקפטי ← מתנסה ← מיישם ← מוביל ← מומחה</b>. <b>והחידוש האמיתי: ציון יעילות.</b> לצד ציון האיכות מוצג כמה טוקנים נדרשו כדי להגיע לתוצאה — כלומר כמה זה עלה וכמה זה לקח. מי שמגיע לאותה תשובה בחצי מהטוקנים פשוט טוב יותר, ואף מבחן AI בעולם לא מודד את זה היום.</p>
+        <p class="revnote"><b>מה השתנה:</b> פוצל למסלולי תוכן במקום מבחן אחד לכולם, ונוסף מדד היעילות — טוקנים כמדד ישיר לעלות ולמהירות. זו גם התוספת שהופכת את המבחן לייחודי: כולם מודדים "כמה אתה יודע", אף אחד לא מודד "כמה זה עולה לך".</p>
         <div class="krow">
-          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — "המבחן של ישראל"</span></div>
+          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — היחיד שמודד גם עלות</span></div>
           <div class="kv"><b>LEADS</b><span class="score">5/5 — אימייל תמורת ציון</span></div>
-          <div class="kv"><b>EFFORT</b><span class="score">~6 ימים, אתה + Claude Code</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~8 ימים (מסלול ראשון ~5)</span></div>
           <div class="kv"><b>MARKET</b><span class="score">אין מקבילה בעברית — נבדק</span></div>
         </div>
-        <p class="proof"><b>ההוכחה מהעולם:</b> Section הפכו מבחן זהה לשתי הודעות לעיתונות ארציות בארה"ב, למוצר B2B ולדוח שנתי מצוטט ("רק 10% מכוח העבודה שולט ב-AI").</p>
-        <p class="first"><b>צעד ראשון:</b> פגישת אפיון 30 דק' — 25 שאלות, 5 רמות, 3 תרחישי פרומפט. שלד עובד תוך שבוע.</p>
+        <p class="proof"><b>ההוכחה מהעולם:</b> Section הפכו מבחן זהה לשתי הודעות לעיתונות ארציות בארה"ב, למוצר B2B ולדוח שנתי מצוטט ("רק 10% מכוח העבודה שולט ב-AI") — וגם הם מדדו רק ידע, לא יעילות.</p>
+        <p class="first"><b>צעד ראשון:</b> מסלול אחד בלבד (כללי/עסקי) כ-MVP — 25 שאלות, 5 רמות, 3 תרחישי פרומפט. מסלולי הקוד נפתחים אחריו, על אותו מנוע.</p>
       </div>
 
-      <div class="card cat-tools" id="idea-2" data-cat="tools" data-name='ה-AI בא על התפקיד שלך? — בודק חשיפה'>
+      <div class="card cat-tools" id="idea-2" data-cat="tools" data-name='מפת ה-AI בתפקיד שלך — מה כבר עובד ומה לא'>
         <button class="vote">☆ בחר</button>
         <div class="top"><span class="idx" style="color:var(--t-tools)">02</span>
-          <div><h3>"ה-AI בא על התפקיד שלך?" — בודק חשיפה למקצוע</h3>
-          <div class="badges"><span class="tag tools">כלי חי</span><span class="tag viral">⚡ התקרה הוויראלית הגבוהה בבנק</span></div></div></div>
-        <p class="what">מקלידים מקצוע — מקבלים בעברית: אחוז חשיפה ל-AI, אילו משימות בתפקיד כבר מתבצעות ע"י AI היום, מה נשאר אנושי, והשוואה בין שני מקצועות. מבוסס על מחקרי חשיפה בינלאומיים (Frey-Osborne, Microsoft, דאטה פתוח של Anthropic) ממופים למשלחי היד של הלמ"ס. <b>כל דף תוצאה מסתיים במשפט אחד: "וזה הקורס שסוגר לך את הפער".</b></p>
+          <div><h3>מפת ה-AI בתפקיד שלך — מה כבר עובד, ומה עוד לא</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span><span class="tag viral">⚡ תקרת השיתוף הגבוהה בבנק</span><span class="tag rev">v2 · מסגור חדש</span></div></div></div>
+        <p class="what">מקלידים מקצוע — ומקבלים <b>מפת משימות</b>, לא תחזית גורל: אילו משימות בתפקיד כבר נעזרות ב-AI היום ובאילו כלים, <b>ומה עדיין לא עובד</b> — היכן האיכות לא מספיקה, היכן זה יקר מדי, והיכן נדרש אדם. כל שורה עם מקור ותאריך עדכון, ובלי אחוזי "סיכון החלפה". הדף מסתיים בהצעה עניינית: אלה הכלים שסוגרים את המשימות האלה, וזה הקורס שמלמד אותם.</p>
+        <p class="revnote"><b>מה השתנה:</b> יצאנו מעולם "ה-AI בא על התפקיד שלך". השוק תנודתי — יש גם מקרים של החזרת עובדים אחרי אוטומציה שלא החזיקה, בגלל איכות או עלות — ולכן קביעות נחרצות על העתיד היו הופכות לנטל ברגע שהמציאות מתהפכת. הכלי מציג את מה שנצפה בפועל ברמת המשימה, כולל הגבולות, ולא מוכר פחד ואחריו פתרון.</p>
         <div class="krow">
-          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — כלי שמשתפים</span></div>
-          <div class="kv"><b>LEADS</b><span class="score">5/5 — פחד+תקווה+פתרון</span></div>
-          <div class="kv"><b>EFFORT</b><span class="score">~9 ימים (כולל דאטה)</span></div>
+          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — הכלי שמראה גם גבולות</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — פחות דרמה, יותר אמון</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~7 ימים (כולל מיפוי משימות)</span></div>
           <div class="kv"><b>SEO</b><span class="score">דף לכל מקצוע = זנב ארוך</span></div>
         </div>
-        <p class="proof"><b>ההוכחה מהעולם:</b> WillRobotsTakeMyJob — אתר של אדם אחד על דאטה ציבורי חינמי — סוקר ב-Fox News, Business Insider ו-Fortune ומחזיק קהל כבר 9 שנים.</p>
-        <p class="first"><b>צעד ראשון:</b> להצליב את טבלת החשיפה של מיקרוסופט עם 30 המקצועות הנפוצים בלמ"ס — יום עבודה אחד, ויש MVP.</p>
+        <p class="proof"><b>ההוכחה מהעולם:</b> WillRobotsTakeMyJob הוכיח את גודל התיאבון לקטגוריה — אבל בנוי על מודל תחזית משנת 2013. הדאטה העדכני (מיקרוסופט, Anthropic) הוא ברמת <b>משימה</b>, לא ברמת משרה. אנחנו לוקחים את הביקוש שלו ואת הדיוק שלהם.</p>
+        <p class="first"><b>צעד ראשון:</b> 10 מקצועות, 8–12 משימות לכל אחד, כל שורה עם מקור ותאריך. מתחילים במקצועות שכבר יש לנו קורס עבורם.</p>
       </div>
 
-      <div class="card cat-tools" id="idea-3" data-cat="tools" data-name='מחשבון פרמיית ה-AI לשכר'>
+      <div class="card cat-tools" id="idea-3" data-cat="tools" data-name='מחשבון הזמן החוזר'>
         <button class="vote">☆ בחר</button>
         <div class="top"><span class="idx" style="color:var(--t-tools)">03</span>
-          <div><h3>מחשבון פרמיית ה-AI לשכר</h3>
-          <div class="badges"><span class="tag tools">כלי חי</span></div></div></div>
-        <p class="what">בוחרים מקצוע ושכר נוכחי — מקבלים כמה שווה תוספת מיומנות AI בתחום, על בסיס הדאטה הקיים (GotFriends: פרמיה של ~9% בהייטק; סקרי MDLI ו-Ethosia; AvodaData הממשלתי). מוצג במסגור הכספי הישן והטוב: <b>שכר היום ← שכר עם מיומנות AI ← עלות הקורס ₪590 ← החזר תוך X חודשים.</b></p>
+          <div><h3>מחשבון הזמן החוזר — במקום מחשבון השכר</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span><span class="tag rev">v2 · הוגדר מחדש</span></div></div></div>
+        <p class="what">מחשבון פרמיית השכר ירד. במקומו נמדד הדבר היחיד שאפשר לעמוד מאחוריו: <b>כמה זמן חוזר בשבוע.</b> בוחרים 3–5 משימות שגרתיות מהתפקיד — ומקבלים אומדן שעות מוחזרות, מבוסס על מדידות לפני/אחרי שאנחנו עצמנו מבצעים בכיתות, עם n גלוי לצד כל מספר. התוצאה מוצגת בשעות ולא בשקלים; מי שרוצה לתרגם לכסף מכיר את השכר שלו טוב מאיתנו.</p>
+        <p class="revnote"><b>מה השתנה:</b> ההערה הכי חשובה בסבב. אי אפשר להתחייב לעליית שכר של אדם שאיננו יודעים היכן ובאיזה תפקיד יעבוד — הבטחה כזו עולה באמינות הרבה יותר ממה שהיא מכניסה בלידים, ובדיוק בשוק שבו התקשורת מחפשת מכללות שמבטיחות יותר מדי. גם רעיון 12 (מחקר פרמיית השכר) ירד מכאן והתאחד לתוך רעיון 14, שם מודדים בוגרים אמיתיים עם מתודולוגיה.</p>
         <div class="krow">
-          <div class="kv"><b>POSITIONING</b><span class="score">4/5</span></div>
-          <div class="kv"><b>LEADS</b><span class="score">5/5 — מדבר כסף</span></div>
-          <div class="kv"><b>EFFORT</b><span class="score">~3 ימים</span></div>
-          <div class="kv"><b>CAMPAIGNS</b><span class="score">מושלם לוואטסאפ/פייסבוק</span></div>
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — צניעות נקראת מקצועיות</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — מדבר בשעות, לא בהבטחות</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~3 ימים + מדידה בכיתה</span></div>
+          <div class="kv"><b>DATA</b><span class="score">נמדד אצלנו — לא מיובא</span></div>
         </div>
-        <p class="proof"><b>ההוכחה מהעולם:</b> HubSpot Website Grader — 4 מיליון בדיקות, 40 אלף באקלינקים — הכלי־חינמי שבנה חברה של מיליארדים. אותו עיקרון, בגרסת שכר ישראלית.</p>
-        <p class="first"><b>צעד ראשון:</b> טבלת בסיס של 20 מקצועות עם טווחי שכר ממקורות קיימים — חצי יום.</p>
+        <p class="proof"><b>ההוכחה מהעולם:</b> HubSpot Website Grader — 4 מיליון בדיקות ו-40 אלף קישורים נכנסים — עבד כי הוא <b>מדד</b> משהו אמיתי באתר של המשתמש, לא כי הוא הבטיח לו הכנסות.</p>
+        <p class="first"><b>צעד ראשון:</b> למדוד 5 משימות בקבוצת קורס אחת, לפני ואחרי. יומיים של מדידה — וזה כל בסיס הדאטה של הכלי.</p>
       </div>
 
-      <div class="card cat-tools" id="idea-4" data-cat="tools" data-name='מגרש אימוני פרומפטים עם ציון חי'>
+      <div class="card cat-tools" id="idea-4" data-cat="tools" data-name='מגרש אימוני הפרומפטים + ספריית המקצועות'>
         <button class="vote">☆ בחר</button>
         <div class="top"><span class="idx" style="color:var(--t-tools)">04</span>
-          <div><h3>מגרש אימוני פרומפטים — עם ציון חי</h3>
-          <div class="badges"><span class="tag tools">כלי חי</span></div></div></div>
-        <p class="what">משימה אמיתית קטנה ("נסח מייל ללקוח כועס"), המבקר כותב פרומפט — ו-AI נותן ציון, משוב, וגרסה משופרת לצידו. <b>זו הטעימה הראשונה של השיעור:</b> המבקר חווה בדיוק איך מרגיש ללמוד אצלנו, עוד לפני שנרשם. לוח שיאים משותף = מנגנון שיתוף מובנה.</p>
+          <div><h3>מגרש אימוני הפרומפטים — והספרייה שהוא מייצר</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span><span class="tag star">★ שלישיית הפתיחה</span><span class="tag merged">🔗 אוחד עם 10</span></div></div></div>
+        <p class="what">משימות <b>מפורטות שמדמות עבודה אמיתית</b> — בריף מלא, אילוצים, קהל יעד, מה נחשב תוצאה טובה — ולא "נסח מייל ללקוח כועס". המבקר כותב פרומפט ומקבל ציון, משוב וגרסה משופרת לצידו. <b>והפרומפטים הטובים ביותר נשמרים לספרייה ציבורית ממוינת לפי מקצוע:</b> לרואת חשבון, לאיש מכירות, למנהלת משרד, לעורך דין. כל פרומפט בספרייה מגיע עם הציון שקיבל, המשימה שממנה נולד והרובריקה ששפטה אותו — כלומר ספרייה שמוכיחה את עצמה, לא רשימה שמישהו הקליד.</p>
+        <p class="revnote"><b>מה השתנה:</b> רעיונות 4 ו-10 אוחדו, כפי שהוצע — הספרייה היא <b>התוצר</b> של המגרש ולא פרויקט נפרד, וכך היא גם מתעדכנת מעצמה. המשימות שודרגו למשימות מפורטות שמדמות את העולם האמיתי. בונוס מבני: הרובריקה שנבנית כאן היא בדיוק המנוע שמדד השליטה (רעיון 1) צריך — ולכן כדאי לבנות את המגרש לפניו.</p>
         <div class="krow">
           <div class="kv"><b>POSITIONING</b><span class="score">4/5 — חוויה, לא הבטחה</span></div>
-          <div class="kv"><b>LEADS</b><span class="score">4/5</span></div>
-          <div class="kv"><b>EFFORT</b><span class="score">~4 ימים</span></div>
-          <div class="kv"><b>RETENTION</b><span class="score">אתגר שבועי מתחלף</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 + טראפיק אורגני קבוע</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~5 ימים (במקום 4+2 בנפרד)</span></div>
+          <div class="kv"><b>SEO</b><span class="score">"פרומפט ל..." — חיפושים חמים</span></div>
         </div>
-        <p class="proof"><b>ההוכחה מהעולם:</b> Coursera מפעילה 15+ חידוני מיומנות כתבנית קבועה — כי משתמש שקיבל ציון סומך על ההמלצה שאחריו.</p>
-        <p class="first"><b>צעד ראשון:</b> אתגר אחד + רובריקת שיפוט אחת. עמוד אחד. יומיים.</p>
+        <p class="proof"><b>ההוכחה מהעולם:</b> Coursera מפעילה 15+ חידוני מיומנות כתבנית קבועה; ספריות הפרומפטים הפתוחות של Wharton/Mollick הן מהנכסים המשותפים ביותר ברשת. כאן שני המנגנונים מוזנים זה מזה.</p>
+        <p class="first"><b>צעד ראשון:</b> משימה מפורטת אחת + רובריקת שיפוט אחת + 25 פרומפטי זרע מתוך חומרי הקורסים הקיימים. יומיים לעמוד עובד.</p>
       </div>
 
-      <div class="card cat-tools" id="idea-5" data-cat="tools" data-name='עובד דיגיטלי חי בדף הבית'>
+      <div class="card cat-tools" id="idea-5" data-cat="tools" data-name='הדגמת הסוכן — דמו מתוסרט'>
         <button class="vote">☆ בחר</button>
         <div class="top"><span class="idx" style="color:var(--t-tools)">05</span>
-          <div><h3>עובד דיגיטלי חי בדף הבית</h3>
-          <div class="badges"><span class="tag tools">כלי חי</span></div></div></div>
-        <p class="what">סוכן AI אמיתי משובץ באתר, שמבצע מול המבקר משימה רב-שלבית בשידור חי — מקבל בקשה, מתכנן, מבצע, מדווח. מעליו כיתוב אחד: <b>"את זה בדיוק תדע לבנות בעצמך אחרי 60 שעות."</b> הדגמה חיה של פרויקט הגמר של קורס הדגל — במקום לתאר אותו.</p>
+          <div><h3>הדגמת הסוכן — דמו מתוסרט, לא סוכן חי</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span><span class="tag rev">v2 · הוכרע</span></div></div></div>
+        <p class="what">השאלה "מצגת או כלי חי?" הוכרעה: <b>דמו מתוסרט ומוקלט.</b> משימה אחת תחומה — למשל מחקר מתחרים מהיר — מוקלטת מקצה לקצה בזמן אמת עם הצגת השלבים (מקבל בקשה, מתכנן, מבצע, מדווח), ומעליה משפט אחד: "את זה בדיוק תדע לבנות בעצמך אחרי 60 שעות". <b>סוכן חי באתר נשאר על השולחן כשלב ב', מאחורי שער:</b> הוא דורש תשתית הרצה ותקציב שוטף, ובעיקר — מול משימה חופשית של מבקר אי אפשר לדעת מראש אם התוצר יהיה טוב. כישלון פומבי בדף הבית של בית ספר ל-AI יקר בהרבה מהרווח.</p>
+        <p class="revnote"><b>מה השתנה:</b> שתי ההסתייגויות התקבלו במלואן — המשאבים והבלתי-צפיות. הכרעה: מתחילים בהקלטה שאנחנו שולטים בה, ומעלים סוכן חי רק כשתהיה הרצה יציבה ומשימה מוגבלת שנבדקה מאות פעמים.</p>
         <div class="krow">
-          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — אפקט וואו</span></div>
-          <div class="kv"><b>LEADS</b><span class="score">3/5</span></div>
-          <div class="kv"><b>EFFORT</b><span class="score">~6 ימים</span></div>
+          <div class="kv"><b>POSITIONING</b><span class="score">3/5 — אפקט וואו, סיכון נמוך</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">2/5 — תומך המרה, לא מייצר</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~2 ימים (במקום 6)</span></div>
           <div class="kv"><b>COURSE LINK</b><span class="score">ישיר — מהנדס AI אג'נטי</span></div>
         </div>
-        <p class="proof"><b>ההוכחה מהעולם:</b> העיקרון של כל דמו מוצר טוב: show, don't tell. אף מכללה בישראל לא מראה סוכן חי.</p>
-        <p class="first"><b>צעד ראשון:</b> לבחור משימת דמו אחת בטוחה ותחומה (למשל: מחקר מתחרים מהיר) ולבנות אותה כ-flow סגור.</p>
+        <p class="proof"><b>ההוכחה מהעולם:</b> כל דמו מוצר טוב הוא מתוסרט. show, don't tell — אבל תמיד על מסלול שנבדק.</p>
+        <p class="first"><b>צעד ראשון:</b> לבחור משימה אחת, להריץ אותה חמש פעמים, ולהקליט את הריצה הטובה. יום עבודה.</p>
       </div>
 
-      <div class="card cat-intel" id="idea-6" data-cat="intel" data-name='המכ״ם — תדריך ה-AI השבועי'>
+      <div class="card cat-intel" id="idea-6" data-cat="intel" data-name='המכ״ם — התדריך השבועי (3 רמות) + החתך הישראלי'>
         <button class="vote">☆ בחר</button>
         <div class="top"><span class="idx" style="color:var(--t-intel)">06</span>
-          <div><h3>"המכ"ם" — תדריך ה-AI השבועי של ישראל</h3>
-          <div class="badges"><span class="tag intel">מודיעין</span><span class="tag star">★ שלישיית הפתיחה — מתחילים כאן</span></div></div></div>
-        <p class="what">כל יום ראשון: 5 דקות קריאה בעברית — מה קרה השבוע ב-AI, <b>ומה זה אומר לעסק ולקריירה שלך בישראל.</b> נפתח תמיד ב"מכתב המומחה" קצר וחתום של ד"ר בדיחי — דעה, לא סיכום. מתפרסם באתר + ניוזלטר + ערוץ וואטסאפ שקט. זה הנכס שממנו כל שאר הרעיונות מקבלים הפצה.</p>
+          <div><h3>"המכ"ם" — תדריך ה-AI השבועי, בשלוש רמות</h3>
+          <div class="badges"><span class="tag intel">מודיעין</span><span class="tag star">★ שלישיית הפתיחה — מתחילים כאן</span><span class="tag merged">🔗 אוחד עם 13</span></div></div></div>
+        <p class="what">כל יום ראשון, בעברית, <b>בשלוש רמות קריאה לפי רמת ההבנה והזמן:</b> <b>30 שניות</b> — מה קרה השבוע; <b>5 דקות</b> — מה זה אומר לעסק ולקריירה שלך בישראל; <b>ולעומק</b> — המקור, המספרים והמשמעות הטכנית. נפתח תמיד ב"מכתב המומחה" קצר וחתום של ד"ר בדיחי — דעה, לא סיכום. אחת לחודש נכנס מדור קבוע — <b>"החתך הישראלי"</b> — מה הדאטה הגלובלי הפתוח (Anthropic Economic Index, מדד סטנפורד, OECD) אומר דווקא על ישראל. זה הנכס שממנו כל שאר הרעיונות מקבלים הפצה.</p>
+        <p class="revnote"><b>מה השתנה:</b> נוספו שלוש רמות תקציר, כך שאותו גיליון עובד גם למנכ"ל שיש לו 30 שניות וגם למפתח שרוצה את המספרים. ורעיון 13 ("החתך הישראלי") הפך למדור בתוך התדריך במקום פרסום עצמאי — אין בו מספיק חומר ייחודי כדי להחזיק נכס נפרד, ובתוך התדריך הוא נותן בדיוק את אותה סמכות בלי להקים ערוץ שני.</p>
         <div class="krow">
           <div class="kv"><b>POSITIONING</b><span class="score">5/5 — קצב = סמכות</span></div>
           <div class="kv"><b>LEADS</b><span class="score">4/5 — רשימת תפוצה חיה</span></div>
-          <div class="kv"><b>EFFORT</b><span class="score">יום הקמה + 2-3 שע'/שבוע</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">יום הקמה + 2–3 שע'/שבוע</span></div>
           <div class="kv"><b>GAP</b><span class="score">אף מכללה לא עושה זאת</span></div>
         </div>
         <p class="proof"><b>ההוכחה מהעולם:</b> The Batch של DeepLearning.AI — הניוזלטר שבנה אימפריית קורסים; המודל של Ethan Mollick (מאות אלפי מנויים): מהירות + קול אישי מנצחים בלוג מוסדי.</p>
@@ -800,7 +824,7 @@ footer .src-line{margin-top:8px;line-height:1.8}
         <button class="vote">☆ בחר</button>
         <div class="top"><span class="idx" style="color:var(--t-intel)">07</span>
           <div><h3>מילון ה-AI העברי המוסמך</h3>
-          <div class="badges"><span class="tag intel">מודיעין</span></div></div></div>
+          <div class="badges"><span class="tag intel">מודיעין</span><span class="tag star">✓ אושר בפידבק ללא שינוי</span></div></div></div>
         <p class="what">150+ מונחי AI בעברית ברורה — Agentic, RAG, MCP, Fine-tuning — כל מונח: הגדרה, דוגמה ישראלית מהשטח, ומתי תפגוש אותו בקורסים שלנו. מתוחזק ומעודכן עם כל גל חדש. <b>מילון האקדמיה ללשון העברית בתחום — משנת 2004.</b> ההגדרה שגוגל (ומנועי ה-AI) יצטטו תהיה שלנו.</p>
         <div class="krow">
           <div class="kv"><b>POSITIONING</b><span class="score">4/5 — "ההגדרה לפי..."</span></div>
@@ -812,148 +836,106 @@ footer .src-line{margin-top:8px;line-height:1.8}
         <p class="first"><b>צעד ראשון:</b> 40 המונחים הראשונים מתוך הסילבוסים הקיימים — הידע כבר אצלכם, צריך רק לפרסם.</p>
       </div>
 
-      <div class="card cat-intel" id="idea-8" data-cat="intel" data-name='פרשנות 24 השעות'>
+      <div class="card cat-intel" id="idea-8" data-cat="intel" data-name='פרשנות 24 השעות — בתורנות'>
         <button class="vote">☆ בחר</button>
         <div class="top"><span class="idx" style="color:var(--t-intel)">08</span>
-          <div><h3>פרשנות 24 השעות — קול מומחה בזמן אמת</h3>
-          <div class="badges"><span class="tag intel">מודיעין</span></div></div></div>
-        <p class="what">נוהל קבוע: בכל השקת ענק (מודל חדש, רגולציה, מוצר) — תוך 24 שעות עולה פרשנות קצרה בעברית בחתימת ד"ר בדיחי: מה קרה, מה זה אומר לעסקים בישראל, מה לעשות מחר. מופץ גם ללינקדאין ולתקשורת. <b>עם הזמן, עיתונאים לומדים למי מתקשרים כשמשהו קורה ב-AI.</b></p>
+          <div><h3>פרשנות 24 השעות — עם תורנות כתיבה</h3>
+          <div class="badges"><span class="tag intel">מודיעין</span><span class="tag rev">v2 · חודד</span></div></div></div>
+        <p class="what">נוהל קבוע: בכל השקת ענק (מודל חדש, רגולציה, מוצר) עולה תוך 24 שעות פרשנות קצרה בעברית — מה קרה, מה זה אומר לעסקים בישראל, מה לעשות מחר. <b>האחריות מתחלקת בין 3–4 כותבים בתורנות שבועית</b>, כל אחד עם חלון זמינות ידוע: התורן מכין טיוטה תוך 4 שעות, ד"ר בדיחי מאשר וחותם. עם הזמן, עיתונאים לומדים למי מתקשרים כשמשהו קורה ב-AI.</p>
+        <p class="revnote"><b>מה השתנה:</b> הזמן הוא כל המהלך — פרשנות שיוצאת אחרי 48 שעות שווה אפס. לכן האחריות מתחלקת בתורנות ולא נשענת על זמינות של אדם אחד; זה גם מה שהופך את זה מכוונה טובה לנוהל שמחזיק לאורך שנה.</p>
         <div class="krow">
           <div class="kv"><b>POSITIONING</b><span class="score">4/5 — מהירות = מומחיות</span></div>
           <div class="kv"><b>LEADS</b><span class="score">3/5</span></div>
-          <div class="kv"><b>EFFORT</b><span class="score">אפס פיתוח — משמעת בלבד</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">אפס פיתוח — נוהל ותורנות</span></div>
           <div class="kv"><b>PR</b><span class="score">בונה מעמד "המקור"</span></div>
         </div>
         <p class="proof"><b>ההוכחה מהעולם:</b> Ethan Mollick בנה מאות אלפי מנויים על עיקרון אחד: להיות ראשון + אמין אחרי כל השקה. בעברית אין אף גורם מוסדי כזה.</p>
-        <p class="first"><b>צעד ראשון:</b> תבנית קבועה של 4 פסקאות + התחייבות פנימית ל-SLA של 24 שעות. זהו.</p>
+        <p class="first"><b>צעד ראשון:</b> תבנית קבועה של 4 פסקאות, לוח תורנות לרבעון, והתחייבות פנימית ל-SLA של 24 שעות. זהו.</p>
       </div>
 
-      <div class="card cat-intel" id="idea-9" data-cat="intel" data-name='מדד משרות ה-AI של ישראל'>
+      <div class="card cat-intel" id="idea-9" data-cat="intel" data-name='מדד הדרישות — אילו כלי AI מבקשים במודעות דרושים'>
         <button class="vote">☆ בחר</button>
         <div class="top"><span class="idx" style="color:var(--t-intel)">09</span>
-          <div><h3>מדד משרות ה-AI של ישראל — דשבורד חי</h3>
-          <div class="badges"><span class="tag intel">מודיעין</span><span class="tag viral">⚡ נכס ציטוט חודשי</span></div></div></div>
-        <p class="what">ספירה חודשית מסודרת של משרות AI בלוחות הדרושים <b>בעברית</b> (AllJobs, דרושים, JobMaster): כמה משרות, באילו תפקידים, באילו ענפים, אילו מיומנויות מבוקשות. מוצג כדשבורד חי + עדכון חודשי קבוע. מדד נאמן של הטכניון עוקב רק אחרי לינקדאין ורק אחרי מפתחים — <b>השוק העברי הרחב פנוי.</b></p>
+          <div><h3>מדד הדרישות — אילו כלי AI מעסיקים בישראל מבקשים החודש</h3>
+          <div class="badges"><span class="tag intel">מודיעין</span><span class="tag warn">⚠ דורש הכרעה לפני בנייה</span><span class="tag rev">v2 · הוגדר מחדש</span></div></div></div>
+        <p class="what">הפידבק חשף שתי בעיות אמיתיות במדד משרות: מהי בכלל "משרת AI", והסיכון שנפרסם ביקוש למשרות שאנחנו לא מכשירים אליהן — מדד שעובד נגדנו. <b>לכן המדד משנה כיוון: לא סופרים משרות, סופרים דרישות.</b> אילו כלים ומיומנויות AI מופיעים במודעות דרושים בעברית <b>בתוך מקצועות רגילים</b> — שיווק, כספים, תפעול, משאבי אנוש, פיתוח — ומה מתוכם כבר נמצא בסילבוס שלנו. התוצר החודשי: "מה מעסיקים בישראל מבקשים החודש", מדד שמצביע ישירות על הקורסים שלנו במקום נגדם.</p>
+        <p class="revnote"><b>מה השתנה:</b> הוגדר מחדש מהיסוד. ספירת משרות היא טריטוריה תפוסה (מדד נאמן, לוחות הדרושים עצמם) והגדרה בעייתית; ספירת דרישות בתוך מקצועות קיימים היא דאטה שאיש לא מפרסם, והיא מחוברת ישירות להיצע הקורסים. <b>עדיין דורש הכרעה:</b> ספירת בסיס ידנית אחת תגיד אם יש כאן מדד בכלל — ורק אז בונים.</p>
         <div class="krow">
-          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — דאטה שאין לאחרים</span></div>
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — דאטה שאין לאחרים</span></div>
           <div class="kv"><b>LEADS</b><span class="score">3/5</span></div>
-          <div class="kv"><b>EFFORT</b><span class="score">~6 ימים + חצי יום/חודש</span></div>
-          <div class="kv"><b>NOTE</b><span class="score">ספירה ידנית — בלי סקרייפינג</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~5 ימים + חצי יום/חודש</span></div>
+          <div class="kv"><b>STATUS</b><span class="score">מותנה בספירת בסיס</span></div>
         </div>
-        <p class="proof"><b>ההוכחה מהעולם:</b> כל מדד חודשי עקבי הופך לשורת ציטוט קבועה בתקשורת ("על פי מדד היחידה ללימודי חוץ, החודש נפתחו X משרות AI").</p>
-        <p class="first"><b>צעד ראשון:</b> להגדיר פרוטוקול ספירה (10 מילות מפתח, 3 לוחות, אותו יום בחודש) ולהריץ ספירת בסיס ראשונה.</p>
+        <p class="proof"><b>ההוכחה מהעולם:</b> כל מדד חודשי עקבי הופך לשורת ציטוט קבועה בתקשורת — אבל רק אם ההגדרה שלו ברורה ומגנה על עצמה בשאלה הראשונה של עיתונאי.</p>
+        <p class="first"><b>צעד ראשון:</b> ספירה ידנית אחת: 3 לוחות, 100 מודעות, 12 מקצועות. יום עבודה שמכריע אם ממשיכים.</p>
       </div>
 
-      <div class="card cat-intel" id="idea-10" data-cat="intel" data-name='ספריית הפרומפטים של המקצועות'>
-        <button class="vote">☆ בחר</button>
-        <div class="top"><span class="idx" style="color:var(--t-intel)">10</span>
-          <div><h3>ספריית הפרומפטים של המקצועות</h3>
-          <div class="badges"><span class="tag intel">מודיעין</span></div></div></div>
-        <p class="what">ספרייה חינמית ופתוחה של פרומפטים מוכנים לפי מקצוע ישראלי: לרואת חשבון, לאיש מכירות, למנהלת משרד, לעורך דין. כל פרומפט נבדק ומתועד. <b>נתינה של ערך אמיתי בחינם היא קיצור הדרך הכי מהיר לאמון</b> — ומי שהפרומפט עבד לו, רוצה את הקורס המלא.</p>
-        <div class="krow">
-          <div class="kv"><b>POSITIONING</b><span class="score">3/5</span></div>
-          <div class="kv"><b>LEADS</b><span class="score">4/5 — שיתוף טבעי בוואטסאפ</span></div>
-          <div class="kv"><b>EFFORT</b><span class="score">~2 ימים</span></div>
-          <div class="kv"><b>SEO</b><span class="score">"פרומפטים ל..." — חיפושים חמים</span></div>
-        </div>
-        <p class="proof"><b>ההוכחה מהעולם:</b> ספריות הפרומפטים החינמיות של Wharton/Mollick הן מהנכסים המשותפים ביותר ברשת — נדיבות שמתורגמת לסמכות.</p>
-        <p class="first"><b>צעד ראשון:</b> 25 פרומפטים ל-5 מקצועות, ישירות מחומרי הקורסים הקיימים.</p>
-      </div>
-
-      <div class="card cat-research" id="idea-11" data-cat="research" data-name='דוח מיומנויות ה-AI של ישראל (שנתי)'>
+      <div class="card cat-research" id="idea-11" data-cat="research" data-name='דוח הנבחנים — מה למדנו ממדד השליטה'>
         <button class="vote">☆ בחר</button>
         <div class="top"><span class="idx" style="color:var(--t-research)">11</span>
-          <div><h3>"דוח מיומנויות ה-AI של ישראל" — המחקר השנתי</h3>
-          <div class="badges"><span class="tag research">מחקר</span><span class="tag viral">⚡ מנוע היח"צ המרכזי</span></div></div></div>
-        <p class="what">דוח שנתי חינמי: רמת השליטה ב-AI של העובד הישראלי — לפי הדאטה המצטבר ממבחן השליטה (רעיון 1) + סקר משלים של 500–1,000 משיבים. גרפים מוכנים להורדה, תקציר לעיתונאים, הודעה לתקשורת. <b>אף גוף בישראל לא מפרסם דאטה כזה. מי שמפרסם ראשון — קובע את השיח.</b></p>
+          <div><h3>"מה למדנו מ-X אלף נבחנים" — הדוח השנתי</h3>
+          <div class="badges"><span class="tag research">מחקר</span><span class="tag rev">v2 · הוגדר מחדש</span></div></div></div>
+        <p class="what">לא "דוח מיומנויות ה-AI של ישראל". הדוח מדווח <b>בדיוק על מי שנבחן</b>: כמה נבחנו, מאילו מקצועות, באיזה מסלול, מה התפלגות הציונים — וגם התפלגות <b>ציוני היעילות</b>, שאף אחד אחר לא מחזיק. <b>המדגם מתואר במפורש כמדגם נוחות של נבחנים מקוונים</b>, עם כל מגבלותיו, ולא כתמונת מצב לאומית. דווקא ההגדרה הצנועה היא מה שהופך את המספר לצליח לציטוט: עיתונאי שמצטט "לפי מדד השליטה, 62% מהנבחנים לא ידעו X" עומד על קרקע יציבה.</p>
+        <p class="revnote"><b>מה השתנה:</b> הכותרת הלאומית ירדה. מדגם של נבחנים באתר אחד אינו ישראל — בלי אקדמיה, בלי מי שלא הגיע אלינו — ולהתיימר לייצג מדינה שלמה היה פוגע בדיוק באמינות שהדוח בא לבנות. גם המונח "מיומנויות AI" חודד: הדוח מודד את מה שהמבחן מודד בפועל — ידע, שימוש, איכות פרומפט ויעילות — ותו לא.</p>
         <div class="krow">
-          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — מונופול ציטוטים</span></div>
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — מונופול על הדאטה</span></div>
           <div class="kv"><b>LEADS</b><span class="score">4/5 — הורדה בהרשמה</span></div>
           <div class="kv"><b>EFFORT</b><span class="score">רבעון (במקביל לשוטף)</span></div>
-          <div class="kv"><b>DEPENDS</b><span class="score">נבנה על רעיון 1</span></div>
+          <div class="kv"><b>DEPENDS</b><span class="score">מסה של נבחנים מרעיון 1</span></div>
         </div>
-        <p class="proof"><b>ההוכחה מהעולם:</b> ה-AI Index של סטנפורד מצוטט ב-NYT, בלומברג וגרדיאן; הדוח של Section הפך לשתי הודעות ארציות. גרסה ישראלית = חדשות בכל ערוץ כלכלי.</p>
-        <p class="first"><b>צעד ראשון:</b> להגדיר את 5 השאלות שהדוח יענה עליהן — ולוודא שמבחן השליטה אוסף בדיוק אותן.</p>
+        <p class="proof"><b>ההוכחה מהעולם:</b> דוח Section מבוסס גם הוא על מדגם מגויס — והוא מצוטט דווקא כי הוא מצהיר על כך מראש. שקיפות מתודולוגית היא מה שמאפשר לצטט, לא מה שמונע.</p>
+        <p class="first"><b>צעד ראשון:</b> להגדיר את 5 השאלות שהדוח יענה עליהן ואת נוסח תיאור המדגם — לפני שנבחן אדם אחד.</p>
       </div>
 
-      <div class="card cat-research" id="idea-12" data-cat="research" data-name='פרמיית ה-AI מחוץ להייטק'>
-        <button class="vote">☆ בחר</button>
-        <div class="top"><span class="idx" style="color:var(--t-research)">12</span>
-          <div><h3>מחקר הדגל: פרמיית ה-AI מחוץ להייטק</h3>
-          <div class="badges"><span class="tag research">מחקר</span></div></div></div>
-        <p class="what">המספר שאף אחד בישראל לא מדד: <b>כמה שווה מיומנות AI בשכר של משווקת, מנהל חשבונות, אשת מכירות, מנהל תפעול.</b> GotFriends מדדו 9% — רק בהייטק, ועצרו. סקר ייעודי בקרב מעסיקים ובוגרים בשוק הרחב יפיק את הכותרת ששייכת לנו: "מיומנות AI שווה X% לשכר — גם מחוץ להייטק".</p>
-        <div class="krow">
-          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — המספר של השוק שלנו</span></div>
-          <div class="kv"><b>LEADS</b><span class="score">4/5 — מזין כל קמפיין</span></div>
-          <div class="kv"><b>EFFORT</b><span class="score">~12 ימים כולל סקר</span></div>
-          <div class="kv"><b>EDGE</b><span class="score">אלפי סטודנטים = מדגם נגיש</span></div>
-        </div>
-        <p class="proof"><b>ההוכחה מהעולם:</b> כל קמפיין עתידי שלנו יוכל לצטט את המחקר של עצמנו — הנכס השיווקי שכולם ישאלו "למה לא עשינו את זה קודם".</p>
-        <p class="first"><b>צעד ראשון:</b> שאלון 10 שאלות למאגר הבוגרים + 200 מעסיקים מרשימת השותפים.</p>
-      </div>
-
-      <div class="card cat-research" id="idea-13" data-cat="research" data-name='החתך הישראלי — הדאטה העולמי בעברית'>
-        <button class="vote">☆ בחר</button>
-        <div class="top"><span class="idx" style="color:var(--t-research)">13</span>
-          <div><h3>"החתך הישראלי" — הדאטה העולמי, בעברית</h3>
-          <div class="badges"><span class="tag research">מחקר</span><span class="tag star">★ שלישיית הפתיחה</span></div></div></div>
-        <p class="what">אחת לרבעון: ניתוח בעברית של מה שהדאטה הגלובלי הפתוח אומר <b>על ישראל</b> — Anthropic Economic Index (ישראל מקום 1 בעולם בשימוש לנפש — פי 4.9!), מדד סטנפורד, OECD. הכותרות כבר קיימות, פשוט אף אחד לא כותב אותן בעברית כמו שצריך. <b>דוח ראשון אפשרי תוך יומיים — עוד לפני שיש לנו דאטה משלנו.</b></p>
-        <div class="krow">
-          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — סמכות מיידית</span></div>
-          <div class="kv"><b>LEADS</b><span class="score">3/5</span></div>
-          <div class="kv"><b>EFFORT</b><span class="score">~2 ימים לגיליון</span></div>
-          <div class="kv"><b>SPEED</b><span class="score">הפרסום הראשון — השבוע</span></div>
-        </div>
-        <p class="proof"><b>ההוכחה מהעולם:</b> נבדק — קיים רק תרגום אחד של מדד סטנפורד לעברית, בלי לוקליזציה ישראלית. הנישה ריקה.</p>
-        <p class="first"><b>צעד ראשון:</b> גיליון #1: "ישראל — אלופת העולם בשימוש ב-AI. אז למה רק 28% מהעסקים מרוויחים מזה?"</p>
-      </div>
-
-      <div class="card cat-research" id="idea-14" data-cat="research" data-name='שקיפות בוגרים — המספרים האמיתיים'>
+      <div class="card cat-research" id="idea-14" data-cat="research" data-name='שקיפות תוצאות בוגרים (כולל פרמיית השכר)'>
         <button class="vote">☆ בחר</button>
         <div class="top"><span class="idx" style="color:var(--t-research)">14</span>
-          <div><h3>שקיפות בוגרים — המספרים האמיתיים</h3>
-          <div class="badges"><span class="tag research">מחקר</span></div></div></div>
-        <p class="what">פרסום יזום ומבוקר של תוצאות בוגרים: אחוז השמה, שינוי שכר, שביעות רצון — כולל המתודולוגיה. הדאטה הממשלתי (AvodaData) מפגר ב-5 שנים ולא מכסה הכשרות מקצועיות; גלובס תוקף באופן קבוע הבטחות לא מבוקרות של מכללות. <b>הראשון שמפרסם מספרים אמיתיים עם מתודולוגיה — הופך את השקיפות עצמה לבידול.</b></p>
+          <div><h3>שקיפות תוצאות בוגרים — עם מתודולוגיה גלויה</h3>
+          <div class="badges"><span class="tag research">מחקר</span><span class="tag merged">🔗 בלע את 12</span><span class="tag warn">⚠ פיילוט לפני החלטה</span></div></div></div>
+        <p class="what">מדידה מוגדרת מראש, ולא "דף המלצות": <b>השמה ב-6 ו-12 חודשים, שינוי שכר מדווח בטווחים (לא ממוצע יחיד), שביעות רצון, ואחוז המשיבים</b> — עם המתודולוגיה גלויה לצד המספרים, כולל מה לא נמדד ומי לא ענה. כאן, ורק כאן, יכולים לחיות מספרי שכר: על הבוגרים שלנו, בשאלון שלנו, עם n ידוע — ולא כתחזית לגולש אנונימי שאיננו יודעים עליו דבר. <b>הערך המוסף מול כל דף המלצות בשוק אינו התוכן — הוא המתודולוגיה.</b> אף מתחרה לא מפרסם אחוז משיבים.</p>
+        <p class="revnote"><b>מה השתנה:</b> רעיון 12 (פרמיית ה-AI מחוץ להייטק) התאחד לכאן. הביקורת נכונה: בסקר שוק אי אפשר לבודד ותק, תפקיד וחברה, ולכן "מיומנות AI שווה X%" הוא מספר שלא נוכל להגן עליו — אבל על הבוגרים שלנו אפשר לדווח ביושר. שתי ההסתייגויות הנוספות התקבלו: התוצאה עשויה לא להחמיא, ולכן <b>מתחילים בפיילוט שקט על קורס אחד וההחלטה על פרסום מתקבלת רק אחרי שרואים את המספרים.</b></p>
         <div class="krow">
           <div class="kv"><b>POSITIONING</b><span class="score">4/5 — אמון = מותג</span></div>
           <div class="kv"><b>LEADS</b><span class="score">4/5 — משכנע מתלבטים</span></div>
           <div class="kv"><b>EFFORT</b><span class="score">~10 ימים + אישור הנהלה</span></div>
-          <div class="kv"><b>RISK</b><span class="score">דורש עמידה מאחורי המספרים</span></div>
+          <div class="kv"><b>GATE</b><span class="score">פיילוט → החלטה → פרסום</span></div>
         </div>
-        <p class="proof"><b>ההוכחה מהעולם:</b> בשוק שבו התקשורת חושדת בכולם, שקיפות היא חסינות — ונשק נגד כל מתחרה שמסתיר.</p>
-        <p class="first"><b>צעד ראשון:</b> פיילוט שקט על קורס אחד: סקר בוגרים 6 חודשים אחרי סיום, ואז החלטת הנהלה.</p>
+        <p class="proof"><b>ההוכחה מהעולם:</b> בשוק שבו התקשורת (גלובס ואחרים) תוקפת באופן קבוע הבטחות לא מבוקרות של מכללות, מתודולוגיה גלויה היא חסינות — ונשק מול כל מתחרה שמפרסם רק ציטוטים מחמיאים.</p>
+        <p class="first"><b>צעד ראשון:</b> פיילוט שקט על קורס אחד: סקר בוגרים 6 חודשים אחרי סיום. אחרי שרואים מספרים — החלטת הנהלה על פרסום.</p>
       </div>
 
-      <div class="card cat-meta" id="idea-15" data-cat="meta" data-name='מדד מוכנות ה-AI לעסקים (B2B)'>
+      <div class="card cat-meta" id="idea-15" data-cat="meta" data-name='מדד מוכנות ה-AI לעסקים (B2B) — עם אדם בלולאה'>
         <button class="vote">☆ בחר</button>
         <div class="top"><span class="idx" style="color:var(--t-meta)">15</span>
-          <div><h3>מדד מוכנות ה-AI לעסקים (B2B)</h3>
-          <div class="badges"><span class="tag meta">מהלך-על</span></div></div></div>
-        <p class="what">שאלון עצמי לעסקים: 6 צירים (אסטרטגיה, דאטה, כלים, אנשים, תהליכים, אבטחה) ← ציון + דירוג ("מוביל / רודף / מדשדש / חשוף") + השוואה לעסקים דומים בישראל. התוצאה מזמינה פגישה — <b>וזה בדיוק הצינור להכשרות הארגוניות ולשותפויות (IAI/ELTA, HUBTEC).</b> הדאטה המצטבר: "מדד מוכנות העסקים הישראלי".</p>
+          <div><h3>מדד מוכנות ה-AI לעסקים — עם אדם מאחורי הדוח</h3>
+          <div class="badges"><span class="tag meta">מהלך-על</span><span class="tag rev">v2 · הוכרע</span></div></div></div>
+        <p class="what">שאלון עצמי לעסקים: 18 שאלות ב-6 צירים (אסטרטגיה, דאטה, כלים, אנשים, תהליכים, אבטחה). <b>אבל התוצאה אינה אוטומטית לגמרי:</b> הארגון מקבל מיד ציון ומיקום יחסי — כדי לא לאבד אותו ברגע הסקרנות — <b>ואילו הדוח המלא נכתב ע"י אדם</b> שקורא את התשובות ומחזיר ניתוח אמיתי ושיחה. זה מה שהופך שאלון לפגישה, וזה גם הצינור להכשרות הארגוניות ולשותפויות (IAI/ELTA, HUBTEC). הדאטה המצטבר: "מדד מוכנות העסקים הישראלי".</p>
+        <p class="revnote"><b>מה השתנה:</b> ההכרעה בין אוטומציה מלאה לאדם בלולאה נפלה על השילוב — ציון מיידי, דוח אנושי. מול ארגון, דוח גנרי אוטומטי שורף את ההזדמנות בדיוק ברגע שבו היא נוצרת; והיעד כאן הוא הכשרה ארגונית, לא ליד.</p>
         <div class="krow">
           <div class="kv"><b>POSITIONING</b><span class="score">4/5 בעולם ה-B2B</span></div>
           <div class="kv"><b>LEADS</b><span class="score">4/5 — פגישות ארגוניות</span></div>
-          <div class="kv"><b>EFFORT</b><span class="score">~5 ימים</span></div>
-          <div class="kv"><b>SYNERGY</b><span class="score">מזין את מערך המכירות</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~5 ימים + זמן אנליסט לדוח</span></div>
+          <div class="kv"><b>SYNERGY</b><span class="score">מזין מכירות ושותפויות</span></div>
         </div>
-        <p class="proof"><b>ההוכחה מהעולם:</b> Cisco הפכה שאלון כזה למדד עולמי מצוטט (רק 13% "Pacesetters"); PwC ממירה אותו ישירות לפגישות ייעוץ עם 500+ ארגונים.</p>
-        <p class="first"><b>צעד ראשון:</b> 18 שאלות, 6 צירים, דוח PDF אוטומטי — ולתת אותו קודם ל-10 לקוחות B2B קיימים.</p>
+        <p class="proof"><b>ההוכחה מהעולם:</b> Cisco הפכה שאלון כזה למדד עולמי מצוטט (רק 13% "Pacesetters"); PwC ממירה אותו ישירות לפגישות ייעוץ עם 500+ ארגונים — עם אנליסט מאחורי כל דוח.</p>
+        <p class="first"><b>צעד ראשון:</b> 18 שאלות, 6 צירים, ולתת אותו קודם ל-10 לקוחות B2B קיימים — עם דוח שנכתב ידנית, כדי ללמוד מה בכלל שווה לאוטמט.</p>
       </div>
 
-      <div class="card cat-meta" id="idea-16" data-cat="meta" data-name='הסמכת "כשיר AI" — הסטנדרט הארצי'>
+      <div class="card cat-meta" id="idea-16" data-cat="meta" data-name='הסמכת "כשיר AI" לפי מקצוע + תעודת לינקדאין'>
         <button class="vote">☆ בחר</button>
         <div class="top"><span class="idx" style="color:var(--t-meta)">16</span>
-          <div><h3>הסמכת "כשיר AI" — הסטנדרט שהמעסיקים ידרשו</h3>
-          <div class="badges"><span class="tag meta">מהלך-על</span></div></div></div>
-        <p class="what">ההימור הגדול של הבנק: בחינת כשירות AI בעברית — תקן שמעסיקים יכולים לדרוש בגיוס ("דרוש: כשירות AI רמה 3"). נבנית על סולם הרמות של מבחן השליטה (רעיון 1), משווקת דרך השותפים התעשייתיים. <b>מי שקובע את הסטנדרט — כולם עוברים דרכו.</b> מהלך של חודשים, אבל הוא הופך אותנו ממכללה לרגולטור-בפועל של השוק.</p>
+          <div><h3>הסמכת "כשיר AI" — לפי מקצוע, עם תעודה בלינקדאין</h3>
+          <div class="badges"><span class="tag meta">מהלך-על</span><span class="tag rev">v2 · חודד</span></div></div></div>
+        <p class="what">ההימור הגדול של הבנק — אבל לא תקן אחד גנרי: <b>סדרת הסמכות לפי ייעוד.</b> "כשיר AI במדעי המחשב", "כשיר AI בעיצוב גרפי", "כשיר AI בשיווק", "כשיר AI בכספים" — כל אחת נבחנת על הכלים והמשימות של אותו עולם, על גבי מסלולי מדד השליטה (רעיון 1). <b>התעודה מונפקת כ-Credential בלינקדאין</b> עם חותמת האקדמיה, כך שהיא יושבת בפרופיל של הבוגר, נראית לכל מגייס ומייצרת חשיפה חוזרת בלי מדיה. היעד: מעסיק שכותב במודעה "דרוש: כשיר AI בשיווק, רמה 3".</p>
+        <p class="revnote"><b>מה השתנה:</b> פיצול לפי מקצועות במקום תקן אחד, ואינטגרציית תעודה ללינקדאין — שתי ההצעות התקבלו. הפיצול גם מוריד סיכון: תקן גנרי אחד קל לתקוף ("איך בוחנים מעצבת ומתכנת באותו מבחן?"), הסמכה ייעודית קשה בהרבה.</p>
         <div class="krow">
           <div class="kv"><b>POSITIONING</b><span class="score">5/5 — משנה קטגוריה</span></div>
           <div class="kv"><b>LEADS</b><span class="score">4/5 — כל נבחן = ליד</span></div>
           <div class="kv"><b>EFFORT</b><span class="score">חודשים + שותפים</span></div>
-          <div class="kv"><b>GATE</b><span class="score">מתחיל רק אחרי רעיונות 1+11</span></div>
+          <div class="kv"><b>GATE</b><span class="score">אחרי שמסלולי רעיון 1 יציבים</span></div>
         </div>
-        <p class="proof"><b>ההוכחה מהעולם:</b> נבדק — אין שום בחינת כשירות AI בעברית. בעולם, מי שהחזיק תקן (PMP, CPA) החזיק שוק שלם.</p>
-        <p class="first"><b>צעד ראשון:</b> שיחה אחת עם שותף תעשייתי גדול: "אם היה תקן — הייתם דורשים אותו בגיוס?"</p>
+        <p class="proof"><b>ההוכחה מהעולם:</b> ההסמכות של לינקדאין עצמה, ולפניהן PMP ו-CPA — מי שהחזיק תקן החזיק שוק. נבדק: אין שום בחינת כשירות AI בעברית, ובוודאי לא לפי מקצוע.</p>
+        <p class="first"><b>צעד ראשון:</b> שיחה אחת עם שותף תעשייתי גדול: "אם היה תקן במקצוע X — הייתם דורשים אותו בגיוס?" התשובה קובעת אם זה מהלך או פנטזיה.</p>
       </div>
 
     </div>
@@ -970,9 +952,9 @@ footer .src-line{margin-top:8px;line-height:1.8}
       <span class="farrow">←</span>
       <div class="fnode">🧬 דאטה ייחודי נצבר<small>כל שימוש = שורת דאטה</small></div>
       <span class="farrow">←</span>
-      <div class="fnode">📊 מדדים ודוחות<small>רעיונות 9, 11–14</small></div>
+      <div class="fnode">📊 מדדים ודוחות<small>רעיונות 9, 11, 14</small></div>
       <span class="farrow">←</span>
-      <div class="fnode">📰 התקשורת מצטטת<small>+ תדריך ופרשנות: 6, 8, 13</small></div>
+      <div class="fnode">📰 התקשורת מצטטת<small>+ תדריך ופרשנות: 6, 8</small></div>
       <span class="farrow">←</span>
       <div class="fnode">🎓 טראפיק, אמון, נרשמים<small>וכל נרשם מזין עוד דאטה</small></div>
     </div>
@@ -995,36 +977,36 @@ footer .src-line{margin-top:8px;line-height:1.8}
 <section class="bg-art flip" id="roadmap" style="padding:70px 0 64px;--art:url('https://d8j0ntlcm91z4.cloudfront.net/user_3CXkMvQYD6UJmnBIXDcObKys6dv/hf_20260812_181613_b658c9cf-afe6-4f34-9b81-95efd1a26f7a_min.webp')">
   <div class="wrap">
     <div class="shead"><span class="snum">07</span><h2>90 יום מהצהרה להוכחה</h2><span class="rule"></span></div>
-    <p class="ssub">כל שלב עומד על מה שנבנה לפניו — ולכן הסדר חשוב לא פחות מהתוכן. המספרים מפנים לכרטיסים בבנק הרעיונות.</p>
+    <p class="ssub">כל שלב עומד על מה שנבנה לפניו — ולכן הסדר חשוב לא פחות מהתוכן. המספרים מפנים לכרטיסים בבנק הרעיונות. <b>השינוי המרכזי בגרסה 2:</b> מגרש הפרומפטים (4) עלה לפני מדד השליטה (1) — הרובריקה שנבנית במגרש היא בדיוק מנוע הציון שהמבחן צריך, ולכן בניית המגרש קודם מקצרת את המבחן ולא מעכבת אותו.</p>
 
     <div class="stair rv">
       <div class="pillar" style="right:0;bottom:2%">
         <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מדברים כמו מומחים</span>
         <span class="p-when">שבועות 1–2 · אפס פיתוח</span>
-        <span class="p-desc">משיקים קצב לפני כלים: תדריך שבועי, נוהל פרשנות, ופרסום ישראלי ראשון.</span>
+        <span class="p-desc">משיקים קצב לפני כלים: תדריך שבועי בשלוש רמות, ולוח תורנות לפרשנות.</span>
         <span class="p-line"></span>
-        <span class="p-items"><span><b>6</b> · המכ"ם</span><span><b>8</b> · פרשנות 24 שע'</span><span><b>13</b> · החתך הישראלי</span></span>
+        <span class="p-items"><span><b>6</b> · המכ"ם + החתך הישראלי</span><span><b>8</b> · פרשנות בתורנות</span></span>
       </div>
       <div class="pillar" style="right:24%;bottom:9.5%">
-        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מוכיחים</span>
-        <span class="p-when">ימים 14–45 · הבנייה המרכזית</span>
-        <span class="p-desc">הדגל עולה לאוויר: מבחן השליטה מתחיל לאסוף לידים ודאטה.</span>
+        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>נותנים ערך</span>
+        <span class="p-when">ימים 5–20 · ~8 ימי עבודה</span>
+        <span class="p-desc">שני נכסים חינמיים שמייצרים טראפיק — ובונים את הרובריקה שהמבחן יעמוד עליה.</span>
         <span class="p-line"></span>
-        <span class="p-items"><span><b>1</b> · מדד השליטה ⭐</span><span><b>3</b> · מחשבון שכר</span><span><b>7</b> · המילון</span><span><b>10</b> · ספריית פרומפטים</span></span>
+        <span class="p-items"><span><b>4</b> · המגרש + הספרייה ⭐</span><span><b>7</b> · המילון</span></span>
       </div>
       <div class="pillar" style="right:48%;bottom:17%">
-        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>ויראליים</span>
-        <span class="p-when">ימים 45–90 · ההרחבה</span>
-        <span class="p-desc">הכלי עם תקרת השיתוף הגבוהה יוצא, והמדד החודשי מתחיל לתקתק.</span>
+        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מוכיחים</span>
+        <span class="p-when">ימים 20–45 · הדגל</span>
+        <span class="p-desc">מדד השליטה עולה לאוויר במסלול הראשון — עם ציון היעילות שאין לאף אחד.</span>
         <span class="p-line"></span>
-        <span class="p-items"><span><b>2</b> · בודק חשיפה</span><span><b>9</b> · מדד המשרות</span><span><b>4</b> · מגרש אימונים</span></span>
+        <span class="p-items"><span><b>1</b> · מדד השליטה ⭐</span><span><b>5</b> · דמו הסוכן</span></span>
       </div>
       <div class="pillar" style="right:72%;bottom:24.5%">
-        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מצוטטים</span>
-        <span class="p-when">רבעון 2 · קציר הדאטה</span>
-        <span class="p-desc">הדאטה שנצבר הופך למחקרים שאף אחד אחר לא יכול לפרסם.</span>
+        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מרחיבים ומצוטטים</span>
+        <span class="p-when">ימים 45–90 ← רבעון 2</span>
+        <span class="p-desc">מסלולי הקוד נפתחים, הכלים מתרחבים, והדאטה שנצבר הופך למחקר.</span>
         <span class="p-line"></span>
-        <span class="p-items"><span><b>11</b> · הדוח השנתי</span><span><b>12</b> · פרמיית השכר</span><span><b>15</b> · מדד B2B</span><span><b>5</b> · עובד דיגיטלי</span><span><b>16</b> · הסמכה</span><span><b>14</b> · שקיפות</span></span>
+        <span class="p-items"><span><b>2</b> · מפת התפקיד</span><span><b>3</b> · מחשבון הזמן</span><span><b>15</b> · מדד B2B</span><span><b>9</b> · מדד הדרישות*</span><span><b>11</b> · דוח הנבחנים</span><span><b>14</b> · שקיפות (פיילוט)</span><span><b>16</b> · הסמכות</span></span>
       </div>
     </div>
 
@@ -1032,24 +1014,25 @@ footer .src-line{margin-top:8px;line-height:1.8}
       <div class="pm rv">
         <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מדברים כמו מומחים</span>
         <span class="p-when">שבועות 1–2 · אפס פיתוח</span>
-        <div class="pm-row"><span class="pm-line"></span><span class="pm-items"><span><b>6</b> · המכ"ם</span><span><b>8</b> · פרשנות 24 שע'</span><span><b>13</b> · החתך הישראלי</span></span></div>
+        <div class="pm-row"><span class="pm-line"></span><span class="pm-items"><span><b>6</b> · המכ"ם + החתך הישראלי</span><span><b>8</b> · פרשנות בתורנות</span></span></div>
+      </div>
+      <div class="pm rv">
+        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>נותנים ערך</span>
+        <span class="p-when">ימים 5–20 · ~8 ימי עבודה</span>
+        <div class="pm-row"><span class="pm-line"></span><span class="pm-items"><span><b>4</b> · המגרש + הספרייה ⭐</span><span><b>7</b> · המילון</span></span></div>
       </div>
       <div class="pm rv">
         <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מוכיחים</span>
-        <span class="p-when">ימים 14–45 · הבנייה המרכזית</span>
-        <div class="pm-row"><span class="pm-line"></span><span class="pm-items"><span><b>1</b> · מדד השליטה ⭐</span><span><b>3</b> · מחשבון שכר</span><span><b>7</b> · המילון</span><span><b>10</b> · ספריית פרומפטים</span></span></div>
+        <span class="p-when">ימים 20–45 · הדגל</span>
+        <div class="pm-row"><span class="pm-line"></span><span class="pm-items"><span><b>1</b> · מדד השליטה ⭐</span><span><b>5</b> · דמו הסוכן</span></span></div>
       </div>
       <div class="pm rv">
-        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>ויראליים</span>
-        <span class="p-when">ימים 45–90 · ההרחבה</span>
-        <div class="pm-row"><span class="pm-line"></span><span class="pm-items"><span><b>2</b> · בודק חשיפה</span><span><b>9</b> · מדד המשרות</span><span><b>4</b> · מגרש אימונים</span></span></div>
-      </div>
-      <div class="pm rv">
-        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מצוטטים</span>
-        <span class="p-when">רבעון 2 · קציר הדאטה</span>
-        <div class="pm-row"><span class="pm-line"></span><span class="pm-items"><span><b>11</b> · הדוח השנתי</span><span><b>12</b> · פרמיית השכר</span><span><b>15</b> · מדד B2B</span><span><b>5</b> · עובד דיגיטלי</span><span><b>16</b> · הסמכה</span><span><b>14</b> · שקיפות</span></span></div>
+        <span class="p-chip"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.6" stroke="url(#nxg)" stroke-width="2.4"/></svg>מרחיבים ומצוטטים</span>
+        <span class="p-when">ימים 45–90 ← רבעון 2</span>
+        <div class="pm-row"><span class="pm-line"></span><span class="pm-items"><span><b>2</b> · מפת התפקיד</span><span><b>3</b> · מחשבון הזמן</span><span><b>15</b> · מדד B2B</span><span><b>9</b> · מדד הדרישות*</span><span><b>11</b> · דוח הנבחנים</span><span><b>14</b> · שקיפות (פיילוט)</span><span><b>16</b> · הסמכות</span></span></div>
       </div>
     </div>
+    <p class="matrix-note" style="margin-top:18px">* <b>9 · מדד הדרישות</b> נכנס למפה רק אם ספירת הבסיס הידנית (יום עבודה אחד) תראה שיש מספיק אזכורי כלי AI במודעות בעברית כדי להחזיק מדד חודשי. אם לא — הוא יורד מהבנק ולא נבנה "בכל זאת".</p>
   </div>
 </section>
 
@@ -1058,14 +1041,14 @@ footer .src-line{margin-top:8px;line-height:1.8}
   <div class="wrap">
     <div class="shead"><span class="snum">08</span><h2>ההמלצה — שלושת מהלכי הפתיחה</h2><span class="rule"></span></div>
     <div class="reco rv">
-      <h3>שלישיית הפתיחה: <span>6 ← 1 ← 13</span></h3>
-      <p>לא מתחילים מהרעיון הכי גדול — מתחילים מהשילוב שמניע את גלגל התנופה הכי מהר: <b>המכ"ם</b> נותן קצב ונוכחות כבר השבוע באפס פיתוח; <b>מדד השליטה</b> הוא מנוע הלידים-דאטה-יח"צ המרכזי; <b>החתך הישראלי</b> נותן פרסום דאטה מיידי — עוד לפני שנאסף גרם דאטה משלנו. שלושתם יחד: קצב + כלי + דאטה = הנוסחה המלאה, תוך פחות מחודש.</p>
+      <h3>שלישיית הפתיחה המעודכנת: <span>6 ← 4 ← 1</span></h3>
+      <p>סבב הפידבק שינה את הפתיחה. <b>המכ"ם (6)</b> נשאר ראשון — קצב ונוכחות כבר השבוע, באפס פיתוח. <b>מגרש הפרומפטים והספרייה (4)</b> נכנס במקום "החתך הישראלי": הוא המהלך שקיבל את התמיכה הרחבה ביותר, הוא מייצר טראפיק אורגני מהיום הראשון, <b>והרובריקה שנבנית בו היא בדיוק מנוע הציון שמדד השליטה צריך</b> — כלומר הוא מקצר את המהלך הבא ולא מעכב אותו. <b>מדד השליטה (1)</b> נשאר הדגל, עכשיו במסלול ראשון בלבד ועם ציון היעילות שאין לאיש. שלושתם יחד: קצב + ערך חינמי + כלי מדידה — כ-11 ימי עבודה.</p>
       <div class="trio">
-        <div class="t-card"><div class="t-n">MOVE 1 · השבוע</div><h5>המכ"ם — התדריך השבועי</h5><p>יום הקמה אחד. הגיליון הראשון בחתימת ד"ר בדיחי יוצא עוד השבוע.</p></div>
-        <div class="t-card"><div class="t-n">MOVE 2 · שבועיים</div><h5>מדד השליטה ב-AI</h5><p>~6 ימי בנייה עם Claude Code. מהיום הראשון: לידים + דאטה לדוח השנתי.</p></div>
-        <div class="t-card"><div class="t-n">MOVE 3 · תוך חודש</div><h5>החתך הישראלי #1</h5><p>"ישראל אלופת העולם בשימוש ב-AI" — הכותרת מחכה שמישהו יכתוב אותה בעברית.</p></div>
+        <div class="t-card"><div class="t-n">MOVE 1 · השבוע · 0 פיתוח</div><h5>המכ"ם — התדריך השבועי</h5><p>יום הקמה אחד, שלוש רמות קריאה. הגיליון הראשון בחתימת ד"ר בדיחי יוצא עוד השבוע.</p></div>
+        <div class="t-card"><div class="t-n">MOVE 2 · שבועיים · ~5 ימים</div><h5>מגרש הפרומפטים + הספרייה</h5><p>משימות מפורטות שמדמות עבודה אמיתית, והפרומפטים המנצחים הופכים לספרייה לפי מקצוע.</p></div>
+        <div class="t-card"><div class="t-n">MOVE 3 · תוך חודש · ~5 ימים</div><h5>מדד השליטה — מסלול ראשון</h5><p>המבחן היחיד בעולם שמציג גם כמה טוקנים עלתה התשובה. מסלולי הקוד נפתחים אחריו.</p></div>
       </div>
-      <div class="cta-vote"><b>הצעד הבא:</b> אישור שלושת מהלכי הפתיחה מאפשר יציאה לדרך השבוע. אם יש העדפה אחרת מתוך בנק הרעיונות — ניתן לסמן מהלכים בנספח ולשלוח אותם חזרה, ונתאים את סדר העדיפויות.</div>
+      <div class="cta-vote"><b>הצעד הבא:</b> אישור שלושת מהלכי הפתיחה מאפשר יציאה לדרך השבוע. במקביל, שני מהלכים כמעט-חינמיים יכולים לרוץ ללא אישור נוסף: <b>7 · המילון</b> (~3 ימים) ו-<b>8 · נוהל הפרשנות בתורנות</b> (אפס פיתוח). שלוש הכרעות עדיין פתוחות ומסומנות בנספח: <b>9</b> (ספירת בסיס לפני בנייה), <b>14</b> (פיילוט לפני פרסום) ו-<b>5</b> (סוכן חי — רק בשלב ב').</div>
     </div>
   </div>
 </section>
