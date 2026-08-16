@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>בנק הרעיונות · גרסה 2 — האקדמיה לבינה מלאכותית יישומית</title>
+<meta name="description" content="מחקר שוק והצעת מיצוב: איך האקדמיה לבינה מלאכותית יישומית עוברת מהצהרת מומחיות להוכחת מומחיות, ומה נדרש כדי להתחיל.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="הצעת מיצוב 2026 — האקדמיה לבינה מלאכותית יישומית">
+<meta property="og:description" content="מחקר שוק בן שלוש סריקות, הזדמנות מיצוב פתוחה, והמלצה לשלושה מהלכי פתיחה.">
+<meta property="og:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_3CXkMvQYD6UJmnBIXDcObKys6dv/hf_20260812_112959_4fe3a3ee-3707-4915-ab04-b9716971ffbc.png">
+<meta property="og:url" content="https://shayvazana-oss.github.io/bidul-ai-academy/bank.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0f1c; --panel:#111629; --panel-2:#151b31;
+  --hair:rgba(255,255,255,.11); --hair-2:rgba(255,255,255,.2);
+  --ink:#eef2fa; --ink2:#b7c2d9; --muted:#8b98b5;
+  --violet:#a78bfa; --violet-d:#8b5cf6; --cyan:#38bdf8; --green:#34d399; --orange:#f59e0b; --pink:#f472b6;
+  --c-tools:#0891b2; --c-intel:#8b5cf6; --c-research:#d97706; --c-meta:#db2777;
+  --t-tools:#3fd0ee; --t-intel:#b9a3fd; --t-research:#fbbf24; --t-meta:#f981bd;
+  --wa:#25d366; --grot:'Space Grotesk','Heebo',sans-serif;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 30px rgba(0,0,0,.35);
+  /* NexaCore brand gradients — "to left" so the blue stop leads in RTL */
+  --gradA:linear-gradient(to left,rgb(28,78,255),rgb(172,36,255) 50%,rgb(254,136,27));
+  --gradB:linear-gradient(to left,rgb(43,167,255),rgb(202,69,255) 50%,rgb(254,136,27));
+  --grad:var(--gradB);
+  --nx-blue:rgb(28,78,255); --nx-purple:rgb(200,111,255);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+body.has-bar{padding-bottom:96px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+section{padding:52px 0;scroll-margin-top:98px}
+a{color:var(--cyan);text-decoration:none}
+.rv{opacity:0;transform:translateY(16px);filter:blur(14px);transition:opacity .85s ease,transform .85s ease,filter .85s ease}
+.rv.in{opacity:1;transform:none;filter:blur(0)}
+@keyframes blurin{from{opacity:0;filter:blur(16px);transform:translateY(12px)}to{opacity:1;filter:blur(0);transform:none}}
+.grot{font-family:var(--grot);letter-spacing:.14em;text-transform:uppercase}
+/* floating pill navbar (NexaCore) — shrinks on scroll */
+.mast{position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:0 16px;pointer-events:none}
+.mast .in{pointer-events:auto;width:100%;max-width:1120px;background:rgba(17,22,41,.93);backdrop-filter:blur(20px);border:1px solid var(--hair);border-radius:18px;box-shadow:0 10px 34px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:8px 8px 8px 20px;transition:max-width .5s ease-in-out,padding .5s ease-in-out}
+.mast.shrunk .in{max-width:800px;padding:6px 6px 6px 16px}
+.m-brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16.5px;letter-spacing:-.02em;color:var(--ink);flex:0 0 auto}
+.m-brand svg{width:28px;height:28px;flex:0 0 auto}
+.m-brand small{display:block;font-family:var(--grot);font-size:9px;letter-spacing:.16em;color:var(--muted);font-weight:500}
+.m-links{display:flex;align-items:center;gap:2px;transition:gap .5s ease-in-out}
+.mast.shrunk .m-links{gap:0}
+.m-links a{font-size:13.5px;color:var(--ink2);border-radius:11px;padding:9px 14px;transition:background .15s,color .15s,padding .5s ease-in-out}
+.m-links a:hover{background:rgba(255,255,255,.08);color:var(--ink)}
+.mast.shrunk .m-links a{padding:7px 9px}
+.m-right{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+@media(max-width:940px){.m-links{display:none}.m-brand small{display:none}}
+/* gradient-border pill button (NexaCore ContactButton) */
+.btn-grad{position:relative;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;padding:1px;background:var(--gradA);flex:0 0 auto}
+.btn-grad>span{display:block;border-radius:11px;padding:10px 20px;background:var(--nx-blue);color:#fff;font-size:13.5px;font-weight:700;white-space:nowrap;transition:background .3s}
+.btn-grad:hover>span{background:var(--gradA)}
+.btn-grad.lg>span{padding:13px 24px;font-size:15px}
+@media(max-width:560px){
+  .mast{top:10px;padding:0 10px}
+  .mast .in{gap:10px;padding:6px 6px 6px 14px}
+  .m-brand{font-size:14px;gap:8px}
+  .m-brand svg{width:24px;height:24px}
+  .btn-grad>span{padding:9px 13px;font-size:12.5px}
+  .btn-grad.lg>span{white-space:normal;text-align:center;padding:12px 18px;font-size:14px}
+}
+/* full-bleed hero (NexaCore Hero) — generated backdrop + slow drift, fades into the page */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:120px 20px 90px;overflow:hidden;text-align:center}
+.hero-bg{position:absolute;inset:0;overflow:hidden;z-index:0}
+.hero-img{position:absolute;inset:-7%;background:#080b16 center/cover no-repeat;animation:drift 38s ease-in-out infinite alternate}
+@keyframes drift{from{transform:scale(1) translate(0,0)}to{transform:scale(1.13) translate(1.6%,-1.8%)}}
+/* scrim is DARKEST where the copy sits (right side in RTL) — artwork stays visible on the left */
+.hero-tint{position:absolute;inset:0;background:radial-gradient(72% 64% at 70% 48%,rgba(12,15,28,.91) 0%,rgba(12,15,28,.8) 58%,rgba(12,15,28,.38) 100%),linear-gradient(180deg,rgba(12,15,28,.72) 0%,rgba(12,15,28,.3) 34%,rgba(12,15,28,.62) 74%,var(--bg) 100%)}
+/* copy re-centres below 900px, so the scrim follows it back to the middle */
+@media(max-width:900px){.hero-tint{background:radial-gradient(78% 58% at 50% 46%,rgba(12,15,28,.9) 0%,rgba(12,15,28,.8) 58%,rgba(12,15,28,.44) 100%),linear-gradient(180deg,rgba(12,15,28,.72) 0%,rgba(12,15,28,.34) 34%,rgba(12,15,28,.62) 74%,var(--bg) 100%)}}
+.hero-fade{position:absolute;bottom:0;left:0;right:0;height:190px;z-index:2;pointer-events:none;background:linear-gradient(to bottom,transparent,var(--bg))}
+.hero-in{position:relative;z-index:3;width:100%;max-width:1180px;text-align:start}
+.hero-copy{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:21px;max-width:620px}
+/* soft local halo behind the copy only — guarantees legibility whatever the backdrop does */
+.hero-copy::before{content:'';position:absolute;inset:-34px -46px;z-index:-1;pointer-events:none;
+  background:radial-gradient(72% 74% at 58% 50%,rgba(7,10,20,.72) 0%,rgba(7,10,20,.5) 52%,rgba(7,10,20,0) 82%)}
+/* the clip lives in the BACKDROP, not in the content grid: it is light-on-black, so `screen`
+   erases its black and only the light composites onto the hero art. It sits under .hero-tint,
+   so it can never reduce the contrast of the copy. A wide radial mask feathers every edge. */
+.hero-vid{position:absolute;top:50%;left:0;transform:translate(-23%,-50%);
+  width:min(78vw,1080px);aspect-ratio:16/9;object-fit:cover;
+  mix-blend-mode:screen;opacity:.92;
+  -webkit-mask-image:radial-gradient(56% 60% at 47% 50%,#000 18%,rgba(0,0,0,.72) 44%,rgba(0,0,0,.28) 66%,transparent 84%);
+  mask-image:radial-gradient(56% 60% at 47% 50%,#000 18%,rgba(0,0,0,.72) 44%,rgba(0,0,0,.28) 66%,transparent 84%)}
+@media(max-width:900px){
+  .hero-vid{top:44%;left:50%;transform:translate(-50%,-50%);width:132vw;opacity:.55}
+}
+@media(max-width:900px){
+  .hero-in{text-align:center;max-width:640px}
+  .hero-copy{align-items:center;max-width:none;margin:0 auto}
+}
+.hero-eyebrow{font-size:clamp(14px,1.7vw,18px);font-weight:700;background:var(--gradB);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.01em}
+.hero h1{font-size:clamp(38px,5.6vw,68px);font-weight:900;line-height:1.05;letter-spacing:-.025em;color:#fff}
+.hero h1 .dim{color:#8b97b5;text-decoration:line-through;text-decoration-thickness:5px;text-decoration-color:rgba(254,136,27,.85)}
+.hero h1 .go{background:var(--gradB);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{font-size:clamp(15px,1.35vw,19px);color:#b9c4dc;max-width:660px;line-height:1.65}
+.hero-sub b{color:#fff;font-weight:600}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:10px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);font-family:var(--grot);font-size:10.5px;letter-spacing:.18em;color:#8b97b5;width:100%}
+@media(max-width:900px){.hero-btns,.hero-meta{justify-content:center}}
+.hero-meta b{color:#dbe3f2;font-weight:600}
+.hero-cue{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:600;color:#8b97b5}
+.hero-cue span{font-size:19px;line-height:1;animation:cue 2.2s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(6px);opacity:1}}
+.hero-eyebrow,.hero h1,.hero-sub,.hero-btns,.hero-meta{animation:blurin 1s ease both}
+.hero h1{animation-delay:.12s}.hero-sub{animation-delay:.26s}
+.hero-btns{animation-delay:.4s}.hero-meta{animation-delay:.52s}
+@media(max-width:700px){.hero{min-height:auto;padding:110px 18px 70px}.hero-cue{display:none}}
+/* executive summary — the first thing a decision-maker reads */
+.execwrap{padding:54px 0 6px}
+.exec{position:relative;background:var(--panel);border:1px solid var(--hair-2);border-radius:16px;padding:30px 34px 26px;box-shadow:var(--shadow);overflow:hidden}
+.exec::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:3px;background:var(--gradA)}
+.exec h2{font-size:clamp(21px,3vw,28px);font-weight:800;letter-spacing:-.01em;margin-bottom:10px}
+.exec-lede{font-size:15.5px;color:var(--ink2);max-width:840px;line-height:1.7;margin-bottom:22px}
+.exec-lede b{color:var(--ink);font-weight:700}
+.exec-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:0;border-top:1px solid var(--hair)}
+@media(max-width:840px){.exec-grid{grid-template-columns:1fr}}
+.exec-cell{padding:20px 24px 6px;border-inline-start:1px dashed var(--hair)}
+.exec-cell:first-child{border-inline-start:none;padding-inline-start:0}
+@media(max-width:840px){.exec-cell{border-inline-start:none;padding-inline-start:0;padding-top:18px}}
+.exec-h{font-family:var(--grot);font-size:10.5px;letter-spacing:.16em;color:var(--nx-purple);font-weight:700;margin-bottom:14px}
+.exec-moves{display:flex;flex-direction:column;gap:13px}
+.exec-move{display:flex;gap:12px;font-size:14.5px;color:var(--ink2);line-height:1.5}
+.exec-move i{flex:0 0 auto;width:23px;height:23px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid var(--hair-2);font-style:normal;font-family:var(--grot);font-size:11.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;justify-content:center;margin-top:2px}
+.exec-move b{color:var(--ink);font-weight:700}
+.exec-facts{display:flex;flex-direction:column;gap:12px}
+.exec-fact{display:flex;align-items:baseline;gap:11px;font-size:14.5px;color:var(--ink2);line-height:1.5}
+.exec-fact strong{font-family:'Bebas Neue',var(--grot);font-size:30px;line-height:.9;color:var(--mc);flex:0 0 auto;min-width:64px}
+.exec-ask{margin-top:20px;border:1px dashed rgba(52,211,153,.5);background:rgba(52,211,153,.06);border-radius:12px;padding:15px 18px;font-size:15px;color:var(--ink2);line-height:1.6}
+.exec-ask b{color:var(--green);font-weight:800}
+/* section backdrops (NexaCore TrustedSection / PrecisionSection) */
+.bg-art{position:relative;isolation:isolate}
+.bg-art::before{content:'';position:absolute;inset:0;z-index:-2;background:#0c0f1c var(--art) center/cover no-repeat}
+/* mirrored so the backdrop's contours climb right→left, the same way the RTL staircase does */
+.bg-art.flip::before{transform:scaleX(-1)}
+.bg-art::after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,var(--bg) 0%,rgba(12,15,28,.68) 20%,rgba(12,15,28,.68) 80%,var(--bg) 100%)}
+.kicker{font-family:var(--grot);font-size:12px;letter-spacing:.26em;color:var(--violet);font-weight:500;margin-bottom:18px}
+h1.giant{font-size:clamp(40px,5.2vw,68px);font-weight:900;line-height:1.05;letter-spacing:-.02em;margin-bottom:20px}
+h1.giant .dim{color:#6f7c99;text-decoration:line-through;text-decoration-thickness:5px;text-decoration-color:rgba(244,114,182,.6)}
+h1.giant .go{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover .kicker{animation:blurin .8s ease both}
+.cover h1.giant{animation:blurin .95s ease .1s both}
+.cover .lede{animation:blurin .95s ease .24s both}
+.cover .meta-row,.cover .cov-btns{animation:blurin .95s ease .38s both}
+.lede{font-size:17px;font-weight:400;color:var(--ink2);max-width:560px;margin-bottom:26px}
+.lede b{color:var(--ink);font-weight:600}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 26px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:12px 0;font-family:var(--grot);font-size:10.5px;letter-spacing:.18em;color:var(--muted)}
+.meta-row b{color:var(--ink2);font-weight:500}
+.cov-btns{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.btn-p{background:var(--green);color:#04241a;font-weight:800;font-size:14px;border-radius:10px;padding:12px 20px;transition:opacity .15s;box-shadow:var(--shadow)}
+.btn-p:hover{opacity:.88;color:#04241a}
+.btn-g{border:1px solid var(--hair-2);color:var(--ink2);font-weight:600;font-size:14px;border-radius:10px;padding:12px 20px;transition:border-color .15s,color .15s}
+.btn-g:hover{border-color:var(--cyan);color:var(--ink)}
+.cov-art{position:relative;border:1px solid var(--hair);border-radius:14px;overflow:hidden;background:#080b16;box-shadow:var(--shadow)}
+.cov-art img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;transform:scale(1.1)}
+.cov-cap{display:flex;justify-content:space-between;border-top:1px solid var(--hair);padding:10px 14px;font-family:var(--grot);font-size:9.5px;letter-spacing:.2em;color:var(--muted)}
+/* market snapshot — three-act narrative (demand → gap → supply) */
+.mapwrap{padding:36px 0 14px;border-bottom:1px solid var(--hair)}
+.mi-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.mi-head h2{font-size:clamp(20px,2.8vw,26px);font-weight:800;letter-spacing:-.01em}
+.mi-head span{font-family:var(--grot);font-size:10.5px;letter-spacing:.16em;color:var(--muted);font-weight:500}
+.snap-act{background:linear-gradient(180deg,#141c3a,#0e1428);border:1px solid var(--hair-2);border-radius:14px;padding:22px 24px 24px;box-shadow:var(--shadow)}
+.snap-act.key{border-color:rgba(245,158,11,.42)}
+.act-lbl{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.act-lbl .an{font-family:var(--grot);font-size:11px;letter-spacing:.2em;color:var(--muted);font-weight:700;flex:0 0 auto}
+.act-lbl h3{font-size:17px;font-weight:800;color:#eef2fa;flex:0 0 auto}
+.act-lbl .rule{flex:1;height:1px;background:var(--hair)}
+.sgrid{display:grid;gap:22px}
+.sgrid.c2{grid-template-columns:1fr 1fr}
+.sgrid.c3{grid-template-columns:repeat(3,1fr)}
+.sgrid.c4{grid-template-columns:repeat(4,1fr);gap:18px}
+.sgrid.c4 .sfig{font-size:46px}
+.sgrid.c4 .scap{font-size:12.5px;max-width:none}
+@media(max-width:1080px){.sgrid.c4{grid-template-columns:1fr 1fr}}
+@media(max-width:780px){.sgrid.c2,.sgrid.c3{grid-template-columns:1fr}}
+@media(max-width:620px){.sgrid.c4{grid-template-columns:1fr}}
+.scell{display:flex;align-items:flex-start;gap:15px}
+.sdia{flex:0 0 auto;width:34px;height:34px;border:2px solid var(--mc);border-radius:5px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;background:rgba(12,15,28,.5);margin-top:7px}
+.sdia span{transform:rotate(-45deg);font-size:15px;line-height:1}
+.sfig{font-family:'Bebas Neue',var(--grot);font-size:56px;line-height:.85;color:var(--mc);letter-spacing:.015em;white-space:nowrap}
+.sfig i{font-style:normal;font-family:'Heebo',sans-serif;font-weight:800;font-size:23px;letter-spacing:0}
+.scap{font-size:13.5px;color:#c3cde0;line-height:1.55;margin-top:9px;font-weight:500}
+.scap b{color:#eef2fa;font-weight:700}
+.ssrc{display:block;font-family:var(--grot);font-size:9.5px;letter-spacing:.14em;color:#8a96b3;margin-top:6px}
+/* connector between acts */
+.snap-link{display:flex;align-items:center;justify-content:center;gap:14px;padding:13px 0;color:var(--muted);font-size:13px;font-weight:700}
+.snap-link::before,.snap-link::after{content:'';width:56px;height:1px;background:var(--hair-2)}
+/* the gap bar — the actual insight */
+.gb-row{display:grid;grid-template-columns:200px 1fr 64px;align-items:center;gap:16px;margin-bottom:12px}
+@media(max-width:780px){.gb-row{grid-template-columns:130px 1fr 52px;gap:10px}}
+.gb-lbl{font-size:13.5px;color:#dbe3f2;font-weight:600;line-height:1.4}
+.gb-lbl small{display:block;font-size:11.5px;color:#8a96b3;font-weight:400}
+.gb-track{position:relative;height:34px;background:rgba(255,255,255,.05);border-radius:7px;overflow:hidden}
+.gb-fill{height:100%;border-radius:7px;transition:width 1.1s cubic-bezier(.22,1,.36,1)}
+.gb-fill.a{background:linear-gradient(to left,#38bdf8,#0ea5e9);box-shadow:0 0 16px rgba(56,189,248,.4)}
+.gb-fill.b{background:linear-gradient(to left,#34d399,#059669);box-shadow:0 0 16px rgba(52,211,153,.35)}
+.gb-gap{position:absolute;top:0;bottom:0;border:1px dashed rgba(245,158,11,.75);background:rgba(245,158,11,.14);border-radius:7px;display:flex;align-items:center;justify-content:center;transition:width 1.1s cubic-bezier(.22,1,.36,1) .25s}
+.gb-gap span{font-size:12.5px;font-weight:800;color:#fbbf24;white-space:nowrap}
+/* narrow screens: the gap region is too small for its label — the reading line below still explains it */
+@media(max-width:900px){.gb-gap span{display:none}}
+.gb-val{font-family:'Bebas Neue',var(--grot);font-size:32px;line-height:1;text-align:left;direction:ltr}
+.gb-val.a{color:#38bdf8}.gb-val.b{color:#34d399}
+.gb-read{margin-top:14px;padding-top:14px;border-top:1px solid var(--hair);font-size:14.5px;color:#dbe3f2;line-height:1.6}
+.gb-read b{color:#fbbf24;font-weight:800}
+.mi-note{font-size:13.5px;color:var(--ink2);margin-top:14px}
+.mi-note b{color:var(--ink)}
+/* scroll-fill statement (veloce TextFillSection) */
+.fillsec{padding:82px 0 72px}
+.fill-k{font-size:10.5px;color:var(--muted);text-align:center;margin-bottom:18px}
+.fillh{position:relative;max-width:840px;margin:0 auto;text-align:center;font-size:clamp(25px,4.2vw,44px);font-weight:900;line-height:1.5;letter-spacing:-.01em}
+.fillh .base{display:block;color:#39435c}
+.fillh .over{position:absolute;inset:0;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;clip-path:inset(0 0 0 100%);transition:clip-path .1s linear}
+/* section head */
+.shead{display:flex;align-items:center;gap:15px;margin-bottom:10px;flex-wrap:wrap}
+/* section chip (NexaCore) — off-white pill + tick-circle glyph, adapted to dark */
+.snum{display:inline-flex;align-items:center;gap:8px;font-family:var(--grot);font-size:12px;letter-spacing:.16em;color:var(--ink);font-weight:700;background:rgba(255,255,255,.06);border:1px solid var(--hair);border-radius:36px;padding:7px 15px;flex:0 0 auto}
+.snum::before{content:'';width:15px;height:15px;flex:0 0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 16'%3E%3Ccircle cx='8.5' cy='8' r='6.6' fill='none' stroke='%23c86fff' stroke-width='1.5'/%3E%3Crect x='8' y='0' width='1.1' height='3' fill='%23c86fff'/%3E%3Crect x='8' y='13' width='1.1' height='3' fill='%23c86fff'/%3E%3Crect x='0' y='7.5' width='3' height='1.1' fill='%23c86fff'/%3E%3Crect x='14' y='7.5' width='3' height='1.1' fill='%23c86fff'/%3E%3C/svg%3E") center/contain no-repeat}
+.shead h2{font-size:clamp(23px,3.4vw,32px);font-weight:800;letter-spacing:-.01em}
+.shead .rule{flex:1;height:1px;background:var(--hair);align-self:center}
+.ssub{color:var(--ink2);font-size:15.5px;max-width:760px;margin-bottom:28px}
+/* findings */
+.findings{border-top:1px solid var(--hair)}
+.finding{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--hair)}
+.finding .n{font-family:var(--grot);font-size:22px;font-weight:700;color:var(--violet)}
+.finding h3{font-size:16.5px;font-weight:700;margin-bottom:4px}
+.finding p{font-size:14.5px;color:var(--ink2)}
+.finding p b{color:var(--ink)}
+.finding .src{display:inline-block;font-family:var(--grot);font-size:10.5px;letter-spacing:.12em;color:var(--muted);margin-top:8px}
+.formula{margin-top:30px;background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:22px 24px;text-align:center}
+.formula .fl{font-family:var(--grot);font-size:10px;letter-spacing:.24em;color:var(--green);margin-bottom:8px}
+.formula .fb{font-size:clamp(15px,2.4vw,20px);font-weight:800;line-height:1.55}
+.formula .fb span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+/* chart */
+.chart{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:22px;box-shadow:var(--shadow)}
+.chart .ct{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chart .ct h3{font-size:15.5px;font-weight:700}
+.chart .ct span{font-family:var(--grot);font-size:10.5px;letter-spacing:.14em;color:var(--muted);font-weight:500}
+.brow{display:grid;grid-template-columns:130px 1fr 96px;align-items:center;gap:12px;padding:10px 0;border-top:1px dashed var(--hair)}
+.brow:first-of-type{border-top:none}
+.brow .bl{font-size:14px;font-weight:700;color:var(--ink)}
+.brow .bl small{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.track{height:12px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden}
+.fill{height:100%;border-radius:6px;background:var(--violet-d);box-shadow:0 0 14px rgba(139,92,246,.5);min-width:5px}
+.fill.us{background:var(--green);box-shadow:0 0 14px rgba(52,211,153,.5)}
+.bv{font-size:14px;font-weight:800;text-align:left;direction:ltr}
+.bv.us{color:var(--green)}
+.chart .note{font-size:13px;color:var(--ink2);margin-top:12px}
+@media(max-width:560px){.brow{grid-template-columns:96px 1fr 70px}.brow .bl{font-size:12px}}
+/* table */
+.tbl-scroll{overflow-x:auto;border:1px solid var(--hair);border-radius:12px;background:var(--panel);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;min-width:680px;font-size:14.5px}
+th{color:var(--ink);font-family:'Heebo',sans-serif;font-weight:800;font-size:14px;letter-spacing:.02em;padding:14px;text-align:right;border-bottom:1px solid var(--hair-2);white-space:nowrap;background:rgba(255,255,255,.05)}
+td{padding:13px 14px;border-bottom:1px solid var(--hair);color:var(--ink2);vertical-align:top;font-size:14.5px}
+tr:last-child td{border-bottom:none}
+td .yes{color:var(--green);font-weight:800;font-size:15px}
+td .no{color:var(--muted);font-weight:700;font-size:15px}
+td .part{color:var(--t-research);font-weight:700;font-size:14.5px}
+tr.us td{background:rgba(52,211,153,.09);color:var(--ink);font-weight:700;border-top:1px solid rgba(52,211,153,.45)}
+td small{display:block;color:var(--muted);font-weight:400;font-size:12.5px;margin-top:2px}
+.tbl-note{font-size:13.5px;color:var(--ink2);margin-top:10px}
+/* matrix */
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:2px;font-size:13px;color:var(--ink2)}
+.legend .li{display:inline-flex;align-items:center;gap:7px}
+.legend .dot{width:11px;height:11px;border-radius:50%}
+.matrix-scroll{overflow-x:auto;padding-top:54px;padding-bottom:6px;direction:ltr}
+.matrix{direction:ltr;position:relative;min-width:640px;height:440px;background:var(--panel);border:1px solid var(--hair);border-radius:12px;box-shadow:var(--shadow)}
+.matrix .q{position:absolute;width:50%;height:50%}
+.matrix .q.tl{left:0;top:0;background:rgba(52,211,153,.06);border-top-left-radius:12px}
+.matrix .divx{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--hair-2)}
+.matrix .divy{position:absolute;top:50%;left:0;right:0;height:1px;background:var(--hair-2)}
+.qlabel{position:absolute;direction:rtl;font-size:12px;font-weight:700;color:var(--muted);background:rgba(12,15,28,.62);padding:4px 10px;border-radius:7px;border:1px solid var(--hair)}
+.qlabel.win{color:var(--green);border-color:rgba(52,211,153,.4)}
+.axis{position:absolute;direction:rtl;font-size:11.5px;color:var(--muted);font-weight:600}
+.axis.x{bottom:8px;left:50%;transform:translateX(-50%)}
+.axis.y{writing-mode:vertical-rl;top:50%;left:8px;transform:translateY(-50%)}
+.mdot{position:absolute;width:31px;height:31px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;cursor:pointer;transform:translate(-50%,50%);box-shadow:0 0 0 2px var(--panel),0 0 16px rgba(0,0,0,.5);transition:transform .15s;z-index:2;text-decoration:none}
+.mdot:hover{transform:translate(-50%,50%) scale(1.22);z-index:6;box-shadow:0 0 0 2px var(--panel),0 0 18px rgba(2,132,199,.45)}
+.mdot.dark{color:#0c0f1c}
+.mdot::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);direction:rtl;white-space:nowrap;background:#1c2440;color:var(--ink);font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:9px;border:1px solid var(--hair-2);opacity:0;pointer-events:none;transition:opacity .15s;z-index:9;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.mdot:hover::after{opacity:1}
+.matrix-note{font-size:13.5px;color:var(--ink2);margin-top:10px}
+.matrix-note b{color:var(--ink)}
+/* ideas */
+.filters{position:sticky;top:86px;z-index:20;background:rgba(12,15,28,.94);backdrop-filter:blur(10px);padding:12px 0;margin-bottom:20px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--hair)}
+.fbtn{border:1px solid var(--hair-2);background:transparent;color:var(--ink2);border-radius:8px;padding:8px 15px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.fbtn:hover{border-color:var(--cyan);color:var(--ink)}
+.fbtn.active{background:var(--ink);border-color:var(--ink);color:#0c0f1c}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.cards{grid-template-columns:1fr}}
+.card{position:relative;background:var(--panel);border:1px solid var(--hair);border-top:2px solid var(--muted);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;scroll-margin-top:152px;transition:transform .2s,border-color .2s;box-shadow:var(--shadow)}
+.card:hover{transform:translateY(-2px);border-color:var(--hair-2)}
+.card.cat-tools{border-top-color:var(--c-tools)}
+.card.cat-intel{border-top-color:var(--c-intel)}
+.card.cat-research{border-top-color:var(--c-research)}
+.card.cat-meta{border-top-color:var(--c-meta)}
+.card.voted{border-color:rgba(52,211,153,.6);box-shadow:0 0 0 1px rgba(52,211,153,.45),var(--shadow)}
+.card.flash{animation:flash 1.6s ease}
+@keyframes flash{0%,60%{box-shadow:0 0 0 3px var(--cyan)}100%{box-shadow:none}}
+.card .top{display:flex;align-items:flex-start;gap:12px}
+.card .idx{flex:0 0 auto;font-family:var(--grot);font-size:20px;font-weight:700;line-height:1.35}
+.card h3{font-size:16.5px;font-weight:800;line-height:1.3;flex:1;padding-left:44px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:3px}
+.tag{font-size:11.5px;font-weight:700;border-radius:5px;padding:2px 8px;white-space:nowrap}
+.tag.tools{background:rgba(8,145,178,.18);color:var(--t-tools)}
+.tag.intel{background:rgba(139,92,246,.18);color:var(--t-intel)}
+.tag.research{background:rgba(217,119,6,.2);color:var(--t-research)}
+.tag.meta{background:rgba(219,39,119,.18);color:var(--t-meta)}
+.tag.star{background:rgba(52,211,153,.16);color:var(--green)}
+.tag.viral{background:rgba(56,189,248,.16);color:var(--cyan)}
+.card .what{font-size:14.5px;color:var(--ink2)}
+.card .what b{color:var(--ink)}
+.krow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kv{border:1px solid var(--hair);border-radius:9px;padding:8px 12px;font-size:13px;color:var(--ink2)}
+.kv b{display:block;font-family:var(--grot);font-size:10px;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:3px}
+.kv .score{color:var(--ink);font-weight:700}
+.proof{font-size:13px;color:var(--ink2);border-inline-start:2px solid var(--hair-2);padding-inline-start:10px}
+.proof b{color:var(--ink)}
+.first{font-size:13.5px;border:1px dashed rgba(56,189,248,.42);border-radius:9px;padding:9px 12px;color:var(--ink2);background:rgba(56,189,248,.06)}
+.first b{color:var(--cyan)}
+/* v2 — feedback round: revision markers */
+.tag.rev{background:rgba(167,139,250,.18);color:var(--violet)}
+.tag.merged{background:rgba(255,255,255,.08);color:var(--ink2)}
+.tag.warn{background:rgba(245,158,11,.18);color:var(--orange)}
+.revnote{font-size:13px;line-height:1.6;color:var(--ink2);background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.3);border-radius:9px;padding:10px 12px}
+.revnote b{color:var(--violet)}
+.chgstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.chgstrip .cs{border:1px solid var(--hair);border-radius:11px;padding:13px 15px;background:var(--panel)}
+.chgstrip .cs b{display:block;font-family:var(--grot);font-size:10px;letter-spacing:.12em;color:var(--muted);font-weight:600;margin-bottom:6px}
+.chgstrip .cs span{font-size:14px;color:var(--ink);font-weight:700;line-height:1.5}
+.chgstrip .cs em{font-style:normal;color:var(--ink2);font-weight:400;font-size:12.5px}
+@media(max-width:900px){.chgstrip{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.chgstrip{grid-template-columns:1fr}}
+.vote{position:absolute;top:14px;left:14px;z-index:3;border:1px solid var(--hair-2);background:var(--bg);color:var(--ink2);border-radius:8px;padding:7px 13px;font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
+.vote:hover{border-color:var(--green);color:var(--ink)}
+.vote.on{background:rgba(52,211,153,.16);border-color:var(--green);color:var(--green)}
+/* flywheel */
+.fly{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px}
+.fnode{background:var(--panel);border:1px solid var(--hair);border-radius:10px;padding:12px 16px;font-size:13.5px;font-weight:700;text-align:center;transition:border-color .2s;box-shadow:var(--shadow)}
+.fnode:hover{border-color:var(--cyan)}
+.fnode small{display:block;font-weight:400;font-size:12.5px;color:var(--muted)}
+.farrow{color:var(--cyan);font-size:19px;font-weight:900}
+.fly-loop{margin-top:14px;text-align:center;font-size:14px;color:var(--ink2)}
+.fly-loop b{color:var(--green)}
+/* roadmap staircase (NexaCore PrecisionSection) — mirrored for RTL: ascends right → left */
+.stair{position:relative;width:100%;height:430px;margin-top:12px}
+.pillar{position:absolute;width:212px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.p-chip{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.05));border:1px solid var(--hair-2);border-radius:20px;padding:10px 17px;font-size:15px;font-weight:800;color:var(--ink);white-space:nowrap;backdrop-filter:blur(8px)}
+.p-chip svg{width:17px;height:17px;flex:0 0 auto}
+.p-when{font-family:var(--grot);font-size:10px;letter-spacing:.14em;color:var(--muted);font-weight:600;margin-top:9px}
+.p-desc{font-size:12.5px;color:var(--ink2);line-height:1.5;margin-top:7px}
+.p-line{width:1px;height:180px;margin-top:12px;background:linear-gradient(rgb(254,136,27),rgb(172,36,255) 25%,rgb(247,159,255) 50%,rgb(255,214,0) 66%,rgb(254,136,27) 84%,rgba(254,136,27,0) 102%)}
+.p-items{position:absolute;top:calc(100% - 178px);right:calc(50% + 13px);display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:right}
+.p-items span{font-size:13px;color:var(--ink2);padding:5px 0;white-space:nowrap}
+.p-items span b{color:var(--ink);font-weight:700}
+.stair-mob{display:none;flex-direction:column;gap:8px;margin-top:10px}
+.pm{display:flex;flex-direction:column;align-items:flex-start}
+.pm-row{display:flex;align-items:stretch;gap:14px;padding-inline-start:22px}
+.pm-line{width:1px;flex:0 0 auto;min-height:96px;background:linear-gradient(rgb(254,136,27),rgb(172,36,255) 25%,rgb(247,159,255) 50%,rgb(255,214,0) 66%,rgb(254,136,27) 84%,rgba(254,136,27,0) 102%)}
+.pm-items{display:flex;flex-direction:column;gap:2px;padding:6px 0}
+.pm-items span{font-size:13px;color:var(--ink2);padding:4px 0}
+.pm-items span b{color:var(--ink);font-weight:700}
+/* the staircase needs real horizontal room — below this it becomes a vertical list */
+@media(max-width:1080px){.stair{display:none}.stair-mob{display:flex}}
+.phases{border-top:1px solid var(--hair)}
+.phase{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--hair)}
+@media(max-width:700px){.phase{grid-template-columns:1fr}}
+.phase .when{font-weight:800;color:var(--cyan);font-size:15px}
+.phase .when small{display:block;color:var(--muted);font-weight:600;font-size:11.5px;margin-top:2px}
+.phase h4{font-size:15.5px;font-weight:800;margin-bottom:5px}
+.phase p{font-size:14px;color:var(--ink2)}
+.chip{display:inline-block;font-size:12.5px;font-weight:700;border-radius:7px;padding:3px 10px;margin:4px 4px 0 0;border:1px solid var(--hair-2);color:var(--ink2)}
+.chip.t{border-color:rgba(8,145,178,.55);color:var(--t-tools)}
+.chip.i{border-color:rgba(139,92,246,.55);color:var(--t-intel)}
+.chip.r{border-color:rgba(217,119,6,.55);color:var(--t-research)}
+.chip.m{border-color:rgba(219,39,119,.55);color:var(--t-meta)}
+/* reco */
+.reco{background:var(--panel);border:1px solid rgba(52,211,153,.4);border-radius:14px;padding:26px;box-shadow:var(--shadow)}
+.reco h3{font-size:20px;font-weight:900;margin-bottom:10px}
+.reco h3 span{color:var(--green)}
+.reco p{font-size:14.5px;color:var(--ink2);margin-bottom:14px}
+.reco p b{color:var(--ink)}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+@media(max-width:700px){.trio{grid-template-columns:1fr}}
+.t-card{border:1px solid var(--hair-2);border-radius:11px;padding:14px}
+.t-card .t-n{font-family:var(--grot);font-size:9.5px;letter-spacing:.18em;color:var(--green);margin-bottom:5px}
+.t-card h5{font-size:14px;font-weight:800;margin-bottom:4px}
+.t-card p{font-size:13px;color:var(--ink2);margin:0}
+.cta-vote{margin-top:6px;border:1px dashed rgba(52,211,153,.45);border-radius:11px;padding:15px 18px;font-size:14px;color:var(--ink2);background:rgba(52,211,153,.06)}
+.cta-vote b{color:var(--green)}
+/* votebar */
+.votebar{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(12,15,28,.95);backdrop-filter:blur(14px);border-top:1px solid rgba(52,211,153,.4);transform:translateY(110%);transition:transform .3s ease;padding:12px 16px calc(12px + env(safe-area-inset-bottom));box-shadow:0 -8px 24px rgba(0,0,0,.4)}
+.votebar.show{transform:none}
+.votebar .inner{max-width:1140px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.votebar .count{font-size:14px;font-weight:800}
+.votebar .count b{color:var(--green)}
+.votebar .picked{font-size:12.5px;color:var(--ink2);flex:1;min-width:120px}
+.vb-btn{border:none;border-radius:10px;padding:11px 18px;font-family:inherit;font-size:14px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform .12s}
+.vb-btn:active{transform:scale(.97)}
+.vb-btn.wa{background:var(--wa);color:#04220f}
+.vb-btn.cp{background:var(--panel-2);color:var(--ink);border:1px solid var(--hair-2)}
+@media(max-width:560px){.votebar .picked{display:none}}
+footer{border-top:1px solid var(--hair);padding:28px 0 46px;font-size:13px;color:var(--muted)}
+footer p{max-width:900px}
+footer .src-line{margin-top:8px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="mast" id="mast">
+  <div class="in">
+    <div class="m-brand">
+      <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <defs><linearGradient id="nxg" x1="2" y1="26" x2="26" y2="2" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="rgb(28,78,255)"/><stop offset=".5" stop-color="rgb(172,36,255)"/><stop offset="1" stop-color="rgb(254,136,27)"/>
+        </linearGradient></defs>
+        <circle cx="14" cy="14" r="11" stroke="url(#nxg)" stroke-width="2.5"/>
+      </svg>
+      <span>האקדמיה לבינה מלאכותית<small>היחידה ללימודי חוץ · MARKET INTELLIGENCE</small></span>
+    </div>
+    <nav class="m-links">
+      <a href="#brief">הבריף</a>
+      <a href="#matrix">מפת ההחלטה</a>
+      <a href="#bank">13 המהלכים</a>
+      <a href="index.html">למסמך המלא</a>
+    </nav>
+    <div class="m-right">
+      <a class="btn-grad" href="#reco"><span>להמלצה</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- BRIEF -->
+<section id="brief" style="padding:130px 0 10px">
+  <div class="wrap">
+    <div class="shead"><span class="snum">מסמך עבודה · גרסה 2</span><h2>בנק הרעיונות — אחרי סבב הפידבק</h2><span class="rule"></span></div>
+    <p class="ssub" style="max-width:840px">גרסת עבודה ממוקדת: רק הרעיונות, בלי מחקר השוק (<a href="index.html" style="color:var(--cyan);text-decoration:underline">המסמך המלא כאן</a>). אחרי סבב פידבק שותפים הבנק ירד מ-16 ל-13 מהלכים. הקו המנחה של הסבב: <b>כל מהלך שאי אפשר לעמוד מאחורי המספר שהוא מפרסם — ירד או השתנה.</b> בכל כרטיס ששונה מופיעה תיבה סגולה — "מה השתנה ולמה". אפשר לסמן עד 3 רעיונות מועדפים בכפתור ☆ ולשלוח את הבחירה חזרה.</p>
+  </div>
+</section>
+
+<!-- MATRIX -->
+<section style="padding-top:16px" id="matrix">
+  <div class="wrap">
+    <div class="shead"><span class="snum">04</span><h2>מפת ההחלטה — אימפקט מול מאמץ</h2><span class="rule"></span></div>
+    <p class="ssub">כל עיגול = רעיון (לחיצה קופצת לכרטיס). המאמץ בימי עבודה עם Claude Code. ריחוף מציג את השם. <b>עודכן בגרסה 2:</b> 10, 12 ו-13 אינם מופיעים — הם אוחדו לתוך 4, 14 ו-6 בהתאמה, ומיקומם של 1, 2, 3, 5, 9 ו-11 השתנה בעקבות הפידבק.</p>
+    <div class="legend">
+      <span class="li"><span class="dot" style="background:var(--c-tools)"></span>כלים חיים</span>
+      <span class="li"><span class="dot" style="background:var(--c-intel)"></span>מרכז מודיעין</span>
+      <span class="li"><span class="dot" style="background:var(--c-research)"></span>מחקר מקורי</span>
+      <span class="li"><span class="dot" style="background:var(--c-meta)"></span>מהלכי-על</span>
+    </div>
+    <div class="matrix-scroll">
+      <div class="matrix">
+        <div class="q tl"></div>
+        <div class="divx"></div><div class="divy"></div>
+        <span class="qlabel win" style="top:12px;left:12px">★ ניצחונות מהירים</span>
+        <span class="qlabel" style="top:12px;right:12px">מהלכים אסטרטגיים</span>
+        <span class="qlabel" style="bottom:34px;left:12px">מילוי חכם</span>
+        <span class="qlabel" style="bottom:34px;right:12px">לא עכשיו</span>
+        <span class="axis x">מאמץ בימי עבודה · שמאל = ימים בודדים · ימין = חודשים</span>
+        <span class="axis y">אימפקט מיצובי · גבוה למעלה</span>
+        <a class="mdot" href="#idea-6"  style="left:6%;bottom:86%;background:var(--c-intel)"    data-tip="6 · המכ&quot;ם — תדריך שבועי · יום הקמה">6</a>
+        <a class="mdot" href="#idea-8"  style="left:4%;bottom:62%;background:var(--c-intel)"    data-tip="8 · פרשנות 24 שעות בתורנות · אפס פיתוח">8</a>
+        <a class="mdot" href="#idea-5"  style="left:10%;bottom:30%;background:var(--c-tools)"   data-tip="5 · הדגמת הסוכן — דמו מתוסרט · יומיים">5</a>
+        <a class="mdot" href="#idea-7"  style="left:15%;bottom:56%;background:var(--c-intel)"   data-tip="7 · מילון ה-AI העברי · 3 ימים">7</a>
+        <a class="mdot" href="#idea-3"  style="left:17%;bottom:44%;background:var(--c-tools)"   data-tip="3 · מחשבון הזמן החוזר · 3 ימים">3</a>
+        <a class="mdot" href="#idea-4"  style="left:24%;bottom:72%;background:var(--c-tools)"   data-tip="4 · מגרש הפרומפטים + הספרייה · 5 ימים">4</a>
+        <a class="mdot" href="#idea-9"  style="left:27%;bottom:46%;background:var(--c-intel)"   data-tip="9 · מדד הדרישות · 5 ימים · דורש הכרעה">9</a>
+        <a class="mdot" href="#idea-15" style="left:30%;bottom:38%;background:var(--c-meta)"    data-tip="15 · מדד מוכנות B2B (אדם בלולאה) · 5 ימים">15</a>
+        <a class="mdot" href="#idea-2"  style="left:34%;bottom:80%;background:var(--c-tools)"   data-tip="2 · מפת ה-AI בתפקיד שלך · 7 ימים">2</a>
+        <a class="mdot" href="#idea-1"  style="left:40%;bottom:94%;background:var(--c-tools)"   data-tip="1 · מדד השליטה — מסלולים + יעילות · 8 ימים">1</a>
+        <a class="mdot dark" href="#idea-14" style="left:52%;bottom:50%;background:var(--c-research)" data-tip="14 · שקיפות בוגרים (כולל 12) · 10 ימים + הנהלה">14</a>
+        <a class="mdot dark" href="#idea-11" style="left:76%;bottom:76%;background:var(--c-research)" data-tip="11 · דוח הנבחנים · רבעון">11</a>
+        <a class="mdot" href="#idea-16" style="left:93%;bottom:72%;background:var(--c-meta)"    data-tip="16 · הסמכות לפי מקצוע · חודשים">16</a>
+      </div>
+    </div>
+    <p class="matrix-note">קו האמצע האנכי ≈ 10 ימי עבודה; הקו האופקי = סף "משנה מיצוב". ריכוז העיגולים ברביע הירוק הוא הנקודה החשובה בדוח: <b>רוב הבידול כאן זול להשגה.</b></p>
+  </div>
+</section>
+<!-- IDEAS -->
+<section style="padding-top:0" id="bank">
+  <div class="wrap">
+    <div class="shead"><span class="snum">05</span><h2>בנק הרעיונות — 13 מהלכים אחרי סבב הפידבק</h2><span class="rule"></span></div>
+    <p class="ssub">גרסה 2. הבנק ירד מ-16 ל-13 מהלכים בעקבות סבב פידבק שותפים — שלושה רעיונות אוחדו לתוך אחרים, וחמישה הוגדרו מחדש. בכל כרטיס ששונה מופיעה שורה סגולה: <b>מה השתנה ולמה</b>. <b>הערה על הציונים:</b> דירוגי האימפקט והלידים הם הערכה פנימית בסולם 1–5 לצורך תיעדוף, ולא נתון נמדד. אומדני הזמן מבוססים על בנייה במשאבים פנימיים.</p>
+
+    <div class="chgstrip rv">
+      <div class="cs"><b>אוחדו</b><span>10 ← 4 · 13 ← 6 · 12 ← 14<em><br>שלושה נכסים כפולים הפכו לשלושה חלקים בתוך מהלכים קיימים.</em></span></div>
+      <div class="cs"><b>הוגדרו מחדש</b><span>2 · 3 · 9 · 11 · 16<em><br>כל מקום שבו הבטחנו יותר ממה שאפשר להוכיח.</em></span></div>
+      <div class="cs"><b>הוכרעו</b><span>5 · 15<em><br>שתי שאלות פתוחות — "חי או מתוסרט?" ו"אוטומטי או אנושי?" — נסגרו.</em></span></div>
+      <div class="cs"><b>חודדו</b><span>1 · 6 · 8<em><br>מסלולים, מדד יעילות, רמות תקציר ותורנות כתיבה.</em></span></div>
+    </div>
+
+    <div class="filters" id="filters">
+      <button class="fbtn active" data-f="all">הכל (13)</button>
+      <button class="fbtn" data-f="tools">🛠 כלים חיים (5)</button>
+      <button class="fbtn" data-f="intel">📡 מרכז מודיעין (4)</button>
+      <button class="fbtn" data-f="research">📊 מחקר מקורי (2)</button>
+      <button class="fbtn" data-f="meta">♟ מהלכי-על (2)</button>
+    </div>
+
+    <div class="cards" id="cards">
+
+      <div class="card cat-tools" id="idea-1" data-cat="tools" data-name='מדד השליטה ב-AI — מבחן לפי מסלולים'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-tools)">01</span>
+          <div><h3>"מדד השליטה ב-AI" — מבחן לפי מסלולים, עם ציון יעילות</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span><span class="tag star">★ שלישיית הפתיחה</span><span class="tag viral">⚡ הדגל</span><span class="tag rev">v2 · חודד</span></div></div></div>
+        <p class="what">מבחן חינמי בעברית, 8–10 דקות, <b>בארבעה מסלולים נפרדים</b> — כללי/עסקי, פייתון, אלגוריתמיקה ומודלים, ובניית אתרים ומוצר — כך שכל נבחן נמדד מול משימות מהעולם שלו ולא מול מבחן גנרי. שלושה ממדים: ידע, שימוש בפועל, ואיכות פרומפטינג (נבדקת ע"י AI בזמן אמת), על סולם עברי — <b>סקפטי ← מתנסה ← מיישם ← מוביל ← מומחה</b>. <b>והחידוש האמיתי: ציון יעילות.</b> לצד ציון האיכות מוצג כמה טוקנים נדרשו כדי להגיע לתוצאה — כלומר כמה זה עלה וכמה זה לקח. מי שמגיע לאותה תשובה בחצי מהטוקנים פשוט טוב יותר, ואף מבחן AI בעולם לא מודד את זה היום.</p>
+        <p class="revnote"><b>מה השתנה:</b> פוצל למסלולי תוכן במקום מבחן אחד לכולם, ונוסף מדד היעילות — טוקנים כמדד ישיר לעלות ולמהירות. זו גם התוספת שהופכת את המבחן לייחודי: כולם מודדים "כמה אתה יודע", אף אחד לא מודד "כמה זה עולה לך".</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — היחיד שמודד גם עלות</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">5/5 — אימייל תמורת ציון</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~8 ימים (מסלול ראשון ~5)</span></div>
+          <div class="kv"><b>MARKET</b><span class="score">אין מקבילה בעברית — נבדק</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> Section הפכו מבחן זהה לשתי הודעות לעיתונות ארציות בארה"ב, למוצר B2B ולדוח שנתי מצוטט ("רק 10% מכוח העבודה שולט ב-AI") — וגם הם מדדו רק ידע, לא יעילות.</p>
+        <p class="first"><b>צעד ראשון:</b> מסלול אחד בלבד (כללי/עסקי) כ-MVP — 25 שאלות, 5 רמות, 3 תרחישי פרומפט. מסלולי הקוד נפתחים אחריו, על אותו מנוע.</p>
+      </div>
+
+      <div class="card cat-tools" id="idea-2" data-cat="tools" data-name='מפת ה-AI בתפקיד שלך — מה כבר עובד ומה לא'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-tools)">02</span>
+          <div><h3>מפת ה-AI בתפקיד שלך — מה כבר עובד, ומה עוד לא</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span><span class="tag viral">⚡ תקרת השיתוף הגבוהה בבנק</span><span class="tag rev">v2 · מסגור חדש</span></div></div></div>
+        <p class="what">מקלידים מקצוע — ומקבלים <b>מפת משימות</b>, לא תחזית גורל: אילו משימות בתפקיד כבר נעזרות ב-AI היום ובאילו כלים, <b>ומה עדיין לא עובד</b> — היכן האיכות לא מספיקה, היכן זה יקר מדי, והיכן נדרש אדם. כל שורה עם מקור ותאריך עדכון, ובלי אחוזי "סיכון החלפה". הדף מסתיים בהצעה עניינית: אלה הכלים שסוגרים את המשימות האלה, וזה הקורס שמלמד אותם.</p>
+        <p class="revnote"><b>מה השתנה:</b> יצאנו מעולם "ה-AI בא על התפקיד שלך". השוק תנודתי — יש גם מקרים של החזרת עובדים אחרי אוטומציה שלא החזיקה, בגלל איכות או עלות — ולכן קביעות נחרצות על העתיד היו הופכות לנטל ברגע שהמציאות מתהפכת. הכלי מציג את מה שנצפה בפועל ברמת המשימה, כולל הגבולות, ולא מוכר פחד ואחריו פתרון.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — הכלי שמראה גם גבולות</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — פחות דרמה, יותר אמון</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~7 ימים (כולל מיפוי משימות)</span></div>
+          <div class="kv"><b>SEO</b><span class="score">דף לכל מקצוע = זנב ארוך</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> WillRobotsTakeMyJob הוכיח את גודל התיאבון לקטגוריה — אבל בנוי על מודל תחזית משנת 2013. הדאטה העדכני (מיקרוסופט, Anthropic) הוא ברמת <b>משימה</b>, לא ברמת משרה. אנחנו לוקחים את הביקוש שלו ואת הדיוק שלהם.</p>
+        <p class="first"><b>צעד ראשון:</b> 10 מקצועות, 8–12 משימות לכל אחד, כל שורה עם מקור ותאריך. מתחילים במקצועות שכבר יש לנו קורס עבורם.</p>
+      </div>
+
+      <div class="card cat-tools" id="idea-3" data-cat="tools" data-name='מחשבון הזמן החוזר'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-tools)">03</span>
+          <div><h3>מחשבון הזמן החוזר — במקום מחשבון השכר</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span><span class="tag rev">v2 · הוגדר מחדש</span></div></div></div>
+        <p class="what">מחשבון פרמיית השכר ירד. במקומו נמדד הדבר היחיד שאפשר לעמוד מאחוריו: <b>כמה זמן חוזר בשבוע.</b> בוחרים 3–5 משימות שגרתיות מהתפקיד — ומקבלים אומדן שעות מוחזרות, מבוסס על מדידות לפני/אחרי שאנחנו עצמנו מבצעים בכיתות, עם n גלוי לצד כל מספר. התוצאה מוצגת בשעות ולא בשקלים; מי שרוצה לתרגם לכסף מכיר את השכר שלו טוב מאיתנו.</p>
+        <p class="revnote"><b>מה השתנה:</b> ההערה הכי חשובה בסבב. אי אפשר להתחייב לעליית שכר של אדם שאיננו יודעים היכן ובאיזה תפקיד יעבוד — הבטחה כזו עולה באמינות הרבה יותר ממה שהיא מכניסה בלידים, ובדיוק בשוק שבו התקשורת מחפשת מכללות שמבטיחות יותר מדי. גם רעיון 12 (מחקר פרמיית השכר) ירד מכאן והתאחד לתוך רעיון 14, שם מודדים בוגרים אמיתיים עם מתודולוגיה.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — צניעות נקראת מקצועיות</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — מדבר בשעות, לא בהבטחות</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~3 ימים + מדידה בכיתה</span></div>
+          <div class="kv"><b>DATA</b><span class="score">נמדד אצלנו — לא מיובא</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> HubSpot Website Grader — 4 מיליון בדיקות ו-40 אלף קישורים נכנסים — עבד כי הוא <b>מדד</b> משהו אמיתי באתר של המשתמש, לא כי הוא הבטיח לו הכנסות.</p>
+        <p class="first"><b>צעד ראשון:</b> למדוד 5 משימות בקבוצת קורס אחת, לפני ואחרי. יומיים של מדידה — וזה כל בסיס הדאטה של הכלי.</p>
+      </div>
+
+      <div class="card cat-tools" id="idea-4" data-cat="tools" data-name='מגרש אימוני הפרומפטים + ספריית המקצועות'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-tools)">04</span>
+          <div><h3>מגרש אימוני הפרומפטים — והספרייה שהוא מייצר</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span><span class="tag star">★ שלישיית הפתיחה</span><span class="tag merged">🔗 אוחד עם 10</span></div></div></div>
+        <p class="what">משימות <b>מפורטות שמדמות עבודה אמיתית</b> — בריף מלא, אילוצים, קהל יעד, מה נחשב תוצאה טובה — ולא "נסח מייל ללקוח כועס". המבקר כותב פרומפט ומקבל ציון, משוב וגרסה משופרת לצידו. <b>והפרומפטים הטובים ביותר נשמרים לספרייה ציבורית ממוינת לפי מקצוע:</b> לרואת חשבון, לאיש מכירות, למנהלת משרד, לעורך דין. כל פרומפט בספרייה מגיע עם הציון שקיבל, המשימה שממנה נולד והרובריקה ששפטה אותו — כלומר ספרייה שמוכיחה את עצמה, לא רשימה שמישהו הקליד.</p>
+        <p class="revnote"><b>מה השתנה:</b> רעיונות 4 ו-10 אוחדו, כפי שהוצע — הספרייה היא <b>התוצר</b> של המגרש ולא פרויקט נפרד, וכך היא גם מתעדכנת מעצמה. המשימות שודרגו למשימות מפורטות שמדמות את העולם האמיתי. בונוס מבני: הרובריקה שנבנית כאן היא בדיוק המנוע שמדד השליטה (רעיון 1) צריך — ולכן כדאי לבנות את המגרש לפניו.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — חוויה, לא הבטחה</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 + טראפיק אורגני קבוע</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~5 ימים (במקום 4+2 בנפרד)</span></div>
+          <div class="kv"><b>SEO</b><span class="score">"פרומפט ל..." — חיפושים חמים</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> Coursera מפעילה 15+ חידוני מיומנות כתבנית קבועה; ספריות הפרומפטים הפתוחות של Wharton/Mollick הן מהנכסים המשותפים ביותר ברשת. כאן שני המנגנונים מוזנים זה מזה.</p>
+        <p class="first"><b>צעד ראשון:</b> משימה מפורטת אחת + רובריקת שיפוט אחת + 25 פרומפטי זרע מתוך חומרי הקורסים הקיימים. יומיים לעמוד עובד.</p>
+      </div>
+
+      <div class="card cat-tools" id="idea-5" data-cat="tools" data-name='הדגמת הסוכן — דמו מתוסרט'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-tools)">05</span>
+          <div><h3>הדגמת הסוכן — דמו מתוסרט, לא סוכן חי</h3>
+          <div class="badges"><span class="tag tools">כלי חי</span><span class="tag rev">v2 · הוכרע</span></div></div></div>
+        <p class="what">השאלה "מצגת או כלי חי?" הוכרעה: <b>דמו מתוסרט ומוקלט.</b> משימה אחת תחומה — למשל מחקר מתחרים מהיר — מוקלטת מקצה לקצה בזמן אמת עם הצגת השלבים (מקבל בקשה, מתכנן, מבצע, מדווח), ומעליה משפט אחד: "את זה בדיוק תדע לבנות בעצמך אחרי 60 שעות". <b>סוכן חי באתר נשאר על השולחן כשלב ב', מאחורי שער:</b> הוא דורש תשתית הרצה ותקציב שוטף, ובעיקר — מול משימה חופשית של מבקר אי אפשר לדעת מראש אם התוצר יהיה טוב. כישלון פומבי בדף הבית של בית ספר ל-AI יקר בהרבה מהרווח.</p>
+        <p class="revnote"><b>מה השתנה:</b> שתי ההסתייגויות התקבלו במלואן — המשאבים והבלתי-צפיות. הכרעה: מתחילים בהקלטה שאנחנו שולטים בה, ומעלים סוכן חי רק כשתהיה הרצה יציבה ומשימה מוגבלת שנבדקה מאות פעמים.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">3/5 — אפקט וואו, סיכון נמוך</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">2/5 — תומך המרה, לא מייצר</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~2 ימים (במקום 6)</span></div>
+          <div class="kv"><b>COURSE LINK</b><span class="score">ישיר — מהנדס AI אג'נטי</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> כל דמו מוצר טוב הוא מתוסרט. show, don't tell — אבל תמיד על מסלול שנבדק.</p>
+        <p class="first"><b>צעד ראשון:</b> לבחור משימה אחת, להריץ אותה חמש פעמים, ולהקליט את הריצה הטובה. יום עבודה.</p>
+      </div>
+
+      <div class="card cat-intel" id="idea-6" data-cat="intel" data-name='המכ״ם — התדריך השבועי (3 רמות) + החתך הישראלי'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-intel)">06</span>
+          <div><h3>"המכ"ם" — תדריך ה-AI השבועי, בשלוש רמות</h3>
+          <div class="badges"><span class="tag intel">מודיעין</span><span class="tag star">★ שלישיית הפתיחה — מתחילים כאן</span><span class="tag merged">🔗 אוחד עם 13</span></div></div></div>
+        <p class="what">כל יום ראשון, בעברית, <b>בשלוש רמות קריאה לפי רמת ההבנה והזמן:</b> <b>30 שניות</b> — מה קרה השבוע; <b>5 דקות</b> — מה זה אומר לעסק ולקריירה שלך בישראל; <b>ולעומק</b> — המקור, המספרים והמשמעות הטכנית. נפתח תמיד ב"מכתב המומחה" קצר וחתום של ד"ר בדיחי — דעה, לא סיכום. אחת לחודש נכנס מדור קבוע — <b>"החתך הישראלי"</b> — מה הדאטה הגלובלי הפתוח (Anthropic Economic Index, מדד סטנפורד, OECD) אומר דווקא על ישראל. זה הנכס שממנו כל שאר הרעיונות מקבלים הפצה.</p>
+        <p class="revnote"><b>מה השתנה:</b> נוספו שלוש רמות תקציר, כך שאותו גיליון עובד גם למנכ"ל שיש לו 30 שניות וגם למפתח שרוצה את המספרים. ורעיון 13 ("החתך הישראלי") הפך למדור בתוך התדריך במקום פרסום עצמאי — אין בו מספיק חומר ייחודי כדי להחזיק נכס נפרד, ובתוך התדריך הוא נותן בדיוק את אותה סמכות בלי להקים ערוץ שני.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — קצב = סמכות</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — רשימת תפוצה חיה</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">יום הקמה + 2–3 שע'/שבוע</span></div>
+          <div class="kv"><b>GAP</b><span class="score">אף מכללה לא עושה זאת</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> The Batch של DeepLearning.AI — הניוזלטר שבנה אימפריית קורסים; המודל של Ethan Mollick (מאות אלפי מנויים): מהירות + קול אישי מנצחים בלוג מוסדי.</p>
+        <p class="first"><b>צעד ראשון:</b> לאשר שם ופורמט, ד"ר בדיחי מקליט 10 דקות — והגיליון הראשון יוצא השבוע. אפס פיתוח.</p>
+      </div>
+
+      <div class="card cat-intel" id="idea-7" data-cat="intel" data-name='מילון ה-AI העברי המוסמך'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-intel)">07</span>
+          <div><h3>מילון ה-AI העברי המוסמך</h3>
+          <div class="badges"><span class="tag intel">מודיעין</span><span class="tag star">✓ אושר בפידבק ללא שינוי</span></div></div></div>
+        <p class="what">150+ מונחי AI בעברית ברורה — Agentic, RAG, MCP, Fine-tuning — כל מונח: הגדרה, דוגמה ישראלית מהשטח, ומתי תפגוש אותו בקורסים שלנו. מתוחזק ומעודכן עם כל גל חדש. <b>מילון האקדמיה ללשון העברית בתחום — משנת 2004.</b> ההגדרה שגוגל (ומנועי ה-AI) יצטטו תהיה שלנו.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — "ההגדרה לפי..."</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">3/5 — SEO ארוך טווח</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~3 ימים + תחזוקה קלה</span></div>
+          <div class="kv"><b>AI-SEO</b><span class="score">מקור שצ'אטבוטים מצטטים</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> נבדק — אין גורם מוסמך מתוחזק בעברית; הטוב ביותר כיום הוא בלוג. טריטוריה פתוחה לגמרי.</p>
+        <p class="first"><b>צעד ראשון:</b> 40 המונחים הראשונים מתוך הסילבוסים הקיימים — הידע כבר אצלכם, צריך רק לפרסם.</p>
+      </div>
+
+      <div class="card cat-intel" id="idea-8" data-cat="intel" data-name='פרשנות 24 השעות — בתורנות'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-intel)">08</span>
+          <div><h3>פרשנות 24 השעות — עם תורנות כתיבה</h3>
+          <div class="badges"><span class="tag intel">מודיעין</span><span class="tag rev">v2 · חודד</span></div></div></div>
+        <p class="what">נוהל קבוע: בכל השקת ענק (מודל חדש, רגולציה, מוצר) עולה תוך 24 שעות פרשנות קצרה בעברית — מה קרה, מה זה אומר לעסקים בישראל, מה לעשות מחר. <b>האחריות מתחלקת בין 3–4 כותבים בתורנות שבועית</b>, כל אחד עם חלון זמינות ידוע: התורן מכין טיוטה תוך 4 שעות, ד"ר בדיחי מאשר וחותם. עם הזמן, עיתונאים לומדים למי מתקשרים כשמשהו קורה ב-AI.</p>
+        <p class="revnote"><b>מה השתנה:</b> הזמן הוא כל המהלך — פרשנות שיוצאת אחרי 48 שעות שווה אפס. לכן האחריות מתחלקת בתורנות ולא נשענת על זמינות של אדם אחד; זה גם מה שהופך את זה מכוונה טובה לנוהל שמחזיק לאורך שנה.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — מהירות = מומחיות</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">3/5</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">אפס פיתוח — נוהל ותורנות</span></div>
+          <div class="kv"><b>PR</b><span class="score">בונה מעמד "המקור"</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> Ethan Mollick בנה מאות אלפי מנויים על עיקרון אחד: להיות ראשון + אמין אחרי כל השקה. בעברית אין אף גורם מוסדי כזה.</p>
+        <p class="first"><b>צעד ראשון:</b> תבנית קבועה של 4 פסקאות, לוח תורנות לרבעון, והתחייבות פנימית ל-SLA של 24 שעות. זהו.</p>
+      </div>
+
+      <div class="card cat-intel" id="idea-9" data-cat="intel" data-name='מדד הדרישות — אילו כלי AI מבקשים במודעות דרושים'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-intel)">09</span>
+          <div><h3>מדד הדרישות — אילו כלי AI מעסיקים בישראל מבקשים החודש</h3>
+          <div class="badges"><span class="tag intel">מודיעין</span><span class="tag warn">⚠ דורש הכרעה לפני בנייה</span><span class="tag rev">v2 · הוגדר מחדש</span></div></div></div>
+        <p class="what">הפידבק חשף שתי בעיות אמיתיות במדד משרות: מהי בכלל "משרת AI", והסיכון שנפרסם ביקוש למשרות שאנחנו לא מכשירים אליהן — מדד שעובד נגדנו. <b>לכן המדד משנה כיוון: לא סופרים משרות, סופרים דרישות.</b> אילו כלים ומיומנויות AI מופיעים במודעות דרושים בעברית <b>בתוך מקצועות רגילים</b> — שיווק, כספים, תפעול, משאבי אנוש, פיתוח — ומה מתוכם כבר נמצא בסילבוס שלנו. התוצר החודשי: "מה מעסיקים בישראל מבקשים החודש", מדד שמצביע ישירות על הקורסים שלנו במקום נגדם.</p>
+        <p class="revnote"><b>מה השתנה:</b> הוגדר מחדש מהיסוד. ספירת משרות היא טריטוריה תפוסה (מדד נאמן, לוחות הדרושים עצמם) והגדרה בעייתית; ספירת דרישות בתוך מקצועות קיימים היא דאטה שאיש לא מפרסם, והיא מחוברת ישירות להיצע הקורסים. <b>עדיין דורש הכרעה:</b> ספירת בסיס ידנית אחת תגיד אם יש כאן מדד בכלל — ורק אז בונים.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — דאטה שאין לאחרים</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">3/5</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~5 ימים + חצי יום/חודש</span></div>
+          <div class="kv"><b>STATUS</b><span class="score">מותנה בספירת בסיס</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> כל מדד חודשי עקבי הופך לשורת ציטוט קבועה בתקשורת — אבל רק אם ההגדרה שלו ברורה ומגנה על עצמה בשאלה הראשונה של עיתונאי.</p>
+        <p class="first"><b>צעד ראשון:</b> ספירה ידנית אחת: 3 לוחות, 100 מודעות, 12 מקצועות. יום עבודה שמכריע אם ממשיכים.</p>
+      </div>
+
+      <div class="card cat-research" id="idea-11" data-cat="research" data-name='דוח הנבחנים — מה למדנו ממדד השליטה'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-research)">11</span>
+          <div><h3>"מה למדנו מ-X אלף נבחנים" — הדוח השנתי</h3>
+          <div class="badges"><span class="tag research">מחקר</span><span class="tag rev">v2 · הוגדר מחדש</span></div></div></div>
+        <p class="what">לא "דוח מיומנויות ה-AI של ישראל". הדוח מדווח <b>בדיוק על מי שנבחן</b>: כמה נבחנו, מאילו מקצועות, באיזה מסלול, מה התפלגות הציונים — וגם התפלגות <b>ציוני היעילות</b>, שאף אחד אחר לא מחזיק. <b>המדגם מתואר במפורש כמדגם נוחות של נבחנים מקוונים</b>, עם כל מגבלותיו, ולא כתמונת מצב לאומית. דווקא ההגדרה הצנועה היא מה שהופך את המספר לצליח לציטוט: עיתונאי שמצטט "לפי מדד השליטה, 62% מהנבחנים לא ידעו X" עומד על קרקע יציבה.</p>
+        <p class="revnote"><b>מה השתנה:</b> הכותרת הלאומית ירדה. מדגם של נבחנים באתר אחד אינו ישראל — בלי אקדמיה, בלי מי שלא הגיע אלינו — ולהתיימר לייצג מדינה שלמה היה פוגע בדיוק באמינות שהדוח בא לבנות. גם המונח "מיומנויות AI" חודד: הדוח מודד את מה שהמבחן מודד בפועל — ידע, שימוש, איכות פרומפט ויעילות — ותו לא.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — מונופול על הדאטה</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — הורדה בהרשמה</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">רבעון (במקביל לשוטף)</span></div>
+          <div class="kv"><b>DEPENDS</b><span class="score">מסה של נבחנים מרעיון 1</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> דוח Section מבוסס גם הוא על מדגם מגויס — והוא מצוטט דווקא כי הוא מצהיר על כך מראש. שקיפות מתודולוגית היא מה שמאפשר לצטט, לא מה שמונע.</p>
+        <p class="first"><b>צעד ראשון:</b> להגדיר את 5 השאלות שהדוח יענה עליהן ואת נוסח תיאור המדגם — לפני שנבחן אדם אחד.</p>
+      </div>
+
+      <div class="card cat-research" id="idea-14" data-cat="research" data-name='שקיפות תוצאות בוגרים (כולל פרמיית השכר)'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-research)">14</span>
+          <div><h3>שקיפות תוצאות בוגרים — עם מתודולוגיה גלויה</h3>
+          <div class="badges"><span class="tag research">מחקר</span><span class="tag merged">🔗 בלע את 12</span><span class="tag warn">⚠ פיילוט לפני החלטה</span></div></div></div>
+        <p class="what">מדידה מוגדרת מראש, ולא "דף המלצות": <b>השמה ב-6 ו-12 חודשים, שינוי שכר מדווח בטווחים (לא ממוצע יחיד), שביעות רצון, ואחוז המשיבים</b> — עם המתודולוגיה גלויה לצד המספרים, כולל מה לא נמדד ומי לא ענה. כאן, ורק כאן, יכולים לחיות מספרי שכר: על הבוגרים שלנו, בשאלון שלנו, עם n ידוע — ולא כתחזית לגולש אנונימי שאיננו יודעים עליו דבר. <b>הערך המוסף מול כל דף המלצות בשוק אינו התוכן — הוא המתודולוגיה.</b> אף מתחרה לא מפרסם אחוז משיבים.</p>
+        <p class="revnote"><b>מה השתנה:</b> רעיון 12 (פרמיית ה-AI מחוץ להייטק) התאחד לכאן. הביקורת נכונה: בסקר שוק אי אפשר לבודד ותק, תפקיד וחברה, ולכן "מיומנות AI שווה X%" הוא מספר שלא נוכל להגן עליו — אבל על הבוגרים שלנו אפשר לדווח ביושר. שתי ההסתייגויות הנוספות התקבלו: התוצאה עשויה לא להחמיא, ולכן <b>מתחילים בפיילוט שקט על קורס אחד וההחלטה על פרסום מתקבלת רק אחרי שרואים את המספרים.</b></p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 — אמון = מותג</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — משכנע מתלבטים</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~10 ימים + אישור הנהלה</span></div>
+          <div class="kv"><b>GATE</b><span class="score">פיילוט → החלטה → פרסום</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> בשוק שבו התקשורת (גלובס ואחרים) תוקפת באופן קבוע הבטחות לא מבוקרות של מכללות, מתודולוגיה גלויה היא חסינות — ונשק מול כל מתחרה שמפרסם רק ציטוטים מחמיאים.</p>
+        <p class="first"><b>צעד ראשון:</b> פיילוט שקט על קורס אחד: סקר בוגרים 6 חודשים אחרי סיום. אחרי שרואים מספרים — החלטת הנהלה על פרסום.</p>
+      </div>
+
+      <div class="card cat-meta" id="idea-15" data-cat="meta" data-name='מדד מוכנות ה-AI לעסקים (B2B) — עם אדם בלולאה'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-meta)">15</span>
+          <div><h3>מדד מוכנות ה-AI לעסקים — עם אדם מאחורי הדוח</h3>
+          <div class="badges"><span class="tag meta">מהלך-על</span><span class="tag rev">v2 · הוכרע</span></div></div></div>
+        <p class="what">שאלון עצמי לעסקים: 18 שאלות ב-6 צירים (אסטרטגיה, דאטה, כלים, אנשים, תהליכים, אבטחה). <b>אבל התוצאה אינה אוטומטית לגמרי:</b> הארגון מקבל מיד ציון ומיקום יחסי — כדי לא לאבד אותו ברגע הסקרנות — <b>ואילו הדוח המלא נכתב ע"י אדם</b> שקורא את התשובות ומחזיר ניתוח אמיתי ושיחה. זה מה שהופך שאלון לפגישה, וזה גם הצינור להכשרות הארגוניות ולשותפויות (IAI/ELTA, HUBTEC). הדאטה המצטבר: "מדד מוכנות העסקים הישראלי".</p>
+        <p class="revnote"><b>מה השתנה:</b> ההכרעה בין אוטומציה מלאה לאדם בלולאה נפלה על השילוב — ציון מיידי, דוח אנושי. מול ארגון, דוח גנרי אוטומטי שורף את ההזדמנות בדיוק ברגע שבו היא נוצרת; והיעד כאן הוא הכשרה ארגונית, לא ליד.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">4/5 בעולם ה-B2B</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — פגישות ארגוניות</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">~5 ימים + זמן אנליסט לדוח</span></div>
+          <div class="kv"><b>SYNERGY</b><span class="score">מזין מכירות ושותפויות</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> Cisco הפכה שאלון כזה למדד עולמי מצוטט (רק 13% "Pacesetters"); PwC ממירה אותו ישירות לפגישות ייעוץ עם 500+ ארגונים — עם אנליסט מאחורי כל דוח.</p>
+        <p class="first"><b>צעד ראשון:</b> 18 שאלות, 6 צירים, ולתת אותו קודם ל-10 לקוחות B2B קיימים — עם דוח שנכתב ידנית, כדי ללמוד מה בכלל שווה לאוטמט.</p>
+      </div>
+
+      <div class="card cat-meta" id="idea-16" data-cat="meta" data-name='הסמכת "כשיר AI" לפי מקצוע + תעודת לינקדאין'>
+        <button class="vote">☆ בחר</button>
+        <div class="top"><span class="idx" style="color:var(--t-meta)">16</span>
+          <div><h3>הסמכת "כשיר AI" — לפי מקצוע, עם תעודה בלינקדאין</h3>
+          <div class="badges"><span class="tag meta">מהלך-על</span><span class="tag rev">v2 · חודד</span></div></div></div>
+        <p class="what">ההימור הגדול של הבנק — אבל לא תקן אחד גנרי: <b>סדרת הסמכות לפי ייעוד.</b> "כשיר AI במדעי המחשב", "כשיר AI בעיצוב גרפי", "כשיר AI בשיווק", "כשיר AI בכספים" — כל אחת נבחנת על הכלים והמשימות של אותו עולם, על גבי מסלולי מדד השליטה (רעיון 1). <b>התעודה מונפקת כ-Credential בלינקדאין</b> עם חותמת האקדמיה, כך שהיא יושבת בפרופיל של הבוגר, נראית לכל מגייס ומייצרת חשיפה חוזרת בלי מדיה. היעד: מעסיק שכותב במודעה "דרוש: כשיר AI בשיווק, רמה 3".</p>
+        <p class="revnote"><b>מה השתנה:</b> פיצול לפי מקצועות במקום תקן אחד, ואינטגרציית תעודה ללינקדאין — שתי ההצעות התקבלו. הפיצול גם מוריד סיכון: תקן גנרי אחד קל לתקוף ("איך בוחנים מעצבת ומתכנת באותו מבחן?"), הסמכה ייעודית קשה בהרבה.</p>
+        <div class="krow">
+          <div class="kv"><b>POSITIONING</b><span class="score">5/5 — משנה קטגוריה</span></div>
+          <div class="kv"><b>LEADS</b><span class="score">4/5 — כל נבחן = ליד</span></div>
+          <div class="kv"><b>EFFORT</b><span class="score">חודשים + שותפים</span></div>
+          <div class="kv"><b>GATE</b><span class="score">אחרי שמסלולי רעיון 1 יציבים</span></div>
+        </div>
+        <p class="proof"><b>ההוכחה מהעולם:</b> ההסמכות של לינקדאין עצמה, ולפניהן PMP ו-CPA — מי שהחזיק תקן החזיק שוק. נבדק: אין שום בחינת כשירות AI בעברית, ובוודאי לא לפי מקצוע.</p>
+        <p class="first"><b>צעד ראשון:</b> שיחה אחת עם שותף תעשייתי גדול: "אם היה תקן במקצוע X — הייתם דורשים אותו בגיוס?" התשובה קובעת אם זה מהלך או פנטזיה.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- RECO -->
+<section class="bg-art" id="reco" style="padding:66px 0 78px;--art:url('https://d8j0ntlcm91z4.cloudfront.net/user_3CXkMvQYD6UJmnBIXDcObKys6dv/hf_20260812_181613_b658c9cf-afe6-4f34-9b81-95efd1a26f7a_min.webp')">
+  <div class="wrap">
+    <div class="shead"><span class="snum">08</span><h2>ההמלצה — שלושת מהלכי הפתיחה</h2><span class="rule"></span></div>
+    <div class="reco rv">
+      <h3>שלישיית הפתיחה המעודכנת: <span>6 ← 4 ← 1</span></h3>
+      <p>סבב הפידבק שינה את הפתיחה. <b>המכ"ם (6)</b> נשאר ראשון — קצב ונוכחות כבר השבוע, באפס פיתוח. <b>מגרש הפרומפטים והספרייה (4)</b> נכנס במקום "החתך הישראלי": הוא המהלך שקיבל את התמיכה הרחבה ביותר, הוא מייצר טראפיק אורגני מהיום הראשון, <b>והרובריקה שנבנית בו היא בדיוק מנוע הציון שמדד השליטה צריך</b> — כלומר הוא מקצר את המהלך הבא ולא מעכב אותו. <b>מדד השליטה (1)</b> נשאר הדגל, עכשיו במסלול ראשון בלבד ועם ציון היעילות שאין לאיש. שלושתם יחד: קצב + ערך חינמי + כלי מדידה — כ-11 ימי עבודה.</p>
+      <div class="trio">
+        <div class="t-card"><div class="t-n">MOVE 1 · השבוע · 0 פיתוח</div><h5>המכ"ם — התדריך השבועי</h5><p>יום הקמה אחד, שלוש רמות קריאה. הגיליון הראשון בחתימת ד"ר בדיחי יוצא עוד השבוע.</p></div>
+        <div class="t-card"><div class="t-n">MOVE 2 · שבועיים · ~5 ימים</div><h5>מגרש הפרומפטים + הספרייה</h5><p>משימות מפורטות שמדמות עבודה אמיתית, והפרומפטים המנצחים הופכים לספרייה לפי מקצוע.</p></div>
+        <div class="t-card"><div class="t-n">MOVE 3 · תוך חודש · ~5 ימים</div><h5>מדד השליטה — מסלול ראשון</h5><p>המבחן היחיד בעולם שמציג גם כמה טוקנים עלתה התשובה. מסלולי הקוד נפתחים אחריו.</p></div>
+      </div>
+      <div class="cta-vote"><b>הצעד הבא:</b> אישור שלושת מהלכי הפתיחה מאפשר יציאה לדרך השבוע. במקביל, שני מהלכים כמעט-חינמיים יכולים לרוץ ללא אישור נוסף: <b>7 · המילון</b> (~3 ימים) ו-<b>8 · נוהל הפרשנות בתורנות</b> (אפס פיתוח). שלוש הכרעות עדיין פתוחות ומסומנות בנספח: <b>9</b> (ספירת בסיס לפני בנייה), <b>14</b> (פיילוט לפני פרסום) ו-<b>5</b> (סוכן חי — רק בשלב ב').</div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <p><b>מתודולוגיה:</b> הדוח מבוסס על שלוש סריקות מחקר שבוצעו ב-11.8.2026 — סריקת 10 אתרי גופי הכשרה ישראליים, ניתוח מנגנוני מיצוב של גופים מובילים בעולם, ומיפוי מקורות הדאטה והמחקר על AI בישראל. כל נתון אומת מול מקור ראשוני.</p>
+    <p class="src-line"><b>מקורות עיקריים:</b> Stanford HAI — AI Index 2026 · McKinsey — State of AI · PwC — Global AI Jobs Barometer 2025 · World Economic Forum — Future of Jobs 2025 · Anthropic Economic Index · Section AI Proficiency Report · בנק ישראל · למ"ס + המכון הישראלי לדמוקרטיה · GotFriends 2025 · רשות החדשנות · מדד נאמן (טכניון) · HubSpot · WillRobotsTakeMyJob · אתרי המתחרים כפי שנבדקו בפועל.</p>
+    <p style="margin-top:10px">האקדמיה לבינה מלאכותית יישומית · היחידה ללימודי חוץ · אוגוסט 2026</p>
+  </div>
+</footer>
+<div class="votebar" id="votebar">
+  <div class="inner">
+    <span class="count">סומנו <b id="vcount">0</b> רעיונות</span>
+    <span class="picked" id="vpicked"></span>
+    <button class="vb-btn cp" id="vcp">העתקת הבחירה</button>
+    <button class="vb-btn wa" id="vwa">שליחה בוואטסאפ</button>
+  </div>
+</div>
+<script>
+const btns=document.querySelectorAll('.fbtn');
+const cards=document.querySelectorAll('.card');
+btns.forEach(b=>b.addEventListener('click',()=>{
+  btns.forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  const f=b.dataset.f;
+  cards.forEach(c=>{c.style.display=(f==='all'||c.dataset.cat===f)?'':'none'});
+}));
+document.querySelectorAll('.mdot').forEach(d=>d.addEventListener('click',()=>{
+  const id=d.getAttribute('href').slice(1);
+  const el=document.getElementById(id);
+  if(!el)return;
+  document.querySelector('.fbtn[data-f="all"]').click();
+  setTimeout(()=>{el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');},50);
+}));
+const picks=new Map();
+const bar=document.getElementById('votebar');
+const vcount=document.getElementById('vcount');
+const vpicked=document.getElementById('vpicked');
+function refresh(){
+  vcount.textContent=picks.size;
+  vpicked.textContent=[...picks.keys()].map(k=>'#'+k).join(' · ');
+  bar.classList.toggle('show',picks.size>0);
+  document.body.classList.toggle('has-bar',picks.size>0);
+}
+document.querySelectorAll('.card .vote').forEach(btn=>{
+  const card=btn.closest('.card');
+  const id=card.id.replace('idea-','');
+  btn.addEventListener('click',()=>{
+    if(picks.has(id)){
+      picks.delete(id);
+      btn.classList.remove('on');btn.textContent='☆ בחר';
+      card.classList.remove('voted');
+    }else{
+      if(picks.size>=3){alert('אפשר לבחור עד 3 רעיונות — הסירו אחד כדי להוסיף אחר 🙂');return;}
+      picks.set(id,card.dataset.name);
+      btn.classList.add('on');btn.textContent='★ נבחר';
+      card.classList.add('voted');
+    }
+    refresh();
+  });
+});
+function buildMsg(){
+  let m='הצעת מיצוב 2026 — האקדמיה לבינה מלאכותית יישומית\nהמהלכים שסימנתי:\n';
+  [...picks.entries()].forEach(([id,name])=>{m+='★ '+id+' · '+name+'\n';});
+  m+='\nלמה דווקא אלה: ';
+  return m;
+}
+document.getElementById('vwa').addEventListener('click',()=>{
+  if(!picks.size)return;
+  window.open('https://wa.me/?text='+encodeURIComponent(buildMsg()),'_blank');
+});
+document.getElementById('vcp').addEventListener('click',async e=>{
+  if(!picks.size)return;
+  try{await navigator.clipboard.writeText(buildMsg());e.target.textContent='✓ הועתק';
+    setTimeout(()=>{e.target.textContent='📋 העתק';},1800);}catch(err){alert(buildMsg());}
+});
+// navbar pill shrinks past 20px of scroll (NexaCore)
+const mastEl=document.getElementById('mast');
+const onMast=()=>mastEl.classList.toggle('shrunk',scrollY>20);
+addEventListener('scroll',onMast,{passive:true});onMast();
+// reveal on scroll — blur-in with per-group stagger (veloce BlurIn)
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){const el=x.target;el.classList.add('in');io.unobserve(el);setTimeout(()=>{el.style.transitionDelay='';},1500);}}),{threshold:.12});
+const rvGroups=new Map();
+document.querySelectorAll('.rv').forEach(el=>{
+  const p=el.parentElement,i=rvGroups.get(p)||0;rvGroups.set(p,i+1);
+  el.style.transitionDelay=(Math.min(i,5)*.09)+'s';
+  io.observe(el);
+});
+// market snapshot — count-up numbers + gap-bar reveal, per act
+const ease=t=>1-Math.pow(1-t,3);
+const sio=new IntersectionObserver(es=>es.forEach(x=>{
+  if(!x.isIntersecting)return;
+  sio.unobserve(x.target);
+  x.target.querySelectorAll('.sfig b[data-count]').forEach(b=>{
+    const target=parseFloat(b.dataset.count),dec=+(b.dataset.dec||0),t0=performance.now(),D=1400;
+    const step=now=>{const p=Math.min(1,(now-t0)/D);b.textContent=(target*ease(p)).toFixed(dec);if(p<1)requestAnimationFrame(step);};
+    requestAnimationFrame(step);
+  });
+  x.target.querySelectorAll('[data-w]').forEach(el=>{el.style.width=el.dataset.w+'%';});
+}),{threshold:.3});
+document.querySelectorAll('.snap-act').forEach(a=>sio.observe(a));
+// safety net: if IntersectionObserver never fires (hidden tab, reduced motion, old browser),
+// force everything visible so the report is never blank
+setTimeout(()=>{
+  document.querySelectorAll('.rv:not(.in)').forEach(el=>{el.style.transitionDelay='0s';el.classList.add('in');});
+  document.querySelectorAll('[data-w]').forEach(el=>{if(!parseFloat(el.style.width))el.style.width=el.dataset.w+'%';});
+  document.querySelectorAll('.sfig b[data-count]').forEach(b=>{b.textContent=(+b.dataset.count).toFixed(+(b.dataset.dec||0));});
+},2600);
+// statement — scroll-driven gradient fill (veloce TextFillSection, RTL: fills right-to-left)
+const fillH=document.getElementById('fillh'),fillOver=document.getElementById('fillover');
+if(fillH){
+  const onFill=()=>{
+    const r=fillH.getBoundingClientRect(),h=innerHeight;
+    const start=h*.85,end=h*.3;
+    let p=(start-r.top)/(start-end)*100;p=Math.max(0,Math.min(100,p));
+    fillOver.style.clipPath='inset(0 0 0 '+(100-p)+'%)';
+  };
+  addEventListener('scroll',onFill,{passive:true});onFill();
+}
+</script>
+</body>
+</html>
