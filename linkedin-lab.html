@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מעבדת הלינקדאין — האקדמיה לבינה מלאכותית יישומית</title>
+<meta name="description" content="כלי עבודה חינמי בעברית: אבחון פרופיל משוקלל, אשף מיצוב, 12 תבניות פוסטים מוכחות ופלייבוק צמיחה יומי — בלי טריקים, בלי אוטומציות אסורות.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="מעבדת הלינקדאין — ממצבים אותך כמומחה, בשיטה">
+<meta property="og:description" content="אבחון פרופיל, נוסחאות מיצוב, מנוע תוכן ושגרת 30 דקות ביום. כל מה שכלי הלינקדאין בתשלום עושים — פתוח, בעברית, בלי הבטחות ריקות.">
+<meta property="og:url" content="https://shayvazana-oss.github.io/bidul-ai-academy/linkedin-lab.html">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔬</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0f1c; --panel:#111629; --panel-2:#151b31;
+  --hair:rgba(255,255,255,.11); --hair-2:rgba(255,255,255,.2);
+  --ink:#eef2fa; --ink2:#b7c2d9; --muted:#8b98b5;
+  --violet:#a78bfa; --violet-d:#8b5cf6; --cyan:#38bdf8; --green:#34d399; --orange:#f59e0b; --pink:#f472b6;
+  --li:#0a66c2; --li-l:#4aa3e8;
+  --grot:'Space Grotesk','Heebo',sans-serif;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 30px rgba(0,0,0,.35);
+  --gradA:linear-gradient(to left,rgb(28,78,255),rgb(172,36,255) 50%,rgb(254,136,27));
+  --gradB:linear-gradient(to left,rgb(43,167,255),rgb(202,69,255) 50%,rgb(254,136,27));
+  --grad:var(--gradB);
+  --nx-blue:rgb(28,78,255); --nx-purple:rgb(200,111,255);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+section{padding:52px 0;scroll-margin-top:98px}
+a{color:var(--cyan);text-decoration:none}
+button{font-family:inherit}
+.grot{font-family:var(--grot);letter-spacing:.14em;text-transform:uppercase}
+.rv{opacity:0;transform:translateY(16px);filter:blur(14px);transition:opacity .85s ease,transform .85s ease,filter .85s ease}
+.rv.in{opacity:1;transform:none;filter:blur(0)}
+@keyframes blurin{from{opacity:0;filter:blur(16px);transform:translateY(12px)}to{opacity:1;filter:blur(0);transform:none}}
+/* floating pill navbar */
+.mast{position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:0 16px;pointer-events:none}
+.mast .in{pointer-events:auto;width:100%;max-width:1120px;background:rgba(17,22,41,.93);backdrop-filter:blur(20px);border:1px solid var(--hair);border-radius:18px;box-shadow:0 10px 34px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:8px 8px 8px 20px;transition:max-width .5s ease-in-out,padding .5s ease-in-out}
+.mast.shrunk .in{max-width:820px;padding:6px 6px 6px 16px}
+.m-brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16.5px;letter-spacing:-.02em;color:var(--ink);flex:0 0 auto}
+.m-brand svg{width:28px;height:28px;flex:0 0 auto}
+.m-brand small{display:block;font-family:var(--grot);font-size:9px;letter-spacing:.16em;color:var(--muted);font-weight:500}
+.m-links{display:flex;align-items:center;gap:2px}
+.m-links a{font-size:13.5px;color:var(--ink2);border-radius:11px;padding:9px 14px;transition:background .15s,color .15s}
+.m-links a:hover{background:rgba(255,255,255,.08);color:var(--ink)}
+.m-right{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+@media(max-width:940px){.m-links{display:none}.m-brand small{display:none}}
+.btn-grad{position:relative;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;padding:1px;background:var(--gradA);flex:0 0 auto;border:none;cursor:pointer}
+.btn-grad>span{display:block;border-radius:11px;padding:10px 20px;background:var(--nx-blue);color:#fff;font-size:13.5px;font-weight:700;white-space:nowrap;transition:background .3s}
+.btn-grad:hover>span{background:var(--gradA)}
+@media(max-width:560px){
+  .mast{top:10px;padding:0 10px}
+  .mast .in{gap:10px;padding:6px 6px 6px 14px}
+  .m-brand{font-size:14px;gap:8px}
+  .m-brand svg{width:24px;height:24px}
+  .btn-grad>span{padding:9px 13px;font-size:12.5px}
+}
+/* hero */
+.hero{position:relative;padding:150px 0 40px;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(52% 44% at 82% 8%,rgba(10,102,194,.32) 0%,transparent 100%),
+             radial-gradient(44% 40% at 12% 30%,rgba(172,36,255,.16) 0%,transparent 100%),
+             radial-gradient(40% 36% at 55% 90%,rgba(254,136,27,.08) 0%,transparent 100%)}
+.kicker{font-family:var(--grot);font-size:12px;letter-spacing:.26em;color:var(--violet);font-weight:500;margin-bottom:18px}
+h1.giant{font-size:clamp(36px,5.2vw,64px);font-weight:900;line-height:1.1;letter-spacing:-.02em;margin-bottom:20px;max-width:900px}
+h1.giant .dim{color:#6f7c99;text-decoration:line-through;text-decoration-thickness:5px;text-decoration-color:rgba(244,114,182,.6)}
+h1.giant .go{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{font-size:17px;font-weight:400;color:var(--ink2);max-width:680px;margin-bottom:26px}
+.lede b{color:var(--ink);font-weight:600}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 26px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:12px 0;font-family:var(--grot);font-size:10.5px;letter-spacing:.18em;color:var(--muted);max-width:680px}
+.meta-row b{color:var(--ink2);font-weight:500}
+.cov-btns{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.btn-p{background:var(--green);color:#04241a;font-weight:800;font-size:14px;border-radius:10px;padding:12px 20px;transition:opacity .15s;box-shadow:var(--shadow);border:none;cursor:pointer}
+.btn-p:hover{opacity:.88;color:#04241a}
+.btn-g{border:1px solid var(--hair-2);color:var(--ink2);font-weight:600;font-size:14px;border-radius:10px;padding:12px 20px;transition:border-color .15s,color .15s;background:transparent;cursor:pointer}
+.btn-g:hover{border-color:var(--cyan);color:var(--ink)}
+.hero .kicker{animation:blurin .8s ease both}
+.hero h1.giant{animation:blurin .95s ease .1s both}
+.hero .lede{animation:blurin .95s ease .24s both}
+.hero .meta-row,.hero .cov-btns{animation:blurin .95s ease .38s both}
+/* honesty strip */
+.exec{position:relative;background:var(--panel);border:1px solid var(--hair-2);border-radius:16px;padding:26px 30px 22px;box-shadow:var(--shadow);overflow:hidden}
+.exec::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:3px;background:var(--gradA)}
+.exec-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+@media(max-width:840px){.exec-grid{grid-template-columns:1fr}}
+.exec-cell{padding:6px 24px;border-inline-start:1px dashed var(--hair)}
+.exec-cell:first-child{border-inline-start:none;padding-inline-start:0}
+@media(max-width:840px){.exec-cell{border-inline-start:none;padding-inline-start:0;padding-top:16px}}
+.exec-h{font-family:var(--grot);font-size:10.5px;letter-spacing:.16em;color:var(--nx-purple);font-weight:700;margin-bottom:9px}
+.exec-cell p{font-size:14px;color:var(--ink2);line-height:1.65}
+.exec-cell p b{color:var(--ink)}
+/* section head */
+.shead{display:flex;align-items:center;gap:15px;margin-bottom:10px;flex-wrap:wrap}
+.snum{display:inline-flex;align-items:center;gap:8px;font-family:var(--grot);font-size:12px;letter-spacing:.16em;color:var(--ink);font-weight:700;background:rgba(255,255,255,.06);border:1px solid var(--hair);border-radius:36px;padding:7px 15px;flex:0 0 auto}
+.snum::before{content:'';width:15px;height:15px;flex:0 0 auto;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 16'%3E%3Ccircle cx='8.5' cy='8' r='6.6' fill='none' stroke='%23c86fff' stroke-width='1.5'/%3E%3Crect x='8' y='0' width='1.1' height='3' fill='%23c86fff'/%3E%3Crect x='8' y='13' width='1.1' height='3' fill='%23c86fff'/%3E%3Crect x='0' y='7.5' width='3' height='1.1' fill='%23c86fff'/%3E%3Crect x='14' y='7.5' width='3' height='1.1' fill='%23c86fff'/%3E%3C/svg%3E") center/contain no-repeat}
+.shead h2{font-size:clamp(23px,3.4vw,32px);font-weight:800;letter-spacing:-.01em}
+.shead .rule{flex:1;height:1px;background:var(--hair);align-self:center}
+.ssub{color:var(--ink2);font-size:15.5px;max-width:760px;margin-bottom:28px}
+.ssub b{color:var(--ink)}
+/* ===== audit ===== */
+.audit-grid{display:grid;grid-template-columns:1fr 330px;gap:20px;align-items:start}
+@media(max-width:900px){.audit-grid{grid-template-columns:1fr}}
+.agroup{background:var(--panel);border:1px solid var(--hair);border-radius:12px;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.agroup-h{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--hair);background:rgba(255,255,255,.03)}
+.agroup-h h3{font-size:15.5px;font-weight:800}
+.agroup-h .gp{font-family:var(--grot);font-size:11px;letter-spacing:.12em;color:var(--muted);font-weight:600;direction:ltr}
+.aitem{display:flex;align-items:flex-start;gap:13px;padding:13px 18px;border-bottom:1px solid var(--hair);cursor:pointer;transition:background .15s}
+.aitem:last-child{border-bottom:none}
+.aitem:hover{background:rgba(255,255,255,.03)}
+.aitem .chk{flex:0 0 auto;width:26px;height:26px;border-radius:50%;border:2px solid var(--hair-2);margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:transparent;transition:all .15s;background:transparent}
+.aitem.done .chk{border-color:var(--green);background:rgba(52,211,153,.16);color:var(--green)}
+.aitem .aq{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.45}
+.aitem .awhy{font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.5}
+.aitem.done .aq{color:var(--ink2)}
+.aitem .aw{flex:0 0 auto;font-family:var(--grot);font-size:10px;letter-spacing:.08em;color:var(--muted);border:1px solid var(--hair);border-radius:6px;padding:2px 7px;margin-top:4px;white-space:nowrap}
+/* score panel */
+.scorebox{position:sticky;top:106px;background:var(--panel);border:1px solid var(--hair-2);border-radius:14px;padding:22px;box-shadow:var(--shadow)}
+@media(max-width:900px){.scorebox{position:static}}
+.scorebox .sl{font-family:var(--grot);font-size:10.5px;letter-spacing:.2em;color:var(--muted);font-weight:600;margin-bottom:8px}
+.score-num{font-family:'Bebas Neue',var(--grot);font-size:74px;line-height:.9;background:var(--gradB);-webkit-background-clip:text;background-clip:text;color:transparent}
+.score-num small{font-size:30px}
+.score-track{height:12px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;margin:14px 0 10px}
+.score-fill{height:100%;border-radius:6px;background:var(--gradB);width:0;transition:width .6s cubic-bezier(.22,1,.36,1)}
+.score-lvl{display:inline-block;font-size:13px;font-weight:800;border:1px solid var(--hair-2);border-radius:8px;padding:4px 12px;color:var(--ink);margin-bottom:14px}
+.fixes{border-top:1px solid var(--hair);padding-top:14px}
+.fixes h4{font-size:13.5px;font-weight:800;margin-bottom:10px;color:var(--ink)}
+.fixes .fx{font-size:13px;color:var(--ink2);line-height:1.55;padding:9px 12px;border:1px dashed rgba(56,189,248,.4);background:rgba(56,189,248,.05);border-radius:9px;margin-bottom:8px}
+.fixes .fx b{color:var(--cyan);display:block;font-size:12.5px;margin-bottom:2px}
+.fixes .allgood{font-size:13.5px;color:var(--green);font-weight:700}
+.areset{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;margin-top:8px}
+.areset:hover{color:var(--ink2)}
+/* ===== wizard ===== */
+.wiz-grid{display:grid;grid-template-columns:380px 1fr;gap:20px;align-items:start}
+@media(max-width:940px){.wiz-grid{grid-template-columns:1fr}}
+.wizform{background:var(--panel);border:1px solid var(--hair-2);border-radius:14px;padding:22px;box-shadow:var(--shadow);position:sticky;top:106px}
+@media(max-width:940px){.wizform{position:static}}
+.wizform label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin:14px 0 5px}
+.wizform label:first-of-type{margin-top:0}
+.wizform label small{font-weight:400;color:var(--muted)}
+.wizform input{width:100%;background:var(--bg);border:1px solid var(--hair-2);border-radius:9px;padding:10px 12px;color:var(--ink);font-family:inherit;font-size:14px;transition:border-color .15s}
+.wizform input:focus{outline:none;border-color:var(--li-l)}
+.wizform input::placeholder{color:#5a6580}
+.gender{display:flex;gap:8px;margin-top:6px}
+.gbtn{flex:1;border:1px solid var(--hair-2);background:transparent;color:var(--ink2);border-radius:8px;padding:8px 0;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s}
+.gbtn.on{background:rgba(74,163,232,.16);border-color:var(--li-l);color:var(--li-l)}
+.wiz-note{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.6}
+.out{background:var(--panel);border:1px solid var(--hair);border-radius:12px;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.out-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px;border-bottom:1px solid var(--hair);background:rgba(255,255,255,.03)}
+.out-h h3{font-size:14.5px;font-weight:800}
+.out-h .oi{font-family:var(--grot);font-size:10px;letter-spacing:.14em;color:var(--muted)}
+.ocard{padding:14px 18px;border-bottom:1px dashed var(--hair)}
+.ocard:last-child{border-bottom:none}
+.ocard .on{font-size:12px;font-weight:700;color:var(--li-l);margin-bottom:5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ocard .on .cc{font-family:var(--grot);font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.08em}
+.ocard .on .cc.over{color:var(--pink)}
+.otext{font-size:14.5px;color:var(--ink);line-height:1.7;white-space:pre-line}
+.otext .pv{color:var(--li-l);font-weight:700}
+.otext .miss{color:var(--muted);background:rgba(255,255,255,.06);border-radius:5px;padding:0 6px;font-size:12.5px;font-weight:600}
+.otext .free{color:var(--orange);font-size:13px}
+.oguide{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.55}
+.copybtn{flex:0 0 auto;border:1px solid var(--hair-2);background:transparent;color:var(--ink2);border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s}
+.copybtn:hover{border-color:var(--green);color:var(--green)}
+.copybtn.ok{border-color:var(--green);color:var(--green);background:rgba(52,211,153,.1)}
+.ocard .orow{display:flex;align-items:flex-start;gap:12px}
+.ocard .orow .otext{flex:1}
+/* ===== content engine ===== */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.fbtn{border:1px solid var(--hair-2);background:transparent;color:var(--ink2);border-radius:8px;padding:8px 15px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.fbtn:hover{border-color:var(--cyan);color:var(--ink)}
+.fbtn.active{background:var(--ink);border-color:var(--ink);color:#0c0f1c}
+.pcards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.pcards{grid-template-columns:1fr}}
+.pcard{background:var(--panel);border:1px solid var(--hair);border-top:2px solid var(--muted);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow);transition:transform .2s,border-color .2s}
+.pcard:hover{transform:translateY(-2px);border-color:var(--hair-2)}
+.pcard.pl-מומחיות{border-top-color:#0891b2}
+.pcard.pl-סיפור{border-top-color:#d97706}
+.pcard.pl-דעה{border-top-color:#db2777}
+.pcard.pl-הוכחה{border-top-color:#8b5cf6}
+.pcard .ph{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.pcard h3{font-size:16px;font-weight:800;line-height:1.3}
+.tag{font-size:11.5px;font-weight:700;border-radius:5px;padding:2px 8px;white-space:nowrap;flex:0 0 auto}
+.tag.pl-מומחיות{background:rgba(8,145,178,.18);color:#3fd0ee}
+.tag.pl-סיפור{background:rgba(217,119,6,.2);color:#fbbf24}
+.tag.pl-דעה{background:rgba(219,39,119,.18);color:#f981bd}
+.tag.pl-הוכחה{background:rgba(139,92,246,.18);color:#b9a3fd}
+.pcard .pgoal{font-size:13.5px;color:var(--ink2);margin:8px 0 10px}
+.pcard .phook{font-size:13.5px;color:var(--ink);background:rgba(255,255,255,.05);border-inline-start:2px solid var(--li-l);padding:8px 12px;border-radius:0 8px 8px 0;line-height:1.55}
+.pcard .phook small{display:block;font-family:var(--grot);font-size:9.5px;letter-spacing:.16em;color:var(--muted);margin-bottom:3px}
+.pcard .pbtns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.pexp{display:none;margin-top:14px;border-top:1px dashed var(--hair);padding-top:14px}
+.pcard.open .pexp{display:block}
+.pexp .pst{font-size:13px;color:var(--ink2);margin-bottom:10px}
+.pexp .pst b{color:var(--ink)}
+.pexp ol{padding-inline-start:20px;font-size:13px;color:var(--ink2);margin-bottom:12px}
+.pexp ol li{margin-bottom:3px}
+.tpl{background:var(--bg);border:1px solid var(--hair);border-radius:9px;padding:14px 16px;font-size:13.5px;color:var(--ink);line-height:1.75;white-space:pre-wrap;font-family:inherit;margin-bottom:10px;overflow-x:auto}
+.tpl .pv{color:var(--li-l);font-weight:700}
+.tpl .miss{color:var(--muted);background:rgba(255,255,255,.07);border-radius:5px;padding:0 6px;font-size:12px;font-weight:600}
+.tpl .free{color:var(--orange)}
+.pwhy{font-size:12.5px;color:var(--muted);line-height:1.6}
+.pwhy b{color:var(--ink2)}
+/* calendar */
+.calbox{margin-top:34px;background:var(--panel);border:1px solid var(--hair-2);border-radius:14px;padding:24px;box-shadow:var(--shadow)}
+.calbox .ch{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.calbox h3{font-size:18px;font-weight:800}
+.calbox .csub{font-size:13.5px;color:var(--ink2);max-width:620px;margin-bottom:16px}
+.calgrid{display:grid;grid-template-columns:70px 1fr 1fr 1fr;gap:8px;min-width:620px}
+.cal-scroll{overflow-x:auto}
+.calgrid .chd{font-family:var(--grot);font-size:10.5px;letter-spacing:.14em;color:var(--muted);font-weight:700;text-align:center;padding:6px 0}
+.calgrid .cwk{font-size:12px;font-weight:800;color:var(--ink2);display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04);border-radius:8px}
+.calgrid .cc{background:var(--bg);border:1px solid var(--hair);border-radius:9px;padding:9px 11px;font-size:12.5px;line-height:1.45}
+.calgrid .cc b{display:block;color:var(--ink);font-size:13px}
+.calgrid .cc span{color:var(--muted);font-size:11.5px}
+.calbtns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+/* ===== playbook ===== */
+.routine{border-top:1px solid var(--hair)}
+.rstep{display:grid;grid-template-columns:76px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--hair)}
+.rstep .rt{font-family:'Bebas Neue',var(--grot);font-size:26px;color:var(--li-l);line-height:1.1;white-space:nowrap}
+.rstep h4{font-size:15.5px;font-weight:800;margin-bottom:3px}
+.rstep p{font-size:14px;color:var(--ink2)}
+.pb2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px;align-items:start}
+@media(max-width:860px){.pb2{grid-template-columns:1fr}}
+.pbox{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:20px 22px;box-shadow:var(--shadow)}
+.pbox h3{font-size:16.5px;font-weight:800;margin-bottom:12px}
+.pbox ul{list-style:none}
+.pbox ul li{font-size:13.5px;color:var(--ink2);padding:7px 0 7px;border-bottom:1px dashed var(--hair);display:flex;gap:10px;line-height:1.55}
+.pbox ul li:last-child{border-bottom:none}
+.pbox ul li::before{content:'←';color:var(--li-l);font-weight:900;flex:0 0 auto}
+.exch{margin-bottom:12px}
+.exch .bad,.exch .good{font-size:13px;border-radius:9px;padding:10px 13px;line-height:1.6;margin-bottom:6px}
+.exch .bad{background:rgba(244,114,182,.07);border:1px solid rgba(244,114,182,.3);color:var(--ink2)}
+.exch .good{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.3);color:var(--ink)}
+.exch .bad b{color:var(--pink)}
+.exch .good b{color:var(--green)}
+.dmcard{border:1px solid var(--hair);border-radius:11px;padding:16px 18px;margin-bottom:12px;background:var(--panel-2)}
+.dmcard .dh{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:4px}
+.dmcard h4{font-size:14.5px;font-weight:800}
+.dmcard .dw{font-size:12.5px;color:var(--muted);margin-bottom:10px;line-height:1.55}
+.dmcard .ds{background:var(--bg);border:1px solid var(--hair);border-radius:9px;padding:12px 14px;font-size:13.5px;color:var(--ink);line-height:1.7;white-space:pre-wrap}
+.dmcard .ds .free{color:var(--orange)}
+.tbl-scroll{overflow-x:auto;border:1px solid var(--hair);border-radius:12px;background:var(--panel);box-shadow:var(--shadow);margin-top:34px}
+table{width:100%;border-collapse:collapse;min-width:640px;font-size:14px}
+th{color:var(--ink);font-weight:800;font-size:13.5px;padding:13px 14px;text-align:right;border-bottom:1px solid var(--hair-2);white-space:nowrap;background:rgba(255,255,255,.05)}
+td{padding:12px 14px;border-bottom:1px solid var(--hair);color:var(--ink2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td b{color:var(--ink)}
+td .hl{color:var(--green);font-weight:600}
+/* warnings */
+.warns{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+@media(max-width:860px){.warns{grid-template-columns:1fr}}
+.warn{background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.35);border-radius:12px;padding:18px 20px}
+.warn h4{font-size:15px;font-weight:800;color:var(--orange);margin-bottom:6px}
+.warn p{font-size:13.5px;color:var(--ink2);line-height:1.65}
+.compgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:10px}
+@media(max-width:860px){.compgrid{grid-template-columns:1fr}}
+.comp{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+.comp h4{font-size:14.5px;font-weight:800;margin-bottom:6px;color:var(--li-l)}
+.comp p{font-size:13.5px;color:var(--ink2);line-height:1.65}
+/* closing */
+.reco{background:var(--panel);border:1px solid rgba(52,211,153,.4);border-radius:14px;padding:26px;box-shadow:var(--shadow)}
+.reco h3{font-size:19px;font-weight:900;margin-bottom:10px}
+.reco h3 span{color:var(--green)}
+.reco p{font-size:14.5px;color:var(--ink2);margin-bottom:8px}
+.reco p b{color:var(--ink)}
+footer{border-top:1px solid var(--hair);padding:28px 0 46px;font-size:13px;color:var(--muted)}
+footer p{max-width:900px;line-height:1.8}
+.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,80px);background:#1c2440;color:var(--ink);border:1px solid rgba(52,211,153,.5);border-radius:11px;padding:10px 20px;font-size:13.5px;font-weight:700;z-index:80;opacity:0;transition:all .3s;pointer-events:none;box-shadow:var(--shadow)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="mast" id="mast">
+  <div class="in">
+    <div class="m-brand">
+      <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <defs><linearGradient id="nxg" x1="2" y1="26" x2="26" y2="2" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="rgb(28,78,255)"/><stop offset=".5" stop-color="rgb(172,36,255)"/><stop offset="1" stop-color="rgb(254,136,27)"/>
+        </linearGradient></defs>
+        <circle cx="14" cy="14" r="11" stroke="url(#nxg)" stroke-width="2.5"/>
+      </svg>
+      <span>מעבדת הלינקדאין<small>האקדמיה לבינה מלאכותית · LINKEDIN LAB</small></span>
+    </div>
+    <nav class="m-links">
+      <a href="#audit">הסורק</a>
+      <a href="#position">המיצוב</a>
+      <a href="#content">מנוע התוכן</a>
+      <a href="#playbook">הפלייבוק</a>
+      <a href="bank.html">בנק הרעיונות</a>
+    </nav>
+    <div class="m-right">
+      <a class="btn-grad" href="#audit"><span>להתחיל באבחון</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" style="padding-bottom:20px">
+  <div class="wrap">
+    <div class="kicker">LINKEDIN LAB · כלי עבודה · גרסה 1</div>
+    <h1 class="giant">הפרופיל שלך לא צריך להיות <span class="dim">ויראלי</span><br><span class="go">הוא צריך למכור אותך נכון</span></h1>
+    <p class="lede">אין כפתור שהופך עמוד לפופולרי — מי שמוכר לך כזה, מוכר לך סיכון לחשבון. מה שיש: <b>שיטה בארבע תחנות</b> — אבחון משוקלל של הפרופיל, נוסחאות מיצוב שממלאים פעם אחת, 12 תבניות פוסטים מוכחות, ושגרת 30 דקות ביום. הכול פתוח, בעברית, ורץ אצלך בדפדפן.</p>
+    <div class="meta-row">
+      <span>תחנות · <b>4</b></span>
+      <span>בדיקות פרופיל · <b>17</b></span>
+      <span>תבניות פוסטים · <b>12</b></span>
+      <span>שגרה יומית · <b>30 דק'</b></span>
+      <span>עלות · <b>0 ₪</b></span>
+    </div>
+    <div class="cov-btns">
+      <a class="btn-p" href="#audit">תחנה 1 · סרוק את הפרופיל</a>
+      <a class="btn-g" href="#content">דלג למנוע התוכן</a>
+    </div>
+  </div>
+</section>
+
+<!-- HONESTY STRIP -->
+<section style="padding:34px 0 6px">
+  <div class="wrap">
+    <div class="exec rv">
+      <div class="exec-grid">
+        <div class="exec-cell">
+          <div class="exec-h">מה הכלים בתשלום עושים</div>
+          <p>Taplio, AuthoredUp ודומיהם מוכרים שלושה דברים: <b>תבניות כתיבה, תזמון פרסום ומעקב מספרים.</b> את שלושתם אפשר להחזיק גם בלי מנוי חודשי — התבניות והשיטה נמצאות בעמוד הזה.</p>
+        </div>
+        <div class="exec-cell">
+          <div class="exec-h">מה אף כלי לא יעשה בשבילך</div>
+          <p>את <b>הניסיון, הדעות והשיחות</b> — הדברים היחידים שבונים מוניטין של מומחה — אי אפשר לגנרט ואי אפשר לקנות. הכלי מנסח; החומר חייב להיות שלך.</p>
+        </div>
+        <div class="exec-cell">
+          <div class="exec-h">ומה מסוכן באמת</div>
+          <p>כלים שמבטיחים "צמיחה אוטומטית" — בקשות חיבור, לייקים ותגובות בוט — <b>מפרים את תנאי השימוש של לינקדאין</b> ומסכנים את החשבון בחסימה. במעבדה הזאת אין אף שיטה כזאת. בכוונה.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATION 1: AUDIT -->
+<section id="audit">
+  <div class="wrap">
+    <div class="shead"><span class="snum">תחנה 1</span><h2>סורק הפרופיל — 17 בדיקות, ציון אחד</h2><span class="rule"></span></div>
+    <p class="ssub">עברו על הפרופיל שלכם מול הרשימה וסמנו מה כבר קיים. כל בדיקה משוקללת לפי כמה שהיא באמת משנה — כותרת ופעילות שוות הרבה יותר מכתובת URL מסודרת. הציון נשמר בדפדפן שלכם בלבד, ובצד תקבלו את <b>שלושת התיקונים הבאים</b> לפי סדר ההשפעה.</p>
+    <div class="audit-grid">
+      <div id="auditGroups"></div>
+      <div class="scorebox">
+        <div class="sl">SCORE · ציון הפרופיל</div>
+        <div class="score-num"><span id="scoreVal">0</span><small>/100</small></div>
+        <div class="score-track"><div class="score-fill" id="scoreFill"></div></div>
+        <span class="score-lvl" id="scoreLvl">עוד לא סומן דבר</span>
+        <div class="fixes">
+          <h4>מה מתקנים קודם</h4>
+          <div id="fixList"></div>
+        </div>
+        <button class="areset" id="auditReset">איפוס הסימונים</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATION 2: POSITIONING -->
+<section id="position" style="padding-top:26px">
+  <div class="wrap">
+    <div class="shead"><span class="snum">תחנה 2</span><h2>אשף המיצוב — ממלאים 5 שדות, מקבלים את כל הניסוחים</h2><span class="rule"></span></div>
+    <p class="ssub">חמש תשובות קצרות מזינות את כל המחוללים בעמוד: כותרת הפרופיל, משפט המיצוב, הבאנר, מבנה ה-About — וגם תבניות הפוסטים בתחנה הבאה. מה שלא מולא נשאר מסומן, אז אפשר להתחיל חלקית. הנתונים נשמרים בדפדפן שלכם בלבד.</p>
+    <div class="wiz-grid">
+      <div class="wizform">
+        <label>לשון כתיבה</label>
+        <div class="gender">
+          <button class="gbtn on" data-g="m" type="button">אני עוזר…</button>
+          <button class="gbtn" data-g="f" type="button">אני עוזרת…</button>
+        </div>
+        <label for="w-תחום">התחום שלך <small>· מה אתה בעצם</small></label>
+        <input id="w-תחום" data-f="תחום" placeholder="למשל: יועצת שכר ודיני עבודה">
+        <label for="w-קהל">קהל היעד <small>· מי הלקוח המדויק</small></label>
+        <input id="w-קהל" data-f="קהל" placeholder="למשל: מנהלי כספים בחברות בצמיחה">
+        <label for="w-בעיה">הבעיה שאתה פותר <small>· במילים של הלקוח</small></label>
+        <input id="w-בעיה" data-f="בעיה" placeholder="למשל: טעויות שכר שמגיעות לתביעות">
+        <label for="w-תוצאה">התוצאה שאתה מביא <small>· מה נשאר אחריך</small></label>
+        <input id="w-תוצאה" data-f="תוצאה" placeholder="למשל: שכר מדויק וראש שקט">
+        <label for="w-הוכחה">ההוכחה <small>· רק מה שתעמוד מאחוריו</small></label>
+        <input id="w-הוכחה" data-f="הוכחה" placeholder="למשל: 12 שנים ומאות ביקורות שכר">
+        <p class="wiz-note">כלל הבית: מספר שאי אפשר לעמוד מאחוריו לא נכנס לפרופיל. עדיף "ליוויתי עשרות חברות" אמיתי מ"מאות" מנופח.</p>
+      </div>
+      <div>
+        <div class="out">
+          <div class="out-h"><h3>משפט המיצוב</h3><span class="oi">המשפט שמנחה הכול — לא מתפרסם</span></div>
+          <div id="outStatement"></div>
+        </div>
+        <div class="out">
+          <div class="out-h"><h3>כותרת הפרופיל (Headline)</h3><span class="oi">עד 220 תווים</span></div>
+          <div id="outHeadlines"></div>
+        </div>
+        <div class="out">
+          <div class="out-h"><h3>משפט לבאנר</h3><span class="oi">1584×396 · משפט אחד</span></div>
+          <div id="outBanner"></div>
+        </div>
+        <div class="out">
+          <div class="out-h"><h3>מבנה ה-About — חמישה בלוקים</h3><button class="copybtn" id="copyAbout">העתקת הכול</button></div>
+          <div id="outAbout"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATION 3: CONTENT ENGINE -->
+<section id="content" style="padding-top:26px">
+  <div class="wrap">
+    <div class="shead"><span class="snum">תחנה 3</span><h2>מנוע התוכן — 12 מסגרות פוסט שעובדות</h2><span class="rule"></span></div>
+    <p class="ssub">ארבעה עמודי תוכן מחזיקים מיצוב של מומחה: <b>מומחיות</b> (מלמד), <b>סיפור</b> (מקרה אמיתי), <b>דעה</b> (עמדה מנומקת) ו<b>הוכחה</b> (שקיפות ותוצאות). כל מסגרת נפתחת לתבנית מלאה — ממולאת אוטומטית בנתוני המיצוב שלכם — עם כפתור העתקה, וגם כפרומפט מוכן לעבודה עם AI שמשאיר את הסיפור שלכם בידיים שלכם.</p>
+    <div class="filters" id="pillarFilters">
+      <button class="fbtn active" data-p="all">הכל (12)</button>
+      <button class="fbtn" data-p="מומחיות">מומחיות (4)</button>
+      <button class="fbtn" data-p="סיפור">סיפור (3)</button>
+      <button class="fbtn" data-p="דעה">דעה (3)</button>
+      <button class="fbtn" data-p="הוכחה">הוכחה (2)</button>
+    </div>
+    <div class="pcards" id="postCards"></div>
+
+    <div class="calbox rv">
+      <div class="ch">
+        <h3>📅 לוח התוכן לחודש הקרוב</h3>
+        <button class="btn-g" id="calShuffle" style="padding:8px 16px;font-size:13px">סידור מחדש</button>
+      </div>
+      <p class="csub">שלושה פוסטים בשבוע — ראשון, שלישי, חמישי — בסבב מאוזן בין ארבעת עמודי התוכן, כך שאף שבוע לא נשמע חד-גוני. שלושה בשבוע זה הקצב שאפשר להחזיק לאורך זמן, וההתמדה שווה יותר מהכמות.</p>
+      <div class="cal-scroll"><div class="calgrid" id="calGrid"></div></div>
+      <div class="calbtns">
+        <button class="btn-p" id="calCopy" style="font-size:13px;padding:10px 18px">העתקת הלוח כטקסט</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATION 4: PLAYBOOK -->
+<section id="playbook" style="padding-top:26px">
+  <div class="wrap">
+    <div class="shead"><span class="snum">תחנה 4</span><h2>פלייבוק הצמיחה — 30 דקות ביום, בסדר הנכון</h2><span class="rule"></span></div>
+    <p class="ssub">פרופיל ממוצב ותוכן טוב הם חצי מהעבודה. החצי השני — <b>נראות ושיחות</b> — נבנה בשגרה קצרה שקל להחזיק: קודם תגובות אצל אחרים, אחר כך הפרסום שלך, ותמיד קשר אישי אחד ביום.</p>
+    <div class="routine" id="routineList"></div>
+
+    <div class="pb2">
+      <div class="pbox">
+        <h3>💬 תורת התגובה — הכלי הכי מוזל בלינקדאין</h3>
+        <ul id="commentRules"></ul>
+      </div>
+      <div class="pbox">
+        <h3>לפני / אחרי — איך נראית תגובה שעובדת</h3>
+        <div id="commentExamples"></div>
+      </div>
+    </div>
+
+    <div style="margin-top:34px">
+      <h3 style="font-size:18px;font-weight:800;margin-bottom:6px">✉️ שלושה תסריטי הודעות — בלי למכור בהודעה הראשונה</h3>
+      <p style="font-size:13.5px;color:var(--ink2);max-width:700px;margin-bottom:16px">הודעות פרטיות הן המקום שבו רוב האנשים שורפים את מה שהתוכן בנה. הכלל: שתי ההודעות הראשונות לא מוכרות כלום. <span style="color:var(--orange)">[הסוגריים]</span> הם המקומות שחייבים למלא אישית — הודעה גנרית מזוהה מקילומטר.</p>
+      <div id="dmCards"></div>
+    </div>
+
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>המדד השבועי</th><th>מה בודקים ואיפה</th><th>מה נחשב בריא</th></tr></thead>
+        <tbody id="metricsRows"></tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:38px">
+      <div class="shead"><span class="snum" style="border-color:rgba(245,158,11,.4)">אזהרות</span><h2 style="font-size:clamp(19px,2.6vw,25px)">מה שלא עובד — ויעלה לך ביוקר</h2><span class="rule"></span></div>
+      <div class="warns" id="warnCards"></div>
+    </div>
+
+    <div style="margin-top:38px">
+      <div class="shead"><span class="snum">עמוד החברה</span><h2 style="font-size:clamp(19px,2.6vw,25px)">והחברה? שלושה עקרונות</h2><span class="rule"></span></div>
+      <div class="compgrid" id="compCards"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section style="padding-top:26px">
+  <div class="wrap">
+    <div class="reco rv">
+      <h3>מה עושים עכשיו? <span>שבוע ראשון במעבדה</span></h3>
+      <p><b>יום 1:</b> סורקים את הפרופיל (תחנה 1) ומתקנים את שלושת הפריטים הראשונים ברשימה. <b>יום 2:</b> ממלאים את אשף המיצוב ומעדכנים כותרת, באנר ו-About. <b>יום 3:</b> בוחרים 10–15 אנשים שהקהל שלכם עוקב אחריהם, ומתחילים את שגרת 30 הדקות. <b>יום 4:</b> פוסט ראשון — מסגרת "השאלה שחוזרת" היא הפתיחה הקלה ביותר. <b>ומשם:</b> הלוח החודשי כבר בנוי בתחנה 3.</p>
+      <p style="margin-top:10px;font-size:13.5px;color:var(--muted)">המעבדה לא מבטיחה עוקבים, לידים או ויראליות — אף אחד לא יכול להבטיח את זה ביושר. היא כן מבטיחה שתדעו בדיוק מה לעשות בכל יום, ושכל מה שתפרסמו יעמוד מאחורי עצמו.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>על השיטה:</b> המעבדה מבוססת על הפרקטיקות המשותפות לבוני נוכחות מקצועית מובילים בלינקדאין — מיצוב ממוקד-לקוח, עקביות על פני ויראליות, תגובות כמנוע חשיפה, והוכחות במקום הצהרות — ועל הניסיון המצטבר בליווי מקצוענים ועסקים ישראליים. אין בה נתוני "אחוזי הצלחה" כי אין דרך ישרה למדוד אותם מראש. כל הנתונים שתזינו נשמרים בדפדפן שלכם בלבד ואינם נשלחים לשום שרת.</p>
+    <p style="margin-top:10px">האקדמיה לבינה מלאכותית יישומית · היחידה ללימודי חוץ · אוגוסט 2026</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast">✓ הועתק</div>
+
+<script>
+const LAB = {"audit":{"groups":[{"id":"foundation","title":"תשתית הפרופיל האישי","items":[{"q":"יש לך תמונת פרופיל מקצועית ועדכנית — פנים ברורות, רקע נקי?","why":"זה הדבר הראשון שהעין נתפסת בו, והוא קובע אם סומכים עליך עוד לפני שקראו מילה.","fix":"צלם תמונת חזית עדכנית (לא סלפי), הפנים תופסות כ-60% מהפריים, רקע נקי. העלה ברזולוציה של לפחות 400×400 פיקסלים.","weight":6},{"q":"יש לך תמונת רקע (באנר) שאומרת מה אתה עושה ולמי?","why":"הבאנר הוא שטח הפרסום הכי גדול בפרופיל — ברירת המחדל הכחולה משדרת שלא אכפת לך.","fix":"עצב באנר במידות 1584×396 פיקסלים עם משפט אחד ברור: מה אתה עושה, למי, ואיך יוצרים איתך קשר. אפשר לסיים את זה בקנבה ברבע שעה.","weight":6},{"q":"הכותרת (Headline) שלך אומרת איזו בעיה אתה פותר ולמי — ולא רק תואר תפקיד?","why":"הכותרת מופיעה בכל תוצאת חיפוש, תגובה ובקשת חיבור — היא עובדת בשבילך גם כשאתה לא שם.","fix":"כתוב לפי הנוסחה: עוזר ל[קהל] להשיג [תוצאה] באמצעות [שיטה]. יש לך עד 220 תווים — נצל אותם, ושלב את המילים שהלקוחות שלך באמת מחפשים.","weight":11},{"q":"ה-About שלך נפתח בבעיה של הלקוח — ולא ב'בעל ניסיון של 15 שנה'?","why":"רק השורות הראשונות מוצגות לפני 'ראה עוד' — אם הן עליך ולא על הלקוח, איבדת אותו שם.","fix":"פתח בבעיה שהלקוח מזהה אצל עצמו, המשך באיך אתה פותר אותה, וסיים בהנעה לפעולה אחת ברורה. יש מקום לעד 2,600 תווים — אבל שלוש השורות הראשונות הן שעושות את העבודה.","weight":10},{"q":"יש לך כתובת פרופיל מותאמת אישית ופרטי קשר מלאים (אתר, מייל)?","why":"כתובת עם מספרים אקראיים ופרטי קשר חסרים עוצרים מתעניין צעד אחד לפני פנייה.","fix":"ערוך את ה-URL לשם שלך (linkedin.com/in/your-name) דרך עריכת הפרופיל הציבורי, והוסף אתר ומייל בסקשן Contact info.","weight":3}]},{"id":"authority","title":"הוכחת מומחיות","items":[{"q":"יש בסקשן Featured שלך 2–4 הוכחות: מקרה לקוח, מאמר, הרצאה או דף שירות?","why":"מי שמתלבט אם לפנות אליך מחפש הוכחה שכבר עשית את זה — Featured הוא המקום שבו היא מוצגת.","fix":"הצמד ל-Featured בין 2 ל-4 פריטים: הפוסט הכי חזק שלך, מקרה לקוח עם תוצאה, וקישור לדף שבו אפשר לעבוד איתך. תן לכל פריט כותרת שמסבירה מה רואים.","weight":8},{"q":"יש לך לפחות 3 המלצות (Recommendations) מלקוחות מהשנתיים האחרונות?","why":"המלצה של לקוח אמיתי שווה יותר מכל מה שתכתוב על עצמך — הוכחה חברתית שאי אפשר לזייף.","fix":"שלח בקשת המלצה ל-3 לקוחות מרוצים, וכתוב להם במה למקד: הבעיה, העבודה, התוצאה. המלצה ממוקדת נכתבת בחמש דקות.","weight":7},{"q":"סקשן הניסיון (Experience) שלך מתאר תוצאות שהשגת — ולא רשימת תחומי אחריות?","why":"לקוח לא קונה 'אחריות על תחום' — הוא קונה תוצאה שכבר השגת למישהו כמוהו.","fix":"לכל תפקיד רלוונטי כתוב 2–3 שורות: למי עזרת, מה עשית, ומה יצא מזה — במספרים שאתה יכול לעמוד מאחוריהם.","weight":5},{"q":"כפתור ברירת המחדל בפרופיל שלך הוא 'עקוב' (Follow) ולא 'התחבר'?","why":"מי שעוד לא מכיר אותך לא יבקש חיבור — אבל לעקוב הוא מוכן, וכך התוכן שלך מתחיל להגיע אליו.","fix":"היכנס ל-Settings → Visibility → Followers וסמן Make follow primary. לוקח 30 שניות.","weight":3},{"q":"מוגדרות לך לפחות 5 מיומנויות (Skills) שתואמות בדיוק את מה שאתה מוכר?","why":"המיומנויות מזינות את מנוע החיפוש של לינקדאין — בלעדיהן לא מוצאים אותך כשמחפשים את מה שאתה עושה.","fix":"אפשר להוסיף עד 50 מיומנויות, אבל מקד את שלוש הראשונות (שמוצגות בראש) במה שאתה רוצה להימכר בו, ובקש אישורים (Endorsements) מקולגות ולקוחות.","weight":3}]},{"id":"activity","title":"פעילות ועקביות","items":[{"q":"אתה מפרסם פוסט מקצועי לפחות פעם בשבוע — כבר חודשיים ברצף?","why":"פרופיל מושלם בלי פעילות הוא חנות סגורה — עקביות בונה נוכחות, לא פוסט ויראלי חד-פעמי.","fix":"קבע חלון כתיבה קבוע ביומן והחזק תור של 3–4 רעיונות מראש. פוסט אחד טוב כל שבוע עדיף על חמישה בשבוע אחד ואז חודש שתיקה.","weight":11},{"q":"אתה כותב תגובות ענייניות על פוסטים של אחרים לפחות 3 פעמים בשבוע?","why":"תגובה חכמה חושפת אותך לקהל של מישהו אחר — הדרך הכי מהירה להיראות בלי לכתוב פוסט.","fix":"בחר 10–15 אנשים שהלקוחות שלך עוקבים אחריהם, והגב אצלם עם עמדה או תוספת ערך — לא 'פוסט מעולה!'. שתיים-שלוש שורות מספיקות.","weight":8},{"q":"אתה עונה לכל תגובה על הפוסטים שלך בתוך 24 שעות?","why":"תגובות שנענות מאותתות לאלגוריתם שהשיחה חיה — ולמגיב שיש כאן עם מי לדבר.","fix":"היכנס פעמיים ביום ל-10 דקות וענה לכל מגיב תשובה עניינית, רצוי עם שאלה שממשיכה את השיחה.","weight":5},{"q":"אתה שולח כל שבוע בקשות חיבור מותאמות אישית לאנשים מקהל היעד שלך?","why":"הרשת לא גדלה לבד — בלי חיבורים חדשים מהקהל הנכון אתה כותב שוב ושוב לאותם אנשים.","fix":"שלח 5–10 בקשות בשבוע עם שורה אישית: איפה נתקלת בהם ולמה מעניין אותך להתחבר. בלי פיץ' מכירה בהודעה הראשונה.","weight":4}]},{"id":"company","title":"עמוד החברה","items":[{"q":"עמוד החברה שלך מלא: לוגו, באנר, תיאור עם מילות מפתח וקישור לאתר?","why":"לקוח שבודק אותך מגיע גם לעמוד החברה — עמוד ריק שובר את הרושם שהפרופיל האישי בנה.","fix":"השלם את כל השדות: לוגו 300×300, באנר 1128×191, תיאור שנפתח במה שאתם פותרים ללקוח, תחום, גודל חברה וקישור לאתר.","weight":4},{"q":"עמוד החברה מפרסם עדכון לפחות פעמיים בחודש?","why":"עמוד שהפוסט האחרון בו מלפני חצי שנה נראה כמו עסק שנסגר.","fix":"קבע קצב מינימום של פוסט בשבועיים: מקרה לקוח, עדכון שירות או גרסה מותאמת לתוכן מהפרופיל האישי. אפשר לתזמן חודש מראש.","weight":3},{"q":"הפרופיל האישי שלך (ושל הצוות) מקושר לעמוד החברה בסקשן הניסיון?","why":"הקישור מציג את הלוגו ליד השם שלך בכל מקום שאתה מופיע — ומזרים לעמוד מבקרים בחינם.","fix":"בסקשן Experience ודא שהתפקיד הנוכחי נבחר מהרשימה הנפתחת של החברות (לא טקסט חופשי), ובקש מכל הצוות לעשות אותו דבר.","weight":3}]}]},"positioning":{"headlines":[{"name":"הלקוח במרכז","formula":"עוזר/ת ל{קהל} לפתור את {בעיה} ׀ {תחום} ׀ {הוכחה}","example":"עוזרת למנהלי ומנהלות HR בהייטק לפתור טעויות שכר לפני שהן הופכות לתביעות ׀ יועצת שכר ודיני עבודה ׀ 12 שנים בתחום"},{"name":"שורה תחתונה","formula":"{תחום} ׀ {תוצאה} ל{קהל} ׀ {הוכחה}","example":"מומחה אוטומציה עסקית ׀ 10 שעות עבודה ידנית פחות בשבוע לעסקים של 2–20 עובדים ׀ 80+ פרויקטים באוויר"},{"name":"קודם ההוכחה","formula":"{הוכחה} ׀ עוזר/ת ל{קהל} להגיע ל{תוצאה} ׀ {תחום}","example":"12 שנים ומאות ביקורות שכר ׀ עוזרת לחברות בצמיחה לעבור ביקורת רגולציה בלי ממצאים ׀ ייעוץ שכר ודיני עבודה"},{"name":"בלי תואר בכלל","formula":"{בעיה}? בדיוק בשביל זה אני כאן ׀ {תוצאה} ל{קהל} ׀ {הוכחה}","example":"עוד ערב של קופי-פייסט בין אקסלים? בדיוק בשביל זה אני כאן ׀ תהליכים שרצים לבד, לעסקים של 2–20 עובדים ׀ 80+ אוטומציות שעובדות ברגע זה"}],"about":[{"title":"פתיחה שתופסת","guide":"אל תפתחו ב'נעים מאוד, אני...'. השורה הראשונה היא היחידה שרואים לפני הלחיצה על 'עוד' — תנו בה את הבעיה של הלקוח, במילים שלו. מי שמזהה את עצמו בשורה הזאת ימשיך לקרוא.","template":"{קהל} מגיעים אליי בדרך כלל עם אותה בעיה: {בעיה}.\nלא כי הם לא מקצועיים — כי אף אחד לא הראה להם דרך אחרת.\nבדיוק בשביל זה אני כאן."},{"title":"מה אני עושה בפועל","guide":"משפט אחד או שניים, קונקרטיים: מה אתם עושים, למי, ולאיזו תוצאה. בלי 'מלווה', 'מעצים' ו'נותן ערך' — משפט שכל מתחרה יכול להעתיק הוא לא מיצוב.","template":"אני {תחום}.\nבפועל: אני עוזר/ת ל{קהל} לעבור מ{בעיה} ל{תוצאה}."},{"title":"איך זה נראה בפועל","guide":"תארו את הדרך בשלושה שלבים פשוטים. לקוח שיכול לדמיין את התהליך מפחד פחות לפנות. שלבים ממוספרים משכנעים יותר מכל שם תואר.","template":"ככה זה עובד:\n1. אבחון קצר — איפה בדיוק {בעיה} עולה לכם הכי ביוקר.\n2. תוכנית עבודה עם יעדים שאפשר למדוד.\n3. ליווי עד {תוצאה} — לא נעלמים אחרי הפגישה הראשונה."},{"title":"הוכחות ומספרים","guide":"כתבו רק מספרים שתוכלו לעמוד מאחוריהם אם ישאלו. מספר מדויק ('47 פרויקטים') אמין יותר ממספר עגול ומרשים. אין עדיין מספרים? סיפור לקוח קונקרטי אחד שווה יותר מהצהרות.","template":"{הוכחה}.\nדוגמה אחת: [לקוח או תיאור אנונימי] הגיע עם {בעיה} —\nתוך [פרק זמן אמיתי] הגענו ל{תוצאה}."},{"title":"קריאה לפעולה","guide":"צעד אחד ברור, לא שלושה. תגידו בדיוק מה קורה כשפונים אליכם — כמה זמן זה לוקח ומה יוצא מזה. 'אשמח להתחבר' זו לא קריאה לפעולה.","template":"מתמודדים עם {בעיה}? שלחו לי הודעה כאן.\nשיחת היכרות של 20 דקות, בלי מחויבות —\nותצאו ממנה עם [צעד ראשון קונקרטי], גם אם לא נעבוד יחד."}],"banner":[{"formula":"{תוצאה} ל{קהל} — בלי {בעיה}","example":"שכר מדויק וראש שקט לחברות בצמיחה — בלי טעויות שמגיעות לבית הדין"},{"formula":"{בעיה}? יש דרך אחרת.","example":"עדיין מעבירים נתונים ידנית בין מערכות? יש דרך אחרת."}],"statement":{"template":"אני עוזר/ת ל{קהל} שמתמודדים עם {בעיה} להגיע ל{תוצאה} — על בסיס {הוכחה} ב{תחום}.","example":"אני עוזרת לחברות הייטק של 50–200 עובדים שמתמודדות עם טעויות שכר ותלונות עובדים, להגיע לשכר מדויק ולשקט תעשייתי — על בסיס 12 שנים ומאות ביקורות שכר בייעוץ שכר ודיני עבודה."}},"posts":{"frameworks":[{"id":"common-mistake","name":"הטעות הנפוצה","pillar":"מומחיות","goal":"ממצב אותך כמי שמזהה מרחוק מה הקהל שלך עושה לא נכון — ונותן תיקון שאפשר ליישם היום.","hook":"רוב ה{קהל} עושים {פעולה} הפוך. וזה עולה להם ב{מחיר}.","structure":["שורת פתיחה: הצהרה ישירה על הטעות","מה אנשים עושים בפועל — ולמה זה דווקא נשמע הגיוני","המחיר האמיתי של הטעות","מה לעשות במקום — צעד קונקרטי אחד","סיום: שאלה שמזמינה את הקוראים לשתף"],"template":"רוב ה{קהל} עושים {פעולה} הפוך.\n\nוזה מובן — ככה כולם מלמדים את זה.\n\n[תאר בשתי שורות מה אנשים עושים בפועל]\n\nהבעיה: {מה זה גורם בפועל}.\n\nמה עובד במקום:\n{הצעד הנכון, במשפט אחד}\n\n[הסבר בשורה או שתיים איך מיישמים את זה כבר השבוע]\n\nנפלתם על זה פעם? מה עשיתם אחרת?","why":"הקורא מזהה את עצמו בטעות ונוצר צורך מיידי לקרוא את התיקון — מי שמאבחן מדויק נתפס כמי שיודע גם לרפא."},{"id":"step-by-step-guide","name":"המדריך בשלבים","pillar":"מומחיות","goal":"הופך ידע שלך לתהליך שאפשר לבצע, ומוכיח שאתה שולט בפרטים ולא רק בסיסמאות.","hook":"איך {תוצאה} ב-{מספר} שלבים. בלי {מה שכולם חושבים שחייבים}.","structure":["שורת פתיחה: ההבטחה + מה לא צריך בשבילה","שורה על למה רוב האנשים נתקעים בזה","השלבים — שורה אחת לכל שלב, פעולה ולא עיקרון","הנקודה שבה רוב האנשים נופלים, ואיך עוקפים אותה","סיום: שורת מסקנה אחת"],"template":"איך {תוצאה} ב-{מספר} שלבים.\n\nבלי {מה שכולם חושבים שחייבים בשביל זה}.\n\n1. {שלב ראשון — פעולה, לא עיקרון}\n2. {שלב שני}\n3. {שלב שלישי}\n[הוסף עוד שלב או שניים אם באמת צריך — לא יותר]\n\nאיפה רוב האנשים נופלים? בשלב {מספר השלב}.\n[הסבר בשורה אחת למה, ואיך עוקפים את זה]\n\nשמרו את הפוסט. תצטרכו אותו בפעם הבאה ש{סיטואציה}.","why":"מבנה ממוספר מוריד את מאמץ הקריאה כמעט לאפס — ופוסט שאפשר לבצע ממנו משהו נשמר ומשותף, לא רק נסרק."},{"id":"recurring-question","name":"השאלה שחוזרת","pillar":"מומחיות","goal":"ממנף שאלה אמיתית שאתה נשאל שוב ושוב כדי להראות שאתה בשטח — ולענות לקהל שלם לפני שהוא שואל.","hook":"יש שאלה שאני נשאל כמעט כל שבוע: \"{השאלה}\"","structure":["שורת פתיחה: השאלה עצמה, כמו ששואלים אותה","מה באמת מסתתר מאחורי השאלה","התשובה הקצרה — משפט אחד","הניואנס שרוב התשובות מפספסות","סיום: הזמנה לשאלה הבאה"],"template":"יש שאלה שאני נשאל כמעט כל שבוע:\n\n\"{השאלה, בניסוח שבו באמת שואלים אותה}\"\n\nוהיא שאלה טובה, כי מאחוריה מסתתר {מה שבאמת מטריד את השואלים}.\n\nהתשובה הקצרה: {התשובה במשפט אחד}.\n\nאבל יש ניואנס שרוב האנשים מפספסים:\n[פרט את הניואנס בשתיים-שלוש שורות, עם דוגמה מהשטח]\n\nוזה משנה את התשובה לגמרי כשמדובר ב{סוג מקרה מסוים}.\n\nאיזו שאלה אתם רוצים שאענה עליה בפוסט הבא?","why":"שאלה אמיתית מהשטח היא הוכחה שאנשים כבר פונים אליך — והקורא שנשא אותה בראש מקבל תשובה בלי שנאלץ לשאול."},{"id":"reverse-guide","name":"המדריך ההפוך","pillar":"מומחיות","goal":"מלמד את הדרך הנכונה דרך רשימת הדרכים הבטוחות להיכשל — בלי להישמע כמו עוד מדריך.","hook":"רוצים להרוס {דבר שהקהל שלכם בונה}? הנה המתכון המדויק.","structure":["שורת פתיחה אירונית: ההבטחה ההפוכה","3–4 \"צעדים\" להרס — כל טעות נפוצה מנוסחת כהוראה","שורת המהפך: נשמע מוכר?","העיקרון האמיתי — מה כן לעשות","סיום: שאלה שגורמת לקורא להודות באחד הצעדים"],"template":"רוצים להרוס {דבר שהקהל שלכם בונה}?\n\nהנה המתכון:\n\n1. {טעות נפוצה, מנוסחת כהוראה}\n2. {טעות שנייה}\n3. {טעות שלישית}\n4. {הטעות הכי כואבת — שמרו אותה לסוף}\n\nנשמע מוכר? רוב ה{קהל} עושים לפחות אחד מאלה. בלי כוונה.\n\nמה שעובד זה בדיוק ההפך: [כתוב במשפט אחד את העיקרון הנכון]\n\nאיזה מהארבעה תפסתם את עצמכם עושים?","why":"היפוך התפקידים עוקף את ההתנגדות ל\"עוד עצה\" — הקורא מחייך, מזהה את עצמו, ומגיע לתיקון כשהוא כבר מסכים איתך."},{"id":"client-before-after","name":"לפני ואחרי","pillar":"סיפור","goal":"מראה איך נראית עבודה איתך דרך מקרה לקוח אמיתי — בלי להתפאר ובלי מספרים שאי אפשר לעמוד מאחוריהם.","hook":"כש{סוג לקוח} הגיע אליי, {נקודת הפתיחה במשפט אחד}.","structure":["שורת פתיחה: הלקוח ונקודת הפתיחה","מה נוסה קודם — ולמה זה לא עבד","המהלך המרכזי שעשיתם — אחד, לא רשימה","ה\"אחרי\" — במילים של הלקוח או בעובדה שאפשר לעמוד מאחוריה","לקח שאפשר לקחת גם בלי לעבוד איתך","סיום: שאלה לקהל"],"template":"כש{סוג לקוח} הגיע אליי, {נקודת הפתיחה במשפט אחד}.\n\nקודם הם ניסו {מה שניסו לבד או עם אחרים}. לא עבד, כי {הסיבה האמיתית}.\n\nמה עשינו בפועל:\n[תאר את המהלך המרכזי בשתיים-שלוש שורות. בלי ז'רגון]\n\nה\"אחרי\", במילים של הלקוח:\n\"[ציטוט אמיתי או תיאור עובדתי — רק מה שאתה יכול לעמוד מאחוריו]\"\n\nמה אפשר לקחת מזה גם בלי לעבוד איתי:\n{הלקח במשפט אחד}\n\nמכירים את נקודת הפתיחה הזאת מקרוב?","why":"הקורא ממקם את עצמו בסיפור של הלקוח — וה\"אחרי\" המאופק, בלי מספרים מנופחים, נשמע אמין ולכן משכנע."},{"id":"failure-lesson","name":"הכישלון שלימד אותי","pillar":"סיפור","goal":"בונה אמון דרך הודאה בכישלון אמיתי — ומראה שהשיטה שלך היום נבנתה על טעויות ששילמת עליהן בעצמך.","hook":"{מהלך שעשית} נכשל. והאשמה הייתה שלי.","structure":["שורת פתיחה: הודאה ישירה בכישלון","ההקשר בקצרה — מה ניסית להשיג","הרגע שבו הבנת שזה נופל","הסיבה האמיתית — ההחלטה שלך, לא הנסיבות","מה אתה עושה אחרת היום בגלל זה","סיום: שורת מסקנה אחת"],"template":"{המהלך שעשית} נכשל.\n\nולא בגלל השוק. ולא בגלל הלקוח. בגללי.\n\nרציתי {מה ניסית להשיג}, אז {מה עשית בפועל}.\n\n[תאר את הרגע שבו הבנת שזה לא עובד — שורה או שתיים, קונקרטי]\n\nהסיבה האמיתית: {ההחלטה השגויה שלך — לא התירוץ הנוח}.\n\nהיום, בכל {סיטואציה דומה}, אני {מה שאתה עושה אחרת}.\n\nהכישלון הזה עולה ללקוחות שלי פחות — כי אני כבר שילמתי עליו.","why":"הודאה בטעות משדרת ביטחון שאי אפשר לזייף — ומי שמפרק את הכישלון של עצמו בכנות נתפס כמי שמבין את התחום לעומק."},{"id":"the-no-i-said","name":"הלא שאמרתי","pillar":"סיפור","goal":"מספר על עבודה שסירבת לה — ומגדיר דרך הסירוב למי אתה כן מתאים ומהם העקרונות שלך.","hook":"סירבתי החודש ל{סוג עבודה או פנייה}. הנה למה.","structure":["שורת פתיחה: הסירוב עצמו","מה הוצע — ולמה זה היה מפתה","הרגע או הפרט שהדליק נורה אדומה","העיקרון שעמד מאחורי ההחלטה","למי אתה כן מתאים","סיום: שאלה על הקו של הקוראים"],"template":"סירבתי החודש ל{סוג עבודה או פנייה}.\n\nוזה לא היה קל. {מה היה מפתה בהצעה}.\n\nאבל [תאר את הרגע או הפרט שהדליק לך נורה אדומה].\n\nהעיקרון שלי פשוט: {העיקרון במשפט אחד}.\n\nכש{התנאי שלא התקיים}, התוצאה בסוף תהיה {מה שהיה קורה} — ועל זה אף צד לא רוצה לשלם.\n\nאז למי אני כן מתאים? {תיאור קצר של הלקוח הנכון}.\n\nאיפה עובר הקו שלכם?","why":"סירוב לעבודה משדר ביקוש ועקרונות בבת אחת — והלקוח הנכון מזהה את עצמו בדיוק בצד שכן מתאים."},{"id":"against-the-grain","name":"נגד הזרם","pillar":"דעה","goal":"ממצב אותך כקול עצמאי בתחום דרך עמדה מנומקת נגד מוסכמה שכולם חוזרים עליה בלי לבדוק.","hook":"כולם ב{תחום} מסכימים ש{המוסכמה}. אני חושב שזו טעות.","structure":["שורת פתיחה: המוסכמה + ההתנגדות שלך","מה כן נכון בה — כדי לא להישמע פרובוקטור","הנימוק המרכזי נגדה, עם דוגמה מהשטח","המחיר של מי שממשיך לפעול לפיה","מה אתה מציע במקום","סיום: הזמנה מפורשת לחלוק עליך"],"template":"כולם ב{תחום} מסכימים ש{המוסכמה}.\n\nאני חושב שזו טעות.\n\nיש בה גרעין של אמת: {מה שכן נכון במוסכמה}.\n\nאבל [הבא דוגמה אמיתית מהשטח שסותרת אותה — שורתיים].\n\nמי שממשיך לפעול לפיה משלם ב{המחיר בפועל}.\n\nמה אני מציע במקום:\n{האלטרנטיבה, במשפט אחד או שניים}\n\nמוזמנים לחלוק עליי בתגובות. באמת.","why":"עמדה ברורה מפצלת את הקהל — וזה בדיוק העניין: המסכימים זוכרים אותך, החולקים מגיבים, ושניהם מפיצים את הפוסט."},{"id":"stop-doing-this","name":"תפסיקו עם זה","pillar":"דעה","goal":"תוקף פרקטיקה מזיקה שכולם בתחום ממשיכים לעשות מהרגל — ונותן אלטרנטיבה ליום שאחרי.","hook":"יש הרגל אחד ב{תחום} שהגיע הזמן לקבור.","structure":["שורת פתיחה: ההכרזה","הפרקטיקה עצמה — לקרוא לה בשמה","למה כולם ממשיכים איתה — סיבה אמיתית, לא זלזול","הנזק שהיא עושה בפועל, עם דוגמה","מה לעשות במקום כבר מחר","סיום: שורת מסקנה"],"template":"יש הרגל אחד ב{תחום} שהגיע הזמן לקבור.\n\n{הפרקטיקה, בניסוח הכי ישיר שאפשר}.\n\nואני מבין למה ממשיכים איתו: {הסיבה האמיתית — נוחות, פחד, \"ככה תמיד עשו\"}.\n\nאבל בפועל:\n[תאר את הנזק, עם דוגמה אחת שראית במו עיניך]\n\nמה לעשות במקום, כבר מחר:\n{האלטרנטיבה — צעד קונקרטי אחד}\n\nההרגלים הכי יקרים הם אלה שכבר אף אחד לא שם לב אליהם.","why":"כעס מנומק על בעיה שהקורא מכיר מקרוב מייצר הזדהות מיידית — ומי שמעז להגיד את זה בקול נתפס כמוביל, לא כעוקב."},{"id":"wrong-question","name":"השאלה הלא נכונה","pillar":"דעה","goal":"משדרג את רמת השיח בתחום — מראה שאתה חושב שלב אחד לפני הלקוחות כי אתה שואל שאלות טובות יותר.","hook":"\"{השאלה שכולם שואלים}\" — זו השאלה הלא נכונה.","structure":["שורת פתיחה: השאלה הנפוצה + הפסילה","למה כולם שואלים דווקא אותה","מה השאלה הזאת מפספסת","השאלה הנכונה","מה משתנה ברגע ששואלים אותה","סיום: שאלה לקורא"],"template":"\"{השאלה שכולם שואלים בתחום שלך}\"\n\nזו השאלה הלא נכונה.\n\nשואלים אותה כי {למה היא מרגישה כמו השאלה הנכונה}.\n\nאבל היא מפספסת את העיקר: {מה שהיא מתעלמת ממנו}.\n\nהשאלה הנכונה היא:\n\"{השאלה הטובה יותר}\"\n\nוברגע ששואלים אותה, [תאר מה משתנה — החלטה אחרת, סדר עדיפויות אחר]\n\nאיזו מהשתיים אתם שואלים את עצמכם היום?","why":"מסגור מחדש יוצר אצל הקורא רגע של \"רגע, באמת\" — ומי ששינה לך שאלה בראש נשאר שם הרבה אחרי שהפוסט נגמר."},{"id":"behind-the-scenes","name":"מאחורי הקלעים","pillar":"הוכחה","goal":"מראה עבודה אמיתית תוך כדי תנועה — כולל ההתלבטויות — במקום להצהיר על מקצועיות.","hook":"ככה נראה {תהליך או פרויקט} אצלי מבפנים. כולל החלקים הפחות אלגנטיים.","structure":["שורת פתיחה: ההזמנה להציץ פנימה","על מה אתה עובד עכשיו — בלי פרטים מזהים","התלבטות אמיתית אחת מהתהליך","איך הכרעת ולמה","מה הלקוח בדרך כלל לא רואה","סיום: שאלה"],"template":"ככה נראה {תהליך או פרויקט} אצלי מבפנים.\n\nכולל החלקים הפחות אלגנטיים.\n\nהשבוע אני עובד על {תיאור כללי, בלי פרטים מזהים של הלקוח}.\n\nההתלבטות המרכזית:\n[תאר דילמה אמיתית אחת — שתי האפשרויות, ולמה הבחירה לא פשוטה]\n\nהכרעתי לכיוון {הכיוון שבחרת}, כי {הנימוק במשפט אחד}.\n\nמה שבדרך כלל לא רואים מבחוץ: {החלק הסמוי — הטיוטות, הבדיקות, הפעם השלישית שמתחילים מחדש}.\n\nמה הייתם בוחרים במקומי?","why":"תהליך אמיתי עם התלבטויות אי אפשר להמציא — ולכן הוא משכנע יותר מכל הצהרת \"אנחנו מקצועיים\"."},{"id":"honest-recap","name":"הסיכום הכן","pillar":"הוכחה","goal":"מציג תוצאות אמיתיות מתקופה מוגדרת — כולל מה שלא עבד — כהוכחה שאפשר לסמוך על כל מספר שאתה מפרסם.","hook":"מה עבד לי ב{תקופה} ומה לא. כולל החלק הפחות נעים.","structure":["שורת פתיחה: ההבטחה לשקיפות","מה יצאת להשיג בתקופה הזאת","מה עבד — רק עובדות שאפשר לעמוד מאחוריהן","מה לא עבד — באותה רמת פירוט וכנות","מה אתה משנה בעקבות זה","סיום: שורת מסקנה"],"template":"מה עבד לי ב{תקופה} ומה לא.\n\nכולל החלק הפחות נעים.\n\nהמטרה הייתה: {מה יצאת להשיג}.\n\nמה עבד:\n[פרט 2–3 דברים שקרו בפועל. רק מה שאתה יכול לעמוד מאחוריו — בלי לעגל למעלה]\n\nמה לא עבד:\n[פרט 1–2 דברים באותה רמת כנות. זה החלק שבונה את האמון]\n\nמה אני משנה ב{התקופה הבאה}: {שינוי אחד קונקרטי}.\n\nשקיפות על מה שלא עבד היא הסיבה להאמין למה שכן.","why":"כשמדווחים גם על הכישלונות, ההצלחות מפסיקות להישמע כמו שיווק — והקורא לומד לסמוך על כל מספר שתפרסם."}]},"playbook":{"routine":[{"time":"5 דק'","task":"סריקה ממוקדת","detail":"פתח את הפיד ואת ההתראות עם משימה, לא לגלילה. סמן 3–5 פוסטים של אנשים מהקהל שלך: לקוחות פוטנציאליים, קולגות, ואנשים שהקהל שלהם הוא הקהל שלך. שמור אותם לרגע התגובות — עוד דקה אתה חוזר אליהם."},{"time":"10 דק'","task":"תגובות — לפני שאתה מפרסם","detail":"כתוב 3–5 תגובות ענייניות על הפוסטים שסימנת. זה החלק הכי חשוב בשגרה: תגובה טובה חושפת אותך לקהל של מישהו אחר, בלי שכתבת פוסט. תמיד תגובות לפני פרסום — ככה אתה נראה בפיד גם בימים שאתה לא מפרסם בהם."},{"time":"8 דק'","task":"פרסום או טיוטה","detail":"בימי פרסום — שלוש פעמים בשבוע מספיק לגמרי — פרסם את הפוסט שהכנת מראש. בשאר הימים כתוב או שפר טיוטה לפוסט הבא, ורשום רעיונות שעלו לך מתגובות ושיחות. ככה אף פוסט לא נכתב בלחץ של הרגע האחרון."},{"time":"5 דק'","task":"מענה לתגובות על הפוסט שלך","detail":"ענה לכל תגובה עניינית — לא ב'תודה!' אלא בתשובה שממשיכה את השיחה. ביום פרסום השעה הראשונה קריטית: דיון ער בהתחלה מאותת לאלגוריתם שהפוסט שווה הפצה. לכן פרסם רק בשעה שאתה יודע שתהיה זמין אחריה."},{"time":"2 דק'","task":"קשר אישי אחד","detail":"שלח הודעה פרטית אחת: בקשת חיבור עם שורה אישית, תודה למי שהגיב אצלך, או קישור שימושי למישהו שדיברתם. אחת ביום נשמע מעט — זה 250 בשנה, וזו רשת אמיתית."}],"commentRules":["תגובה של שורה אחת ('פוסט מעולה!') לא נחשבת — היא רעש. אם אין לך מה להוסיף, אל תגיב.","הוסף משהו משלך: ניסיון, דוגמה, מספר, זווית שהכותב לא הזכיר. זה מה שהופך תגובה לתוכן.","האורך הנכון: 2–4 משפטים. מספיק כדי להגיד משהו אמיתי, קצר מספיק שקוראים עד הסוף.","הגב איפה שהלקוחות שלך קוראים — אצל אנשים שהקהל שלהם הוא הקהל שלך, לא רק אצל חברים.","אל תמכור בתגובה. בלי לינק לשירות שלך, בלי 'בדיוק כתבתי על זה פוסט'. מוכרים — אף פעם לא שם.","מותר לחלוק בנימוס. תגובה עם זווית נגדית מנומקת מושכת יותר תשומת לב מעשר תגובות מסכימות."],"commentExamples":[{"bad":"פוסט מעולה! מסכים עם כל מילה.","good":"הנקודה על תמחור לפי ערך מדויקת. אצלי המעבר הזה לקח כמעט שנה — מה שעבד בסוף היה להחיל את המודל החדש רק על לקוחות חדשים, במקום לנסות להסב את הקיימים. וההתנגדות הכי גדולה הייתה דווקא שלי, לא שלהם."},{"bad":"תודה ששיתפת! חשוב מאוד.","good":"נכון לרוב המקרים, אבל בעסקים קטנים ראיתי גם את הצד השני: כשאין תהליך מסודר, האוטומציה רק מקבעת את הבלגן. אצל לקוח שלי עצרנו את ההטמעה חודש כדי לסדר קודם את התהליך — וזה מה שהציל את הפרויקט."}],"dms":[{"name":"בקשת חיבור עם הודעה אישית","when":"כששולחים בקשת חיבור למישהו רלוונטי — עדיף אחרי שכבר הגבת לו על פוסט או שיש הקשר משותף. לא שולחים בקשות קרות שאי אפשר להסביר במשפט אחד למה דווקא הוא.","script":"היי [שם], קראתי את הפוסט שלך על [נושא] — הנקודה על [תובנה ספציפית מהפוסט] נשארה איתי. אני [תפקיד/תחום] ועוסק בנושאים קרובים. אשמח להתחבר ולעקוב."},{"name":"אחרי אישור החיבור — בלי למכור","when":"יום-יומיים אחרי שאישרו את הבקשה. המטרה: לפתוח שיחה אנושית. שום מכירה — לא בהודעה הזאת ולא בזו שאחריה.","script":"תודה שאישרת את החיבור, [שם]. ראיתי שאתה עוסק ב[התחום שלו] — סקרן אותי איך אתם מתמודדים היום עם [אתגר אמיתי בתחום שלו]. בלי שום אג'נדה — זה נושא שאני חושב עליו הרבה, ומעניין אותי לשמוע איך זה נראה אצלך."},{"name":"הודעת ערך למי שהגיב על פוסט שלך","when":"כשמישהו כתב תגובה עניינית על פוסט שלך ויש לך משהו קונקרטי לתת לו — מאמר, כלי, תבנית, המלצה. לא הודעת תודה גנרית, ולא פתיח מוסווה למכירה.","script":"היי [שם], תודה על התגובה על הפוסט על [נושא] — הנקודה שהעלית על [הנקודה שלו] מדויקת. נזכרתי ב[מאמר/כלי/תבנית] שנוגע בדיוק בזה וחסך לי הרבה זמן — מצרף קישור. בלי קאץ', פשוט חשבתי שיהיה לך שימושי."}],"metrics":[{"metric":"צפיות בפרופיל","what":"כמה אנשים נכנסו לפרופיל שלך בשבוע האחרון. רואים תחת 'מי צפה בפרופיל שלך' או בלוח האנליטיקס של הפרופיל.","healthy":"עלייה עקבית משבוע לשבוע, עם קפיצות בימי פרסום. הכיוון חשוב מהמספר המוחלט."},{"metric":"תגובות לפוסט","what":"כמה תגובות אמיתיות (לא שלך) מקבל כל פוסט. רואים בנתוני הפוסט, מתחת לכל פרסום.","healthy":"מגמת עלייה לאורך שבועות. תגובה שווה יותר מלייק — היא אומרת שמישהו עצר וחשב."},{"metric":"בקשות חיבור נכנסות","what":"כמה אנשים מבקשים להתחבר אליך — ובעיקר מי הם. בודקים ברשימת הבקשות הממתינות פעם בשבוע.","healthy":"לא הכמות אלא ההרכב: כשמתחילות להגיע בקשות מאנשים שנראים כמו הלקוחות שלך — המיצוב עובד."},{"metric":"שיחות ענייניות שנפתחו","what":"כמה שיחות אמיתיות התחילו השבוע בעקבות התוכן — שאלה בפרטי, בקשת המלצה, מישהו שהזכיר פוסט שלך. אין לזה דשבורד — סופרים ידנית, שורה בטבלה.","healthy":"אחת-שתיים בשבוע זו התקדמות אמיתית. זה המדד הקרוב ביותר ללקוחות עתידיים."},{"metric":"עוקבים חדשים","what":"קצב גדילת קהל העוקבים. רואים באנליטיקס של הפרופיל.","healthy":"עלייה יציבה, גם אם איטית. עוקבים שהגיעו מתגובות ופוסטים שלך שווים יותר מכל קפיצה — אל תשווה את עצמך למשפיענים."}],"warnings":[{"title":"כלי אוטומציה — הדרך הקצרה לאבד את החשבון","text":"תוספים ששולחים בקשות חיבור או תגובות אוטומטיות מפרים את תנאי השימוש של לינקדאין, נקודה. לינקדאין מזהה דפוסי פעילות לא אנושיים ומגיבה בהגבלות עד חסימת חשבון — ואת החשבון, עם כל הקשרים שבנית בו, אי אפשר לקנות בחזרה. שום חיסכון בזמן לא שווה את הסיכון הזה."},{"title":"Engagement pods — מספרים ריקים","text":"קבוצות לייקים הדדיים מנפחות את המספרים אבל לא מביאות אף לקוח. האלגוריתם בוחן מי מגיב ומה הקשר שלו אליך, לא רק כמה — וקהל אנושי מזהה מהר את אותם עשרים שמות שמגיבים על הכול. בסוף אתה מודד את עצמך על רעש שאתה בעצמך ייצרת."},{"title":"קניית עוקבים — נכס מזויף","text":"עוקבים קנויים לא קוראים, לא מגיבים ולא קונים. הם רק מדללים את המעורבות היחסית שלך, וכל מי שטורח לבדוק רואה את הפער: אלפי עוקבים, שלוש תגובות לפוסט. זה נזק אמינות שלוקח הרבה זמן לתקן."},{"title":"AI שכותב במקומך — נשמע כמו כולם","text":"פוסט שיצא מ-AI בלי עריכה נשמע בדיוק כמו אלפי הפוסטים שיצאו מאותו כלי באותו שבוע, וקוראים כבר מזהים את זה מהמשפט הראשון. השתמש ב-AI לטיוטה ולמבנה — אבל הסיפור, המספרים והדעות חייבים להיות שלך. הניסיון האישי שלך הוא הדבר היחיד שאי אפשר לגנרט."}],"company":[{"title":"הפרופיל האישי מנצח את עמוד החברה","text":"בהגעה אורגנית, פוסט מפרופיל אישי מגיע כמעט תמיד לקהל גדול בהרבה מאותו פוסט בעמוד חברה. הסיבה פשוטה: אנשים באים ללינקדאין לעקוב אחרי אנשים, והאלגוריתם מתעדף שיחות בין בני אדם על פני תוכן ממותג. לכן עיקר ההשקעה שייך לפרופילים האישיים — של המנכ\"ל ושל העובדים — והעמוד משלים אותם."},{"title":"עובד שמשתף מנצח כל באנר","text":"כשעובד מספר במילים שלו על פרויקט, לקוח או תובנה מהעבודה — זה מגיע רחוק יותר ונתפס אמין יותר מכל פוסט ממותג. רק אל תחלקו טקסט מוכן להעתקה: עשרה פוסטים זהים בפיד נראים בדיוק כמו מה שהם. תנו לעובדים נושאים ונקודות מפתח, ותנו להם לכתוב בקול שלהם."},{"title":"מה כן שם בעמוד החברה","text":"עמוד החברה הוא חלון הראווה, לא מנוע הצמיחה: לקוח רציני יבדוק אותו לפני שהוא סוגר איתכם, ועמוד נטוש מדליק נורה אדומה. פרסמו בו הוכחות — פרויקטים שהסתיימו, סיפורי לקוח, גיוסים, אבני דרך — ושמרו עליו מעודכן. את הדעות והדיונים השאירו לפרופילים האישיים; העמוד קיים כדי לאמת אותם."}]}};
+
+/* ---------- utils ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const store={
+  get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+let toastT;
+function toast(msg){const t=$('#toast');t.textContent=msg||'✓ הועתק';t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1800);}
+async function copyText(txt,btn){
+  try{await navigator.clipboard.writeText(txt);}
+  catch(e){
+    const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');}catch(e2){}
+    document.body.removeChild(ta);
+  }
+  toast();
+  if(btn){btn.classList.add('ok');const old=btn.textContent;btn.textContent='✓ הועתק';setTimeout(()=>{btn.classList.remove('ok');btn.textContent=old;},1600);}
+}
+
+/* ---------- station 1: audit ---------- */
+const auditState=store.get('lab-audit',{});
+const auditWrap=$('#auditGroups');
+LAB.audit.groups.forEach(g=>{
+  const div=document.createElement('div');div.className='agroup';
+  let rows='';
+  g.items.forEach((it,i)=>{
+    const key=g.id+'-'+i;
+    const done=!!auditState[key];
+    rows+=`<div class="aitem${done?' done':''}" data-k="${key}" role="checkbox" aria-checked="${done}" tabindex="0">
+      <span class="chk">✓</span>
+      <span style="flex:1"><span class="aq">${esc(it.q)}</span><span class="awhy" style="display:block">${esc(it.why)}</span></span>
+      <span class="aw">${it.weight} נק'</span>
+    </div>`;
+  });
+  div.innerHTML=`<div class="agroup-h"><h3>${esc(g.title)}</h3><span class="gp" data-gp="${g.id}"></span></div>${rows}`;
+  auditWrap.appendChild(div);
+});
+function auditLevel(s){
+  if(s>=90)return['נכס שיווקי — הפרופיל עובד בשבילך','var(--green)'];
+  if(s>=75)return['ממוצב — נשארו הליטושים','var(--green)'];
+  if(s>=60)return['פרופיל עובד — הבסיס קיים','var(--cyan)'];
+  if(s>=40)return['נוכחות בסיסית — יש עבודה','var(--orange)'];
+  return['פרופיל רדום — מתחילים מהיסודות','var(--pink)'];
+}
+function renderAudit(){
+  let score=0;
+  const missing=[];
+  LAB.audit.groups.forEach(g=>{
+    let done=0;
+    g.items.forEach((it,i)=>{
+      const key=g.id+'-'+i;
+      if(auditState[key]){score+=it.weight;done++;}
+      else missing.push(it);
+    });
+    const gp=document.querySelector(`[data-gp="${g.id}"]`);
+    if(gp)gp.textContent=done+' / '+g.items.length;
+  });
+  $('#scoreVal').textContent=score;
+  $('#scoreFill').style.width=score+'%';
+  const anyMarked=Object.values(auditState).some(Boolean);
+  const lvlEl=$('#scoreLvl');
+  if(!anyMarked){lvlEl.textContent='עוד לא סומן דבר';lvlEl.style.color='var(--muted)';lvlEl.style.borderColor='var(--hair-2)';}
+  else{const[t,c]=auditLevel(score);lvlEl.textContent=t;lvlEl.style.color=c;lvlEl.style.borderColor=c;}
+  const fx=$('#fixList');
+  if(!missing.length){fx.innerHTML='<p class="allgood">✓ כל 17 הבדיקות ירוקות. עכשיו זה עניין של שגרה — תחנה 4.</p>';}
+  else{
+    missing.sort((a,b)=>b.weight-a.weight);
+    fx.innerHTML=missing.slice(0,3).map(it=>`<div class="fx"><b>+${it.weight} נק' · ${esc(it.q)}</b>${esc(it.fix)}</div>`).join('');
+  }
+}
+auditWrap.addEventListener('click',e=>{
+  const row=e.target.closest('.aitem');if(!row)return;
+  const k=row.dataset.k;
+  auditState[k]=!auditState[k];
+  row.classList.toggle('done',auditState[k]);
+  row.setAttribute('aria-checked',auditState[k]);
+  store.set('lab-audit',auditState);
+  renderAudit();
+});
+auditWrap.addEventListener('keydown',e=>{
+  if((e.key===' '||e.key==='Enter')&&e.target.classList.contains('aitem')){e.preventDefault();e.target.click();}
+});
+$('#auditReset').addEventListener('click',()=>{
+  Object.keys(auditState).forEach(k=>delete auditState[k]);
+  store.set('lab-audit',auditState);
+  document.querySelectorAll('.aitem').forEach(r=>{r.classList.remove('done');r.setAttribute('aria-checked','false');});
+  renderAudit();
+});
+renderAudit();
+
+/* ---------- station 2: wizard ---------- */
+const FIELDS=['תחום','קהל','בעיה','תוצאה','הוכחה'];
+const wiz=store.get('lab-wizard',{gender:'m'});
+FIELDS.forEach(f=>{
+  const inp=document.getElementById('w-'+f);
+  if(wiz[f])inp.value=wiz[f];
+  inp.addEventListener('input',()=>{wiz[f]=inp.value.trim();store.set('lab-wizard',wiz);renderWizard();renderPosts();});
+});
+document.querySelectorAll('.gbtn').forEach(b=>{
+  if(wiz.gender===b.dataset.g)document.querySelectorAll('.gbtn').forEach(x=>x.classList.toggle('on',x===b));
+  b.addEventListener('click',()=>{
+    wiz.gender=b.dataset.g;store.set('lab-wizard',wiz);
+    document.querySelectorAll('.gbtn').forEach(x=>x.classList.toggle('on',x===b));
+    renderWizard();renderPosts();
+  });
+});
+function genderize(s){return s.replace(/עוזר\/ת/g,wiz.gender==='f'?'עוזרת':'עוזר');}
+function fillText(t){
+  let s=genderize(t);
+  FIELDS.forEach(f=>{const v=wiz[f];if(v)s=s.split('{'+f+'}').join(v);});
+  return s;
+}
+function fillHtml(t){
+  let s=esc(genderize(t));
+  FIELDS.forEach(f=>{
+    const v=wiz[f];
+    s=s.split('{'+f+'}').join(v?'<b class="pv">'+esc(v)+'</b>':'<span class="miss">'+f+'</span>');
+  });
+  s=s.replace(/\{([^{}<\n]+)\}/g,'<span class="miss">$1</span>');
+  s=s.replace(/\[([^\]\n]+)\]/g,'<span class="free">[$1]</span>');
+  return s;
+}
+function ocard(label,tpl,extra){
+  return `<div class="ocard"><div class="on">${label}</div><div class="orow"><div class="otext">${fillHtml(tpl)}</div><button class="copybtn" data-copy="${esc(fillText(tpl))}">העתקה</button></div>${extra||''}</div>`;
+}
+function renderWizard(){
+  const st=LAB.positioning.statement;
+  $('#outStatement').innerHTML=ocard('משפט אחד שעונה על "למי, מה, ולמה שיאמינו לך"',st.template,
+    `<p class="oguide">דוגמה ממולאת: ${esc(st.example)}</p>`);
+  $('#outHeadlines').innerHTML=LAB.positioning.headlines.map(h=>{
+    const txt=fillText(h.formula);
+    const n=txt.length;
+    const over=n>220;
+    return `<div class="ocard"><div class="on">${esc(h.name)} <span class="cc${over?' over':''}">${n}/220</span></div>
+      <div class="orow"><div class="otext">${fillHtml(h.formula)}</div><button class="copybtn" data-copy="${esc(txt)}">העתקה</button></div>
+      <p class="oguide">דוגמה: ${esc(h.example)}</p></div>`;
+  }).join('');
+  $('#outBanner').innerHTML=LAB.positioning.banner.map((b,i)=>
+    `<div class="ocard"><div class="on">נוסחה ${i+1}</div><div class="orow"><div class="otext">${fillHtml(b.formula)}</div><button class="copybtn" data-copy="${esc(fillText(b.formula))}">העתקה</button></div><p class="oguide">דוגמה: ${esc(b.example)}</p></div>`
+  ).join('');
+  $('#outAbout').innerHTML=LAB.positioning.about.map((b,i)=>
+    `<div class="ocard"><div class="on">${i+1} · ${esc(b.title)}</div><div class="orow"><div class="otext">${fillHtml(b.template)}</div><button class="copybtn" data-copy="${esc(fillText(b.template))}">העתקה</button></div><p class="oguide">${esc(b.guide)}</p></div>`
+  ).join('');
+}
+$('#copyAbout').addEventListener('click',e=>{
+  copyText(LAB.positioning.about.map(b=>fillText(b.template)).join('\n\n'),e.target);
+});
+document.body.addEventListener('click',e=>{
+  const b=e.target.closest('[data-copy]');
+  if(b)copyText(b.dataset.copy,b);
+});
+renderWizard();
+
+/* ---------- station 3: content engine ---------- */
+const AIRULES='כללי כתיבה: שורה ראשונה קצרה שעוצרת גלילה; שורות קצרות עם שורת רווח ביניהן; בלי פתיחות כמו "אני שמח לשתף"; לסיים בשאלה אחת או שורת מסקנה אחת.';
+function aiPrompt(f){
+  const st=fillText(LAB.positioning.statement.template);
+  return 'אתה עוזר לי לכתוב פוסט לינקדאין בעברית לפי המסגרת "'+f.name+'" ('+f.pillar+').\n\n'+
+  'המיצוב שלי: '+st+'\n\n'+
+  'מבנה הפוסט:\n'+f.structure.map((s,i)=>(i+1)+'. '+s).join('\n')+'\n\n'+
+  'התבנית:\n'+fillText(f.template)+'\n\n'+AIRULES+'\n\n'+
+  'חשוב: אל תמציא מספרים, לקוחות או סיפורים. בכל מקום שיש [סוגריים מרובעים] — קודם שאל אותי שאלות כדי שאתן לך את הפרטים האמיתיים, ורק אחר כך כתוב טיוטה. הפוסט צריך להישמע כמוני, לא כמו AI.';
+}
+const cardsEl=$('#postCards');
+function renderPosts(){
+  cardsEl.innerHTML=LAB.posts.frameworks.map((f,i)=>`
+  <div class="pcard pl-${f.pillar}" data-p="${f.pillar}" data-i="${i}">
+    <div class="ph"><h3>${esc(f.name)}</h3><span class="tag pl-${f.pillar}">${f.pillar}</span></div>
+    <p class="pgoal">${esc(f.goal)}</p>
+    <div class="phook"><small>HOOK · שורת הפתיחה</small>${fillHtml(f.hook)}</div>
+    <div class="pbtns">
+      <button class="copybtn pexpand" data-i="${i}">פתיחת התבנית ▾</button>
+      <button class="copybtn" data-copy="${esc(fillText(f.template))}">העתקת התבנית</button>
+      <button class="copybtn" data-ai="${i}">פרומפט ל-AI</button>
+    </div>
+    <div class="pexp">
+      <p class="pst"><b>המבנה:</b></p>
+      <ol>${f.structure.map(s=>'<li>'+esc(s)+'</li>').join('')}</ol>
+      <div class="tpl">${fillHtml(f.template)}</div>
+      <p class="pwhy"><b>למה זה עובד:</b> ${esc(f.why)}</p>
+    </div>
+  </div>`).join('');
+  applyPillarFilter();
+}
+let curPillar='all';
+function applyPillarFilter(){
+  document.querySelectorAll('.pcard').forEach(c=>{
+    c.style.display=(curPillar==='all'||c.dataset.p===curPillar)?'':'none';
+  });
+}
+$('#pillarFilters').addEventListener('click',e=>{
+  const b=e.target.closest('.fbtn');if(!b)return;
+  document.querySelectorAll('#pillarFilters .fbtn').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  curPillar=b.dataset.p;
+  applyPillarFilter();
+});
+cardsEl.addEventListener('click',e=>{
+  const ex=e.target.closest('.pexpand');
+  if(ex){
+    const card=ex.closest('.pcard');
+    card.classList.toggle('open');
+    ex.textContent=card.classList.contains('open')?'סגירת התבנית ▴':'פתיחת התבנית ▾';
+    return;
+  }
+  const ai=e.target.closest('[data-ai]');
+  if(ai){copyText(aiPrompt(LAB.posts.frameworks[+ai.dataset.ai]),ai);}
+});
+renderPosts();
+
+/* calendar */
+const DAYS=['ראשון','שלישי','חמישי'];
+let calOffset=store.get('lab-cal-offset',0);
+function buildPlan(){
+  const byPillar={};
+  LAB.posts.frameworks.forEach(f=>{(byPillar[f.pillar]=byPillar[f.pillar]||[]).push(f)});
+  const order=['מומחיות','סיפור','דעה','מומחיות','הוכחה','סיפור','מומחיות','דעה','סיפור','מומחיות','דעה','הוכחה'];
+  const idx={};
+  const seq=[];
+  order.forEach(p=>{
+    const arr=byPillar[p]||[];
+    if(!arr.length)return;
+    idx[p]=idx[p]||0;
+    seq.push(arr[idx[p]%arr.length]);
+    idx[p]++;
+  });
+  const off=calOffset%seq.length;
+  return seq.slice(off).concat(seq.slice(0,off));
+}
+function renderCal(){
+  const plan=buildPlan();
+  let html='<div></div>'+DAYS.map(d=>`<div class="chd">יום ${d}</div>`).join('');
+  for(let w=0;w<4;w++){
+    html+=`<div class="cwk">שבוע ${w+1}</div>`;
+    for(let d=0;d<3;d++){
+      const f=plan[w*3+d];
+      html+=`<div class="cc"><b>${esc(f.name)}</b><span>${f.pillar}</span></div>`;
+    }
+  }
+  $('#calGrid').innerHTML=html;
+}
+$('#calShuffle').addEventListener('click',()=>{calOffset=(calOffset+1)%12;store.set('lab-cal-offset',calOffset);renderCal();});
+$('#calCopy').addEventListener('click',e=>{
+  const plan=buildPlan();
+  let txt='לוח תוכן לינקדאין — 4 שבועות (מעבדת הלינקדאין)\n';
+  for(let w=0;w<4;w++){
+    txt+='\nשבוע '+(w+1)+':\n';
+    for(let d=0;d<3;d++){
+      const f=plan[w*3+d];
+      txt+='• יום '+DAYS[d]+' — '+f.name+' ('+f.pillar+'): '+fillText(f.hook)+'\n';
+    }
+  }
+  copyText(txt,e.target);
+});
+renderCal();
+
+/* ---------- station 4: playbook ---------- */
+$('#routineList').innerHTML=LAB.playbook.routine.map(r=>
+  `<div class="rstep"><div class="rt">${esc(r.time)}</div><div><h4>${esc(r.task)}</h4><p>${esc(r.detail)}</p></div></div>`
+).join('');
+$('#commentRules').innerHTML=LAB.playbook.commentRules.map(r=>'<li>'+esc(r)+'</li>').join('');
+$('#commentExamples').innerHTML=LAB.playbook.commentExamples.map(x=>
+  `<div class="exch"><div class="bad"><b>✗ ככה לא:</b> "${esc(x.bad)}"</div><div class="good"><b>✓ ככה כן:</b> "${esc(x.good)}"</div></div>`
+).join('');
+$('#dmCards').innerHTML=LAB.playbook.dms.map(d=>{
+  const script=esc(d.script).replace(/\[([^\]\n]+)\]/g,'<span class="free">[$1]</span>');
+  return `<div class="dmcard"><div class="dh"><h4>${esc(d.name)}</h4><button class="copybtn" data-copy="${esc(d.script)}">העתקה</button></div><p class="dw">${esc(d.when)}</p><div class="ds">${script}</div></div>`;
+}).join('');
+$('#metricsRows').innerHTML=LAB.playbook.metrics.map(m=>
+  `<tr><td><b>${esc(m.metric)}</b></td><td>${esc(m.what)}</td><td class="hl">${esc(m.healthy)}</td></tr>`
+).join('');
+$('#warnCards').innerHTML=LAB.playbook.warnings.map(w=>
+  `<div class="warn"><h4>⚠ ${esc(w.title)}</h4><p>${esc(w.text)}</p></div>`
+).join('');
+$('#compCards').innerHTML=LAB.playbook.company.map(c=>
+  `<div class="comp"><h4>${esc(c.title)}</h4><p>${esc(c.text)}</p></div>`
+).join('');
+
+/* ---------- chrome ---------- */
+const mastEl=$('#mast');
+const onMast=()=>mastEl.classList.toggle('shrunk',scrollY>20);
+addEventListener('scroll',onMast,{passive:true});onMast();
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+setTimeout(()=>{document.querySelectorAll('.rv:not(.in)').forEach(el=>el.classList.add('in'));},2600);
+</script>
+</body>
+</html>
