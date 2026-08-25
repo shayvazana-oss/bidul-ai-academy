@@ -277,6 +277,79 @@ const IDEAS_SYSTEM = `אתה אסטרטג תוכן ללינקדאין בעברי
 - question: השאלה האמיתית של לקוח שהפוסט עונה עליה — זה מה שהופך פוסט לנכס.
 - כתוב בעברית, בפנייה לרבים כשאתה מדבר אל הכותב.`;
 
+/* ---------- mode: audit — fill the profile checklist from the user's own export ---------- */
+
+/** LinkedIn's own PDF export runs a few hundred KB; this cap only blocks abuse. */
+const MAX_PDF_B64 = 9_000_000;
+const MAX_PROFILE_TEXT = 20_000;
+const MIN_PROFILE_TEXT = 200;
+
+const AuditOut = z.object({
+  items: z
+    .array(
+      z.object({
+        id: z.string().describe("ה-id של הפריט, בדיוק כפי שנמסר ברשימה"),
+        status: z.string().describe('"כן" / "לא" / "חלקי" / "אין מידע" — לפי המסמך בלבד'),
+        note: z.string().describe("משפט קצר: על סמך מה נקבע, או מה חסר במסמך"),
+      }),
+    )
+    .describe("שיפוט לכל פריט שנמסר. אם המסמך לא מראה את זה — 'אין מידע', לא ניחוש"),
+  headline: z.object({
+    found: z.boolean().describe("האם נמצאה כותרת פרופיל במסמך"),
+    quote: z.string().describe("הכותרת כפי שהיא מופיעה במסמך, מצוטטת"),
+    critique: z.string().describe("2-3 משפטים: מה עובד ומה לא, מול עקרון הבעיה-והלקוח"),
+    better: z.string().describe("נוסח משופר עד 220 תווים, מבוסס רק על עובדות מהמסמך והמיצוב"),
+  }),
+  about: z.object({
+    found: z.boolean().describe("האם נמצא סקשן About/Summary במסמך"),
+    critique: z.string().describe("2-3 משפטים על הפתיחה והמבנה"),
+    betterOpening: z.string().describe("פתיחת About משופרת, 2-3 שורות, רק מעובדות שבמסמך"),
+  }),
+  experience: z.object({
+    critique: z.string().describe("2-3 משפטים: האם התפקידים מתארים תוצאות או תחומי אחריות"),
+  }),
+  summary: z.string().describe("3-4 משפטים: מצב הפרופיל והצעד האחד הכי משתלם עכשיו"),
+});
+type AuditOutT = z.infer<typeof AuditOut>;
+
+const AUDIT_STATUSES = ["כן", "לא", "חלקי", "אין מידע"] as const;
+
+function normalizeAudit(r: AuditOutT, validIds: Set<string>) {
+  return {
+    items: r.items
+      .filter((i) => validIds.has(i.id.trim()))
+      .slice(0, 20)
+      .map((i) => ({
+        id: i.id.trim(),
+        status: pick(i.status, AUDIT_STATUSES, "אין מידע"),
+        note: clip(i.note, 250),
+      })),
+    headline: {
+      found: r.headline.found,
+      quote: clip(r.headline.quote, 300),
+      critique: clip(r.headline.critique, 400),
+      better: clip(r.headline.better, 250),
+    },
+    about: {
+      found: r.about.found,
+      critique: clip(r.about.critique, 400),
+      betterOpening: clip(r.about.betterOpening, 500),
+    },
+    experience: { critique: clip(r.experience.critique, 400) },
+    summary: clip(r.summary, 600),
+  };
+}
+
+const AUDIT_SYSTEM = `אתה מאבחן פרופילי לינקדאין עבור "האקדמיה לבינה מלאכותית יישומית". קיבלת את הפרופיל של הכותב כפי שהוא ייצא אותו בעצמו (PDF של לינקדאין או טקסט מודבק), ורשימת פריטי בדיקה עם id לכל אחד.
+
+הכלל שמעל הכול: אתה שופט אך ורק לפי מה שמופיע במסמך. מה שהמסמך לא מראה — הסטטוס הוא "אין מידע", לא ניחוש. יצוא ה-PDF של לינקדאין בדרך כלל לא כולל: תמונת פרופיל, באנר, סקשן Featured, המלצות, הגדרות כפתור, נתוני פעילות ועמוד חברה — צפה לסמן שם "אין מידע".
+
+לכל פריט ברשימה החזר את ה-id המדויק שנמסר, סטטוס אחד ("כן" / "לא" / "חלקי" / "אין מידע") והערה קצרה שמסבירה על סמך מה.
+
+בביקורת על הכותרת, ה-About והניסיון: צטט מדויק, אל תמציא עובדות, מספרים או לקוחות שלא מופיעים במסמך או במיצוב. הנוסחים המשופרים חייבים להיבנות רק ממה שבאמת כתוב שם. אם החומר דל — אמור זאת ישירות.
+
+כתוב עברית ישראלית טבעית, בפנייה לרבים (אתם/כתבו). אם הפרופיל באנגלית — הביקורת בעברית, הציטוטים כלשונם, והנוסחים המשופרים באותה שפה שבה כתוב הפרופיל.`;
+
 const EFFORTS = ["low", "medium", "high", "xhigh", "max"] as const satisfies readonly NonNullable<
   Anthropic.OutputConfig["effort"]
 >[];
@@ -351,8 +424,8 @@ export default async function handler(request: Request): Promise<Response> {
   }
   const body = raw as Record<string, unknown>;
   const mode = typeof body.mode === "string" ? body.mode : "review";
-  if (!["review", "write", "ideas"].includes(mode)) {
-    return json({ error: "mode לא מוכר. האפשרויות: review / write / ideas." }, 400, origin);
+  if (!["review", "write", "ideas", "audit"].includes(mode)) {
+    return json({ error: "mode לא מוכר. האפשרויות: review / write / ideas / audit." }, 400, origin);
   }
 
   const p = (body.positioning ?? {}) as Record<string, unknown>;
@@ -471,6 +544,75 @@ export default async function handler(request: Request): Promise<Response> {
       );
       if (r instanceof Response) return r;
       return json({ write: normalizeWrite(r.out), usage: r.usage }, 200, origin);
+    }
+
+    /* ---------- audit ---------- */
+    if (mode === "audit") {
+      const prof = (body.profile ?? {}) as Record<string, unknown>;
+      const pdf = typeof prof.pdf === "string" ? prof.pdf.replace(/\s/g, "") : "";
+      const text = cap(prof.text, MAX_PROFILE_TEXT + 1);
+      if (pdf && pdf.length > MAX_PDF_B64) {
+        return json({ error: "קובץ ה-PDF גדול מדי. יצוא הפרופיל של לינקדאין קטן בהרבה — ודאו שזה הקובץ הנכון." }, 400, origin);
+      }
+      if (pdf && !/^[A-Za-z0-9+/=]+$/.test(pdf.slice(0, 100))) {
+        return json({ error: "הקובץ שהתקבל אינו PDF תקין." }, 400, origin);
+      }
+      if (!pdf && text.length < MIN_PROFILE_TEXT) {
+        return json(
+          { error: "אין מספיק חומר לאבחון — צרפו את קובץ ה-PDF מלינקדאין או הדביקו את טקסט הפרופיל (לפחות 200 תווים)." },
+          400,
+          origin,
+        );
+      }
+      if (text.length > MAX_PROFILE_TEXT) {
+        return json({ error: "הטקסט שהודבק ארוך מדי (מעל 20,000 תווים). הדביקו את עמוד הפרופיל בלבד." }, 400, origin);
+      }
+      const rawItems = Array.isArray(body.items) ? body.items : [];
+      const items = rawItems
+        .slice(0, 20)
+        .map((it) => {
+          const o = (it ?? {}) as Record<string, unknown>;
+          return { id: cap(o.id, 60), q: cap(o.q, 250) };
+        })
+        .filter((it) => it.id && it.q);
+      if (items.length < 5) {
+        return json({ error: "חסרה רשימת פריטי הבדיקה (items) בבקשה." }, 400, origin);
+      }
+      const validIds = new Set(items.map((i) => i.id));
+      const instruction = `המיצוב שהכותב הגדיר לעצמו (אם מולא):\n${context}\n\nפריטי הבדיקה:\n${items.map((i) => `- ${i.id} · ${i.q}`).join("\n")}\n\nשפוט כל פריט לפי המסמך בלבד ותן ביקורת לפי הסכימה.`;
+      const content: Anthropic.ContentBlockParam[] = pdf
+        ? [
+            { type: "document", source: { type: "base64", media_type: "application/pdf", data: pdf } },
+            { type: "text", text: instruction },
+          ]
+        : [{ type: "text", text: `הפרופיל כפי שהודבק ע"י הכותב:\n"""\n${text}\n"""\n\n${instruction}` }];
+      const response = await client.messages.parse({
+        model: "claude-opus-5",
+        max_tokens: 8000,
+        system: AUDIT_SYSTEM,
+        output_config: { format: zodOutputFormat(AuditOut), effort: EFFORT },
+        messages: [{ role: "user", content }],
+      });
+      if (response.stop_reason === "refusal") {
+        return json({ error: "המודל נמנע מלנתח את המסמך הזה." }, 422, origin);
+      }
+      if (response.stop_reason === "max_tokens") {
+        return json({ error: "התשובה נקטעה באמצע. נסו שוב." }, 502, origin);
+      }
+      if (!response.parsed_output) {
+        return json({ error: "התקבלה תשובה לא צפויה מהמודל. נסו שוב." }, 502, origin);
+      }
+      return json(
+        {
+          audit: normalizeAudit(response.parsed_output, validIds),
+          usage: {
+            input_tokens: response.usage.input_tokens,
+            output_tokens: response.usage.output_tokens,
+          },
+        },
+        200,
+        origin,
+      );
     }
 
     /* ---------- ideas ---------- */

@@ -262,6 +262,26 @@ h1.giant .go{background:var(--grad);-webkit-background-clip:text;background-clip
 .dstat-card .dn{font-family:'Bebas Neue',var(--grot);font-size:34px;line-height:1;color:var(--li-l)}
 .dstat-card p{font-size:12.5px;color:var(--ink2);line-height:1.5;margin-top:6px}
 .dstat-card small{display:block;font-family:var(--grot);font-size:9px;letter-spacing:.1em;color:var(--muted);margin-top:6px}
+/* ===== auto-audit (profile PDF / paste) ===== */
+.dropzone{border:2px dashed var(--hair-2);border-radius:12px;padding:18px;text-align:center;font-size:13.5px;color:var(--ink2);cursor:pointer;transition:border-color .15s,background .15s}
+.dropzone:hover,.dropzone.drag{border-color:var(--li-l);background:rgba(74,163,232,.06)}
+.dropzone b{color:var(--ink)}
+.dropzone .df{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+.dropzone.hasfile{border-style:solid;border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.05)}
+.aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+@media(max-width:760px){.aud-grid{grid-template-columns:1fr}}
+.aud-grid textarea{width:100%;min-height:96px;background:var(--bg);border:1px solid var(--hair-2);border-radius:10px;padding:11px 13px;color:var(--ink);font-family:inherit;font-size:13px;line-height:1.6;resize:vertical}
+.aud-grid textarea:focus{outline:none;border-color:var(--li-l)}
+.aud-note{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6}
+.aitem .amark{flex:0 0 auto;font-size:10.5px;font-weight:700;border-radius:6px;padding:2px 8px;margin-top:4px;white-space:nowrap}
+.aitem .amark.m-auto{background:rgba(52,211,153,.14);color:var(--green)}
+.aitem .amark.m-no{background:rgba(244,114,182,.13);color:var(--pink)}
+.aitem .amark.m-manual{background:rgba(255,255,255,.08);color:var(--muted)}
+.aud-crit{border:1px solid var(--hair);border-radius:11px;padding:14px 17px;margin-top:10px;background:var(--panel-2)}
+.aud-crit h4{font-size:13.5px;font-weight:800;color:var(--li-l);margin-bottom:6px}
+.aud-crit .q{font-size:13px;color:var(--muted);border-inline-start:2px solid var(--hair-2);padding-inline-start:10px;margin-bottom:8px;line-height:1.55}
+.aud-crit p{font-size:13px;color:var(--ink2);line-height:1.6;margin-bottom:8px}
+.aud-crit .bt{background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.3);border-radius:9px;padding:10px 13px;font-size:13.5px;color:var(--ink);line-height:1.65;white-space:pre-line}
 /* ===== ideas engine + guided writer + drafts drawer ===== */
 .ideasbox{margin:0 0 22px;background:var(--panel);border:1px solid var(--hair-2);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow)}
 .ideasbox .ih{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
@@ -498,6 +518,29 @@ footer p{max-width:900px;line-height:1.8}
   <div class="wrap">
     <div class="shead"><span class="snum">תחנה 1</span><h2>סורק הפרופיל — 17 בדיקות, ציון אחד</h2><span class="rule"></span></div>
     <p class="ssub">עברו על הפרופיל שלכם מול הרשימה וסמנו מה כבר קיים. כל בדיקה משוקללת לפי כמה שהיא באמת משנה — כותרת ופעילות שוות הרבה יותר מכתובת URL מסודרת. הציון נשמר בדפדפן שלכם בלבד, ובצד תקבלו את <b>שלושת התיקונים הבאים</b> לפי סדר ההשפעה.</p>
+    <div class="airev" id="autoAudit" style="margin:0 0 22px">
+      <div class="airev-h">
+        <div>
+          <h3>⚡ אבחון אוטומטי — בלי לעבור שאלה-שאלה</h3>
+          <p>בלי סריקה, בלי תוסף, בלי סיכון לחשבון — משתמשים ביצוא הרשמי של לינקדאין עצמה: בפרופיל שלכם לחצו <b>More ‏← Save to PDF</b>, וגררו את הקובץ לכאן (או הדביקו את טקסט העמוד). Claude ימלא את מה שאפשר לקבוע מהמסמך, יסמן מה נשאר לבדיקה ידנית, וייתן ביקורת ונוסח משופר לכותרת ול-About <b>שלכם בפועל</b>.</p>
+        </div>
+      </div>
+      <div class="aud-grid">
+        <div class="dropzone" id="audDrop" role="button" tabindex="0">
+          <b>גררו לכאן את קובץ ה-PDF מלינקדאין</b>
+          <span class="df" id="audFileName">או לחצו לבחירת קובץ</span>
+          <input type="file" id="audFile" accept="application/pdf" style="display:none">
+        </div>
+        <textarea id="audText" placeholder="…או: פתחו את עמוד הפרופיל שלכם, סמנו הכול (Ctrl+A), העתיקו — והדביקו כאן"></textarea>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px">
+        <button class="btn-ai" id="audRun"><span>אבחנו את הפרופיל שלי</span></button>
+        <div class="ai-status" id="audStatus" role="status" aria-live="polite" style="display:none;margin-top:0"></div>
+      </div>
+      <p class="aud-note">מה היצוא של לינקדאין לא מכיל, ולכן יישאר לבדיקה ידנית קצרה: תמונות (פרופיל ובאנר), Featured, המלצות, הגדרות מעקב, נתוני פעילות ועמוד החברה. המסמך נשלח לשרת רק בלחיצה, עובר ל-API של Anthropic לניתוח, ואינו נשמר אצלנו.</p>
+      <div class="ai-out" id="audOut"></div>
+    </div>
+
     <div class="audit-grid">
       <div id="auditGroups"></div>
       <div class="scorebox">
@@ -899,9 +942,90 @@ $('#auditReset').addEventListener('click',()=>{
   Object.keys(auditState).forEach(k=>delete auditState[k]);
   store.set('lab-audit',auditState);
   document.querySelectorAll('.aitem').forEach(r=>{r.classList.remove('done');r.setAttribute('aria-checked','false');});
+  document.querySelectorAll('.aitem .amark').forEach(m=>m.remove());
   renderAudit();
 });
 renderAudit();
+
+/* ---------- auto-audit from the user's own LinkedIn export ---------- */
+const AUDIT_ITEMS=[];
+LAB.audit.groups.forEach(g=>g.items.forEach((it,i)=>AUDIT_ITEMS.push({id:g.id+'-'+i,q:it.q})));
+let audPdf=null;
+const audDrop=$('#audDrop'),audFileInp=$('#audFile');
+function audSetFile(f){
+  if(!f)return;
+  if(f.type!=='application/pdf'&&!/\.pdf$/i.test(f.name)){
+    statusSay($('#audStatus'),'זה לא קובץ PDF. ייצאו את הפרופיל מלינקדאין: More ← Save to PDF.','err');return;
+  }
+  if(f.size>6*1024*1024){
+    statusSay($('#audStatus'),'הקובץ גדול מדי — יצוא הפרופיל של לינקדאין שוקל הרבה פחות. ודאו שזה הקובץ הנכון.','err');return;
+  }
+  const r=new FileReader();
+  r.onload=()=>{
+    audPdf=String(r.result).split(',')[1]||'';
+    audDrop.classList.add('hasfile');
+    $('#audFileName').textContent=f.name+' ✓';
+  };
+  r.readAsDataURL(f);
+}
+audDrop.addEventListener('click',()=>audFileInp.click());
+audDrop.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();audFileInp.click();}});
+audFileInp.addEventListener('change',()=>audSetFile(audFileInp.files[0]));
+['dragover','dragenter'].forEach(ev=>audDrop.addEventListener(ev,e=>{e.preventDefault();audDrop.classList.add('drag');}));
+['dragleave','drop'].forEach(ev=>audDrop.addEventListener(ev,e=>{e.preventDefault();audDrop.classList.remove('drag');}));
+audDrop.addEventListener('drop',e=>audSetFile(e.dataTransfer.files&&e.dataTransfer.files[0]));
+let audBusy=false;
+$('#audRun').addEventListener('click',async()=>{
+  if(audBusy||!AI_ENDPOINT)return;
+  const audOut=$('#audOut');audOut.classList.remove('on');audOut.innerHTML='';
+  const text=$('#audText').value.trim();
+  if(!audPdf&&text.length<200){
+    statusSay($('#audStatus'),'צרפו את קובץ ה-PDF או הדביקו את טקסט הפרופיל (לפחות 200 תווים).','err');return;
+  }
+  audBusy=true;
+  const data=await aiPost({
+    mode:'audit',
+    profile:audPdf?{pdf:audPdf}:{text},
+    items:AUDIT_ITEMS,
+    positioning:posPayload()
+  },$('#audStatus'),$('#audRun'),'Claude קורא את הפרופיל שלכם…');
+  audBusy=false;
+  if(!data)return;
+  const a=data.audit;
+  if(!a||!Array.isArray(a.items)){statusSay($('#audStatus'),'התקבלה תשובה ריקה מהשרת.','err');return;}
+  applyAudit(a);
+});
+function applyAudit(a){
+  const byId={};a.items.forEach(i=>{byId[i.id]=i;});
+  let auto=0,no=0,manual=0;
+  document.querySelectorAll('.aitem').forEach(row=>{
+    const k=row.dataset.k,r=byId[k];
+    const old=row.querySelector('.amark');if(old)old.remove();
+    const mark=document.createElement('span');mark.className='amark';
+    if(r&&r.status==='כן'){
+      if(!auditState[k]){auditState[k]=true;row.classList.add('done');row.setAttribute('aria-checked','true');}
+      mark.classList.add('m-auto');mark.textContent='זוהה במסמך';auto++;
+    }else if(r&&(r.status==='לא'||r.status==='חלקי')){
+      mark.classList.add('m-no');mark.textContent=r.status==='לא'?'חסר לפי המסמך':'חלקי';
+      mark.title=r.note||'';no++;
+    }else{
+      mark.classList.add('m-manual');mark.textContent='לבדיקה ידנית';manual++;
+    }
+    row.insertBefore(mark,row.querySelector('.aw'));
+  });
+  store.set('lab-audit',auditState);
+  renderAudit();
+  const crit=(title,found,quote,critique,better,copyLabel)=>found?
+    `<div class="aud-crit"><h4>${title}</h4>${quote?'<div class="q">❝ '+esc(quote)+'</div>':''}<p>${esc(critique)}</p>${better?'<div class="bt">'+esc(better)+'</div><div style="margin-top:8px"><button class="copybtn" data-copy="'+esc(better)+'">'+copyLabel+'</button></div>':''}</div>`:'';
+  const audOut=$('#audOut');
+  audOut.innerHTML=`
+    <p class="ai-headline" style="font-size:15px">${esc(a.summary||'')}</p>
+    <div class="ai-sec"><h4>מה קרה עכשיו</h4><p style="font-size:13px;color:var(--ink2)">✓ ${auto} פריטים סומנו אוטומטית לפי המסמך · ${no} זוהו כחסרים · ${manual} נשארו לבדיקה ידנית קצרה (מה שהיצוא לא מכיל). טעינו? אפשר לתקן כל סימון בלחיצה על השורה.</p></div>
+    ${crit('הכותרת (Headline) שלכם',a.headline&&a.headline.found,a.headline?a.headline.quote:'',a.headline?a.headline.critique:'',a.headline?a.headline.better:'','העתקת הנוסח המשופר')}
+    ${crit('ה-About שלכם',a.about&&a.about.found,'',a.about?a.about.critique:'',a.about?a.about.betterOpening:'','העתקת הפתיחה המשופרת')}
+    ${a.experience&&a.experience.critique?'<div class="aud-crit"><h4>סקשן הניסיון</h4><p>'+esc(a.experience.critique)+'</p></div>':''}`;
+  audOut.classList.add('on');
+}
 
 /* ---------- station 2: wizard ---------- */
 const FIELDS=['תחום','קהל','בעיה','תוצאה','הוכחה'];
@@ -1380,8 +1504,11 @@ if(!AI_ENDPOINT){
   /* nothing to call: keep the blocks honest rather than shipping dead buttons */
   aiBtn.disabled=true;
   aiBtn.querySelector('span').textContent='לא זמין בעמוד הזה';
-  $('.airev-h p').innerHTML='ביקורת התוכן בבינה מלאכותית אינה פעילה בעמוד הזה כרגע. <b>בדיקת הצורה שלמעלה עובדת כרגיל</b> ואינה תלויה בה.';
+  $('#checker .airev-h p').innerHTML='ביקורת התוכן בבינה מלאכותית אינה פעילה בעמוד הזה כרגע. <b>בדיקת הצורה שלמעלה עובדת כרגיל</b> ואינה תלויה בה.';
   $('#ideasBox').style.display='none';
+  const audBtn=$('#audRun');
+  audBtn.disabled=true;
+  audBtn.querySelector('span').textContent='לא זמין בעמוד הזה';
 }
 aiBtn.addEventListener('click',async()=>{
   if(aiBusy||!AI_ENDPOINT)return;

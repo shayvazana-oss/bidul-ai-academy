@@ -31,6 +31,19 @@ const REVIEW = {
   nextStep: "החליפו את המכפיל בתיאור קונקרטי של מה שהשתנה.",
 };
 
+const AUDIT_RESP = {
+  items: [
+    { id: "foundation-2", status: "כן", note: "כותרת ממוקדת" },
+    { id: "foundation-3", status: "כן", note: "About נפתח בבעיה" },
+    { id: "authority-2", status: "לא", note: "תחומי אחריות בלבד" },
+    { id: "activity-0", status: "אין מידע", note: "היצוא לא כולל פעילות" },
+  ],
+  headline: { found: true, quote: "יועץ עסקי בכיר", critique: "תואר, בלי הלקוח ובלי הבעיה.", better: "עוזר לעסקים קטנים לצאת מכאוס תזרימי" },
+  about: { found: true, critique: "נפתח בביוגרפיה במקום בבעיית הלקוח.", betterOpening: "רוב העסקים שמגיעים אליי מגלים את החור בתזרים מאוחר מדי." },
+  experience: { critique: "התפקידים מתארים אחריות, לא תוצאות." },
+  summary: "יש בסיס טוב. הצעד המשתלם עכשיו: להחליף את הכותרת.",
+};
+
 const WRITE_RESP = {
   post: "רוב היועצים מתמחרים לפי שעה.\n\nאצלי המעבר לפרויקטים לקח [פרק הזמן האמיתי].\n\nניסיתם?",
   missing: ["פרק הזמן האמיתי של המעבר"],
@@ -50,8 +63,8 @@ const upstream = http.createServer((req, res) => {
   let raw = "";
   req.on("data", (c) => (raw += c));
   req.on("end", () => {
-    const schema = raw.includes('"altHooks"') ? "write" : raw.includes('"ideas"') ? "ideas" : "review";
-    const payload = schema === "write" ? WRITE_RESP : schema === "ideas" ? IDEAS_RESP : REVIEW;
+    const schema = raw.includes('"betterOpening"') ? "audit" : raw.includes('"altHooks"') ? "write" : raw.includes('"ideas"') ? "ideas" : "review";
+    const payload = schema === "audit" ? AUDIT_RESP : schema === "write" ? WRITE_RESP : schema === "ideas" ? IDEAS_RESP : REVIEW;
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({
       id: "msg_e2e", type: "message", role: "assistant", model: "claude-opus-5",
@@ -109,7 +122,7 @@ await page.waitForTimeout(300);
 const localScore = await page.textContent("#dScore");
 ok("local form checker still scores without API", localScore !== "—", `score ${localScore}`);
 ok("unconfigured: button is disabled, not dead", await page.locator("#aiRun").isDisabled());
-const offCopy = (await page.textContent(".airev-h p")) ?? "";
+const offCopy = (await page.textContent("#checker .airev-h p")) ?? "";
 ok("unconfigured: copy is reader-facing", offCopy.includes("אינה פעילה") && offCopy.includes("עובדת כרגיל"), offCopy.slice(0, 50));
 ok("unconfigured: no repo plumbing leaks to visitors", !offCopy.includes("api/lab.ts") && !offCopy.includes("docs/"));
 ok("unconfigured shows no results panel", !(await page.locator("#aiOut").evaluate((e) => e.classList.contains("on"))));
@@ -202,7 +215,7 @@ await page.setViewportSize({ width: 390, height: 844 });
 await page.waitForTimeout(400);
 ok("no mobile horizontal overflow", !(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 2)));
 await page.setViewportSize({ width: 1380, height: 950 });
-await page.locator(".airev").scrollIntoViewIfNeeded();
+await page.locator("#checker .airev").scrollIntoViewIfNeeded();
 await page.waitForTimeout(400);
 await page.screenshot({ path: "/tmp/claude-0/-home-user-bidul-ai-academy/17896887-5337-5994-9484-fe76adb2b018/scratchpad/v3-ai-review.png" });
 
@@ -355,6 +368,54 @@ ok("unicode-bold flagged", (await page.evaluate(() => [...document.querySelector
 await page.fill("#draft", "שורת פתיחה חדה.\n\nתוכן אמיתי עם אמירה.\n\nמה דעתכם?\n\n#אחד #שתיים #שלוש #ארבע");
 await page.waitForTimeout(300);
 ok("hashtag warning reflects deprecation", (await page.evaluate(() => [...document.querySelectorAll("#dChecks .ck span span, #dChecks .ck span")].map((x) => x.textContent).join("|"))).includes("ביטלה מעקב"));
+
+// === 7c. auto-audit from the user's own export ===
+await page.evaluate(() => { localStorage.removeItem("lab-audit"); });
+await page.reload({ waitUntil: "domcontentloaded" });
+await page.waitForTimeout(700);
+ok("auto-audit box present", (await page.locator("#autoAudit").count()) === 1);
+// guard: no material
+await page.click("#audRun");
+await page.waitForTimeout(300);
+ok("audit requires material before calling API", ((await page.textContent("#audStatus")) ?? "").includes("200 תווים"));
+// paste path
+await page.fill("#audText", "שי כהן. יועץ עסקי בכיר. עשר שנות ניסיון בליווי עסקים. ".repeat(8));
+await page.click("#audRun");
+await page.waitForSelector("#audOut.on", { timeout: 20000 });
+ok("summary rendered", ((await page.textContent("#audOut")) ?? "").includes("להחליף את הכותרת"));
+ok("headline critique with rewrite", ((await page.textContent("#audOut")) ?? "").includes("כאוס תזרימי"));
+ok("about rewrite rendered", ((await page.textContent("#audOut")) ?? "").includes("החור בתזרים"));
+// items applied to the checklist
+const marked = await page.evaluate(`(() => ({
+  f2done: document.querySelector('.aitem[data-k="foundation-2"]').classList.contains("done"),
+  f2mark: document.querySelector('.aitem[data-k="foundation-2"] .amark').textContent,
+  a2mark: document.querySelector('.aitem[data-k="authority-2"] .amark').textContent,
+  act0mark: document.querySelector('.aitem[data-k="activity-0"] .amark').textContent,
+  score: document.querySelector("#scoreVal").textContent,
+}))()`) as any;
+ok("'כן' items auto-checked", marked.f2done === true && marked.f2mark === "זוהה במסמך");
+ok("score updated from auto-check", Number(marked.score) > 0, `score ${marked.score}`);
+ok("'לא' item marked missing, not checked", marked.a2mark === "חסר לפי המסמך");
+ok("no-info item marked manual", marked.act0mark === "לבדיקה ידנית");
+// pdf path: attach a file and confirm it is accepted + request carries pdf
+const tinyPdf = Buffer.from("%PDF-1.4\n1 0 obj<</Type/Catalog>>endobj\ntrailer<<>>\n%%EOF");
+await page.setInputFiles("#audFile", { name: "Profile.pdf", mimeType: "application/pdf", buffer: tinyPdf });
+await page.waitForTimeout(400);
+ok("pdf accepted into dropzone", ((await page.textContent("#audFileName")) ?? "").includes("Profile.pdf ✓"));
+let sawPdf = false;
+await page.route("**/api/lab", async (route) => {
+  const body = JSON.parse(route.request().postData() ?? "{}");
+  sawPdf = typeof body?.profile?.pdf === "string" && body.profile.pdf.length > 10;
+  await route.fallback();
+});
+await page.click("#audRun");
+await page.waitForSelector("#audOut.on", { timeout: 20000 });
+ok("pdf reaches the API as base64", sawPdf);
+await page.unroute("**/api/lab");
+// reset clears the marks
+await page.click("#auditReset");
+await page.waitForTimeout(200);
+ok("reset clears audit marks", (await page.locator(".aitem .amark").count()) === 0);
 
 // === 8. unconfigured page hides AI-only entry points ===
 await page.goto("http://127.0.0.1:8787/lab", { waitUntil: "domcontentloaded" });

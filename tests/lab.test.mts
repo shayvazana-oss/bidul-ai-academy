@@ -247,6 +247,59 @@ ok("no assistant prefill", !sent.messages.some((m: any) => m.role === "assistant
   ok("ideas: titles clipped", ir.ideas.every((i: any) => i.title.length <= 201));
 }
 
+// === mode: audit ===
+{
+  const IPA = { "x-forwarded-for": "83.0.0.1" };
+  const items = [
+    { id: "foundation-2", q: "כותרת?" }, { id: "foundation-3", q: "About?" },
+    { id: "activity-0", q: "פרסום שבועי?" }, { id: "authority-1", q: "המלצות?" }, { id: "company-0", q: "עמוד חברה?" },
+  ];
+  // no profile material -> 400, no billable call
+  ok("audit without material rejected 400", (await handler(post({ mode: "audit", items }, ORIGIN, IPA))).status === 400);
+  ok("audit with tiny text rejected 400", (await handler(post({ mode: "audit", profile: { text: "קצר" }, items }, ORIGIN, IPA))).status === 400);
+  ok("audit without items rejected 400", (await handler(post({ mode: "audit", profile: { text: "א".repeat(300) } }, ORIGIN, IPA))).status === 400);
+  ok("audit with oversized pdf rejected 400", (await handler(post({ mode: "audit", profile: { pdf: "A".repeat(9_000_001) }, items }, ORIGIN, IPA))).status === 400);
+
+  nextPayload = {
+    items: [
+      { id: "foundation-2", status: "כן", note: "כותרת ממוקדת לקוח" },
+      { id: "foundation-3", status: "לא", note: "נפתח בניסיון" },
+      { id: "activity-0", status: "אין מידע", note: "היצוא לא כולל פעילות" },
+      { id: "authority-1", status: "אולי??", note: "סטטוס מחוץ לרשימה" },
+      { id: "לא-קיים", status: "כן", note: "id זר — חייב להיזרק" },
+    ],
+    headline: { found: true, quote: "יועץ בכיר", critique: "תואר בלי לקוח.", better: "עוזר למנהלי כספים למנוע טעויות שכר" },
+    about: { found: true, critique: "נפתח בביוגרפיה.", betterOpening: "טעות שכר אחת עולה יותר מייעוץ שנתי." },
+    experience: { critique: "תחומי אחריות, לא תוצאות." },
+    summary: "הבסיס קיים, הכותרת היא הצעד הראשון.",
+  };
+  const ar = await handler(post({ mode: "audit", profile: { text: "פרופיל לדוגמה. ".repeat(30) }, items }, ORIGIN, IPA));
+  const ab: any = await ar.json();
+  ok("audit returns 200", ar.status === 200, String(ar.status));
+  ok("audit judges sent items", ab.audit.items.some((i: any) => i.id === "foundation-2" && i.status === "כן"));
+  ok("foreign item id filtered out", !ab.audit.items.some((i: any) => i.id === "לא-קיים"));
+  ok("out-of-set status normalized to אין מידע", ab.audit.items.find((i: any) => i.id === "authority-1")?.status === "אין מידע");
+  ok("audit returns headline critique", ab.audit.headline.better.includes("מנהלי כספים"));
+  const sentA = lastRequest.body;
+  ok("audit prompt carries pasted profile", JSON.stringify(sentA.messages).includes("פרופיל לדוגמה"));
+  ok("audit system forbids guessing", typeof sentA.system === "string" && sentA.system.includes("אין מידע"));
+
+  // pdf path: document block reaches the model
+  nextPayload = null;
+  const pdfB64 = Buffer.from("%PDF-1.4 fake").toString("base64");
+  nextPayload = {
+    items: [{ id: "foundation-2", status: "חלקי", note: "" }],
+    headline: { found: false, quote: "", critique: "", better: "" },
+    about: { found: false, critique: "", betterOpening: "" },
+    experience: { critique: "" },
+    summary: "סיכום.",
+  };
+  const pr = await handler(post({ mode: "audit", profile: { pdf: pdfB64 }, items }, ORIGIN, IPA));
+  ok("audit pdf path returns 200", pr.status === 200, String(pr.status));
+  const doc = lastRequest.body.messages[0].content.find((c: any) => c.type === "document");
+  ok("pdf sent as a base64 document block", doc?.source?.media_type === "application/pdf" && doc?.source?.data === pdfB64);
+}
+
 // === unknown mode ===
 ok("unknown mode rejected 400", (await handler(post({ mode: "hack", draft: GOOD_DRAFT }, ORIGIN, { "x-forwarded-for": "85.0.0.1" }))).status === 400);
 
