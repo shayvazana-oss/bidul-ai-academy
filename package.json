@@ -26,6 +26,6 @@
   "private": true,
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "tsx tests/review-post.test.mts"
+    "test": "tsx tests/lab.test.mts"
   }
 }

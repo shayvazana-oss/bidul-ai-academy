@@ -22,6 +22,20 @@ const REVIEW = {
   nextStep: "הוסיפו את המספר האמיתי מהמעבר אצל אותו לקוח.",
 };
 
+const WRITE_RESP = {
+  post: "רוב היועצים מתמחרים לפי שעה.\n\nוזו טעות ששילמתי עליה בעצמי: [המספר האמיתי].\n\nמה דעתכם?",
+  missing: ["המספר האמיתי מהמעבר"],
+  altHooks: ["הלקוח לא קונה שעות.", "טעות התמחור שלי.", "שעה זה לא מוצר."],
+};
+const IDEAS_RESP = {
+  ideas: Array.from({ length: 9 }, (_, i) => ({
+    title: "רעיון " + (i + 1),
+    angle: "זווית קונקרטית מהמיצוב.",
+    frameworkId: i === 0 ? "לא-קיים" : "common-mistake",
+    question: "מה הלקוח שואל?",
+  })),
+};
+
 let lastRequest: any = null;
 let nextPayload: any = null; // override the model's reply for one call
 const mock = http.createServer((req, res) => {
@@ -29,7 +43,10 @@ const mock = http.createServer((req, res) => {
   req.on("data", (c) => (raw += c));
   req.on("end", () => {
     lastRequest = { url: req.url, body: JSON.parse(raw) };
-    const payload = nextPayload ?? REVIEW;
+    // Branch on the requested output schema so each mode gets a matching reply.
+    const schema = JSON.stringify(lastRequest.body?.output_config?.format?.schema ?? {});
+    const auto = schema.includes('"altHooks"') ? WRITE_RESP : schema.includes('"ideas"') ? IDEAS_RESP : REVIEW;
+    const payload = nextPayload ?? auto;
     const stop = nextPayload?.__stop ?? "end_turn";
     nextPayload = null;
     res.writeHead(200, { "Content-Type": "application/json" });
@@ -50,12 +67,12 @@ process.env.ANTHROPIC_API_KEY = "sk-ant-test-key";
 process.env.RATE_LIMIT_PER_HOUR = "8";
 process.env.GLOBAL_LIMIT_PER_HOUR = "100";
 
-const { default: handler } = await import("../api/review-post.ts");
+const { default: handler } = await import("../api/lab.ts");
 
 function post(body: unknown, origin: string | null = ORIGIN, headers: Record<string, string> = {}): Request {
   const h: Record<string, string> = { "Content-Type": "application/json", "x-forwarded-for": "10.0.0.1", ...headers };
   if (origin) h["Origin"] = origin;
-  return new Request("http://x/api/review-post", { method: "POST", headers: h, body: JSON.stringify(body) });
+  return new Request("http://x/api/lab", { method: "POST", headers: h, body: JSON.stringify(body) });
 }
 let failed = 0;
 const ok = (label: string, cond: boolean, extra = "") => {
@@ -160,6 +177,52 @@ ok("no assistant prefill", !sent.messages.some((m: any) => m.role === "assistant
   ok("schema mismatch returns 502, not a generic 500", bad.status === 502, String(bad.status));
   ok("schema-mismatch error is user-readable", ((await bad.json()) as any).error.includes("תשובה לא צפויה"));
 }
+
+// === mode: write ===
+{
+  const IPW = { "x-forwarded-for": "70.0.0.1" };
+  const fw = { name: "הטעות הנפוצה", pillar: "מומחיות", goal: "ממצב", structure: ["פתיחה", "טעות", "תיקון"], template: "רוב הקהל..." };
+  // no answers -> refuse to invent
+  const noAns = await handler(post({ mode: "write", framework: fw, answers: [] }, ORIGIN, IPW));
+  ok("write without answers rejected 400", noAns.status === 400, ((await noAns.json()) as any).error);
+  // no framework
+  ok("write without framework rejected 400", (await handler(post({ mode: "write", answers: [{ q: "מה קרה", a: "משהו" }] }, ORIGIN, IPW))).status === 400);
+  // happy path
+  const wr = await handler(post({
+    mode: "write", framework: fw, lashon: "נקבה",
+    answers: [{ q: "מה הטעות", a: "תמחור לפי שעה" }, { q: "", a: "בלי שאלה" }, { q: "ריק", a: "" }],
+    positioning: { תחום: "ייעוץ" },
+  }, ORIGIN, IPW));
+  const wb: any = await wr.json();
+  ok("write returns 200 with a post", wr.status === 200 && typeof wb.write?.post === "string", String(wr.status));
+  ok("write returns missing + altHooks", wb.write?.missing?.length === 1 && wb.write?.altHooks?.length === 3);
+  const sentW = lastRequest.body;
+  ok("write prompt carries the interview", JSON.stringify(sentW.messages).includes("תמחור לפי שעה"));
+  ok("write prompt filters empty q/a pairs", !JSON.stringify(sentW.messages).includes("בלי שאלה"));
+  ok("write prompt carries lashon", JSON.stringify(sentW.messages).includes("נקבה"));
+  ok("write system forbids invention", typeof sentW.system === "string" && sentW.system.includes("אסור להמציא"));
+}
+
+// === mode: ideas ===
+{
+  const IPI = { "x-forwarded-for": "80.0.0.1" };
+  const fws = [
+    { id: "common-mistake", name: "הטעות הנפוצה", pillar: "מומחיות" },
+    { id: "against-the-grain", name: "נגד הזרם", pillar: "דעה" },
+    { id: "client-before-after", name: "לפני ואחרי", pillar: "סיפור" },
+    { id: "honest-recap", name: "הסיכום הכן", pillar: "הוכחה" },
+  ];
+  // ideas without positioning -> 400 (grounding requirement)
+  const noPos = await handler(post({ mode: "ideas", frameworks: fws }, ORIGIN, IPI));
+  ok("ideas without positioning rejected 400", noPos.status === 400, ((await noPos.json()) as any).error);
+  const ir = await handler(post({ mode: "ideas", frameworks: fws, positioning: { קהל: "בעלי עסקים" } }, ORIGIN, IPI));
+  const ib: any = await ir.json();
+  ok("ideas returns 200 with 9 ideas", ir.status === 200 && ib.ideas?.length === 9, String(ir.status));
+  ok("unknown frameworkId normalized to empty", ib.ideas?.[0]?.frameworkId === "" && ib.ideas?.[1]?.frameworkId === "common-mistake");
+}
+
+// === unknown mode ===
+ok("unknown mode rejected 400", (await handler(post({ mode: "hack", draft: GOOD_DRAFT }, ORIGIN, { "x-forwarded-for": "85.0.0.1" }))).status === 400);
 
 // === throttling (last: these deliberately exhaust the instance-wide quota) ===
 // One client hitting its own per-IP cap (RATE_LIMIT_PER_HOUR is 8 in this run).

@@ -1,5 +1,5 @@
 /**
- * End-to-end: browser -> the real review-post handler -> a stubbed Messages API.
+ * End-to-end: browser -> the real lab handler -> a stubbed Messages API.
  * Serves linkedin-lab.html and the function from one origin so the page's fetch
  * exercises the same path it will in production.
  */
@@ -31,15 +31,31 @@ const REVIEW = {
   nextStep: "החליפו את המכפיל בתיאור קונקרטי של מה שהשתנה.",
 };
 
-// --- stub Messages API ---
+const WRITE_RESP = {
+  post: "רוב היועצים מתמחרים לפי שעה.\n\nאצלי המעבר לפרויקטים לקח [פרק הזמן האמיתי].\n\nניסיתם?",
+  missing: ["פרק הזמן האמיתי של המעבר"],
+  altHooks: ["הלקוח לא קונה שעות.", "טעות התמחור שלי.", "שעה זה לא מוצר."],
+};
+const IDEAS_RESP = {
+  ideas: Array.from({ length: 9 }, (_, i) => ({
+    title: "רעיון מספר " + (i + 1),
+    angle: "זווית שנשענת על המיצוב בלבד.",
+    frameworkId: "common-mistake",
+    question: "מה הלקוח באמת שואל?",
+  })),
+};
+
+// --- stub Messages API (branches per requested schema) ---
 const upstream = http.createServer((req, res) => {
   let raw = "";
   req.on("data", (c) => (raw += c));
   req.on("end", () => {
+    const schema = raw.includes('"altHooks"') ? "write" : raw.includes('"ideas"') ? "ideas" : "review";
+    const payload = schema === "write" ? WRITE_RESP : schema === "ideas" ? IDEAS_RESP : REVIEW;
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({
       id: "msg_e2e", type: "message", role: "assistant", model: "claude-opus-5",
-      content: [{ type: "text", text: JSON.stringify(REVIEW) }],
+      content: [{ type: "text", text: JSON.stringify(payload) }],
       stop_reason: "end_turn", stop_sequence: null,
       usage: { input_tokens: 1200, output_tokens: 600 },
     }));
@@ -51,11 +67,11 @@ process.env.ANTHROPIC_API_KEY = "sk-ant-e2e";
 process.env.ALLOWED_ORIGINS = "http://127.0.0.1:8787";
 process.env.RATE_LIMIT_PER_HOUR = "50";
 
-const { default: handler } = await import("../api/review-post.ts");
+const { default: handler } = await import("../api/lab.ts");
 
 // --- site + function on one origin ---
 const site = http.createServer(async (req, res) => {
-  if (req.url?.startsWith("/api/review-post")) {
+  if (req.url?.startsWith("/api/lab")) {
     const chunks: Buffer[] = [];
     for await (const c of req) chunks.push(c as Buffer);
     const request = new Request(`http://127.0.0.1:8787${req.url}`, {
@@ -70,7 +86,7 @@ const site = http.createServer(async (req, res) => {
   }
   let html = fs.readFileSync(PAGE, "utf8");
   if (req.url?.includes("connected")) {
-    html = html.replace('<meta name="lab-api" content="">', '<meta name="lab-api" content="/api/review-post">');
+    html = html.replace('<meta name="lab-api" content="">', '<meta name="lab-api" content="/api/lab">');
   }
   res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
   res.end(html);
@@ -95,7 +111,7 @@ ok("local form checker still scores without API", localScore !== "—", `score $
 ok("unconfigured: button is disabled, not dead", await page.locator("#aiRun").isDisabled());
 const offCopy = (await page.textContent(".airev-h p")) ?? "";
 ok("unconfigured: copy is reader-facing", offCopy.includes("אינה פעילה") && offCopy.includes("עובדת כרגיל"), offCopy.slice(0, 50));
-ok("unconfigured: no repo plumbing leaks to visitors", !offCopy.includes("api/review-post.ts") && !offCopy.includes("docs/"));
+ok("unconfigured: no repo plumbing leaks to visitors", !offCopy.includes("api/lab.ts") && !offCopy.includes("docs/"));
 ok("unconfigured shows no results panel", !(await page.locator("#aiOut").evaluate((e) => e.classList.contains("on"))));
 
 // === 2. endpoint configured — full round trip ===
@@ -170,7 +186,7 @@ await page.fill("#draft", DRAFT);
 await page.waitForTimeout(200);
 
 // a review missing fields must not render as a clean bill of health
-await page.route("**/api/review-post", (r) =>
+await page.route("**/api/lab", (r) =>
   r.fulfill({ status: 200, contentType: "application/json",
     body: JSON.stringify({ review: { verdict: "עובד", headline: "בדיקה", substance: {}, nextStep: "המשיכו" } }) }));
 await page.click("#aiRun");
@@ -179,7 +195,7 @@ const body = (await page.textContent("#aiOut")) ?? "";
 ok("missing claimCheck does not fake a clean result", !body.includes("לא נמצאו הבטחות"), body.slice(0, 60));
 ok("missing hasPoint asserts nothing about the post", !body.includes("אין כאן אמירה"));
 ok("present fields still render", body.includes("המשיכו"));
-await page.unroute("**/api/review-post");
+await page.unroute("**/api/lab");
 
 // mobile
 await page.setViewportSize({ width: 390, height: 844 });
@@ -191,12 +207,148 @@ await page.waitForTimeout(400);
 await page.screenshot({ path: "/tmp/claude-0/-home-user-bidul-ai-academy/17896887-5337-5994-9484-fe76adb2b018/scratchpad/v3-ai-review.png" });
 
 // === 3. server error surfaces to the user ===
-await page.route("**/api/review-post", (r) =>
+await page.route("**/api/lab", (r) =>
   r.fulfill({ status: 429, contentType: "application/json", body: JSON.stringify({ error: "הגעתם למכסת הביקורות לשעה." }) }));
 await page.click("#aiRun");
 await page.waitForTimeout(700);
 ok("server error message surfaced", ((await page.textContent("#aiStatus")) ?? "").includes("מכסת הביקורות"));
 ok("error state styled as error", await page.locator("#aiStatus").evaluate((e) => e.classList.contains("err")));
+
+// === 4. guided writer: template gaps become the interview, output is grounded ===
+await page.unroute("**/api/lab");
+await page.locator("#content").scrollIntoViewIfNeeded();
+const writeBtn = page.locator('[data-write]').first();
+ok("guided-write button exists when endpoint configured", (await page.locator("[data-write]").count()) === 12);
+await writeBtn.click();
+await page.waitForTimeout(500);
+ok("writer opens", await page.locator("#writerBox").evaluate((e) => e.classList.contains("on")));
+const qCount = await page.locator("#writerQs textarea").count();
+ok("interview questions derived from template slots", qCount >= 4, `${qCount} questions`);
+// no answers -> local guard
+await page.click("#writerRun");
+await page.waitForTimeout(300);
+ok("writer requires at least one answer", ((await page.textContent("#writerStatus")) ?? "").includes("חומר אמיתי"));
+// answer one and run
+await page.locator("#writerQs textarea").first().fill("תמחור לפי שעה במקום לפי ערך");
+await page.click("#writerRun");
+await page.waitForSelector("#writerOut.on", { timeout: 20000 });
+const wOut = (await page.textContent("#writerOut")) ?? "";
+ok("writer renders the drafted post", wOut.includes("מתמחרים לפי שעה"));
+ok("writer surfaces missing facts honestly", wOut.includes("פרק הזמן האמיתי"));
+ok("writer renders 3 alt hooks", (await page.locator("#writerOut .ai-hook").count()) === 3);
+// send to checker
+await page.click("#writerToChecker");
+await page.waitForTimeout(600);
+ok("writer sends draft to checker", ((await page.inputValue("#draft")) ?? "").includes("מתמחרים לפי שעה"));
+// save to drawer
+await page.locator("#content").scrollIntoViewIfNeeded();
+await page.click("#writerToDrawer");
+await page.waitForTimeout(300);
+
+// === 5. drafts drawer ===
+ok("draft saved to drawer", (await page.locator(".drow").count()) === 1);
+const st0 = (await page.textContent(".drow .dstat")) ?? "";
+await page.click(".drow .dstat");
+await page.waitForTimeout(200);
+const st1 = (await page.textContent(".drow .dstat")) ?? "";
+ok("status cycles on click", st0.trim() === "טיוטה" && st1.trim() === "מוכן", `${st0.trim()} -> ${st1.trim()}`);
+await page.reload({ waitUntil: "domcontentloaded" });
+await page.waitForTimeout(700);
+ok("drawer persists after reload", (await page.locator(".drow").count()) === 1);
+ok("status persists after reload", ((await page.textContent(".drow .dstat")) ?? "").trim() === "מוכן");
+await page.fill("#draft", DRAFT);
+await page.waitForTimeout(200);
+await page.click("#drawerSave");
+await page.waitForTimeout(200);
+ok("save-from-checker adds a second draft", (await page.locator(".drow").count()) === 2);
+await page.locator('.drow [data-act="del"]').first().click();
+await page.waitForTimeout(200);
+ok("delete removes a draft", (await page.locator(".drow").count()) === 1);
+
+// === 6. ideas engine ===
+await page.fill("#w-קהל", "יועצים עצמאיים");
+await page.waitForTimeout(200);
+await page.locator("#ideasBox").scrollIntoViewIfNeeded();
+await page.fill("#ideasFocus", "תמחור");
+await page.click("#ideasRun");
+await page.waitForSelector(".idea", { timeout: 20000 });
+ok("9 idea cards rendered", (await page.locator(".idea").count()) === 9);
+ok("idea shows the client question", ((await page.textContent(".idea .iq")) ?? "").includes("באמת שואל"));
+ok("idea maps to a framework", ((await page.textContent(".idea .tag")) ?? "").includes("הטעות הנפוצה"));
+await page.locator("[data-ideawrite]").first().click();
+await page.waitForTimeout(500);
+ok("idea opens the writer with context", ((await page.textContent("#writerQs")) ?? "").includes("רעיון מספר 1"));
+
+// === 7. ICS export wiring (no download assertion — jsdomless check of the blob path) ===
+const icsOk = await page.evaluate(() => {
+  let captured = "";
+  const orig = URL.createObjectURL;
+  (URL as any).createObjectURL = (b: Blob) => { captured = "blob-made"; return "blob:fake"; };
+  const a = document.createElement("a");
+  const origClick = HTMLAnchorElement.prototype.click;
+  HTMLAnchorElement.prototype.click = function () { captured += "+clicked:" + (this as HTMLAnchorElement).download; };
+  (document.querySelector("#calIcs") as HTMLButtonElement).click();
+  HTMLAnchorElement.prototype.click = origClick;
+  (URL as any).createObjectURL = orig;
+  return captured;
+});
+ok("ICS export builds and triggers a download", icsOk.includes("blob-made") && icsOk.includes("linkedin-lab-30days.ics"), icsOk);
+
+// === 7b. RTL fixer + preview + new form checks ===
+const RTL_DRAFT = `Excel הרג לכם את היום?
+
+יש דרך אחרת לנהל את הנתונים.
+
+LinkedIn הוא המקום שבו לקוחות בודקים אתכם.
+
+מה דעתכם?`;
+await page.fill("#draft", RTL_DRAFT);
+await page.waitForTimeout(300);
+const rtlFlag = (await page.textContent("#dRtl")) ?? "";
+ok("RTL flip counter detects Latin-first Hebrew lines", rtlFlag.includes("2"), rtlFlag.trim());
+const rtlCheck = await page.evaluate(() => [...document.querySelectorAll("#dChecks .ck b")].map((x) => x.textContent).join("|"));
+ok("form check flags flipping lines as bad", rtlCheck.includes("שיתהפכו"), rtlCheck.slice(0, 80));
+// the copy-with-fix button must inject RLM exactly on the flipping lines
+const fixed = await page.evaluate(async () => {
+  let captured = "";
+  (navigator.clipboard as any).writeText = (t: string) => { captured = t; return Promise.resolve(); };
+  (document.querySelector("#copyFixed") as HTMLButtonElement).click();
+  await new Promise((r) => setTimeout(r, 200));
+  return captured;
+});
+const fixedLines = fixed.split("\n");
+ok("RLM injected on Latin-first Hebrew lines", fixedLines[0].startsWith("‏") && fixedLines[4].startsWith("‏"), JSON.stringify(fixedLines[0].slice(0, 8)));
+ok("RLM NOT injected on Hebrew-first lines", !fixedLines[2].startsWith("‏"));
+ok("fix is idempotent", (await page.evaluate((f) => {
+  const w = window as any;
+  return f;
+}, fixed)) === fixed.replace(/‏‏/g, "‏"));
+// preview shows see-more cut and switches device
+const LONG = "שורת פתיחה. " + "עוד משפט שממשיך את הפוסט הזה למקום מעניין. ".repeat(10);
+await page.fill("#draft", LONG);
+await page.waitForTimeout(300);
+ok("preview shows see-more marker on long drafts", ((await page.textContent("#pvText")) ?? "").includes("…עוד"));
+const lenDesk = ((await page.textContent("#pvText")) ?? "").length;
+await page.click('.pvt[data-cut="140"]');
+await page.waitForTimeout(200);
+const lenMob = ((await page.textContent("#pvText")) ?? "").length;
+ok("mobile preview cuts earlier than desktop", lenMob < lenDesk, `${lenMob} < ${lenDesk}`);
+await page.click('.pvt[data-cut="210"]');
+// unicode-bold warning
+await page.fill("#draft", "שורת פתיחה עם 𝗕𝗼𝗹𝗱 מזויף בפנים.\n\nעוד תוכן אמיתי כלשהו כאן.\n\nמה דעתכם?");
+await page.waitForTimeout(300);
+ok("unicode-bold flagged", (await page.evaluate(() => [...document.querySelectorAll("#dChecks .ck b")].map((x) => x.textContent).join("|"))).includes("יוניקוד"));
+// hashtag advice updated to post-2024 reality
+await page.fill("#draft", "שורת פתיחה חדה.\n\nתוכן אמיתי עם אמירה.\n\nמה דעתכם?\n\n#אחד #שתיים #שלוש #ארבע");
+await page.waitForTimeout(300);
+ok("hashtag warning reflects deprecation", (await page.evaluate(() => [...document.querySelectorAll("#dChecks .ck span span, #dChecks .ck span")].map((x) => x.textContent).join("|"))).includes("ביטלה מעקב"));
+
+// === 8. unconfigured page hides AI-only entry points ===
+await page.goto("http://127.0.0.1:8787/lab", { waitUntil: "domcontentloaded" });
+await page.waitForTimeout(600);
+ok("unconfigured: ideas box hidden", await page.locator("#ideasBox").evaluate((e) => (e as HTMLElement).style.display === "none"));
+ok("unconfigured: no guided-write buttons, AI-prompt fallback instead", (await page.locator("[data-write]").count()) === 0 && (await page.locator("[data-ai]").count()) === 12);
+ok("unconfigured: drawer still works", (await page.locator("#drawerBox").count()) === 1);
 
 console.log("JS errors:", errors.length ? errors : "none");
 await browser.close();

@@ -201,6 +201,80 @@ const SYSTEM = `אתה עורך תוכן ותיק שמלווה מקצוענים 
 - אם הטיוטה ריקה מתוכן, אמור זאת ישירות ב-headline. אל תרכך.
 - אל תעיר על אורך, אימוג'ים, האשטגים או שורות רווח — בדיקת הצורה כבר נעשית בנפרד.`;
 
+/* ---------- mode: write — a ghostwriter that may only use supplied facts ---------- */
+
+const WriteOut = z.object({
+  post: z.string().describe("הפוסט המלא, מוכן להדבקה. עד 2,800 תווים"),
+  missing: z
+    .array(z.string())
+    .describe("עד 4 עובדות שחסרות כדי שהפוסט יהיה חזק באמת — מה שהכותב צריך להשלים"),
+  altHooks: z
+    .array(z.string())
+    .describe("בדיוק 3 שורות פתיחה חלופיות, מבוססות רק על החומר שנמסר"),
+});
+type WriteOutT = z.infer<typeof WriteOut>;
+
+function normalizeWrite(r: WriteOutT) {
+  return {
+    post: clip(r.post, MAX_DRAFT_CHARS),
+    missing: r.missing.slice(0, 4).map((m) => clip(m, 200)),
+    altHooks: r.altHooks.slice(0, 3).map((h) => clip(h, 200)),
+  };
+}
+
+const WRITE_SYSTEM = `אתה גוסטרייטר ללינקדאין בעברית, עבור "האקדמיה לבינה מלאכותית יישומית". אתה כותב את הפוסט של הכותב — לא פוסט גנרי.
+
+הכלל שמעל הכול: מותר לך להשתמש אך ורק בעובדות, במספרים ובסיפורים שהכותב מסר בתשובות הראיון ובמיצוב. אסור להמציא לקוחות, תוצאות, אחוזים, שנים או פרטים "מתקבלים על הדעת". במקום שבו חסרה עובדה שהמבנה דורש — השאר סוגריים מרובעים עם תיאור קצר של מה שחסר, למשל [המספר האמיתי], ורשום את זה גם ב-missing. פוסט כן עם חורים עדיף על פוסט שלם עם שקרים.
+
+כללי הכתיבה:
+- שורה ראשונה קצרה שעוצרת גלילה, בלי "שמח לשתף" וחבריו.
+- שורות קצרות עם שורת רווח ביניהן. בלי חומות טקסט.
+- קול אישי בגוף ראשון, בלשון שנמסרה (זכר/נקבה).
+- סיום בשאלה אחת או בשורת מסקנה אחת.
+- בלי האשטגים אלא אם הכותב סיפק. בלי אימוג'ים כמעט בכלל.
+- עד 2,800 תווים. עברית ישראלית טבעית, לא מתורגמת.
+- עקוב אחרי מבנה המסגרת שנמסרה, אבל אל תהיה עבד שלה — אם התשובות מושכות לכיוון חד יותר, לך איתן.
+
+altHooks: שלוש פתיחות שונות זו מזו באופי (שאלה / הצהרה / סיפור), כולן נטועות בחומר שנמסר בלבד.`;
+
+/* ---------- mode: ideas — post ideas grounded in the writer's positioning ---------- */
+
+const IdeasOut = z.object({
+  ideas: z
+    .array(
+      z.object({
+        title: z.string().describe("כותרת הרעיון במשפט אחד, קונקרטי"),
+        angle: z.string().describe("משפט או שניים: הזווית — מה הפוסט טוען או מראה"),
+        frameworkId: z.string().describe("ה-id של המסגרת המתאימה ביותר, מתוך הרשימה שנמסרה"),
+        question: z.string().describe("השאלה של הלקוח שהפוסט הזה עונה עליה"),
+      }),
+    )
+    .describe("בדיוק 9 רעיונות לפוסטים"),
+});
+type IdeasOutT = z.infer<typeof IdeasOut>;
+
+function normalizeIdeas(r: IdeasOutT, validIds: Set<string>) {
+  return {
+    ideas: r.ideas.slice(0, 9).map((i) => ({
+      title: clip(i.title, 200),
+      angle: clip(i.angle, 300),
+      frameworkId: validIds.has(i.frameworkId.trim()) ? i.frameworkId.trim() : "",
+      question: clip(i.question, 200),
+    })),
+  };
+}
+
+const IDEAS_SYSTEM = `אתה אסטרטג תוכן ללינקדאין בעברית, עבור "האקדמיה לבינה מלאכותית יישומית". אתה מציע רעיונות לפוסטים שממצבים את הכותב כבעל נישה — לא כ"עוד קול בפיד".
+
+הכלל שמעל הכול: כל רעיון חייב להיות כזה שהכותב יכול לכתוב מהניסיון שלו בלבד, בלי להמציא נתונים. אל תציע רעיונות שדורשים סטטיסטיקות, מחקרים או תוצאות שלא נמסרו. רעיון טוב שואב מהמיצוב: הבעיה שהכותב פותר, הטעויות שהוא רואה, השאלות שהוא נשאל, העמדות שיש לו.
+
+דרישות:
+- בדיוק 9 רעיונות, מפוזרים על פני ארבעת עמודי התוכן: מומחיות, סיפור, דעה, הוכחה.
+- לכל רעיון בחר frameworkId אחד מהרשימה שנמסרה — המסגרת שהכי מתאימה לו.
+- title קונקרטי ("הטעות בחוזי השכר שרואים כל שבוע"), לא גנרי ("טיפים לניהול").
+- question: השאלה האמיתית של לקוח שהפוסט עונה עליה — זה מה שהופך פוסט לנכס.
+- כתוב בעברית, בפנייה לרבים כשאתה מדבר אל הכותב.`;
+
 const EFFORTS = ["low", "medium", "high", "xhigh", "max"] as const satisfies readonly NonNullable<
   Anthropic.OutputConfig["effort"]
 >[];
@@ -274,19 +348,9 @@ export default async function handler(request: Request): Promise<Response> {
     return json({ error: "גוף הבקשה אינו JSON תקין." }, 400, origin);
   }
   const body = raw as Record<string, unknown>;
-
-  const draft = cap(body.draft, MAX_DRAFT_CHARS + 1);
-  if (draft.length < 40) {
-    return json({ error: "הטיוטה קצרה מדי לביקורת תוכן (מינימום 40 תווים)." }, 400, origin);
-  }
-  if (draft.length > MAX_DRAFT_CHARS) {
-    return json(
-      {
-        error: `הטיוטה ארוכה מ-${MAX_DRAFT_CHARS.toLocaleString("he-IL")} תווים — מעל המגבלה של לינקדאין.`,
-      },
-      400,
-      origin,
-    );
+  const mode = typeof body.mode === "string" ? body.mode : "review";
+  if (!["review", "write", "ideas"].includes(mode)) {
+    return json({ error: "mode לא מוכר. האפשרויות: review / write / ideas." }, 400, origin);
   }
 
   const p = (body.positioning ?? {}) as Record<string, unknown>;
@@ -300,51 +364,142 @@ export default async function handler(request: Request): Promise<Response> {
   const filled = Object.entries(positioning).filter(([, v]) => v);
   const context = filled.length
     ? filled.map(([k, v]) => `- ${k}: ${v}`).join("\n")
-    : "(הכותב לא מילא את אשף המיצוב — שפוט את הפוסט על פי עצמו, ואל תמציא לו קהל או תחום.)";
+    : "(הכותב לא מילא את אשף המיצוב.)";
 
   // timeout x (maxRetries + 1) must fit inside maxDuration, or Vercel kills the
   // invocation mid-retry and the friendly 504 below never gets to run.
   const client = new Anthropic({ timeout: 25_000, maxRetries: 1 });
 
-  try {
+  /** Shared call wrapper: same stop-reason handling for every mode. */
+  async function callModel<T>(
+    system: string,
+    userContent: string,
+    schema: Parameters<typeof zodOutputFormat>[0],
+  ): Promise<{ out: T; usage: { input_tokens: number; output_tokens: number } } | Response> {
     const response = await client.messages.parse({
       model: "claude-opus-5",
       max_tokens: 8000,
-      system: SYSTEM,
-      output_config: { format: zodOutputFormat(Review), effort: EFFORT },
-      messages: [
-        {
-          role: "user",
-          content: `המיצוב שהכותב הגדיר לעצמו:\n${context}\n\nהטיוטה לביקורת:\n"""\n${draft}\n"""\n\nתן ביקורת תוכן לפי הסכימה.`,
-        },
-      ],
+      system,
+      output_config: { format: zodOutputFormat(schema), effort: EFFORT },
+      messages: [{ role: "user", content: userContent }],
     });
-
     if (response.stop_reason === "refusal") {
-      return json(
-        { error: "המודל נמנע מלנתח את הטיוטה הזו. נסו לנסח אותה אחרת." },
-        422,
-        origin,
-      );
+      return json({ error: "המודל נמנע מלטפל בבקשה הזו. נסו לנסח אחרת." }, 422, origin);
     }
     if (response.stop_reason === "max_tokens") {
-      return json({ error: "הניתוח נקטע באמצע. נסו טיוטה קצרה יותר." }, 502, origin);
+      return json({ error: "התשובה נקטעה באמצע. נסו קלט קצר יותר." }, 502, origin);
     }
     if (!response.parsed_output) {
       return json({ error: "התקבלה תשובה לא צפויה מהמודל. נסו שוב." }, 502, origin);
     }
-
-    return json(
-      {
-        review: normalize(response.parsed_output),
-        usage: {
-          input_tokens: response.usage.input_tokens,
-          output_tokens: response.usage.output_tokens,
-        },
+    return {
+      out: response.parsed_output as T,
+      usage: {
+        input_tokens: response.usage.input_tokens,
+        output_tokens: response.usage.output_tokens,
       },
-      200,
-      origin,
-    );
+    };
+  }
+
+  try {
+    /* ---------- review ---------- */
+    if (mode === "review") {
+      const draft = cap(body.draft, MAX_DRAFT_CHARS + 1);
+      if (draft.length < 40) {
+        return json({ error: "הטיוטה קצרה מדי לביקורת תוכן (מינימום 40 תווים)." }, 400, origin);
+      }
+      if (draft.length > MAX_DRAFT_CHARS) {
+        return json(
+          {
+            error: `הטיוטה ארוכה מ-${MAX_DRAFT_CHARS.toLocaleString("he-IL")} תווים — מעל המגבלה של לינקדאין.`,
+          },
+          400,
+          origin,
+        );
+      }
+      const reviewContext = filled.length
+        ? context
+        : "(הכותב לא מילא את אשף המיצוב — שפוט את הפוסט על פי עצמו, ואל תמציא לו קהל או תחום.)";
+      const r = await callModel<ReviewOut>(
+        SYSTEM,
+        `המיצוב שהכותב הגדיר לעצמו:\n${reviewContext}\n\nהטיוטה לביקורת:\n"""\n${draft}\n"""\n\nתן ביקורת תוכן לפי הסכימה.`,
+        Review,
+      );
+      if (r instanceof Response) return r;
+      return json({ review: normalize(r.out), usage: r.usage }, 200, origin);
+    }
+
+    /* ---------- write ---------- */
+    if (mode === "write") {
+      const fw = (body.framework ?? {}) as Record<string, unknown>;
+      const framework = {
+        name: cap(fw.name, 100),
+        pillar: cap(fw.pillar, 30),
+        goal: cap(fw.goal, 300),
+        structure: (Array.isArray(fw.structure) ? fw.structure : [])
+          .slice(0, 8)
+          .map((s) => cap(s, 200))
+          .filter(Boolean),
+        template: cap(fw.template, 2000),
+      };
+      if (!framework.name || !framework.template) {
+        return json({ error: "חסרה מסגרת הפוסט (framework) בבקשה." }, 400, origin);
+      }
+      const rawAnswers = Array.isArray(body.answers) ? body.answers : [];
+      const answers = rawAnswers
+        .slice(0, 14)
+        .map((a) => {
+          const o = (a ?? {}) as Record<string, unknown>;
+          return { q: cap(o.q, 200), a: cap(o.a, 600) };
+        })
+        .filter((a) => a.q && a.a);
+      if (!answers.length) {
+        return json(
+          { error: "ענו לפחות על שאלה אחת בראיון — בלי חומר אמיתי אין ממה לכתוב." },
+          400,
+          origin,
+        );
+      }
+      const lashon = body.lashon === "נקבה" ? "נקבה" : "זכר";
+      const r = await callModel<WriteOutT>(
+        WRITE_SYSTEM,
+        `לשון הכתיבה: ${lashon}.\n\nהמיצוב של הכותב:\n${context}\n\nמסגרת הפוסט: "${framework.name}" (${framework.pillar})\nמטרתה: ${framework.goal}\nמבנה:\n${framework.structure.map((s, i) => `${i + 1}. ${s}`).join("\n")}\nתבנית לרוח הדברים (לא לציטוט עיוור):\n"""\n${framework.template}\n"""\n\nהראיון — החומר היחיד שמותר לכתוב ממנו:\n${answers.map((a) => `שאלה: ${a.q}\nתשובה: ${a.a}`).join("\n\n")}\n\nכתוב את הפוסט לפי הסכימה.`,
+        WriteOut,
+      );
+      if (r instanceof Response) return r;
+      return json({ write: normalizeWrite(r.out), usage: r.usage }, 200, origin);
+    }
+
+    /* ---------- ideas ---------- */
+    {
+      if (!filled.length) {
+        return json(
+          { error: "מנוע הרעיונות עובד מהמיצוב — מלאו לפחות שדה אחד באשף בתחנה 2." },
+          400,
+          origin,
+        );
+      }
+      const rawFw = Array.isArray(body.frameworks) ? body.frameworks : [];
+      const fwList = rawFw
+        .slice(0, 15)
+        .map((f) => {
+          const o = (f ?? {}) as Record<string, unknown>;
+          return { id: cap(o.id, 60), name: cap(o.name, 100), pillar: cap(o.pillar, 30) };
+        })
+        .filter((f) => f.id && f.name);
+      if (fwList.length < 4) {
+        return json({ error: "חסרה רשימת המסגרות (frameworks) בבקשה." }, 400, origin);
+      }
+      const focus = cap(body.focus, 200);
+      const validIds = new Set(fwList.map((f) => f.id));
+      const r = await callModel<IdeasOutT>(
+        IDEAS_SYSTEM,
+        `המיצוב של הכותב:\n${context}\n${focus ? `\nנושא שמעניין את הכותב החודש: ${focus}\n` : ""}\nהמסגרות הזמינות (בחר frameworkId מכאן בלבד):\n${fwList.map((f) => `- ${f.id} · ${f.name} (${f.pillar})`).join("\n")}\n\nהצע 9 רעיונות לפי הסכימה.`,
+        IdeasOut,
+      );
+      if (r instanceof Response) return r;
+      return json({ ideas: normalizeIdeas(r.out, validIds).ideas, usage: r.usage }, 200, origin);
+    }
   } catch (error) {
     if (error instanceof Anthropic.AuthenticationError) {
       return json({ error: "מפתח ה-API של השרת אינו תקין." }, 500, origin);
