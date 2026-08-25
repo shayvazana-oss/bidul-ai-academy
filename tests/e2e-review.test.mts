@@ -92,10 +92,10 @@ await page.fill("#draft", DRAFT);
 await page.waitForTimeout(300);
 const localScore = await page.textContent("#dScore");
 ok("local form checker still scores without API", localScore !== "—", `score ${localScore}`);
-await page.click("#aiRun");
-await page.waitForTimeout(400);
-const notWired = (await page.textContent("#aiStatus")) ?? "";
-ok("unconfigured endpoint explains itself", notWired.includes("לא מחוברת"), notWired.slice(0, 45));
+ok("unconfigured: button is disabled, not dead", await page.locator("#aiRun").isDisabled());
+const offCopy = (await page.textContent(".airev-h p")) ?? "";
+ok("unconfigured: copy is reader-facing", offCopy.includes("אינה פעילה") && offCopy.includes("עובדת כרגיל"), offCopy.slice(0, 50));
+ok("unconfigured: no repo plumbing leaks to visitors", !offCopy.includes("api/review-post.ts") && !offCopy.includes("docs/"));
 ok("unconfigured shows no results panel", !(await page.locator("#aiOut").evaluate((e) => e.classList.contains("on"))));
 
 // === 2. endpoint configured — full round trip ===
@@ -138,6 +138,48 @@ ok("button re-enabled", !(await page.locator("#aiRun").isDisabled()));
 
 const hookCopy = await page.locator(".ai-hook .copybtn").first().getAttribute("data-copy");
 ok("hook copy button carries the text", (hookCopy ?? "").includes("לא קונה שעות"));
+
+// verdict/risk reach the class attribute only through a whitelist
+ok("verdict class comes from the whitelist", ((await page.locator(".ai-badge").getAttribute("class")) ?? "").includes("v-עובד"));
+ok("risk class comes from the whitelist", ((await page.locator(".ai-claim").first().getAttribute("class")) ?? "").includes("r-גבוה"));
+
+// privacy copy must name the third-party hop and drop the absolute claim
+const foot = (await page.textContent(".ai-foot")) ?? "";
+ok("footnote names the Anthropic hop", foot.includes("Anthropic"), foot.slice(0, 60));
+const formCopy = (await page.textContent("#checker .ssub")) ?? "";
+ok("form-check copy no longer claims the draft never leaves", !formCopy.includes("לא נשלחת לשום מקום"));
+ok("form-check copy scopes the promise to itself", formCopy.includes("רצה כולה בדפדפן"));
+
+// editing the draft must invalidate a rendered review rather than silently disagree
+await page.fill("#draft", DRAFT + "\n\nשורה חדשה שנוספה אחרי הניתוח.");
+await page.waitForTimeout(300);
+ok("stale review is flagged after an edit", (await page.locator(".ai-stale").count()) === 1);
+ok("stale review is visually dimmed", await page.locator("#aiOut").evaluate((e) => parseFloat((e as HTMLElement).style.opacity) < 1));
+await page.fill("#draft", DRAFT);
+await page.waitForTimeout(300);
+ok("stale flag clears when the draft is restored", (await page.locator(".ai-stale").count()) === 0);
+
+// a guard rejection must not leave the previous review sitting above the error
+await page.fill("#draft", "קצר");
+await page.waitForTimeout(200);
+await page.click("#aiRun");
+await page.waitForTimeout(300);
+ok("guard clears the stale review panel", !(await page.locator("#aiOut").evaluate((e) => e.classList.contains("on"))));
+ok("guard shows its own message", ((await page.textContent("#aiStatus")) ?? "").includes("40 תווים"));
+await page.fill("#draft", DRAFT);
+await page.waitForTimeout(200);
+
+// a review missing fields must not render as a clean bill of health
+await page.route("**/api/review-post", (r) =>
+  r.fulfill({ status: 200, contentType: "application/json",
+    body: JSON.stringify({ review: { verdict: "עובד", headline: "בדיקה", substance: {}, nextStep: "המשיכו" } }) }));
+await page.click("#aiRun");
+await page.waitForSelector("#aiOut.on", { timeout: 20000 });
+const body = (await page.textContent("#aiOut")) ?? "";
+ok("missing claimCheck does not fake a clean result", !body.includes("לא נמצאו הבטחות"), body.slice(0, 60));
+ok("missing hasPoint asserts nothing about the post", !body.includes("אין כאן אמירה"));
+ok("present fields still render", body.includes("המשיכו"));
+await page.unroute("**/api/review-post");
 
 // mobile
 await page.setViewportSize({ width: 390, height: 844 });

@@ -1,5 +1,8 @@
+/**
+ * Handler tests against a stubbed Messages API — no API quota is consumed.
+ * Run: npm test
+ */
 import http from "node:http";
-import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 
 const ORIGIN = "https://shayvazana-oss.github.io";
 const GOOD_DRAFT = `רוב היועצים מתמחרים לפי שעה. וזו טעות.
@@ -14,28 +17,27 @@ const REVIEW = {
   claimCheck: [],
   specificity: [{ vague: "לקח חודשיים", better: "פרטו מה קרה בחודשיים האלה" }],
   audienceFit: "מדבר ליועצים עצמאיים.",
-  hookOptions: ["הלקוח שלכם לא קונה שעות.", "תמחור לפי שעה מעניש אתכם על יעילות.", "הפסקתי לתמחר לפי שעה. הנה מה שקרה."],
+  hookOptions: ["הלקוח שלכם לא קונה שעות.", "תמחור לפי שעה מעניש אתכם על יעילות.", "הפסקתי לתמחר לפי שעה."],
   cuts: [],
   nextStep: "הוסיפו את המספר האמיתי מהמעבר אצל אותו לקוח.",
 };
 
-// Mock Messages API: assert the request shape, return a structured-output response.
 let lastRequest: any = null;
+let nextPayload: any = null; // override the model's reply for one call
 const mock = http.createServer((req, res) => {
   let raw = "";
   req.on("data", (c) => (raw += c));
   req.on("end", () => {
     lastRequest = { url: req.url, body: JSON.parse(raw) };
+    const payload = nextPayload ?? REVIEW;
+    const stop = nextPayload?.__stop ?? "end_turn";
+    nextPayload = null;
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(
       JSON.stringify({
-        id: "msg_test",
-        type: "message",
-        role: "assistant",
-        model: "claude-opus-5",
-        content: [{ type: "text", text: JSON.stringify(REVIEW) }],
-        stop_reason: "end_turn",
-        stop_sequence: null,
+        id: "msg_test", type: "message", role: "assistant", model: "claude-opus-5",
+        content: [{ type: "text", text: JSON.stringify(payload) }],
+        stop_reason: stop, stop_sequence: null,
         usage: { input_tokens: 900, output_tokens: 400 },
       }),
     );
@@ -43,79 +45,157 @@ const mock = http.createServer((req, res) => {
 });
 
 await new Promise<void>((r) => mock.listen(0, r));
-const port = (mock.address() as any).port;
-process.env.ANTHROPIC_BASE_URL = `http://127.0.0.1:${port}`;
+process.env.ANTHROPIC_BASE_URL = `http://127.0.0.1:${(mock.address() as any).port}`;
 process.env.ANTHROPIC_API_KEY = "sk-ant-test-key";
-process.env.RATE_LIMIT_PER_HOUR = "3";
+process.env.RATE_LIMIT_PER_HOUR = "8";
+process.env.GLOBAL_LIMIT_PER_HOUR = "100";
 
 const { default: handler } = await import("../api/review-post.ts");
 
-function post(body: unknown, origin: string | null = ORIGIN, ip = "1.1.1.1"): Request {
-  const headers: Record<string, string> = { "Content-Type": "application/json", "x-forwarded-for": ip };
-  if (origin) headers["Origin"] = origin;
-  return new Request("http://x/api/review-post", { method: "POST", headers, body: JSON.stringify(body) });
+function post(body: unknown, origin: string | null = ORIGIN, headers: Record<string, string> = {}): Request {
+  const h: Record<string, string> = { "Content-Type": "application/json", "x-forwarded-for": "10.0.0.1", ...headers };
+  if (origin) h["Origin"] = origin;
+  return new Request("http://x/api/review-post", { method: "POST", headers: h, body: JSON.stringify(body) });
 }
-const ok = (label: string, cond: boolean, extra = "") =>
+let failed = 0;
+const ok = (label: string, cond: boolean, extra = "") => {
+  if (!cond) failed++;
   console.log(`${cond ? "PASS" : "FAIL"}  ${label}${extra ? " — " + extra : ""}`);
+};
 
-// --- schema sanity ---
-const fmt: any = zodOutputFormat(
-  (await import("zod")).z.object({ a: (await import("zod")).z.string() }),
-);
-ok("zodOutputFormat produces a json_schema format", fmt?.type === "json_schema", JSON.stringify(fmt?.type));
-
-// --- CORS preflight ---
+// === access control ===
 const pre = await handler(new Request("http://x", { method: "OPTIONS", headers: { Origin: ORIGIN } }));
 ok("OPTIONS returns 204", pre.status === 204, String(pre.status));
 ok("preflight echoes allowed origin", pre.headers.get("access-control-allow-origin") === ORIGIN);
 
-// --- method / origin guards ---
-const get = await handler(new Request("http://x", { method: "GET", headers: { Origin: ORIGIN } }));
-ok("GET rejected 405", get.status === 405, String(get.status));
+ok("GET rejected 405", (await handler(new Request("http://x", { method: "GET", headers: { Origin: ORIGIN } }))).status === 405);
+
 const evil = await handler(post({ draft: GOOD_DRAFT }, "https://evil.example"));
-ok("disallowed origin rejected 403", evil.status === 403, String(evil.status));
+ok("unlisted origin rejected 403", evil.status === 403, String(evil.status));
 ok("403 does not echo evil origin", evil.headers.get("access-control-allow-origin") !== "https://evil.example");
 
-// --- input validation ---
-const short = await handler(post({ draft: "קצר מדי" }));
-ok("too-short draft rejected 400", short.status === 400, (await short.clone().json()).error);
-const long = await handler(post({ draft: "א".repeat(3100) }));
-ok("over-3000-char draft rejected 400", long.status === 400, (await long.clone().json()).error);
-const badJson = await handler(
-  new Request("http://x", { method: "POST", headers: { Origin: ORIGIN, "x-forwarded-for": "9.9.9.9" }, body: "{oops" }),
-);
-ok("malformed JSON rejected 400", badJson.status === 400);
+// the critical one: no Origin header at all (curl / scripts) must not reach the model
+const noOrigin = await handler(post({ draft: GOOD_DRAFT }, null));
+ok("MISSING origin rejected 403 (no billable call)", noOrigin.status === 403, String(noOrigin.status));
 
-// --- happy path ---
-const good = await handler(post({ draft: GOOD_DRAFT, positioning: { תחום: "ייעוץ עסקי", קהל: "יועצים עצמאיים" } }, ORIGIN, "2.2.2.2"));
-const goodBody = await good.json();
+// (throttling is exercised at the end — it exhausts the instance-wide quota)
+
+// === input validation ===
+const IP2 = { "x-forwarded-for": "20.0.0.1" };
+ok("too-short draft rejected 400", (await handler(post({ draft: "קצר מדי" }, ORIGIN, IP2))).status === 400);
+ok("over-3000-char draft rejected 400", (await handler(post({ draft: "א".repeat(3100) }, ORIGIN, IP2))).status === 400);
+ok(
+  "over-length message uses a thousands separator",
+  ((await (await handler(post({ draft: "א".repeat(3100) }, ORIGIN, IP2))).json()) as any).error.includes("3,000"),
+);
+ok(
+  "malformed JSON rejected 400",
+  (await handler(new Request("http://x", { method: "POST", headers: { Origin: ORIGIN, ...IP2 }, body: "{oops" }))).status === 400,
+);
+// literal null body used to crash the handler with an uncaught TypeError
+const nullBody = await handler(new Request("http://x", { method: "POST", headers: { Origin: ORIGIN, ...IP2 }, body: "null" }));
+ok("literal null body rejected 400, not a crash", nullBody.status === 400, String(nullBody.status));
+ok("null-body error still carries CORS", nullBody.headers.get("access-control-allow-origin") === ORIGIN);
+const arrBody = await handler(new Request("http://x", { method: "POST", headers: { Origin: ORIGIN, ...IP2 }, body: "[]" }));
+ok("array body rejected 400", arrBody.status === 400);
+
+// === happy path ===
+const IP3 = { "x-forwarded-for": "30.0.0.1" };
+const good = await handler(post({ draft: GOOD_DRAFT, positioning: { תחום: "ייעוץ עסקי", קהל: "יועצים עצמאיים" } }, ORIGIN, IP3));
+const goodBody: any = await good.json();
 ok("valid request returns 200", good.status === 200, String(good.status));
-ok("returns parsed review object", goodBody?.review?.verdict === "עובד", JSON.stringify(goodBody).slice(0, 90));
+ok("returns the review", goodBody?.review?.verdict === "עובד");
 ok("returns 3 hook options", goodBody?.review?.hookOptions?.length === 3);
 ok("returns usage", typeof goodBody?.usage?.output_tokens === "number");
-ok("CORS header on success", good.headers.get("access-control-allow-origin") === ORIGIN);
 
-// --- request shape actually sent to the API ---
+// === request shape actually sent to the model ===
 const sent = lastRequest.body;
 ok("model is claude-opus-5", sent.model === "claude-opus-5", sent.model);
 ok("no budget_tokens sent", !JSON.stringify(sent).includes("budget_tokens"));
-ok("effort inside output_config", sent.output_config?.effort === "high", JSON.stringify(sent.output_config?.effort));
+ok("effort inside output_config", sent.output_config?.effort === "medium", String(sent.output_config?.effort));
 ok("format inside output_config", sent.output_config?.format?.type === "json_schema");
 ok("schema is strict", sent.output_config?.format?.schema?.additionalProperties === false);
-ok("system prompt sent", typeof sent.system === "string" && sent.system.includes("עקרון הבית"));
+ok("max_tokens bounded", sent.max_tokens === 8000, String(sent.max_tokens));
+ok("system prompt names the allowed enum values", typeof sent.system === "string" && sent.system.includes('"חזק" או "עובד" או "חלש"'));
 ok("draft reached the model", JSON.stringify(sent.messages).includes("מתמחרים לפי שעה"));
 ok("positioning reached the model", JSON.stringify(sent.messages).includes("יועצים עצמאיים"));
 ok("no assistant prefill", !sent.messages.some((m: any) => m.role === "assistant"));
 
-// --- rate limit (limit is 3/hr, same ip) ---
-const ip = "3.3.3.3";
-const codes: number[] = [];
-for (let i = 0; i < 4; i++) codes.push((await handler(post({ draft: GOOD_DRAFT }, ORIGIN, ip))).status);
-ok("rate limit trips on 4th request", codes.slice(0, 3).every((c) => c === 200) && codes[3] === 429, codes.join(","));
+// === normalization: the wire schema enforces none of this, the server must ===
+{
+  const IP4 = { "x-forwarded-for": "40.0.0.1" };
+  nextPayload = {
+    ...REVIEW,
+    verdict: "חלש מאוד",                                   // outside the allowed set
+    claimCheck: Array.from({ length: 9 }, (_, i) => ({      // over the cap of 5
+      claim: "ציטוט " + i, risk: i % 2 ? "קריטי" : "גבוה", why: "כי", fix: "ככה",
+    })),
+    specificity: Array.from({ length: 7 }, () => ({ vague: "א", better: "ב" })),
+    hookOptions: ["1", "2", "3", "4", "5"],
+    cuts: ["a", "b", "c", "d"],
+    headline: "ל".repeat(900),
+  };
+  const res: any = await (await handler(post({ draft: GOOD_DRAFT }, ORIGIN, IP4))).json();
+  ok("out-of-set verdict normalized into the allowed set", res.review.verdict === "חלש", res.review.verdict);
+  ok("claimCheck clamped to 5", res.review.claimCheck.length === 5, String(res.review.claimCheck.length));
+  ok("out-of-set risk normalized", res.review.claimCheck.every((c: any) => ["גבוה", "בינוני"].includes(c.risk)));
+  ok("specificity clamped to 3", res.review.specificity.length === 3);
+  ok("hookOptions clamped to 3", res.review.hookOptions.length === 3);
+  ok("cuts clamped to 3", res.review.cuts.length === 3);
+  ok("long strings clipped", res.review.headline.length <= 301, String(res.review.headline.length));
+}
 
-// --- missing key ---
+// === model-side failure modes ===
+{
+  const IP5 = { "x-forwarded-for": "50.0.0.1" };
+  nextPayload = { ...REVIEW, __stop: "max_tokens" };
+  const cut = await handler(post({ draft: GOOD_DRAFT }, ORIGIN, IP5));
+  ok("truncated response returns 502 with a clear message", cut.status === 502 && (await cut.json() as any).error.includes("נקטע"));
+
+  nextPayload = { ...REVIEW, __stop: "refusal" };
+  ok("refusal returns 422", (await handler(post({ draft: GOOD_DRAFT }, ORIGIN, IP5))).status === 422);
+
+  nextPayload = { nonsense: true }; // fails zod -> SDK throws AnthropicError, not APIError
+  const bad = await handler(post({ draft: GOOD_DRAFT }, ORIGIN, IP5));
+  ok("schema mismatch returns 502, not a generic 500", bad.status === 502, String(bad.status));
+  ok("schema-mismatch error is user-readable", ((await bad.json()) as any).error.includes("תשובה לא צפויה"));
+}
+
+// === throttling (last: these deliberately exhaust the instance-wide quota) ===
+// One client hitting its own per-IP cap (RATE_LIMIT_PER_HOUR is 8 in this run).
+{
+  const codes: number[] = [];
+  for (let i = 0; i < 10; i++) {
+    codes.push((await handler(post({ draft: GOOD_DRAFT }, ORIGIN, { "x-forwarded-for": "5.5.5.5" }))).status);
+  }
+  ok("per-IP cap trips after the limit", codes.slice(0, 8).every((c) => c === 200) && codes[8] === 429, codes.join(","));
+}
+// The platform-set header wins, so a forged x-forwarded-for cannot escape that bucket.
+{
+  const codes: number[] = [];
+  for (let i = 0; i < 10; i++) {
+    codes.push(
+      (await handler(post({ draft: GOOD_DRAFT }, ORIGIN, { "x-forwarded-for": `1.2.3.${i}`, "x-vercel-forwarded-for": "88.88.88.88" }))).status,
+    );
+  }
+  ok("spoofed xff cannot escape the platform-resolved bucket", codes.includes(429), codes.join(","));
+}
+// Off-platform no header is trustworthy, so the instance-wide ceiling is the real bound.
+{
+  const codes: number[] = [];
+  for (let i = 0; i < 120; i++) {
+    codes.push((await handler(post({ draft: GOOD_DRAFT }, ORIGIN, { "x-forwarded-for": `9.9.${i}.1` }))).status);
+  }
+  ok("global ceiling stops unlimited forged IPs", codes.includes(429), `${codes.filter((c) => c === 200).length} allowed of 120`);
+  const last: any = await (await handler(post({ draft: GOOD_DRAFT }, ORIGIN, { "x-forwarded-for": "9.9.250.1" }))).json();
+  ok("global-limit message differs from the per-IP one", String(last.error).includes("עמוס"), last.error);
+}
+
+// === config guards ===
 delete process.env.ANTHROPIC_API_KEY;
-const noKey = await handler(post({ draft: GOOD_DRAFT }, ORIGIN, "4.4.4.4"));
-ok("missing API key returns 503", noKey.status === 503, (await noKey.clone().json()).error);
+const noKey = await handler(post({ draft: GOOD_DRAFT }, ORIGIN, { "x-forwarded-for": "60.0.0.1" }));
+ok("missing API key returns 503", noKey.status === 503, ((await noKey.json()) as any).error);
 
 mock.close();
+console.log(failed ? `\n${failed} FAILING` : "\nall green");
+process.exit(failed ? 1 : 0);

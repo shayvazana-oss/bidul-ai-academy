@@ -252,6 +252,7 @@ h1.giant .go{background:var(--grad);-webkit-background-clip:text;background-clip
 .ai-status .spin{width:14px;height:14px;border:2px solid var(--hair-2);border-top-color:var(--li-l);border-radius:50%;animation:spin .8s linear infinite;flex:0 0 auto}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ai-status.err{color:var(--pink)}
+@media(prefers-reduced-motion:reduce){.ai-status .spin{animation:none;border-top-color:var(--hair-2)}}
 .ai-out{margin-top:18px;border-top:1px solid var(--hair);padding-top:18px;display:none}
 .ai-out.on{display:block}
 .ai-verdict{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
@@ -521,7 +522,7 @@ footer p{max-width:900px;line-height:1.8}
 <section id="checker" style="padding-top:26px">
   <div class="wrap">
     <div class="shead"><span class="snum">תחנה 4</span><h2>בודק הפוסט — הביקורת לפני הפרסום</h2><span class="rule"></span></div>
-    <p class="ssub">הדביקו טיוטה וקבלו בדיקה מיידית מול כללי הכתיבה של המעבדה: שורת פתיחה, קלישאות, מבנה, אורך וסיום. הבדיקה בודקת <b>צורה, לא תוכן</b> — אם אין בפוסט אמירה אמיתית, אף ציון לא יציל אותו. הטיוטה נשארת בדפדפן ולא נשלחת לשום מקום.</p>
+    <p class="ssub">הדביקו טיוטה וקבלו בדיקה מיידית מול כללי הכתיבה של המעבדה: שורת פתיחה, קלישאות, מבנה, אורך וסיום. הבדיקה בודקת <b>צורה, לא תוכן</b> — אם אין בפוסט אמירה אמיתית, אף ציון לא יציל אותו. הבדיקה הזו רצה כולה בדפדפן והטיוטה לא עוזבת אותו; ביקורת התוכן שמתחתיה כן שולחת אותה לשרת, ורק בלחיצה על הכפתור.</p>
     <div class="checker-grid">
       <div>
         <textarea id="draft" placeholder="הדביקו כאן את הטיוטה...
@@ -546,12 +547,12 @@ footer p{max-width:900px;line-height:1.8}
     <div class="airev">
       <div class="airev-h">
         <div>
-          <h3>🤖 ביקורת תוכן — הקומה השנייה</h3>
-          <p>הבדיקה למעלה עוברת על <b>הצורה</b>. זו עוברת על <b>התוכן</b>: האם יש כאן אמירה אמיתית, אילו משפטים גנריים מדי, ובעיקר — <b>אילו הבטחות ומספרים לא תוכלו להגן עליהם בשאלה הראשונה</b>. הניתוח נעשה ע"י Claude Opus 5 ומשתמש גם במיצוב שהגדרתם בתחנה 2.</p>
+          <h3>🤖 ביקורת תוכן — מה הפוסט באמת אומר</h3>
+          <p>הבדיקה למעלה עוברת על <b>הצורה</b>. זו עוברת על <b>התוכן</b>: האם יש כאן אמירה אמיתית, אילו משפטים גנריים מדי, ובעיקר — <b>על אילו הבטחות ומספרים לא תוכלו להגן בשאלה הראשונה</b>. את הביקורת כותב Claude Opus 5, והוא מקבל גם את המיצוב שהגדרתם בתחנה 2.</p>
         </div>
         <button class="btn-ai" id="aiRun"><span>נתחו את הטיוטה</span></button>
       </div>
-      <div class="ai-status" id="aiStatus" style="display:none"></div>
+      <div class="ai-status" id="aiStatus" role="status" aria-live="polite" style="display:none"></div>
       <div class="ai-out" id="aiOut"></div>
     </div>
   </div>
@@ -645,7 +646,7 @@ const LAB = {"audit":{"groups":[{"id":"foundation","title":"תשתית הפרו�
 
 /* ---------- utils ---------- */
 const $=s=>document.querySelector(s);
-const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const store={
   get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
   set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
@@ -1003,7 +1004,7 @@ function renderDraft(){
   const icon={ok:'✓',warn:'!',bad:'✗'};
   $('#dChecks').innerHTML=res.checks.map(k=>`<div class="ck ${k.s}"><i>${icon[k.s]}</i><span><b>${esc(k.t)}</b>${esc(k.d)}</span></div>`).join('');
 }
-draftEl.addEventListener('input',renderDraft);
+draftEl.addEventListener('input',()=>{renderDraft();aiCheckStale();});
 renderDraft();
 
 /* ---------- station 4b: AI content review ---------- */
@@ -1015,59 +1016,90 @@ function aiSay(msg,kind){
   aiStatus.className='ai-status'+(kind==='err'?' err':'');
   aiStatus.innerHTML=(kind==='wait'?'<span class="spin"></span>':'')+esc(msg);
 }
-function aiSection(title,inner){return inner?`<div class="ai-sec"><h4>${title}</h4>${inner}</div>`:'';}
+function aiSection(title,innerHtml){return innerHtml?`<div class="ai-sec"><h4>${esc(title)}</h4>${innerHtml}</div>`:'';}
+/* model output decides a class name only through these maps — never by interpolation */
+const V_CLASS={'חזק':'v-חזק','עובד':'v-עובד','חלש':'v-חלש'};
+const R_CLASS={'גבוה':'r-גבוה','בינוני':'r-בינוני'};
+const arr=v=>Array.isArray(v)?v:null;
 function renderReview(r){
-  const claims=(r.claimCheck||[]).map(c=>
-    `<div class="ai-claim r-${esc(c.risk)}"><span class="rk">סיכון ${esc(c.risk)}</span>
+  const cc=arr(r.claimCheck),sp=arr(r.specificity),hk=arr(r.hookOptions),ct=arr(r.cuts);
+  const claims=(cc||[]).map(c=>
+    `<div class="ai-claim ${R_CLASS[c.risk]||''}"><span class="rk">סיכון ${esc(c.risk)}</span>
       <div class="q">${esc(c.claim)}</div><div class="w">${esc(c.why)}</div><div class="f">${esc(c.fix)}</div></div>`).join('');
-  const swaps=(r.specificity||[]).map(s=>
+  const swaps=(sp||[]).map(s=>
     `<div class="ai-swap"><div class="from"><small>גנרי</small>${esc(s.vague)}</div><div class="to"><small>קונקרטי</small>${esc(s.better)}</div></div>`).join('');
-  const hooks=(r.hookOptions||[]).map((h,i)=>
+  const hooks=(hk||[]).map((h,i)=>
     `<div class="ai-hook"><span class="n">${i+1}</span><span>${esc(h)}</span><button class="copybtn" data-copy="${esc(h)}">העתקה</button></div>`).join('');
-  const cuts=(r.cuts||[]).length?'<ul class="ai-list">'+r.cuts.map(c=>'<li>'+esc(c)+'</li>').join('')+'</ul>':'';
+  const cuts=(ct&&ct.length)?'<ul class="ai-list">'+ct.map(c=>'<li>'+esc(c)+'</li>').join('')+'</ul>':'';
   const sub=r.substance||{};
+  /* a section is shown only when the field actually arrived — a missing field must
+     never render as a clean bill of health */
+  const claimBody=cc?(claims||'<p style="color:var(--green)">✓ לא נמצאו הבטחות או מספרים שאי אפשר לעמוד מאחוריהם.</p>'):'';
+  const point=typeof sub.hasPoint==='boolean'
+    ?`<span style="font-size:12.5px;color:var(--muted)">${sub.hasPoint?'✓ יש אמירה שאפשר לחלוק עליה':'⚠ אין כאן אמירה שאפשר לחלוק עליה'}</span>`:'';
   aiOut.innerHTML=`
-    <div class="ai-verdict"><span class="ai-badge v-${esc(r.verdict)}">${esc(r.verdict)}</span>
-      <span style="font-size:12.5px;color:var(--muted)">${sub.hasPoint?'✓ יש אמירה שאפשר לחלוק עליה':'⚠ אין כאן אמירה שאפשר לחלוק עליה'}</span></div>
+    <div class="ai-verdict"><span class="ai-badge ${V_CLASS[r.verdict]||''}">${esc(r.verdict)}</span>${point}</div>
     <p class="ai-headline">${esc(r.headline)}</p>
     ${aiSection('האמירה',sub.note?'<p>'+esc(sub.note)+'</p>':'')}
-    ${aiSection('בדיקת הבטחות — מה לא תוכלו להגן עליו',
-      claims||'<p style="color:var(--green)">✓ לא נמצאו הבטחות או מספרים שאי אפשר לעמוד מאחוריהם.</p>')}
+    ${aiSection('בדיקת הבטחות — על מה לא תוכלו להגן',claimBody)}
     ${aiSection('גנרי ← קונקרטי',swaps)}
     ${aiSection('שורות פתיחה חלופיות',hooks)}
     ${aiSection('מה למחוק',cuts)}
     ${aiSection('התאמה לקהל',r.audienceFit?'<p>'+esc(r.audienceFit)+'</p>':'')}
     ${aiSection('הצעד הבא',r.nextStep?'<div class="ai-next"><b>הכי משתלם עכשיו:</b> '+esc(r.nextStep)+'</div>':'')}
-    <p class="ai-foot">הניתוח נוצר ע"י Claude Opus 5 ומהווה חוות דעת עריכה — לא פסיקה. הטיוטה נשלחת לשרת רק בלחיצה על הכפתור, ואינה נשמרת שם.</p>`;
+    <p class="ai-foot">את הביקורת כתב Claude Opus 5 — זו חוות דעת עריכה, לא פסיקה. הטיוטה נשלחת לשרת שלנו רק בלחיצה על הכפתור, ומשם ל-API של Anthropic לצורך הניתוח; אנחנו לא שומרים אותה, לא בדיסק ולא במסד נתונים.</p>`;
   aiOut.classList.add('on');
 }
+/* a rendered review belongs to the text it was run on; if the draft moves on, say so */
+let aiDraftAt=null;
+function aiCheckStale(){
+  if(!aiOut.classList.contains('on')||aiDraftAt===null)return;
+  const stale=draftEl.value.trim()!==aiDraftAt;
+  aiOut.style.opacity=stale?'.55':'';
+  let flag=aiOut.querySelector('.ai-stale');
+  if(stale&&!flag){
+    flag=document.createElement('div');
+    flag.className='ai-stale ai-next';
+    flag.style.cssText='border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.07);margin-bottom:16px';
+    flag.innerHTML='<b style="color:var(--orange)">שימו לב:</b> הטיוטה השתנתה מאז הניתוח. הריצו שוב כדי לקבל ביקורת על הגרסה הנוכחית.';
+    aiOut.prepend(flag);
+  }else if(!stale&&flag){flag.remove();}
+}
+if(!AI_ENDPOINT){
+  /* nothing to call: keep the block honest rather than shipping a dead button */
+  aiBtn.disabled=true;
+  aiBtn.querySelector('span').textContent='לא זמין בעמוד הזה';
+  $('.airev-h p').innerHTML='ביקורת התוכן בבינה מלאכותית אינה פעילה בעמוד הזה כרגע. <b>בדיקת הצורה שלמעלה עובדת כרגיל</b> ואינה תלויה בה.';
+}
 aiBtn.addEventListener('click',async()=>{
-  if(aiBusy)return;
+  if(aiBusy||!AI_ENDPOINT)return;
   const draft=draftEl.value.trim();
-  if(!AI_ENDPOINT){
-    aiSay('ביקורת התוכן עדיין לא מחוברת. יש לפרוס את הפונקציה שב-api/review-post.ts ולהזין את כתובתה בתגית lab-api שבראש הקובץ — ההוראות המלאות ב-docs/linkedin-lab-api.md.','err');
-    return;
-  }
+  aiOut.classList.remove('on');aiOut.innerHTML='';aiOut.style.opacity='';
   if(draft.length<40){aiSay('הדביקו טיוטה ארוכה יותר (לפחות 40 תווים) לפני הניתוח.','err');return;}
   if(draft.length>3000){aiSay('הטיוטה ארוכה מ-3,000 תווים — מעל המגבלה של לינקדאין.','err');return;}
-  aiBusy=true;aiBtn.disabled=true;aiOut.classList.remove('on');
+  aiBusy=true;aiBtn.disabled=true;aiBtn.setAttribute('aria-busy','true');
   const t0=Date.now();
   const tick=setInterval(()=>aiSay('Claude קורא את הטיוטה… '+Math.round((Date.now()-t0)/1000)+' שניות','wait'),1000);
   aiSay('Claude קורא את הטיוטה…','wait');
+  const ctl=new AbortController();
+  const kill=setTimeout(()=>ctl.abort(),65000);
   try{
     const res=await fetch(AI_ENDPOINT,{
-      method:'POST',headers:{'Content-Type':'application/json'},
+      method:'POST',headers:{'Content-Type':'application/json'},signal:ctl.signal,
       body:JSON.stringify({draft,positioning:{תחום:wiz['תחום']||'',קהל:wiz['קהל']||'',בעיה:wiz['בעיה']||'',תוצאה:wiz['תוצאה']||'',הוכחה:wiz['הוכחה']||''}})
     });
     const data=await res.json().catch(()=>({}));
     if(!res.ok)throw new Error(data.error||('השרת החזיר שגיאה '+res.status));
     if(!data.review)throw new Error('התקבלה תשובה ריקה מהשרת.');
+    aiDraftAt=draft;
     renderReview(data.review);
     aiStatus.style.display='none';
   }catch(err){
-    aiSay(err.message||'לא הצלחנו להגיע לשרת הניתוח. בדקו את החיבור ואת כתובת ה-API.','err');
+    aiSay(err&&err.name==='AbortError'?'הניתוח לא חזר בזמן. נסו שוב.'
+      :(err&&err.message)||'לא הצלחנו להגיע לשרת הניתוח. בדקו את החיבור ואת כתובת ה-API.','err');
   }finally{
-    clearInterval(tick);aiBusy=false;aiBtn.disabled=false;
+    clearTimeout(kill);clearInterval(tick);
+    aiBusy=false;aiBtn.disabled=false;aiBtn.removeAttribute('aria-busy');
   }
 });
 
