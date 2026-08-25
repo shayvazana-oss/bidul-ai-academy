@@ -319,6 +319,19 @@ const fixed = await page.evaluate(async () => {
 const fixedLines = fixed.split("\n");
 ok("RLM injected on Latin-first Hebrew lines", fixedLines[0].startsWith("‏") && fixedLines[4].startsWith("‏"), JSON.stringify(fixedLines[0].slice(0, 8)));
 ok("RLM NOT injected on Hebrew-first lines", !fixedLines[2].startsWith("‏"));
+// the round trip that used to fail: paste the FIXED text back — the flag must clear
+await page.fill("#draft", fixed);
+await page.waitForTimeout(300);
+ok("fixed text no longer counts as a problem", ((await page.textContent("#dRtl")) ?? "").trim() === "");
+ok("fixed text passes the RTL form check", !(await page.evaluate(() => [...document.querySelectorAll("#dChecks .ck b")].map((x) => x.textContent).join("|"))).includes("שיתהפכו"));
+// non-ASCII strong-L starts (Cyrillic) genuinely flip and must now be caught
+await page.fill("#draft", "Яндекс שינתה את הכללים.\n\nעוד שורה עברית רגילה כאן.\n\nמה דעתכם?");
+await page.waitForTimeout(300);
+ok("Cyrillic-first Hebrew line detected", ((await page.textContent("#dRtl")) ?? "").includes("1"));
+// Arabic-first lines are already RTL and must NOT be flagged
+await page.fill("#draft", "العربية מילה בעברית בשורה הזו.\n\nעוד שורה עברית.\n\nמה דעתכם?");
+await page.waitForTimeout(300);
+ok("Arabic-first line not falsely flagged", ((await page.textContent("#dRtl")) ?? "").trim() === "");
 ok("fix is idempotent", (await page.evaluate((f) => {
   const w = window as any;
   return f;

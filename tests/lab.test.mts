@@ -221,6 +221,32 @@ ok("no assistant prefill", !sent.messages.some((m: any) => m.role === "assistant
   ok("unknown frameworkId normalized to empty", ib.ideas?.[0]?.frameworkId === "" && ib.ideas?.[1]?.frameworkId === "common-mistake");
 }
 
+// === normalization for the new modes (wire schema enforces none of this) ===
+{
+  const IPN = { "x-forwarded-for": "82.0.0.1" };
+  const fw = { name: "מסגרת", pillar: "דעה", goal: "מטרה", structure: ["א"], template: "תבנית" };
+  nextPayload = {
+    post: "פ".repeat(5000),
+    missing: ["א", "ב", "ג", "ד", "ה", "ו"],
+    altHooks: ["1", "2", "3", "4", "5"],
+  };
+  const wr: any = await (await handler(post({ mode: "write", framework: fw, answers: [{ q: "ש", a: "ת" }] }, ORIGIN, IPN))).json();
+  ok("write: post clipped to LinkedIn cap", wr.write.post.length <= 3001, String(wr.write.post.length));
+  ok("write: missing clamped to 4", wr.write.missing.length === 4);
+  ok("write: altHooks clamped to 3", wr.write.altHooks.length === 3);
+
+  const fws = [
+    { id: "a", name: "א", pillar: "מומחיות" }, { id: "b", name: "ב", pillar: "סיפור" },
+    { id: "c", name: "ג", pillar: "דעה" }, { id: "d", name: "ד", pillar: "הוכחה" },
+  ];
+  nextPayload = {
+    ideas: Array.from({ length: 12 }, () => ({ title: "ט".repeat(500), angle: "ז", frameworkId: "a", question: "ש" })),
+  };
+  const ir: any = await (await handler(post({ mode: "ideas", frameworks: fws, positioning: { קהל: "ק" } }, ORIGIN, IPN))).json();
+  ok("ideas: clamped to 9", ir.ideas.length === 9, String(ir.ideas.length));
+  ok("ideas: titles clipped", ir.ideas.every((i: any) => i.title.length <= 201));
+}
+
 // === unknown mode ===
 ok("unknown mode rejected 400", (await handler(post({ mode: "hack", draft: GOOD_DRAFT }, ORIGIN, { "x-forwarded-for": "85.0.0.1" }))).status === 400);
 
