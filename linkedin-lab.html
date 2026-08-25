@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ביקורת התוכן עם AI: הדביקו כאן את כתובת ה-endpoint אחרי הפריסה ב-Vercel.
+     לדוגמה: content="https://bidul-ai-academy.vercel.app/api/review-post"
+     כל עוד השדה ריק, בודק הצורה עובד כרגיל וכפתור ה-AI מסביר מה חסר. -->
+<meta name="lab-api" content="">
 <title>מעבדת הלינקדאין — האקדמיה לבינה מלאכותית יישומית</title>
 <meta name="description" content="כלי עבודה חינמי בעברית: אבחון פרופיל משוקלל, אשף מיצוב, 12 תבניות פוסטים מפורטות ופלייבוק צמיחה יומי — בלי טריקים, בלי אוטומציות אסורות.">
 <meta property="og:type" content="website">
@@ -234,6 +238,57 @@ h1.giant .go{background:var(--grad);-webkit-background-clip:text;background-clip
 .ck b{display:block;color:var(--ink);font-size:13.5px}
 .ck span{color:var(--ink2);font-size:12.5px;line-height:1.5}
 .ck-empty{font-size:13.5px;color:var(--muted);padding:8px 0}
+/* ===== AI content review ===== */
+.airev{margin-top:20px;background:var(--panel);border:1px solid var(--hair-2);border-radius:14px;padding:22px 24px;box-shadow:var(--shadow)}
+.airev-h{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.airev-h h3{font-size:17px;font-weight:800;display:flex;align-items:center;gap:9px}
+.airev-h p{font-size:13.5px;color:var(--ink2);max-width:640px;margin-top:6px;line-height:1.6}
+.airev-h p b{color:var(--ink)}
+.btn-ai{position:relative;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;padding:1px;background:var(--gradA);border:none;cursor:pointer;flex:0 0 auto}
+.btn-ai>span{display:block;border-radius:11px;padding:12px 22px;background:var(--nx-blue);color:#fff;font-size:14px;font-weight:700;white-space:nowrap;transition:background .3s}
+.btn-ai:hover:not(:disabled)>span{background:var(--gradA)}
+.btn-ai:disabled{opacity:.55;cursor:not-allowed}
+.ai-status{font-size:13.5px;color:var(--ink2);margin-top:14px;display:flex;align-items:center;gap:9px}
+.ai-status .spin{width:14px;height:14px;border:2px solid var(--hair-2);border-top-color:var(--li-l);border-radius:50%;animation:spin .8s linear infinite;flex:0 0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ai-status.err{color:var(--pink)}
+.ai-out{margin-top:18px;border-top:1px solid var(--hair);padding-top:18px;display:none}
+.ai-out.on{display:block}
+.ai-verdict{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.ai-badge{font-family:var(--grot);font-size:11px;letter-spacing:.16em;font-weight:700;border-radius:30px;padding:6px 15px;border:1px solid}
+.ai-badge.v-חזק{color:var(--green);border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.1)}
+.ai-badge.v-עובד{color:var(--orange);border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.1)}
+.ai-badge.v-חלש{color:var(--pink);border-color:rgba(244,114,182,.5);background:rgba(244,114,182,.1)}
+.ai-headline{font-size:17px;font-weight:700;color:var(--ink);line-height:1.55;margin-bottom:20px}
+.ai-sec{margin-bottom:20px}
+.ai-sec:last-child{margin-bottom:0}
+.ai-sec h4{font-family:var(--grot);font-size:10.5px;letter-spacing:.16em;color:var(--nx-purple);font-weight:700;margin-bottom:10px}
+.ai-sec p{font-size:14px;color:var(--ink2);line-height:1.65}
+.ai-claim{border:1px solid rgba(245,158,11,.4);background:rgba(245,158,11,.06);border-radius:11px;padding:13px 16px;margin-bottom:9px}
+.ai-claim.r-גבוה{border-color:rgba(244,114,182,.45);background:rgba(244,114,182,.06)}
+.ai-claim .q{font-size:13.5px;color:var(--ink);font-weight:700;line-height:1.55}
+.ai-claim .q::before{content:'❝ ';color:var(--muted)}
+.ai-claim .w{font-size:13px;color:var(--ink2);margin-top:6px;line-height:1.6}
+.ai-claim .f{font-size:13px;color:var(--green);margin-top:6px;line-height:1.6}
+.ai-claim .f::before{content:'← ';font-weight:900}
+.ai-claim .rk{float:left;font-family:var(--grot);font-size:9.5px;letter-spacing:.12em;color:var(--orange);font-weight:700}
+.ai-claim.r-גבוה .rk{color:var(--pink)}
+.ai-swap{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:9px}
+@media(max-width:700px){.ai-swap{grid-template-columns:1fr}}
+.ai-swap div{font-size:13px;line-height:1.6;border-radius:9px;padding:10px 13px}
+.ai-swap .from{background:rgba(255,255,255,.04);border:1px solid var(--hair);color:var(--ink2)}
+.ai-swap .to{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.3);color:var(--ink)}
+.ai-swap small{display:block;font-family:var(--grot);font-size:9px;letter-spacing:.14em;color:var(--muted);margin-bottom:4px}
+.ai-hook{display:flex;align-items:flex-start;gap:11px;border:1px solid var(--hair);border-radius:10px;padding:11px 14px;margin-bottom:8px;font-size:14px;color:var(--ink);line-height:1.6;background:var(--bg)}
+.ai-hook .n{flex:0 0 auto;font-family:var(--grot);font-size:11px;color:var(--li-l);font-weight:700;margin-top:2px}
+.ai-hook .copybtn{flex:0 0 auto;margin-inline-start:auto}
+.ai-list{list-style:none}
+.ai-list li{font-size:13.5px;color:var(--ink2);line-height:1.6;padding:7px 0;border-bottom:1px dashed var(--hair);display:flex;gap:10px}
+.ai-list li:last-child{border-bottom:none}
+.ai-list li::before{content:'✂';color:var(--pink);flex:0 0 auto}
+.ai-next{border:1px dashed rgba(52,211,153,.5);background:rgba(52,211,153,.06);border-radius:11px;padding:14px 17px;font-size:14.5px;color:var(--ink);line-height:1.6}
+.ai-next b{color:var(--green)}
+.ai-foot{font-size:11.5px;color:var(--muted);margin-top:14px;line-height:1.6}
 /* ===== weekly tracker ===== */
 .trackform{display:grid;grid-template-columns:repeat(5,1fr) auto;gap:8px;margin-bottom:14px;align-items:end}
 @media(max-width:860px){.trackform{grid-template-columns:1fr 1fr}}
@@ -486,6 +541,18 @@ footer p{max-width:900px;line-height:1.8}
           <p class="ck-empty">הדביקו טיוטה — הניתוח רץ תוך כדי הקלדה.</p>
         </div>
       </div>
+    </div>
+
+    <div class="airev">
+      <div class="airev-h">
+        <div>
+          <h3>🤖 ביקורת תוכן — הקומה השנייה</h3>
+          <p>הבדיקה למעלה עוברת על <b>הצורה</b>. זו עוברת על <b>התוכן</b>: האם יש כאן אמירה אמיתית, אילו משפטים גנריים מדי, ובעיקר — <b>אילו הבטחות ומספרים לא תוכלו להגן עליהם בשאלה הראשונה</b>. הניתוח נעשה ע"י Claude Opus 5 ומשתמש גם במיצוב שהגדרתם בתחנה 2.</p>
+        </div>
+        <button class="btn-ai" id="aiRun"><span>נתחו את הטיוטה</span></button>
+      </div>
+      <div class="ai-status" id="aiStatus" style="display:none"></div>
+      <div class="ai-out" id="aiOut"></div>
     </div>
   </div>
 </section>
@@ -938,6 +1005,71 @@ function renderDraft(){
 }
 draftEl.addEventListener('input',renderDraft);
 renderDraft();
+
+/* ---------- station 4b: AI content review ---------- */
+const AI_ENDPOINT=(document.querySelector('meta[name="lab-api"]')?.content||'').trim();
+const aiBtn=$('#aiRun'),aiStatus=$('#aiStatus'),aiOut=$('#aiOut');
+let aiBusy=false;
+function aiSay(msg,kind){
+  aiStatus.style.display='flex';
+  aiStatus.className='ai-status'+(kind==='err'?' err':'');
+  aiStatus.innerHTML=(kind==='wait'?'<span class="spin"></span>':'')+esc(msg);
+}
+function aiSection(title,inner){return inner?`<div class="ai-sec"><h4>${title}</h4>${inner}</div>`:'';}
+function renderReview(r){
+  const claims=(r.claimCheck||[]).map(c=>
+    `<div class="ai-claim r-${esc(c.risk)}"><span class="rk">סיכון ${esc(c.risk)}</span>
+      <div class="q">${esc(c.claim)}</div><div class="w">${esc(c.why)}</div><div class="f">${esc(c.fix)}</div></div>`).join('');
+  const swaps=(r.specificity||[]).map(s=>
+    `<div class="ai-swap"><div class="from"><small>גנרי</small>${esc(s.vague)}</div><div class="to"><small>קונקרטי</small>${esc(s.better)}</div></div>`).join('');
+  const hooks=(r.hookOptions||[]).map((h,i)=>
+    `<div class="ai-hook"><span class="n">${i+1}</span><span>${esc(h)}</span><button class="copybtn" data-copy="${esc(h)}">העתקה</button></div>`).join('');
+  const cuts=(r.cuts||[]).length?'<ul class="ai-list">'+r.cuts.map(c=>'<li>'+esc(c)+'</li>').join('')+'</ul>':'';
+  const sub=r.substance||{};
+  aiOut.innerHTML=`
+    <div class="ai-verdict"><span class="ai-badge v-${esc(r.verdict)}">${esc(r.verdict)}</span>
+      <span style="font-size:12.5px;color:var(--muted)">${sub.hasPoint?'✓ יש אמירה שאפשר לחלוק עליה':'⚠ אין כאן אמירה שאפשר לחלוק עליה'}</span></div>
+    <p class="ai-headline">${esc(r.headline)}</p>
+    ${aiSection('האמירה',sub.note?'<p>'+esc(sub.note)+'</p>':'')}
+    ${aiSection('בדיקת הבטחות — מה לא תוכלו להגן עליו',
+      claims||'<p style="color:var(--green)">✓ לא נמצאו הבטחות או מספרים שאי אפשר לעמוד מאחוריהם.</p>')}
+    ${aiSection('גנרי ← קונקרטי',swaps)}
+    ${aiSection('שורות פתיחה חלופיות',hooks)}
+    ${aiSection('מה למחוק',cuts)}
+    ${aiSection('התאמה לקהל',r.audienceFit?'<p>'+esc(r.audienceFit)+'</p>':'')}
+    ${aiSection('הצעד הבא',r.nextStep?'<div class="ai-next"><b>הכי משתלם עכשיו:</b> '+esc(r.nextStep)+'</div>':'')}
+    <p class="ai-foot">הניתוח נוצר ע"י Claude Opus 5 ומהווה חוות דעת עריכה — לא פסיקה. הטיוטה נשלחת לשרת רק בלחיצה על הכפתור, ואינה נשמרת שם.</p>`;
+  aiOut.classList.add('on');
+}
+aiBtn.addEventListener('click',async()=>{
+  if(aiBusy)return;
+  const draft=draftEl.value.trim();
+  if(!AI_ENDPOINT){
+    aiSay('ביקורת התוכן עדיין לא מחוברת. יש לפרוס את הפונקציה שב-api/review-post.ts ולהזין את כתובתה בתגית lab-api שבראש הקובץ — ההוראות המלאות ב-docs/linkedin-lab-api.md.','err');
+    return;
+  }
+  if(draft.length<40){aiSay('הדביקו טיוטה ארוכה יותר (לפחות 40 תווים) לפני הניתוח.','err');return;}
+  if(draft.length>3000){aiSay('הטיוטה ארוכה מ-3,000 תווים — מעל המגבלה של לינקדאין.','err');return;}
+  aiBusy=true;aiBtn.disabled=true;aiOut.classList.remove('on');
+  const t0=Date.now();
+  const tick=setInterval(()=>aiSay('Claude קורא את הטיוטה… '+Math.round((Date.now()-t0)/1000)+' שניות','wait'),1000);
+  aiSay('Claude קורא את הטיוטה…','wait');
+  try{
+    const res=await fetch(AI_ENDPOINT,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({draft,positioning:{תחום:wiz['תחום']||'',קהל:wiz['קהל']||'',בעיה:wiz['בעיה']||'',תוצאה:wiz['תוצאה']||'',הוכחה:wiz['הוכחה']||''}})
+    });
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok)throw new Error(data.error||('השרת החזיר שגיאה '+res.status));
+    if(!data.review)throw new Error('התקבלה תשובה ריקה מהשרת.');
+    renderReview(data.review);
+    aiStatus.style.display='none';
+  }catch(err){
+    aiSay(err.message||'לא הצלחנו להגיע לשרת הניתוח. בדקו את החיבור ואת כתובת ה-API.','err');
+  }finally{
+    clearInterval(tick);aiBusy=false;aiBtn.disabled=false;
+  }
+});
 
 /* ---------- station 5: weekly tracker ---------- */
 const TKEYS=['views','comments','invites','convos','ssi'];

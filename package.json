@@ -1,0 +1,31 @@
+{
+  "name": "bidul-ai-academy",
+  "version": "1.0.0",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shayvazana-oss/bidul-ai-academy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shayvazana-oss/bidul-ai-academy/issues"
+  },
+  "homepage": "https://github.com/shayvazana-oss/bidul-ai-academy#readme",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.120.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.3.0",
+    "playwright": "^1.62.1",
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2"
+  },
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "tsx tests/review-post.test.mts"
+  }
+}
