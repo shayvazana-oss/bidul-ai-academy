@@ -554,7 +554,7 @@ export default async function handler(request: Request): Promise<Response> {
       if (pdf && pdf.length > MAX_PDF_B64) {
         return json({ error: "קובץ ה-PDF גדול מדי. יצוא הפרופיל של לינקדאין קטן בהרבה — ודאו שזה הקובץ הנכון." }, 400, origin);
       }
-      if (pdf && !/^[A-Za-z0-9+/=]+$/.test(pdf.slice(0, 100))) {
+      if (pdf && !(pdf.length % 4 === 0 && /^[A-Za-z0-9+/]+={0,2}$/.test(pdf))) {
         return json({ error: "הקובץ שהתקבל אינו PDF תקין." }, 400, origin);
       }
       if (!pdf && text.length < MIN_PROFILE_TEXT) {

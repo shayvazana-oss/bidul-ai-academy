@@ -259,6 +259,11 @@ ok("no assistant prefill", !sent.messages.some((m: any) => m.role === "assistant
   ok("audit with tiny text rejected 400", (await handler(post({ mode: "audit", profile: { text: "קצר" }, items }, ORIGIN, IPA))).status === 400);
   ok("audit without items rejected 400", (await handler(post({ mode: "audit", profile: { text: "א".repeat(300) } }, ORIGIN, IPA))).status === 400);
   ok("audit with oversized pdf rejected 400", (await handler(post({ mode: "audit", profile: { pdf: "A".repeat(9_000_001) }, items }, ORIGIN, IPA))).status === 400);
+  // corrupt base64 must be caught wherever the garbage sits, not only in the first 100 chars
+  ok("audit with corrupt base64 past char 100 rejected 400",
+    (await handler(post({ mode: "audit", profile: { pdf: "A".repeat(150) + "!!!" + "A".repeat(499) }, items }, ORIGIN, IPA))).status === 400);
+  ok("audit with non-multiple-of-4 base64 rejected 400",
+    (await handler(post({ mode: "audit", profile: { pdf: "A".repeat(201) }, items }, ORIGIN, IPA))).status === 400);
 
   nextPayload = {
     items: [

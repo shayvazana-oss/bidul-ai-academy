@@ -862,7 +862,7 @@ async function aiPost(payload,statusEl,btn,waitMsg){
     return data;
   }catch(err){
     if(statusEl)statusSay(statusEl,err&&err.name==='AbortError'?'הבקשה לא חזרה בזמן. נסו שוב.'
-      :(err&&err.message)||'לא הצלחנו להגיע לשרת. בדקו את החיבור.','err');
+      :(err&&err.name!=='TypeError'&&err.message)||'לא הצלחנו להגיע לשרת. בדקו את החיבור.','err');
     return null;
   }finally{
     clearTimeout(kill);if(tick)clearInterval(tick);
@@ -1016,6 +1016,7 @@ function applyAudit(a){
       if(!auditState[k]){auditState[k]=true;row.classList.add('done');row.setAttribute('aria-checked','true');}
       mark.classList.add('m-auto');mark.textContent='זוהה במסמך';auto++;
     }else if(r&&(r.status==='לא'||r.status==='חלקי')){
+      if(auditState[k]){auditState[k]=false;row.classList.remove('done');row.setAttribute('aria-checked','false');}
       mark.classList.add('m-no');mark.textContent=r.status==='לא'?'חסר לפי המסמך':'חלקי';
       mark.title=r.note||'';no++;
     }else{
