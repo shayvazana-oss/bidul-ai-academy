@@ -58,13 +58,32 @@ const IDEAS_RESP = {
   })),
 };
 
+const WEEKLY_RESP = {
+  reading: "המספרים יציבים לחשבון קטן — זה הנורמל, לא כישלון.",
+  diagnosis: "צפיות עולות אבל שיחות לא זזות — הפרופיל לא ממיר.",
+  experiment: "השבוע: שלוש תגובות ביום על אנשים מרשימת החלומות.",
+};
+const VOICE_RESP = {
+  profile: "- משפטים קצרים, עד 10 מילים.\n- בלי סופרלטיבים.\n- סיום ישיר, בלי מוסר השכל.",
+};
+
 // --- stub Messages API (branches per requested schema) ---
 const upstream = http.createServer((req, res) => {
   let raw = "";
   req.on("data", (c) => (raw += c));
   req.on("end", () => {
-    const schema = raw.includes('"betterOpening"') ? "audit" : raw.includes('"altHooks"') ? "write" : raw.includes('"ideas"') ? "ideas" : "review";
-    const payload = schema === "audit" ? AUDIT_RESP : schema === "write" ? WRITE_RESP : schema === "ideas" ? IDEAS_RESP : REVIEW;
+    const schema = raw.includes('"betterOpening"') ? "audit"
+      : raw.includes('"altHooks"') ? "write"
+      : raw.includes('"ideas"') ? "ideas"
+      : raw.includes('"experiment"') ? "weekly"
+      : raw.includes('"profile"') ? "voice"
+      : "review";
+    const payload = schema === "audit" ? AUDIT_RESP
+      : schema === "write" ? WRITE_RESP
+      : schema === "ideas" ? IDEAS_RESP
+      : schema === "weekly" ? WEEKLY_RESP
+      : schema === "voice" ? VOICE_RESP
+      : REVIEW;
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({
       id: "msg_e2e", type: "message", role: "assistant", model: "claude-opus-5",
@@ -417,12 +436,100 @@ await page.click("#auditReset");
 await page.waitForTimeout(200);
 ok("reset clears audit marks", (await page.locator(".aitem .amark").count()) === 0);
 
+// === 7b. growth features: market toggle, checker rules, dream list, carousel, voice, weekly ===
+await page.goto("http://127.0.0.1:8787/lab?connected", { waitUntil: "domcontentloaded" });
+await page.waitForTimeout(500);
+
+// language-strategy toggle: switch, note updates, choice survives reload
+await page.click('.mbtn[data-m="mix"]');
+ok("market toggle updates the note", ((await page.textContent("#langNote")) ?? "").includes("קהל מעורב"));
+await page.reload({ waitUntil: "domcontentloaded" });
+await page.waitForTimeout(400);
+ok("market choice survives reload", await page.locator('.mbtn[data-m="mix"]').evaluate((e) => e.classList.contains("on")));
+
+// checker: AI-fingerprint patterns flagged
+await page.fill("#draft", "זה לא כישלון. זה שיעור — חשוב.\n\nראיתי את זה — שוב ושוב — אצל לקוחות.\n\nבעולם שבו כולם כותבים אותו דבר — צריך לבלוט.\n\nמה דעתכם?");
+await page.waitForTimeout(250);
+let checksTxt = (await page.textContent("#dChecks")) ?? "";
+ok("AI-fingerprint draft flagged", checksTxt.includes("טביעות אצבע של AI") && checksTxt.includes("זה לא X"));
+ok("generic question ending downgraded", checksTxt.includes("שאלה גנרית בסוף"));
+
+// checker: engagement bait flagged
+await page.fill("#draft", "כתבתי מדריך שלם על טעויות שכר נפוצות אצל עסקים קטנים.\n\nתגיבו \"רוצה\" ואשלח לכם אותו בפרטי.");
+await page.waitForTimeout(250);
+checksTxt = (await page.textContent("#dChecks")) ?? "";
+ok("comment-gate bait flagged", checksTxt.includes("פיתיון מעורבות"));
+
+// checker: a clean human draft passes the new checks
+await page.fill("#draft", DRAFT);
+await page.waitForTimeout(250);
+checksTxt = (await page.textContent("#dChecks")) ?? "";
+ok("clean draft passes AI-fingerprint check", checksTxt.includes("בלי טביעות אצבע של AI") && !checksTxt.includes("פיתיון"));
+
+// dream-25 list: add, cycle stage, touch, persist, delete
+await page.fill("#dr-name", "דנה כהן · אקמי");
+await page.fill("#dr-why", "מגייסים עכשיו צוות כספים");
+await page.click("#dreamAdd");
+ok("dream row added", ((await page.textContent("#dreamRows")) ?? "").includes("דנה כהן"));
+await page.click('#dreamRows [data-act="stage"]');
+ok("dream stage cycles", ((await page.textContent('#dreamRows [data-act="stage"]')) ?? "").includes("מחוברים"));
+await page.click('#dreamRows [data-act="touch"]');
+ok("dream touch stamps today", ((await page.textContent("#dreamRows")) ?? "").includes("היום"));
+await page.reload({ waitUntil: "domcontentloaded" });
+await page.waitForTimeout(400);
+const dreamAfter = (await page.textContent("#dreamRows")) ?? "";
+ok("dream list survives reload", dreamAfter.includes("דנה כהן") && dreamAfter.includes("מחוברים") && dreamAfter.includes("היום"));
+await page.click('#dreamRows [data-act="del"]');
+ok("dream row deleted", !(((await page.textContent("#dreamRows")) ?? "").includes("דנה כהן")));
+
+// carousel builder: paragraphs become editable slides, print button appears
+await page.fill("#carSrc", "הפתיח הגדול\n\nגוף ראשון עם רעיון אחד\n\nגוף שני עם רעיון אחד\n\nסיום והזמנה רכה");
+await page.click("#carBuild");
+ok("carousel builds one slide per block", (await page.locator("#carSlides .carslide").count()) === 4);
+ok("first slide styled as hook", await page.locator("#carSlides .carslide").first().evaluate((e) => e.classList.contains("c-first")));
+ok("last slide styled as closer", await page.locator("#carSlides .carslide").last().evaluate((e) => e.classList.contains("c-last")));
+ok("slides are editable", (await page.locator('#carSlides .carslide[contenteditable="true"]').count()) === 4);
+ok("print button revealed", await page.locator("#carPrintBtn").isVisible());
+
+// voice profile: distill via mocked API, stored, threaded into review
+const myPost = "אני רואה את זה כל שבוע אצל לקוחות. טעות קטנה בתלוש, ואף אחד לא שם לב עד הביקורת. ".repeat(4);
+await page.fill("#voiceSrc", myPost + "\n---\n" + myPost);
+await page.click("#voiceRun");
+await page.waitForSelector("#voiceOut:not([style*='display: none'])", { timeout: 15000 });
+ok("voice profile rendered and stored", ((await page.textContent("#voiceOut")) ?? "").includes("משפטים קצרים"));
+let sawVoice = "";
+await page.route("**/api/lab", async (route) => {
+  const body = JSON.parse(route.request().postData() ?? "{}");
+  if (body.mode === "review") sawVoice = body.voice ?? "";
+  await route.fallback();
+});
+await page.fill("#draft", DRAFT);
+await page.click("#aiRun");
+await page.waitForSelector("#aiOut.on", { timeout: 15000 });
+ok("stored voice rides along with the review call", sawVoice.includes("משפטים קצרים"));
+await page.unroute("**/api/lab");
+await page.click("#voiceClear");
+ok("voice profile clears", await page.locator("#voiceOut").evaluate((e) => (e as HTMLElement).style.display === "none"));
+
+// weekly reading: needs tracker data, then renders the three sections
+await page.fill("#t-views", "120");
+await page.fill("#t-convos", "1");
+await page.click("#trackAdd");
+await page.click("#weeklyRun");
+await page.waitForSelector("#weeklyOut.on", { timeout: 15000 });
+const wkTxt = (await page.textContent("#weeklyOut")) ?? "";
+ok("weekly reading renders all three sections", wkTxt.includes("מה המספרים אומרים") && wkTxt.includes("האבחנה") && wkTxt.includes("הניסוי לשבוע הבא"));
+ok("weekly reading carries the mock verdict", wkTxt.includes("הפרופיל לא ממיר"));
+
 // === 8. unconfigured page hides AI-only entry points ===
 await page.goto("http://127.0.0.1:8787/lab", { waitUntil: "domcontentloaded" });
 await page.waitForTimeout(600);
 ok("unconfigured: ideas box hidden", await page.locator("#ideasBox").evaluate((e) => (e as HTMLElement).style.display === "none"));
 ok("unconfigured: no guided-write buttons, AI-prompt fallback instead", (await page.locator("[data-write]").count()) === 0 && (await page.locator("[data-ai]").count()) === 12);
 ok("unconfigured: drawer still works", (await page.locator("#drawerBox").count()) === 1);
+ok("unconfigured: weekly + voice buttons disabled honestly",
+  await page.locator("#weeklyRun").isDisabled() && await page.locator("#voiceRun").isDisabled() &&
+  (((await page.textContent("#voiceRun")) ?? "").includes("לא זמין")));
 
 console.log("JS errors:", errors.length ? errors : "none");
 await browser.close();

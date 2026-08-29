@@ -36,6 +36,16 @@ const IDEAS_RESP = {
   })),
 };
 
+const WEEKLY_RESP = {
+  reading: "המספרים יציבים — נורמלי לחשבון קטן.",
+  diagnosis: "צפיות עולות אבל שיחות לא — הפרופיל לא ממיר.",
+  experiment: "השבוע: 3 תגובות ביום על רשימת החלומות.",
+};
+
+const VOICE_RESP = {
+  profile: "- משפטים קצרים, עד 10 מילים.\n- בלי סופרלטיבים.\n- פתיחה בשאלה של לקוח.",
+};
+
 let lastRequest: any = null;
 let nextPayload: any = null; // override the model's reply for one call
 const mock = http.createServer((req, res) => {
@@ -45,7 +55,11 @@ const mock = http.createServer((req, res) => {
     lastRequest = { url: req.url, body: JSON.parse(raw) };
     // Branch on the requested output schema so each mode gets a matching reply.
     const schema = JSON.stringify(lastRequest.body?.output_config?.format?.schema ?? {});
-    const auto = schema.includes('"altHooks"') ? WRITE_RESP : schema.includes('"ideas"') ? IDEAS_RESP : REVIEW;
+    const auto = schema.includes('"altHooks"') ? WRITE_RESP
+      : schema.includes('"ideas"') ? IDEAS_RESP
+      : schema.includes('"experiment"') ? WEEKLY_RESP
+      : schema.includes('"profile"') ? VOICE_RESP
+      : REVIEW;
     const payload = nextPayload ?? auto;
     const stop = nextPayload?.__stop ?? "end_turn";
     nextPayload = null;
@@ -303,6 +317,40 @@ ok("no assistant prefill", !sent.messages.some((m: any) => m.role === "assistant
   ok("audit pdf path returns 200", pr.status === 200, String(pr.status));
   const doc = lastRequest.body.messages[0].content.find((c: any) => c.type === "document");
   ok("pdf sent as a base64 document block", doc?.source?.media_type === "application/pdf" && doc?.source?.data === pdfB64);
+}
+
+// === mode: weekly ===
+{
+  const IPK = { "x-forwarded-for": "86.0.0.1" };
+  const weeks = [
+    { d: "1.8", views: 120, comments: 3, invites: 1, convos: 0, ssi: 40 },
+    { d: "8.8", views: 150, comments: 5, invites: 2, convos: 1, ssi: 42 },
+  ];
+  const wr: any = await (await handler(post({ mode: "weekly", weeks }, ORIGIN, IPK))).json();
+  ok("weekly returns reading/diagnosis/experiment", !!wr.weekly?.reading && !!wr.weekly?.diagnosis && !!wr.weekly?.experiment);
+  const sent = lastRequest.body.messages[0].content;
+  ok("weekly table reaches the model with the numbers", sent.includes("צפיות פרופיל: 120") && sent.includes("SSI: 42"));
+  ok("weekly without data rejected 400", (await handler(post({ mode: "weekly", weeks: [] }, ORIGIN, IPK))).status === 400);
+  ok("weekly with junk rows rejected 400", (await handler(post({ mode: "weekly", weeks: ["x", 5, null] }, ORIGIN, IPK))).status === 400);
+  nextPayload = { reading: "א".repeat(2000), diagnosis: "ב", experiment: "ג" };
+  const clipped: any = await (await handler(post({ mode: "weekly", weeks }, ORIGIN, IPK))).json();
+  ok("weekly overlong reading clipped server-side", clipped.weekly.reading.length <= 601, String(clipped.weekly.reading.length)); // clip() appends an ellipsis after the cut
+}
+
+// === mode: voice ===
+{
+  const IPV = { "x-forwarded-for": "87.0.0.1" };
+  const post1 = "אני רואה את זה כל שבוע אצל לקוחות. ".repeat(12);
+  const vr: any = await (await handler(post({ mode: "voice", posts: [post1, post1] }, ORIGIN, IPV))).json();
+  ok("voice returns a profile", typeof vr.voice?.profile === "string" && vr.voice.profile.includes("משפטים"));
+  ok("voice posts reach the model numbered", lastRequest.body.messages[0].content.includes("--- פוסט 2 ---"));
+  ok("voice with too little material rejected 400", (await handler(post({ mode: "voice", posts: ["קצר"] }, ORIGIN, IPV))).status === 400);
+  ok("voice with non-array posts rejected 400", (await handler(post({ mode: "voice", posts: "פוסט" }, ORIGIN, IPV))).status === 400);
+  // voice profile threading into review + write
+  await handler(post({ draft: GOOD_DRAFT, voice: "- משפטים קצרים בלבד." }, ORIGIN, IPV));
+  ok("review carries the voice profile when supplied", lastRequest.body.messages[0].content.includes("תעודת הקול"));
+  await handler(post({ draft: GOOD_DRAFT }, ORIGIN, IPV));
+  ok("review omits the voice block when absent", !lastRequest.body.messages[0].content.includes("תעודת הקול"));
 }
 
 // === unknown mode ===
