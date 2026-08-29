@@ -511,6 +511,26 @@ await page.unroute("**/api/lab");
 await page.click("#voiceClear");
 ok("voice profile clears", await page.locator("#voiceOut").evaluate((e) => (e as HTMLElement).style.display === "none"));
 
+// corrupt localStorage must not kill the page script
+await page.evaluate("localStorage.setItem('lab-dream','\"junk\"');localStorage.setItem('lab-track','{\"a\":1}')");
+await page.reload({ waitUntil: "domcontentloaded" });
+await page.waitForTimeout(400);
+await page.fill("#dr-name", "בדיקת שרידות");
+await page.click("#dreamAdd");
+ok("corrupt lab-dream/lab-track survived: dream list still works", ((await page.textContent("#dreamRows")) ?? "").includes("בדיקת שרידות"));
+await page.fill("#carSrc", "אחד\n\nשניים");
+await page.click("#carBuild");
+ok("corrupt storage survived: carousel still builds", (await page.locator("#carSlides .carslide").count()) === 2);
+await page.evaluate("localStorage.removeItem('lab-dream');localStorage.removeItem('lab-track')");
+await page.reload({ waitUntil: "domcontentloaded" });
+await page.waitForTimeout(400);
+
+// contrastive regex: narrative pronoun negation is NOT flagged
+await page.fill("#draft", "אתמול ישבתי מול לקוח ותיק.\n\nהוא לא ענה, הוא רק חייך ואמר שאין לו זמן לזה עכשיו.\n\nשבוע אחרי זה הוא התקשר בעצמו וביקש שנתחיל מיד, כי הביקורת הגיעה.\n\nמה גרם לשינוי? מספר אחד בדוח שהוא לא הצליח להסביר לרואה החשבון שלו.");
+await page.waitForTimeout(250);
+checksTxt = (await page.textContent("#dChecks")) ?? "";
+ok("narrative 'הוא לא... הוא' not branded as AI template", checksTxt.includes("בלי טביעות אצבע של AI"));
+
 // weekly reading: needs tracker data, then renders the three sections
 await page.fill("#t-views", "120");
 await page.fill("#t-convos", "1");

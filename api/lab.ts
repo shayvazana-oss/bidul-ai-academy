@@ -151,7 +151,14 @@ function pick<T extends string>(value: string, allowed: readonly T[], fallback: 
   const v = value.trim();
   return allowed.find((a) => v === a) ?? allowed.find((a) => v.includes(a)) ?? fallback;
 }
-const clip = (s: string, n: number): string => (s.length > n ? s.slice(0, n).trimEnd() + "…" : s);
+/** slice() can land mid-surrogate-pair; back off one unit so no lone surrogate ships. */
+const cut = (s: string, n: number): string => {
+  let t = s.slice(0, n);
+  const c = t.charCodeAt(t.length - 1);
+  if (c >= 0xd800 && c <= 0xdbff) t = t.slice(0, -1);
+  return t;
+};
+const clip = (s: string, n: number): string => (s.length > n ? cut(s, n).trimEnd() + "…" : s);
 
 /** The schema cannot enforce its own limits, so clamp everything before it ships. */
 function normalize(r: ReviewOut) {
@@ -415,7 +422,7 @@ const EFFORTS = ["low", "medium", "high", "xhigh", "max"] as const satisfies rea
 const EFFORT = EFFORTS.find((e) => e === process.env.REVIEW_EFFORT?.trim()) ?? "medium";
 
 function cap(v: unknown, max: number): string {
-  return typeof v === "string" ? v.trim().slice(0, max) : "";
+  return typeof v === "string" ? cut(v.trim(), max) : "";
 }
 
 function corsHeaders(origin: string | null): Record<string, string> {
@@ -499,8 +506,9 @@ export default async function handler(request: Request): Promise<Response> {
     ? filled.map(([k, v]) => `- ${k}: ${v}`).join("\n")
     : "(הכותב לא מילא את אשף המיצוב.)";
 
-  // optional voice profile, distilled earlier by mode:"voice" and stored client-side
-  const voice = cap(body.voice, 1500);
+  // optional voice profile, distilled earlier by mode:"voice" and stored client-side.
+  // Collapse quote runs so a crafted profile cannot forge the """ fence around it.
+  const voice = cap(body.voice, 1500).replace(/"{3,}/g, '"');
   const voiceBlock = voice
     ? `\n\nתעודת הקול של הכותב — כך הוא באמת כותב. שמור על הסגנון הזה:\n"""\n${voice}\n"""`
     : "";
