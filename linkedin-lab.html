@@ -499,6 +499,13 @@ footer p{max-width:860px;line-height:1.8}
   #carPrint .carslide.c-first{font-size:30pt}
   #carPrint .carslide.c-long{font-size:13pt}
 }
+.cta-note{font-size:12.5px;color:var(--muted);margin-top:12px}
+.stationbar{display:flex;gap:2px;background:#fff;border:1px solid var(--hair);border-radius:14px;padding:6px;margin-top:26px;box-shadow:var(--shadow-sm);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.stationbar a{flex:1;display:flex;align-items:center;justify-content:center;gap:9px;padding:11px 14px;border-radius:9px;font-size:13.5px;font-weight:700;color:var(--ink2);white-space:nowrap;transition:background .15s,color .15s}
+.stationbar a:hover,.stationbar a:focus-visible{background:var(--li-soft);color:var(--li)}
+.stationbar a i{font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--bg);border:1px solid var(--hair-2);color:var(--ink2);font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.stationbar a:hover i,.stationbar a:focus-visible i{background:var(--li);border-color:var(--li);color:#fff}
+@media(max-width:700px){.stationbar a{font-size:12.5px;padding:10px 10px}}
 </style>
 </head>
 <body>
@@ -542,6 +549,14 @@ footer p{max-width:860px;line-height:1.8}
       <a class="btn-p" href="#audit">תחנה 1 · סרוק את הפרופיל</a>
       <a class="btn-g" href="#content">דלג למנוע התוכן</a>
     </div>
+    <p class="cta-note">✓ חינם · בלי הרשמה · הנתונים נשמרים בדפדפן שלכם בלבד</p>
+    <nav class="stationbar rv" aria-label="חמש התחנות">
+      <a href="#audit"><i>1</i>סורק הפרופיל</a>
+      <a href="#position"><i>2</i>אשף המיצוב</a>
+      <a href="#content"><i>3</i>מנוע התוכן</a>
+      <a href="#checker"><i>4</i>בודק הפוסט</a>
+      <a href="#playbook"><i>5</i>הפלייבוק</a>
+    </nav>
   </div>
 </section>
 
