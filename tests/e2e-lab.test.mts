@@ -132,10 +132,12 @@ const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromi
 const page = await browser.newPage({ viewport: { width: 1380, height: 950 } });
 const errors: string[] = [];
 page.on("pageerror", (e) => errors.push(e.message));
+const go = async (view: string) => { await page.evaluate(`location.hash='#${view}'`); await page.waitForTimeout(200); };
 
 // === 1. endpoint NOT configured — must degrade gracefully ===
 await page.goto("http://127.0.0.1:8787/lab", { waitUntil: "domcontentloaded" });
 await page.waitForTimeout(600);
+await go("checker");
 await page.fill("#draft", DRAFT);
 await page.waitForTimeout(300);
 const localScore = await page.textContent("#dScore");
@@ -150,8 +152,10 @@ ok("unconfigured shows no results panel", !(await page.locator("#aiOut").evaluat
 await page.goto("http://127.0.0.1:8787/lab?connected", { waitUntil: "domcontentloaded" });
 await page.waitForTimeout(600);
 // positioning from station 2 must reach the API
+await go("position");
 await page.fill("#w-קהל", "יועצים עצמאיים");
 await page.fill("#w-תחום", "ייעוץ תמחור");
+await go("checker");
 await page.fill("#draft", DRAFT);
 await page.waitForTimeout(300);
 
@@ -247,6 +251,7 @@ ok("server error message surfaced", ((await page.textContent("#aiStatus")) ?? ""
 ok("error state styled as error", await page.locator("#aiStatus").evaluate((e) => e.classList.contains("err")));
 
 // === 4. guided writer: template gaps become the interview, output is grounded ===
+await go("content");
 await page.unroute("**/api/lab");
 await page.locator("#content").scrollIntoViewIfNeeded();
 const writeBtn = page.locator('[data-write]').first();
@@ -273,11 +278,12 @@ await page.click("#writerToChecker");
 await page.waitForTimeout(600);
 ok("writer sends draft to checker", ((await page.inputValue("#draft")) ?? "").includes("מתמחרים לפי שעה"));
 // save to drawer
-await page.locator("#content").scrollIntoViewIfNeeded();
+await go("content");
 await page.click("#writerToDrawer");
 await page.waitForTimeout(300);
 
 // === 5. drafts drawer ===
+await go("checker");
 ok("draft saved to drawer", (await page.locator(".drow").count()) === 1);
 const st0 = (await page.textContent(".drow .dstat")) ?? "";
 await page.click(".drow .dstat");
@@ -298,9 +304,10 @@ await page.waitForTimeout(200);
 ok("delete removes a draft", (await page.locator(".drow").count()) === 1);
 
 // === 6. ideas engine ===
+await go("position");
 await page.fill("#w-קהל", "יועצים עצמאיים");
 await page.waitForTimeout(200);
-await page.locator("#ideasBox").scrollIntoViewIfNeeded();
+await go("content");
 await page.fill("#ideasFocus", "תמחור");
 await page.click("#ideasRun");
 await page.waitForSelector(".idea", { timeout: 20000 });
@@ -327,6 +334,7 @@ const icsOk = await page.evaluate(() => {
 ok("ICS export builds and triggers a download", icsOk.includes("blob-made") && icsOk.includes("linkedin-lab-30days.ics"), icsOk);
 
 // === 7b. RTL fixer + preview + new form checks ===
+await go("checker");
 const RTL_DRAFT = `Excel הרג לכם את היום?
 
 יש דרך אחרת לנהל את הנתונים.
@@ -389,6 +397,7 @@ await page.waitForTimeout(300);
 ok("hashtag warning reflects deprecation", (await page.evaluate(() => [...document.querySelectorAll("#dChecks .ck span span, #dChecks .ck span")].map((x) => x.textContent).join("|"))).includes("ביטלה מעקב"));
 
 // === 7c. auto-audit from the user's own export ===
+await go("audit");
 await page.evaluate(() => { localStorage.removeItem("lab-audit"); });
 await page.reload({ waitUntil: "domcontentloaded" });
 await page.waitForTimeout(700);
@@ -441,6 +450,7 @@ await page.goto("http://127.0.0.1:8787/lab?connected", { waitUntil: "domcontentl
 await page.waitForTimeout(500);
 
 // language-strategy toggle: switch, note updates, choice survives reload
+await go("position");
 await page.click('.mbtn[data-m="mix"]');
 ok("market toggle updates the note", ((await page.textContent("#langNote")) ?? "").includes("קהל מעורב"));
 await page.reload({ waitUntil: "domcontentloaded" });
@@ -448,6 +458,7 @@ await page.waitForTimeout(400);
 ok("market choice survives reload", await page.locator('.mbtn[data-m="mix"]').evaluate((e) => e.classList.contains("on")));
 
 // checker: AI-fingerprint patterns flagged
+await go("checker");
 await page.fill("#draft", "זה לא כישלון. זה שיעור — חשוב.\n\nראיתי את זה — שוב ושוב — אצל לקוחות.\n\nבעולם שבו כולם כותבים אותו דבר — צריך לבלוט.\n\nמה דעתכם?");
 await page.waitForTimeout(250);
 let checksTxt = (await page.textContent("#dChecks")) ?? "";
@@ -467,6 +478,7 @@ checksTxt = (await page.textContent("#dChecks")) ?? "";
 ok("clean draft passes AI-fingerprint check", checksTxt.includes("בלי טביעות אצבע של AI") && !checksTxt.includes("פיתיון"));
 
 // dream-25 list: add, cycle stage, touch, persist, delete
+await go("playbook");
 await page.fill("#dr-name", "דנה כהן · אקמי");
 await page.fill("#dr-why", "מגייסים עכשיו צוות כספים");
 await page.click("#dreamAdd");
@@ -483,6 +495,7 @@ await page.click('#dreamRows [data-act="del"]');
 ok("dream row deleted", !(((await page.textContent("#dreamRows")) ?? "").includes("דנה כהן")));
 
 // carousel builder: paragraphs become editable slides, print button appears
+await go("content");
 await page.fill("#carSrc", "הפתיח הגדול\n\nגוף ראשון עם רעיון אחד\n\nגוף שני עם רעיון אחד\n\nסיום והזמנה רכה");
 await page.click("#carBuild");
 ok("carousel builds one slide per block", (await page.locator("#carSlides .carslide").count()) === 4);
@@ -492,6 +505,7 @@ ok("slides are editable", (await page.locator('#carSlides .carslide[contentedita
 ok("print button revealed", await page.locator("#carPrintBtn").isVisible());
 
 // voice profile: distill via mocked API, stored, threaded into review
+await go("position");
 const myPost = "אני רואה את זה כל שבוע אצל לקוחות. טעות קטנה בתלוש, ואף אחד לא שם לב עד הביקורת. ".repeat(4);
 await page.fill("#voiceSrc", myPost + "\n---\n" + myPost);
 await page.click("#voiceRun");
@@ -503,11 +517,13 @@ await page.route("**/api/lab", async (route) => {
   if (body.mode === "review") sawVoice = body.voice ?? "";
   await route.fallback();
 });
+await go("checker");
 await page.fill("#draft", DRAFT);
 await page.click("#aiRun");
 await page.waitForSelector("#aiOut.on", { timeout: 15000 });
 ok("stored voice rides along with the review call", sawVoice.includes("משפטים קצרים"));
 await page.unroute("**/api/lab");
+await go("position");
 await page.click("#voiceClear");
 ok("voice profile clears", await page.locator("#voiceOut").evaluate((e) => (e as HTMLElement).style.display === "none"));
 
@@ -515,9 +531,11 @@ ok("voice profile clears", await page.locator("#voiceOut").evaluate((e) => (e as
 await page.evaluate("localStorage.setItem('lab-dream','\"junk\"');localStorage.setItem('lab-track','{\"a\":1}')");
 await page.reload({ waitUntil: "domcontentloaded" });
 await page.waitForTimeout(400);
+await go("playbook");
 await page.fill("#dr-name", "בדיקת שרידות");
 await page.click("#dreamAdd");
 ok("corrupt lab-dream/lab-track survived: dream list still works", ((await page.textContent("#dreamRows")) ?? "").includes("בדיקת שרידות"));
+await go("content");
 await page.fill("#carSrc", "אחד\n\nשניים");
 await page.click("#carBuild");
 ok("corrupt storage survived: carousel still builds", (await page.locator("#carSlides .carslide").count()) === 2);
@@ -526,12 +544,14 @@ await page.reload({ waitUntil: "domcontentloaded" });
 await page.waitForTimeout(400);
 
 // contrastive regex: narrative pronoun negation is NOT flagged
+await go("checker");
 await page.fill("#draft", "אתמול ישבתי מול לקוח ותיק.\n\nהוא לא ענה, הוא רק חייך ואמר שאין לו זמן לזה עכשיו.\n\nשבוע אחרי זה הוא התקשר בעצמו וביקש שנתחיל מיד, כי הביקורת הגיעה.\n\nמה גרם לשינוי? מספר אחד בדוח שהוא לא הצליח להסביר לרואה החשבון שלו.");
 await page.waitForTimeout(250);
 checksTxt = (await page.textContent("#dChecks")) ?? "";
 ok("narrative 'הוא לא... הוא' not branded as AI template", checksTxt.includes("בלי טביעות אצבע של AI"));
 
 // weekly reading: needs tracker data, then renders the three sections
+await go("playbook");
 await page.fill("#t-views", "120");
 await page.fill("#t-convos", "1");
 await page.click("#trackAdd");
