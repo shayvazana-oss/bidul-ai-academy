@@ -7,7 +7,7 @@
      לדוגמה: content="https://bidul-ai-academy.vercel.app/api/review-post"
      כל עוד השדה ריק, בודק הצורה עובד כרגיל וכפתור ה-AI מסביר מה חסר. -->
 <meta name="lab-api" content="">
-<title>מעבדת הלינקדאין — האקדמיה לבינה מלאכותית יישומית</title>
+<title>מעבדת הלינקדאין — שיגור בחמש תחנות</title>
 <meta name="description" content="כלי עבודה חינמי בעברית: אבחון פרופיל משוקלל, אשף מיצוב, 12 תבניות פוסטים מפורטות ופלייבוק צמיחה יומי — בלי טריקים, בלי אוטומציות אסורות.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="מעבדת הלינקדאין — משגרים את החשבון שלכם אל הכוכבים">
@@ -17,7 +17,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Frank+Ruhl+Libre:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    LinkedIn Lab — light SaaS reskin
@@ -63,7 +63,8 @@ h1,h2,h3,h4{color:var(--ink);text-wrap:balance}
 .mast{position:fixed;top:10px;left:0;right:0;z-index:50;display:flex;justify-content:center;pointer-events:none;padding:0 12px}
 .mast .in{pointer-events:auto;width:100%;max-width:1180px;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border:1px solid var(--hair);border-radius:16px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:10px 20px;transition:box-shadow .25s;box-shadow:var(--shadow-sm)}
 .mast.shrunk .in{box-shadow:var(--shadow-sm)}
-.m-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-.01em;color:var(--ink);flex:0 0 auto}
+.m-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-.01em;color:var(--ink);flex:0 0 auto;cursor:pointer}
+a.m-brand:hover span{color:var(--li)}
 .m-brand svg{width:26px;height:26px;flex:0 0 auto}
 .m-brand small{display:block;font-size:10.5px;letter-spacing:.1em;color:var(--muted);font-weight:500}
 .m-links{display:flex;align-items:center;gap:2px}
@@ -508,12 +509,60 @@ footer p{max-width:860px;line-height:1.8}
 @media(max-width:700px){.stationbar a{font-size:12.5px;padding:10px 10px}}
 [data-view]{display:none}
 .m-links a.on{color:var(--li)}
+/* ---------- launch scene: one photo, one camera, scroll drives the liftoff ---------- */
+:root{--scene-travel:300svh}
+.scene{height:calc(100svh + var(--scene-travel));position:relative;background:#0b0a12}
+.scene__vp{position:sticky;top:0;height:100svh;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
+.scene__backdrop{position:absolute;inset:0;z-index:-1;background:#0b0a12}
+.scene__camera{position:absolute;inset:0;transform:scale(var(--cam-z,1));transform-origin:50% 50%}
+.is-moving .scene__camera,.is-moving .scene__photo{will-change:transform}
+.scene__photo{position:absolute;left:50%;top:50%;width:max(108.699%,172.95svh);height:auto;max-width:none;transform:translate(var(--cam-x,-47.957%),var(--cam-y,-80.097%))}
+.scene__glow{position:absolute;inset:0;pointer-events:none;opacity:var(--glow-o,1);background:radial-gradient(110% 112% at 50% 0%,rgba(247,127,113,0) 66%,rgba(247,127,113,.5) 84%,rgba(255,80,60,1) 100%)}
+.hero2{display:flex;flex-direction:column;align-items:center;gap:24px;width:min(820px,92%);padding-bottom:11svh;text-align:center;visibility:var(--hero-vis,visible);transform:translateY(calc(var(--hero-out,0)*-163px))}
+.hero2__badge{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:9px 18px;color:rgba(255,255,255,.9);font-size:13px;font-weight:600;letter-spacing:.02em;backdrop-filter:blur(10px);opacity:var(--hero-o,1);filter:var(--hero-filter,none)}
+.hero2__title{font-family:'Frank Ruhl Libre',Heebo,serif;font-weight:800;font-size:clamp(42px,6.4vw,86px);line-height:1.06;letter-spacing:-.02em;color:#fff;margin:0;opacity:var(--hero-o,1);filter:var(--hero-filter,none)}
+.hero2__gold{color:#ff9d85}
+.hero2__sub{color:rgba(255,255,255,.85);font-size:clamp(15px,1.55vw,19px);line-height:1.65;max-width:540px;margin:0;opacity:var(--hero-o,1);filter:var(--hero-filter,none)}
+.hero2__hint{color:rgba(255,255,255,.55);font-size:12px;letter-spacing:.14em;opacity:var(--hero-o,1);filter:var(--hero-filter,none)}
+.hero2__title .line{display:block;clip-path:inset(-0.35em -0.6em -0.05em -0.6em)}
+.hero2__title .line__in{display:block}
+html.js:not(.is-open):not(.is-instant) .line__in{transform:translateY(100%);opacity:0}
+html.js:not(.is-open):not(.is-instant) .hero2__badge,html.js:not(.is-open):not(.is-instant) .hero2__sub,html.js:not(.is-open):not(.is-instant) .hero2__hint{opacity:0}
+@keyframes line-reveal{0%{transform:translateY(100%);opacity:0}25%{opacity:1}100%{transform:translateY(0);opacity:1}}
+@keyframes sc-fade{to{opacity:1}}
+.is-ready .line__in{animation:line-reveal .9s cubic-bezier(.16,1,.3,1) forwards}
+.is-ready .hero2__title .line:nth-child(1) .line__in{animation-delay:.08s}
+.is-ready .hero2__title .line:nth-child(2) .line__in{animation-delay:.21s}
+.is-ready .hero2__title .line:nth-child(3) .line__in{animation-delay:.34s}
+.is-ready .hero2__badge,.is-ready .hero2__sub,.is-ready .hero2__hint{animation:sc-fade .35s linear .95s forwards}
+.is-open .hero2__title .line{clip-path:none}
+.is-open .line__in,.is-open .hero2__badge,.is-open .hero2__sub,.is-open .hero2__hint{animation:none;opacity:var(--hero-o,1);transform:none}
+.is-instant .hero2__title .line{clip-path:none}
+.plat{position:absolute;left:50%;top:15%;transform:translateX(-50%);width:min(960px,94%);display:flex;flex-direction:column;align-items:center;opacity:var(--plat-o,0);visibility:var(--plat-vis,hidden)}
+.plat__pill{display:inline-flex;align-items:center;gap:9px;background:rgba(10,7,7,.4);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:8px 16px;color:rgba(255,255,255,.85);font-size:12px;font-weight:700;letter-spacing:.06em;transform:translateY(calc((1 - var(--plat-text-p,0))*62svh))}
+.plat__pill i{width:5px;height:5px;border-radius:50%;background:#7ef0a2;display:inline-block}
+.plat__title{font-family:'Frank Ruhl Libre',Heebo,serif;font-weight:700;color:#fff;font-size:clamp(26px,3.4vw,44px);letter-spacing:-.02em;margin:16px 0 26px;text-align:center;transform:translateY(calc((1 - var(--plat-text-p,0))*62svh))}
+.plat__window{width:100%;border-radius:16px;background:rgba(15,14,20,.55);backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 120px rgba(0,0,0,.55);overflow:hidden;transform:translateY(calc((1 - var(--plat-shot-p,0))*54svh))}
+.plat__bar{display:flex;align-items:center;gap:7px;padding:11px 16px;background:rgba(18,18,24,.92);border-bottom:1px solid rgba(255,255,255,.08)}
+.plat__dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+.plat__url{margin:0 auto;background:rgba(0,0,0,.4);border-radius:7px;padding:4px 16px;font-size:11.5px;color:rgba(255,255,255,.6);direction:ltr;letter-spacing:.01em}
+.plat__body{padding:24px 22px 20px}
+.plat__grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.plat__st{display:flex;flex-direction:column;align-items:center;gap:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:16px 10px;color:#fff;text-align:center;transition:background .15s,transform .15s}
+.plat__st:hover{background:rgba(255,255,255,.14);transform:translateY(-2px)}
+.plat__st .n{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);font-size:11.5px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.plat__st b{font-size:13.5px;font-weight:700}
+.plat__st small{color:rgba(255,255,255,.55);font-size:11px;line-height:1.4}
+.plat__ctas{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.plat__note{text-align:center;color:rgba(255,255,255,.5);font-size:12px;margin:14px 0 0}
+@media(max-width:760px){.plat__grid{grid-template-columns:repeat(2,1fr)}.plat__st:last-child{grid-column:1/-1}.plat{top:12%}}
+@media(prefers-reduced-motion:reduce){:root{--scene-travel:120svh}}
 </style>
 </head>
 <body>
 <div class="mast" id="mast">
   <div class="in">
-    <div class="m-brand">
+    <a class="m-brand" href="#home" aria-label="חזרה לעמוד הבית">
       <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
         <path d="M14 2.5c3.6 2 5.6 5.9 5.6 9.9 0 1.5-.2 2.9-.7 4.2L14 19l-4.9-2.4c-.5-1.3-.7-2.7-.7-4.2 0-4 2-7.9 5.6-9.9z" fill="#0a66c2"/>
         <circle cx="14" cy="10.8" r="2.1" fill="#fff"/>
@@ -521,8 +570,8 @@ footer p{max-width:860px;line-height:1.8}
         <path d="M14 20v4.5" stroke="#f59e0b" stroke-width="2.6" stroke-linecap="round"/>
         <path d="M11.6 20.6l-1.2 2.4M16.4 20.6l1.2 2.4" stroke="#f59e0b" stroke-width="1.6" stroke-linecap="round"/>
       </svg>
-      <span>מעבדת הלינקדאין<small>האקדמיה לבינה מלאכותית · LINKEDIN LAB</small></span>
-    </div>
+      <span>מעבדת הלינקדאין<small>LINKEDIN LAB</small></span>
+    </a>
     <nav class="m-links">
       <a href="#audit">הסורק</a>
       <a href="#position">המיצוב</a>
@@ -538,30 +587,42 @@ footer p{max-width:860px;line-height:1.8}
 </div>
 
 <!-- HERO -->
-<section class="hero" style="padding-bottom:20px" data-view="home">
-  <div class="wrap">
-    <div class="kicker">🚀 LINKEDIN LAB · מסלול שיגור בחמש תחנות</div>
-    <h1 class="giant">משגרים את חשבון הלינקדאין שלכם<br><span class="go">אל הכוכבים</span></h1>
-    <p class="lede">בלי דלק מפוקפק — מי שמוכר לכם "כפתור ויראליות", מוכר לכם סיכון לחשבון. מסלול השיגור שלנו: <b>שיטה בחמש תחנות</b> — אבחון משוקלל של הפרופיל, נוסחאות מיצוב שממלאים פעם אחת, 12 תבניות פוסטים מפורטות, בודק טיוטות שנותן ביקורת לפני כל פרסום, ושגרת 30 דקות ביום עם יומן מעקב. הכול פתוח, בעברית, ורץ אצלכם בדפדפן.</p>
-    <div class="meta-row">
-      <span>תחנות · <b>5</b></span>
-      <span>בדיקות פרופיל · <b>17</b></span>
-      <span>תבניות פוסטים · <b>12</b></span>
-      <span>שגרה יומית · <b>30 דק'</b></span>
-      <span>עלות · <b>0 ₪</b></span>
+<section class="scene" id="scene" data-view="home">
+  <div class="scene__vp">
+    <div class="scene__backdrop" aria-hidden="true">
+      <div class="scene__camera"><img class="scene__photo" src="assets/hero-space.jpg" alt="" aria-hidden="true"></div>
+      <div class="scene__glow"></div>
     </div>
-    <div class="cov-btns">
-      <a class="btn-p" href="#audit">תחנה 1 · סרוק את הפרופיל</a>
-      <a class="btn-g" href="#content">דלג למנוע התוכן</a>
+    <div class="hero2">
+      <div class="hero2__badge">🚀 מסלול שיגור בחמש תחנות · חינם, בדפדפן שלכם</div>
+      <h1 class="hero2__title"><span class="line"><span class="line__in">משגרים את חשבון</span></span><span class="line"><span class="line__in">הלינקדאין שלכם</span></span><span class="line"><span class="line__in hero2__gold">אל הכוכבים</span></span></h1>
+      <p class="hero2__sub">בלי דלק מפוקפק ובלי הבטחות ריקות — מסלול של חמש תחנות שממצב אתכם כמומחים, צעד אחר צעד. גללו לשיגור.</p>
+      <div class="hero2__hint" aria-hidden="true">גללו ▾</div>
     </div>
-    <p class="cta-note">✓ חינם · בלי הרשמה · הנתונים נשמרים בדפדפן שלכם בלבד</p>
-    <nav class="stationbar rv" aria-label="חמש התחנות">
-      <a href="#audit"><i>1</i>סורק הפרופיל</a>
-      <a href="#position"><i>2</i>אשף המיצוב</a>
-      <a href="#content"><i>3</i>מנוע התוכן</a>
-      <a href="#checker"><i>4</i>בודק הפוסט</a>
-      <a href="#playbook"><i>5</i>הפלייבוק</a>
-    </nav>
+    <div class="plat" aria-label="תחנת הבקרה">
+      <div class="plat__pill"><i></i>תחנת הבקרה</div>
+      <h2 class="plat__title">חמש תחנות. מסלול אחד. בלי קיצורי דרך.</h2>
+      <div class="plat__window">
+        <div class="plat__bar">
+          <span class="plat__dot" style="background:#EE6A5F"></span><span class="plat__dot" style="background:#F5BD4F"></span><span class="plat__dot" style="background:#61C454"></span>
+          <span class="plat__url">shayvazana-oss.github.io/bidul-ai-academy</span>
+        </div>
+        <div class="plat__body">
+          <div class="plat__grid">
+            <a class="plat__st" href="#audit"><span class="n">1</span><b>סורק הפרופיל</b><small>17 בדיקות משוקללות</small></a>
+            <a class="plat__st" href="#position"><span class="n">2</span><b>אשף המיצוב</b><small>5 שדות, כל הניסוחים</small></a>
+            <a class="plat__st" href="#content"><span class="n">3</span><b>מנוע התוכן</b><small>12 תבניות + קרוסלות</small></a>
+            <a class="plat__st" href="#checker"><span class="n">4</span><b>בודק הפוסט</b><small>ביקורת לפני פרסום</small></a>
+            <a class="plat__st" href="#playbook"><span class="n">5</span><b>הפלייבוק</b><small>30 דק' ביום, בסדר הנכון</small></a>
+          </div>
+          <div class="plat__ctas">
+            <a class="btn-p" href="#audit">תחנה 1 · סרוק את הפרופיל</a>
+            <a class="btn-g" href="#content">דלג למנוע התוכן</a>
+          </div>
+          <p class="plat__note">✓ חינם · בלי הרשמה · הנתונים נשמרים בדפדפן שלכם בלבד</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -984,7 +1045,7 @@ footer p{max-width:860px;line-height:1.8}
 <footer>
   <div class="wrap">
     <p><b>על השיטה:</b> המעבדה מבוססת על הפרקטיקות המשותפות לבוני נוכחות מקצועית מובילים בלינקדאין — מיצוב ממוקד-לקוח, עקביות על פני ויראליות, תגובות כמנוע חשיפה, והוכחות במקום הצהרות — ועל הניסיון המצטבר בליווי מקצוענים ועסקים ישראליים. אין בה נתוני "אחוזי הצלחה" כי אין דרך ישרה למדוד אותם מראש. כל הנתונים שתזינו נשמרים בדפדפן שלכם בלבד ואינם נשלחים לשום שרת.</p>
-    <p style="margin-top:10px">האקדמיה לבינה מלאכותית יישומית · היחידה ללימודי חוץ · אוגוסט 2026</p>
+    <p style="margin-top:10px">מעבדת הלינקדאין · אוגוסט 2026</p>
   </div>
 </footer>
 
@@ -2036,6 +2097,74 @@ function applyView(){
 }
 addEventListener('hashchange',applyView);
 applyView();
+
+/* ---------- launch scene: camera, exits, arrival, intro ---------- */
+document.documentElement.classList.add('js');
+(function(){
+  const scene=document.getElementById('scene');if(!scene)return;
+  const root=document.documentElement;
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const c01=x=>x<0?0:x>1?1:x;
+  const outCubic=t=>1-Math.pow(1-t,3),outQuart=t=>1-Math.pow(1-t,4);
+  const inOutCubic=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  const trk=(p,a,b,e)=>e(c01((p-a)/(b-a)));
+  let target=0,current=0,raf=0,last=0;
+  function prog(){
+    if(currentView()!=='home')return 0;
+    const h=scene.offsetHeight-innerHeight;
+    return h>0?c01((scrollY-scene.offsetTop)/h):0;
+  }
+  function apply(p){
+    const q=c01(p/0.86);
+    root.style.setProperty('--cam-x',(-47.957+(-50+47.957)*q)+'%');
+    root.style.setProperty('--cam-y',(-80.097+(-36.716+80.097)*q)+'%');
+    root.style.setProperty('--cam-z',reduced?'1':String(1+0.11*Math.sin(Math.PI*q)));
+    const exit=trk(p,0.297,0.508,t=>t);
+    root.style.setProperty('--hero-out',String(Math.pow(exit,1.75)));
+    root.style.setProperty('--hero-o',String(Math.pow(1-c01((exit-0.38)/0.62),1.25)));
+    root.style.setProperty('--hero-filter',exit>0?('blur('+(18*Math.pow(exit,0.9)).toFixed(2)+'px)'):'none');
+    root.style.setProperty('--hero-vis',exit>=1?'hidden':'visible');
+    root.style.setProperty('--glow-o',String(1-trk(p,0.55,0.95,inOutCubic)));
+    root.style.setProperty('--plat-o',String(trk(p,0.557,0.623,outCubic)));
+    root.style.setProperty('--plat-text-p',String(trk(p,0.563,0.967,outQuart)));
+    root.style.setProperty('--plat-shot-p',String(trk(p,0.557,0.984,outCubic)));
+    root.style.setProperty('--plat-vis',p>0.54?'visible':'hidden');
+    root.classList.toggle('is-moving',p>0.001&&p<0.999);
+    if(p>0.05)sceneOpen();
+  }
+  function frame(ts){
+    const dt=Math.min(0.05,(ts-last)/1000||0.016);last=ts;
+    let step=(target-current)*(1-Math.exp(-9*dt));
+    const cap=0.40*dt;
+    if(step>cap)step=cap;else if(step<-cap)step=-cap;
+    current+=step;
+    if(Math.abs(target-current)<0.0004)current=target;
+    apply(current);
+    if(current!==target)raf=requestAnimationFrame(frame);else raf=0;
+  }
+  function onScroll(){
+    target=prog();
+    if(reduced){current=target;apply(current);return;}
+    if(!raf){last=performance.now();raf=requestAnimationFrame(frame);}
+  }
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',onScroll);
+  addEventListener('hashchange',()=>setTimeout(onScroll,60));
+  let openedIntro=false;
+  function sceneOpen(){if(openedIntro)return;openedIntro=true;root.classList.add('is-open');}
+  function startIntro(){
+    if(reduced||prog()>0.02||currentView()!=='home'){root.classList.add('is-instant');openedIntro=true;return;}
+    root.classList.add('is-ready');
+    const sub=document.querySelector('.hero2__sub');
+    const t=setTimeout(sceneOpen,1800);
+    if(sub)sub.addEventListener('animationend',()=>{clearTimeout(t);sceneOpen();},{once:true});
+  }
+  let kicked=false;
+  const kick=()=>{if(!kicked){kicked=true;startIntro();}};
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(kick);setTimeout(kick,1200);}
+  else kick();
+  apply(0);onScroll();
+})();
 
 /* ---------- chrome ---------- */
 const mastEl=$('#mast');
