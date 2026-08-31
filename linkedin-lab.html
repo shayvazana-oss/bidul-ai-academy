@@ -548,6 +548,71 @@ footer p{max-width:860px;line-height:1.8}
 .stcard small{color:var(--muted);font-size:11px;line-height:1.4}
 @media(max-width:760px){.stgrid{grid-template-columns:repeat(2,1fr)}.stcard:last-child{grid-column:1/-1}.rxchip{display:none}.licard{rotate:none}}
 @media(prefers-reduced-motion:reduce){.licard,.rxchip{animation:none}}
+
+/* ===== hero ignition sequence ===== */
+.hero{--ez-thrust:cubic-bezier(.22,1,.36,1);--ez-land:cubic-bezier(.34,1.45,.64,1);--ez-pop:cubic-bezier(.34,1.8,.5,1)}
+.hero h1.giant{position:relative;z-index:0}
+/* baseline masks — padding/negative-margin pair keeps Hebrew descenders unclipped */
+.hl{display:block;overflow:hidden;padding-bottom:.12em;margin-bottom:-.12em}
+.hli{display:block}
+.arc{position:absolute;left:50%;bottom:-10px;transform:translateX(-50%);width:min(400px,76%);z-index:-1;pointer-events:none}
+.arc-star{transform-box:fill-box;transform-origin:center}
+.btn-p{position:relative}
+.ig{position:absolute;left:50%;bottom:-7px;width:12px;height:12px;margin-left:-6px;border:1px solid var(--li);border-radius:50%;opacity:0;pointer-events:none}
+/* standalone rotate never collides with transform/translate/scale */
+.licard{transition:rotate .35s cubic-bezier(.22,1,.36,1)}
+.licard:hover{rotate:0deg}
+
+/* keyframes are from-states only: natural styles are the final frame */
+@keyframes lift{from{opacity:0;transform:translateY(112%)}}
+@keyframes riseIn{from{opacity:0;transform:translateY(var(--ty,12px))}}
+@keyframes fadeIn{from{opacity:0}}
+@keyframes land{from{opacity:0;translate:0 var(--land-y,34px);scale:.94}}
+@keyframes ringDraw{from{stroke-dashoffset:82}}
+@keyframes arcDraw{from{stroke-dashoffset:100}}
+@keyframes spark{from{opacity:0;transform:scale(.3)}60%{transform:scale(1.15)}}
+@keyframes pop{from{opacity:0;scale:.4}}
+@keyframes numPulse{50%{scale:1.06}}
+@keyframes ignite{from{opacity:0;transform:scale(.4)}20%{opacity:.9}to{opacity:0;transform:scale(2.6)}}
+
+.hero.launch .kicker{animation:riseIn .5s var(--ez-thrust) backwards}
+.hero.launch .hli{animation:lift .64s var(--ez-thrust) .08s backwards}
+.hero.launch .hl+.hl .hli{animation-delay:.24s}
+.hero.launch .lede{animation:riseIn .55s var(--ez-thrust) .45s backwards}
+.hero.launch .cov-btns{--ty:10px;animation:riseIn .5s var(--ez-thrust) .62s backwards}
+.hero.launch .cta-note{animation:fadeIn .45s ease-out .78s backwards}
+.hero.launch .arc-reveal{animation:arcDraw .7s var(--ez-thrust) .7s backwards}
+.hero.launch .arc-star{animation:spark .3s var(--ez-pop) 1.4s backwards}
+.hero.launch .ig{animation:ignite .7s cubic-bezier(.22,.61,.36,1) .85s both}
+/* comma-lists restate liFloat: an .launch animation shorthand would otherwise kill the float */
+.hero.launch .c-score{animation:liFloat 6s .9s ease-in-out infinite alternate,land .65s var(--ez-land) .9s backwards}
+.hero.launch .c-post{animation:liFloat 7s ease-in-out infinite alternate,land .65s var(--ez-land) 1.05s backwards}
+.hero.launch .c-conn{animation:liFloat 8s 1.5s ease-in-out infinite alternate,land .65s var(--ez-land) 1.2s backwards}
+.hero.launch .sc-ring circle+circle{animation:ringDraw .9s var(--ez-thrust) 1.25s backwards}
+.hero.launch .sc-num{animation:numPulse .26s ease-out 2.15s backwards}
+.hero.launch .rxchip{animation:liFloat 5s ease-in-out infinite alternate,pop .42s var(--ez-pop) backwards}
+.hero.launch .rxchip.r-1{animation-delay:.4s,1.75s}
+.hero.launch .rxchip.r-2{animation-delay:1.1s,1.84s}
+.hero.launch .rxchip.r-3{animation-delay:1.8s,1.93s}
+.hero.launch .stcard{--ty:16px;animation:riseIn .45s var(--ez-thrust) backwards}
+.hero.launch .stcard:nth-child(1){animation-delay:1.9s}
+.hero.launch .stcard:nth-child(2){animation-delay:1.98s}
+.hero.launch .stcard:nth-child(3){animation-delay:2.06s}
+.hero.launch .stcard:nth-child(4){animation-delay:2.14s}
+.hero.launch .stcard:nth-child(5){animation-delay:2.22s}
+
+@media(max-width:760px){
+  .hero{--ty:8px}
+  .licard{--land-y:18px}
+  .hero.launch .c-score{animation-delay:.9s,.9s}
+  .hero.launch .c-post{animation-delay:0s,1.02s}
+  .hero.launch .c-conn{animation-delay:1.5s,1.14s}
+  .hero.launch .stcard{--ty:10px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero.launch *{animation:none!important}
+  .licard{transition:none}
+}
 </style>
 </head>
 <body>
@@ -581,37 +646,45 @@ footer p{max-width:860px;line-height:1.8}
 <section class="hero" data-view="home" style="padding-bottom:26px">
   <div class="wrap" style="text-align:center">
     <div class="kicker">🚀 מסלול שיגור בחמש תחנות · חינם, בדפדפן שלכם</div>
-    <h1 class="giant serif" style="margin-inline:auto">משגרים את חשבון הלינקדאין שלכם<br><span class="go">אל הכוכבים</span></h1>
+    <h1 class="giant serif" style="margin-inline:auto">
+      <span class="hl"><span class="hli">משגרים את חשבון הלינקדאין שלכם</span></span>
+      <span class="hl"><span class="hli go">אל הכוכבים</span></span>
+      <svg class="arc" viewBox="0 0 400 48" aria-hidden="true">
+        <defs><mask id="arcm"><path class="arc-reveal" d="M392 40 Q 210 -12 10 16" pathLength="100" fill="none" stroke="#fff" stroke-width="9" stroke-dasharray="100" stroke-dashoffset="0"/></mask></defs>
+        <path d="M392 40 Q 210 -12 10 16" pathLength="100" fill="none" stroke="#0a66c2" stroke-opacity=".3" stroke-width="1.5" stroke-linecap="round" stroke-dasharray=".2 3" mask="url(#arcm)"/>
+        <path class="arc-star" fill="#0a66c2" opacity=".85" d="M10 16 m0 -6 l1.4 4.6 4.6 1.4 -4.6 1.4 -1.4 4.6 -1.4 -4.6 -4.6 -1.4 4.6 -1.4 z"/>
+      </svg>
+    </h1>
     <p class="lede" style="margin-inline:auto">בלי דלק מפוקפק ובלי הבטחות ריקות — מסלול של חמש תחנות שממצב אתכם כמומחים, צעד אחר צעד. הכול פתוח, בעברית, ורץ אצלכם בדפדפן.</p>
     <div class="cov-btns" style="justify-content:center">
-      <a class="btn-p" href="#audit">תחנה 1 · סרוק את הפרופיל</a>
+      <a class="btn-p" href="#audit">תחנה 1 · סרוק את הפרופיל<span class="ig" aria-hidden="true"></span></a>
       <a class="btn-g" href="#content">דלג למנוע התוכן</a>
     </div>
     <p class="cta-note">✓ חינם · בלי הרשמה · הנתונים נשמרים בדפדפן שלכם בלבד</p>
 
-    <div class="li-wrap rv" aria-hidden="true">
-      <span class="rxchip r-1">👍</span>
-      <span class="rxchip r-2">💬</span>
-      <span class="rxchip r-3">🔗</span>
+    <div class="li-wrap" aria-hidden="true">
+      <span class="rxchip r-1" data-depth="12">👍</span>
+      <span class="rxchip r-2" data-depth="12">💬</span>
+      <span class="rxchip r-3" data-depth="12">🔗</span>
       <div class="li-strip">
-        <div class="licard c-score">
-          <svg viewBox="0 0 84 84" class="sc-ring"><circle cx="42" cy="42" r="36" fill="none" stroke="#e5eaf1" stroke-width="8"/><circle cx="42" cy="42" r="36" fill="none" stroke="#0a66c2" stroke-width="8" stroke-linecap="round" stroke-dasharray="185 226" transform="rotate(-90 42 42)"/></svg>
-          <div class="sc-num">82<small>/100</small></div>
+        <div class="licard c-score" data-depth="4">
+          <svg viewBox="0 0 84 84" class="sc-ring"><circle cx="42" cy="42" r="36" fill="none" stroke="#e5eaf1" stroke-width="8"/><circle cx="42" cy="42" r="36" fill="none" stroke="#0a66c2" stroke-width="8" stroke-linecap="round" pathLength="100" stroke-dasharray="82 100" transform="rotate(-90 42 42)"/></svg>
+          <div class="sc-num"><span id="scNum">82</span><small>/100</small></div>
           <div class="sc-lbl">ציון פרופיל</div>
         </div>
-        <div class="licard c-post">
+        <div class="licard c-post" data-depth="8">
           <div class="lp-head"><span class="lp-av"></span><span class="lp-name"><b>הפרופיל שלכם</b><small>הכותרת מהאשף · שעה · 🌐</small></span></div>
           <p class="lp-text">רוב היועצים מתמחרים לפי שעה. וזו טעות.<span class="lp-more"> …עוד</span></p>
           <div class="lp-rx"><span>👍💡❤️ 47</span><span>12 תגובות · 4 שיתופים</span></div>
         </div>
-        <div class="licard c-conn">
+        <div class="licard c-conn" data-depth="6">
           <div class="lc-avs"><i style="background:#dbe9f9">ד</i><i style="background:#e8f3e3">ר</i><i style="background:#fdf0e3">א</i><i style="background:#f1ecfd">+</i></div>
           <div class="lc-txt"><b>3 בקשות חיבור נכנסות</b><small>מהקהל שאתם רוצים · השבוע</small></div>
         </div>
       </div>
     </div>
 
-    <nav class="stgrid rv" aria-label="חמש התחנות">
+    <nav class="stgrid" aria-label="חמש התחנות">
       <a class="stcard" href="#audit"><span class="n">1</span><b>סורק הפרופיל</b><small>17 בדיקות משוקללות</small></a>
       <a class="stcard" href="#position"><span class="n">2</span><b>אשף המיצוב</b><small>5 שדות, כל הניסוחים</small></a>
       <a class="stcard" href="#content"><span class="n">3</span><b>מנוע התוכן</b><small>12 תבניות + קרוסלות</small></a>
@@ -2076,6 +2149,57 @@ $('#carPrintBtn').addEventListener('click',()=>{
   setTimeout(done,1500); /* fallback for browsers that skip afterprint */
 });
 
+/* ---------- hero ignition (plays once per page load) ---------- */
+const heroEl=document.querySelector('.hero');
+const scNumEl=document.getElementById('scNum');
+const mRed=matchMedia('(prefers-reduced-motion:reduce)');
+let heroPlayed=false,scRaf=0;
+function runScore(){
+  cancelAnimationFrame(scRaf);
+  const t0=performance.now()+1250,D=900; /* matches the ring: 1.25s delay, .9s sweep */
+  scNumEl.textContent='0';
+  const step=now=>{
+    const p=Math.min(1,Math.max(0,(now-t0)/D));
+    scNumEl.textContent=Math.round(82*(1-Math.pow(1-p,3)));
+    if(p<1)scRaf=requestAnimationFrame(step);
+  };
+  scRaf=requestAnimationFrame(step);
+}
+function launchHero(){
+  if(mRed.matches||heroPlayed){heroEl.classList.remove('launch');scNumEl.textContent='82';return;}
+  heroPlayed=true;
+  heroEl.classList.add('launch');
+  runScore();
+}
+/* ---------- hero parallax — fine pointers only, idle-governed ---------- */
+(function(){
+  if(!matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+  const els=[...heroEl.querySelectorAll('[data-depth]')];
+  let raf=0,tx=0,ty=0,cx=0,cy=0,rect=null,inView=true;
+  const stop=()=>{cancelAnimationFrame(raf);raf=0;};
+  const clear=()=>{stop();els.forEach(el=>el.style.translate='');tx=ty=cx=cy=0;};
+  const tick=()=>{
+    cx+=(tx-cx)*.08;cy+=(ty-cy)*.08;
+    els.forEach(el=>{const d=+el.dataset.depth;
+      el.style.translate=(cx*d).toFixed(2)+'px '+(cy*d*.7).toFixed(2)+'px';});
+    raf=(Math.abs(tx-cx)+Math.abs(ty-cy)>.001)?requestAnimationFrame(tick):0;
+  };
+  const wake=()=>{if(!raf&&inView&&document.visibilityState==='visible'&&!mRed.matches)raf=requestAnimationFrame(tick);};
+  heroEl.addEventListener('pointermove',e=>{
+    if(mRed.matches)return;
+    rect=rect||heroEl.getBoundingClientRect();
+    tx=(.5-(e.clientX-rect.left)/rect.width)*2;
+    ty=(.5-(e.clientY-rect.top)/rect.height)*2;
+    wake();
+  },{passive:true});
+  heroEl.addEventListener('pointerleave',()=>{tx=ty=0;wake();});
+  addEventListener('resize',()=>{rect=null;},{passive:true});
+  addEventListener('scroll',()=>{rect=null;},{passive:true});
+  new IntersectionObserver(en=>{inView=en[0].isIntersecting;if(!inView)stop();}).observe(heroEl);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible')stop();});
+  mRed.addEventListener('change',()=>{if(mRed.matches)clear();});
+})();
+
 /* ---------- view router: each station is its own page ---------- */
 const VIEWS=['home','audit','position','content','checker','playbook'];
 function currentView(){const h=location.hash.replace('#','');return VIEWS.includes(h)?h:'home';}
@@ -2088,6 +2212,7 @@ function applyView(){
     a.classList.toggle('on',(a.getAttribute('href')||'')==='#'+v);
   });
   document.querySelectorAll('[data-view="'+v+'"] .rv:not(.in)').forEach(e=>e.classList.add('in'));
+  if(v==='home')launchHero();
   scrollTo(0,0);
 }
 addEventListener('hashchange',applyView);
