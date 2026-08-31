@@ -509,54 +509,45 @@ footer p{max-width:860px;line-height:1.8}
 @media(max-width:700px){.stationbar a{font-size:12.5px;padding:10px 10px}}
 [data-view]{display:none}
 .m-links a.on{color:var(--li)}
-/* ---------- launch scene: one photo, one camera, scroll drives the liftoff ---------- */
-:root{--scene-travel:300svh}
-.scene{height:calc(100svh + var(--scene-travel));position:relative;background:#0b0a12}
-.scene__vp{position:sticky;top:0;height:100svh;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
-.scene__backdrop{position:absolute;inset:0;z-index:-1;background:#0b0a12}
-.scene__camera{position:absolute;inset:0;transform:scale(var(--cam-z,1));transform-origin:50% 50%}
-.is-moving .scene__camera,.is-moving .scene__photo{will-change:transform}
-.scene__photo{position:absolute;left:50%;top:50%;width:max(108.699%,172.95svh);height:auto;max-width:none;transform:translate(var(--cam-x,-47.957%),var(--cam-y,-80.097%))}
-.scene__glow{position:absolute;inset:0;pointer-events:none;opacity:var(--glow-o,1);background:radial-gradient(110% 112% at 50% 0%,rgba(247,127,113,0) 66%,rgba(247,127,113,.5) 84%,rgba(255,80,60,1) 100%)}
-.hero2{display:flex;flex-direction:column;align-items:center;gap:24px;width:min(820px,92%);padding-bottom:11svh;text-align:center;visibility:var(--hero-vis,visible);transform:translateY(calc(var(--hero-out,0)*-163px))}
-.hero2__badge{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:9px 18px;color:rgba(255,255,255,.9);font-size:13px;font-weight:600;letter-spacing:.02em;backdrop-filter:blur(10px);opacity:var(--hero-o,1);filter:var(--hero-filter,none)}
-.hero2__title{font-family:'Frank Ruhl Libre',Heebo,serif;font-weight:800;font-size:clamp(42px,6.4vw,86px);line-height:1.06;letter-spacing:-.02em;color:#fff;margin:0;opacity:var(--hero-o,1);filter:var(--hero-filter,none)}
-.hero2__gold{color:#ff9d85}
-.hero2__sub{color:rgba(255,255,255,.85);font-size:clamp(15px,1.55vw,19px);line-height:1.65;max-width:540px;margin:0;opacity:var(--hero-o,1);filter:var(--hero-filter,none)}
-.hero2__hint{color:rgba(255,255,255,.55);font-size:12px;letter-spacing:.14em;opacity:var(--hero-o,1);filter:var(--hero-filter,none)}
-.hero2__title .line{display:block;clip-path:inset(-0.35em -0.6em -0.05em -0.6em)}
-.hero2__title .line__in{display:block}
-html.js:not(.is-open):not(.is-instant) .line__in{transform:translateY(100%);opacity:0}
-html.js:not(.is-open):not(.is-instant) .hero2__badge,html.js:not(.is-open):not(.is-instant) .hero2__sub,html.js:not(.is-open):not(.is-instant) .hero2__hint{opacity:0}
-@keyframes line-reveal{0%{transform:translateY(100%);opacity:0}25%{opacity:1}100%{transform:translateY(0);opacity:1}}
-@keyframes sc-fade{to{opacity:1}}
-.is-ready .line__in{animation:line-reveal .9s cubic-bezier(.16,1,.3,1) forwards}
-.is-ready .hero2__title .line:nth-child(1) .line__in{animation-delay:.08s}
-.is-ready .hero2__title .line:nth-child(2) .line__in{animation-delay:.21s}
-.is-ready .hero2__title .line:nth-child(3) .line__in{animation-delay:.34s}
-.is-ready .hero2__badge,.is-ready .hero2__sub,.is-ready .hero2__hint{animation:sc-fade .35s linear .95s forwards}
-.is-open .hero2__title .line{clip-path:none}
-.is-open .line__in,.is-open .hero2__badge,.is-open .hero2__sub,.is-open .hero2__hint{animation:none;opacity:var(--hero-o,1);transform:none}
-.is-instant .hero2__title .line{clip-path:none}
-.plat{position:absolute;left:50%;top:15%;transform:translateX(-50%);width:min(960px,94%);display:flex;flex-direction:column;align-items:center;opacity:var(--plat-o,0);visibility:var(--plat-vis,hidden)}
-.plat__pill{display:inline-flex;align-items:center;gap:9px;background:rgba(10,7,7,.4);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:8px 16px;color:rgba(255,255,255,.85);font-size:12px;font-weight:700;letter-spacing:.06em;transform:translateY(calc((1 - var(--plat-text-p,0))*62svh))}
-.plat__pill i{width:5px;height:5px;border-radius:50%;background:#7ef0a2;display:inline-block}
-.plat__title{font-family:'Frank Ruhl Libre',Heebo,serif;font-weight:700;color:#fff;font-size:clamp(26px,3.4vw,44px);letter-spacing:-.02em;margin:16px 0 26px;text-align:center;transform:translateY(calc((1 - var(--plat-text-p,0))*62svh))}
-.plat__window{width:100%;border-radius:16px;background:rgba(15,14,20,.55);backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 120px rgba(0,0,0,.55);overflow:hidden;transform:translateY(calc((1 - var(--plat-shot-p,0))*54svh))}
-.plat__bar{display:flex;align-items:center;gap:7px;padding:11px 16px;background:rgba(18,18,24,.92);border-bottom:1px solid rgba(255,255,255,.08)}
-.plat__dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
-.plat__url{margin:0 auto;background:rgba(0,0,0,.4);border-radius:7px;padding:4px 16px;font-size:11.5px;color:rgba(255,255,255,.6);direction:ltr;letter-spacing:.01em}
-.plat__body{padding:24px 22px 20px}
-.plat__grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.plat__st{display:flex;flex-direction:column;align-items:center;gap:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:16px 10px;color:#fff;text-align:center;transition:background .15s,transform .15s}
-.plat__st:hover{background:rgba(255,255,255,.14);transform:translateY(-2px)}
-.plat__st .n{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);font-size:11.5px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
-.plat__st b{font-size:13.5px;font-weight:700}
-.plat__st small{color:rgba(255,255,255,.55);font-size:11px;line-height:1.4}
-.plat__ctas{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
-.plat__note{text-align:center;color:rgba(255,255,255,.5);font-size:12px;margin:14px 0 0}
-@media(max-width:760px){.plat__grid{grid-template-columns:repeat(2,1fr)}.plat__st:last-child{grid-column:1/-1}.plat{top:12%}}
-@media(prefers-reduced-motion:reduce){:root{--scene-travel:120svh}}
+/* ---------- light hero: feed-flavored floating cards ---------- */
+.serif{font-family:'Frank Ruhl Libre',Heebo,serif;font-weight:800;letter-spacing:-.015em}
+.li-wrap{position:relative;margin-top:38px}
+.li-strip{display:flex;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap}
+.licard{background:#fff;border:1px solid var(--hair);border-radius:14px;box-shadow:var(--shadow);padding:16px;text-align:right}
+.licard.c-post{width:300px;rotate:-1.5deg;animation:liFloat 7s ease-in-out infinite alternate}
+.licard.c-score{width:170px;rotate:2deg;text-align:center;animation:liFloat 6s .9s ease-in-out infinite alternate}
+.licard.c-conn{width:225px;rotate:-2deg;animation:liFloat 8s 1.5s ease-in-out infinite alternate}
+@keyframes liFloat{from{transform:translateY(0)}to{transform:translateY(-9px)}}
+.rxchip{position:absolute;z-index:2;background:#fff;border:1px solid var(--hair);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--shadow-sm);animation:liFloat 5s ease-in-out infinite alternate}
+.rxchip.r-1{top:-16px;inset-inline-start:16%;animation-delay:.4s}
+.rxchip.r-2{bottom:-12px;inset-inline-end:14%;animation-delay:1.1s}
+.rxchip.r-3{top:34%;inset-inline-end:4%;animation-delay:1.8s}
+.lp-head{display:flex;gap:10px;align-items:center}
+.lp-av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--li),#79b8ef);flex:0 0 auto}
+.lp-name{display:flex;flex-direction:column;line-height:1.3}
+.lp-name b{font-size:13px}
+.lp-name small{font-size:11px;color:var(--muted)}
+.lp-text{font-size:12.5px;color:var(--ink2);line-height:1.65;margin:10px 0 12px;text-align:right}
+.lp-more{color:var(--muted)}
+.lp-rx{display:flex;justify-content:space-between;border-top:1px solid var(--hair);padding-top:9px;font-size:11px;color:var(--muted)}
+.sc-ring{width:74px;height:74px;display:block;margin:0 auto 8px}
+.sc-num{font-size:24px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums}
+.sc-num small{font-size:12px;color:var(--muted);font-weight:600}
+.sc-lbl{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.lc-avs{display:flex;justify-content:center;margin-bottom:10px}
+.lc-avs i{width:34px;height:34px;border-radius:50%;border:2px solid #fff;margin-inline-start:-8px;font-style:normal;font-weight:800;font-size:13px;color:var(--ink2);display:inline-flex;align-items:center;justify-content:center}
+.lc-avs i:first-child{margin-inline-start:0}
+.lc-txt{text-align:center;line-height:1.4}
+.lc-txt b{font-size:12.5px;display:block}
+.lc-txt small{font-size:11px;color:var(--muted)}
+.stgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;max-width:980px;margin:38px auto 0}
+.stcard{display:flex;flex-direction:column;align-items:center;gap:5px;background:#fff;border:1px solid var(--hair);border-radius:12px;padding:15px 10px;box-shadow:var(--shadow-sm);transition:transform .15s,border-color .15s;text-align:center;color:var(--ink)}
+.stcard:hover{transform:translateY(-2px);border-color:var(--li)}
+.stcard .n{width:22px;height:22px;border-radius:50%;background:var(--li-soft);color:var(--li);font-size:11.5px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.stcard b{font-size:13.5px;font-weight:700}
+.stcard small{color:var(--muted);font-size:11px;line-height:1.4}
+@media(max-width:760px){.stgrid{grid-template-columns:repeat(2,1fr)}.stcard:last-child{grid-column:1/-1}.rxchip{display:none}.licard{rotate:none}}
+@media(prefers-reduced-motion:reduce){.licard,.rxchip{animation:none}}
 </style>
 </head>
 <body>
@@ -587,42 +578,46 @@ html.js:not(.is-open):not(.is-instant) .hero2__badge,html.js:not(.is-open):not(.
 </div>
 
 <!-- HERO -->
-<section class="scene" id="scene" data-view="home">
-  <div class="scene__vp">
-    <div class="scene__backdrop" aria-hidden="true">
-      <div class="scene__camera"><img class="scene__photo" src="assets/hero-space.jpg" alt="" aria-hidden="true"></div>
-      <div class="scene__glow"></div>
+<section class="hero" data-view="home" style="padding-bottom:26px">
+  <div class="wrap" style="text-align:center">
+    <div class="kicker">🚀 מסלול שיגור בחמש תחנות · חינם, בדפדפן שלכם</div>
+    <h1 class="giant serif" style="margin-inline:auto">משגרים את חשבון הלינקדאין שלכם<br><span class="go">אל הכוכבים</span></h1>
+    <p class="lede" style="margin-inline:auto">בלי דלק מפוקפק ובלי הבטחות ריקות — מסלול של חמש תחנות שממצב אתכם כמומחים, צעד אחר צעד. הכול פתוח, בעברית, ורץ אצלכם בדפדפן.</p>
+    <div class="cov-btns" style="justify-content:center">
+      <a class="btn-p" href="#audit">תחנה 1 · סרוק את הפרופיל</a>
+      <a class="btn-g" href="#content">דלג למנוע התוכן</a>
     </div>
-    <div class="hero2">
-      <div class="hero2__badge">🚀 מסלול שיגור בחמש תחנות · חינם, בדפדפן שלכם</div>
-      <h1 class="hero2__title"><span class="line"><span class="line__in">משגרים את חשבון</span></span><span class="line"><span class="line__in">הלינקדאין שלכם</span></span><span class="line"><span class="line__in hero2__gold">אל הכוכבים</span></span></h1>
-      <p class="hero2__sub">בלי דלק מפוקפק ובלי הבטחות ריקות — מסלול של חמש תחנות שממצב אתכם כמומחים, צעד אחר צעד. גללו לשיגור.</p>
-      <div class="hero2__hint" aria-hidden="true">גללו ▾</div>
-    </div>
-    <div class="plat" aria-label="תחנת הבקרה">
-      <div class="plat__pill"><i></i>תחנת הבקרה</div>
-      <h2 class="plat__title">חמש תחנות. מסלול אחד. בלי קיצורי דרך.</h2>
-      <div class="plat__window">
-        <div class="plat__bar">
-          <span class="plat__dot" style="background:#EE6A5F"></span><span class="plat__dot" style="background:#F5BD4F"></span><span class="plat__dot" style="background:#61C454"></span>
-          <span class="plat__url">shayvazana-oss.github.io/bidul-ai-academy</span>
+    <p class="cta-note">✓ חינם · בלי הרשמה · הנתונים נשמרים בדפדפן שלכם בלבד</p>
+
+    <div class="li-wrap rv" aria-hidden="true">
+      <span class="rxchip r-1">👍</span>
+      <span class="rxchip r-2">💬</span>
+      <span class="rxchip r-3">🔗</span>
+      <div class="li-strip">
+        <div class="licard c-score">
+          <svg viewBox="0 0 84 84" class="sc-ring"><circle cx="42" cy="42" r="36" fill="none" stroke="#e5eaf1" stroke-width="8"/><circle cx="42" cy="42" r="36" fill="none" stroke="#0a66c2" stroke-width="8" stroke-linecap="round" stroke-dasharray="185 226" transform="rotate(-90 42 42)"/></svg>
+          <div class="sc-num">82<small>/100</small></div>
+          <div class="sc-lbl">ציון פרופיל</div>
         </div>
-        <div class="plat__body">
-          <div class="plat__grid">
-            <a class="plat__st" href="#audit"><span class="n">1</span><b>סורק הפרופיל</b><small>17 בדיקות משוקללות</small></a>
-            <a class="plat__st" href="#position"><span class="n">2</span><b>אשף המיצוב</b><small>5 שדות, כל הניסוחים</small></a>
-            <a class="plat__st" href="#content"><span class="n">3</span><b>מנוע התוכן</b><small>12 תבניות + קרוסלות</small></a>
-            <a class="plat__st" href="#checker"><span class="n">4</span><b>בודק הפוסט</b><small>ביקורת לפני פרסום</small></a>
-            <a class="plat__st" href="#playbook"><span class="n">5</span><b>הפלייבוק</b><small>30 דק' ביום, בסדר הנכון</small></a>
-          </div>
-          <div class="plat__ctas">
-            <a class="btn-p" href="#audit">תחנה 1 · סרוק את הפרופיל</a>
-            <a class="btn-g" href="#content">דלג למנוע התוכן</a>
-          </div>
-          <p class="plat__note">✓ חינם · בלי הרשמה · הנתונים נשמרים בדפדפן שלכם בלבד</p>
+        <div class="licard c-post">
+          <div class="lp-head"><span class="lp-av"></span><span class="lp-name"><b>הפרופיל שלכם</b><small>הכותרת מהאשף · שעה · 🌐</small></span></div>
+          <p class="lp-text">רוב היועצים מתמחרים לפי שעה. וזו טעות.<span class="lp-more"> …עוד</span></p>
+          <div class="lp-rx"><span>👍💡❤️ 47</span><span>12 תגובות · 4 שיתופים</span></div>
+        </div>
+        <div class="licard c-conn">
+          <div class="lc-avs"><i style="background:#dbe9f9">ד</i><i style="background:#e8f3e3">ר</i><i style="background:#fdf0e3">א</i><i style="background:#f1ecfd">+</i></div>
+          <div class="lc-txt"><b>3 בקשות חיבור נכנסות</b><small>מהקהל שאתם רוצים · השבוע</small></div>
         </div>
       </div>
     </div>
+
+    <nav class="stgrid rv" aria-label="חמש התחנות">
+      <a class="stcard" href="#audit"><span class="n">1</span><b>סורק הפרופיל</b><small>17 בדיקות משוקללות</small></a>
+      <a class="stcard" href="#position"><span class="n">2</span><b>אשף המיצוב</b><small>5 שדות, כל הניסוחים</small></a>
+      <a class="stcard" href="#content"><span class="n">3</span><b>מנוע התוכן</b><small>12 תבניות + קרוסלות</small></a>
+      <a class="stcard" href="#checker"><span class="n">4</span><b>בודק הפוסט</b><small>ביקורת לפני פרסום</small></a>
+      <a class="stcard" href="#playbook"><span class="n">5</span><b>הפלייבוק</b><small>30 דק' ביום, בסדר הנכון</small></a>
+    </nav>
   </div>
 </section>
 
@@ -2098,73 +2093,6 @@ function applyView(){
 addEventListener('hashchange',applyView);
 applyView();
 
-/* ---------- launch scene: camera, exits, arrival, intro ---------- */
-document.documentElement.classList.add('js');
-(function(){
-  const scene=document.getElementById('scene');if(!scene)return;
-  const root=document.documentElement;
-  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const c01=x=>x<0?0:x>1?1:x;
-  const outCubic=t=>1-Math.pow(1-t,3),outQuart=t=>1-Math.pow(1-t,4);
-  const inOutCubic=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-  const trk=(p,a,b,e)=>e(c01((p-a)/(b-a)));
-  let target=0,current=0,raf=0,last=0;
-  function prog(){
-    if(currentView()!=='home')return 0;
-    const h=scene.offsetHeight-innerHeight;
-    return h>0?c01((scrollY-scene.offsetTop)/h):0;
-  }
-  function apply(p){
-    const q=c01(p/0.86);
-    root.style.setProperty('--cam-x',(-47.957+(-50+47.957)*q)+'%');
-    root.style.setProperty('--cam-y',(-80.097+(-36.716+80.097)*q)+'%');
-    root.style.setProperty('--cam-z',reduced?'1':String(1+0.11*Math.sin(Math.PI*q)));
-    const exit=trk(p,0.297,0.508,t=>t);
-    root.style.setProperty('--hero-out',String(Math.pow(exit,1.75)));
-    root.style.setProperty('--hero-o',String(Math.pow(1-c01((exit-0.38)/0.62),1.25)));
-    root.style.setProperty('--hero-filter',exit>0?('blur('+(18*Math.pow(exit,0.9)).toFixed(2)+'px)'):'none');
-    root.style.setProperty('--hero-vis',exit>=1?'hidden':'visible');
-    root.style.setProperty('--glow-o',String(1-trk(p,0.55,0.95,inOutCubic)));
-    root.style.setProperty('--plat-o',String(trk(p,0.557,0.623,outCubic)));
-    root.style.setProperty('--plat-text-p',String(trk(p,0.563,0.967,outQuart)));
-    root.style.setProperty('--plat-shot-p',String(trk(p,0.557,0.984,outCubic)));
-    root.style.setProperty('--plat-vis',p>0.54?'visible':'hidden');
-    root.classList.toggle('is-moving',p>0.001&&p<0.999);
-    if(p>0.05)sceneOpen();
-  }
-  function frame(ts){
-    const dt=Math.min(0.05,(ts-last)/1000||0.016);last=ts;
-    let step=(target-current)*(1-Math.exp(-9*dt));
-    const cap=0.40*dt;
-    if(step>cap)step=cap;else if(step<-cap)step=-cap;
-    current+=step;
-    if(Math.abs(target-current)<0.0004)current=target;
-    apply(current);
-    if(current!==target)raf=requestAnimationFrame(frame);else raf=0;
-  }
-  function onScroll(){
-    target=prog();
-    if(reduced){current=target;apply(current);return;}
-    if(!raf){last=performance.now();raf=requestAnimationFrame(frame);}
-  }
-  addEventListener('scroll',onScroll,{passive:true});
-  addEventListener('resize',onScroll);
-  addEventListener('hashchange',()=>setTimeout(onScroll,60));
-  let openedIntro=false;
-  function sceneOpen(){if(openedIntro)return;openedIntro=true;root.classList.add('is-open');}
-  function startIntro(){
-    if(reduced||prog()>0.02||currentView()!=='home'){root.classList.add('is-instant');openedIntro=true;return;}
-    root.classList.add('is-ready');
-    const sub=document.querySelector('.hero2__sub');
-    const t=setTimeout(sceneOpen,1800);
-    if(sub)sub.addEventListener('animationend',()=>{clearTimeout(t);sceneOpen();},{once:true});
-  }
-  let kicked=false;
-  const kick=()=>{if(!kicked){kicked=true;startIntro();}};
-  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(kick);setTimeout(kick,1200);}
-  else kick();
-  apply(0);onScroll();
-})();
 
 /* ---------- chrome ---------- */
 const mastEl=$('#mast');
