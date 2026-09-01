@@ -62,11 +62,17 @@ function throttled(ip: string): Throttle {
 
   const limit = ip === "unknown" ? UNKNOWN_IP_LIMIT : RATE_LIMIT;
   const recent = (hits.get(ip) ?? []).filter(fresh);
-  if (recent.length >= limit) {
-    hits.set(ip, recent);
-    return "ip";
-  }
+  hits.set(ip, recent);
+  if (recent.length >= limit) return "ip";
+  return null;
+}
 
+/** Charge one slot — called only right before a billable model call, so a
+ *  request that fails validation never costs the user part of their quota. */
+function rateCharge(ip: string): void {
+  const now = Date.now();
+  const fresh = (ts: number) => now - ts < RATE_WINDOW_MS;
+  const recent = (hits.get(ip) ?? []).filter(fresh);
   recent.push(now);
   hits.set(ip, recent);
   globalHits.push(now);
@@ -80,7 +86,6 @@ function throttled(ip: string): Throttle {
       if (k !== ip) hits.delete(k);
     }
   }
-  return null;
 }
 
 /**
@@ -344,14 +349,24 @@ const VOICE_SYSTEM = `אתה בלשן סגנון. קיבלת 1–5 פוסטים 
 
 /* ---------- mode: audit — fill the profile checklist from the user's own export ---------- */
 
-/** LinkedIn's own PDF export runs a few hundred KB; this cap only blocks abuse. */
-const MAX_PDF_B64 = 9_000_000;
+/** LinkedIn's own PDF export runs a few hundred KB. Vercel rejects request
+ *  bodies over ~4.5MB before the handler runs, so every cap here must keep the
+ *  combined payload under that platform ceiling — otherwise the friendly
+ *  errors below are dead code and users get a raw 413. */
+const MAX_PDF_B64 = 3_000_000;
 const MAX_PROFILE_TEXT = 20_000;
 const MIN_PROFILE_TEXT = 200;
-/** Screenshots are downscaled client-side to ~1568px JPEG; this cap only blocks abuse. */
-const MAX_SHOT_B64 = 1_500_000;
+/** Screenshots are downscaled client-side to ~1568px JPEG. */
+const MAX_SHOT_B64 = 900_000;
 const MAX_SHOTS = 4;
+const MAX_COMBINED_B64 = 4_000_000;
 const SHOT_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
+/** First decoded bytes must match the declared type — keeps forged uploads off the model API. */
+const SHOT_MAGIC: Record<string, (b: Buffer) => boolean> = {
+  "image/jpeg": (b) => b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff,
+  "image/png": (b) => b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47,
+  "image/webp": (b) => b.toString("latin1", 0, 4) === "RIFF" && b.toString("latin1", 8, 12) === "WEBP",
+};
 
 const AuditOut = z.object({
   items: z
@@ -530,6 +545,7 @@ export default async function handler(request: Request): Promise<Response> {
     userContent: string,
     schema: S,
   ): Promise<{ out: z.infer<S>; usage: { input_tokens: number; output_tokens: number } } | Response> {
+    rateCharge(clientIp(request));
     const response = await client.messages.parse({
       model: "claude-opus-5",
       max_tokens: 8000,
@@ -653,7 +669,19 @@ export default async function handler(request: Request): Promise<Response> {
         if (!(b64.length % 4 === 0 && /^[A-Za-z0-9+/]+={0,2}$/.test(b64))) {
           return json({ error: "אחד הקבצים שהתקבלו אינו תמונה תקינה." }, 400, origin);
         }
+        const magic = SHOT_MAGIC[mt];
+        const head = Buffer.from(b64.slice(0, 24), "base64");
+        if (!magic || head.length < 12 || !magic(head)) {
+          return json({ error: "אחד הקבצים שהתקבלו אינו תמונה תקינה." }, 400, origin);
+        }
         shots.push({ mt: mt as "image/jpeg" | "image/png" | "image/webp", b64 });
+      }
+      if (pdf.length + shots.reduce((n, s) => n + s.b64.length, 0) + text.length > MAX_COMBINED_B64) {
+        return json(
+          { error: "החומר המצורף כבד מדי ביחד — הסירו צילום מסך אחד או צרפו קובץ PDF קטן יותר." },
+          400,
+          origin,
+        );
       }
       if (!pdf && !shots.length && text.length < MIN_PROFILE_TEXT) {
         return json(
@@ -693,10 +721,11 @@ export default async function handler(request: Request): Promise<Response> {
       }
       content.push({
         type: "text",
-        text: !pdf && text.length >= MIN_PROFILE_TEXT
+        text: !pdf && text.length > 0
           ? `הפרופיל כפי שהודבק ע"י הכותב:\n"""\n${text}\n"""\n\n${instruction}`
           : instruction,
       });
+      rateCharge(clientIp(request));
       const response = await client.messages.parse({
         model: "claude-opus-5",
         max_tokens: 8000,
@@ -833,6 +862,9 @@ export default async function handler(request: Request): Promise<Response> {
     }
     if (error instanceof Anthropic.APIError) {
       console.error("Anthropic API error", error.status, error.message);
+      if (error.status === 400 && /image/i.test(error.message)) {
+        return json({ error: "אחת התמונות שצורפו לא נקראה על ידי המודל — נסו לצלם מחדש או להסיר אותה." }, 400, origin);
+      }
       return json({ error: "שגיאה בשירות הניתוח. נסו שוב." }, 502, origin);
     }
     // AnthropicError is the SDK base class: schema-validation failures land here,

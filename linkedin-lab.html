@@ -1172,6 +1172,7 @@ async function aiPost(payload,statusEl,btn,waitMsg){
       body:JSON.stringify(payload)
     });
     const data=await res.json().catch(()=>({}));
+    if(res.status===413)throw new Error('החומר המצורף כבד מדי לשליחה — הסירו צילום מסך או צרפו קובץ קטן יותר.');
     if(!res.ok)throw new Error(data.error||('השרת החזיר שגיאה '+res.status));
     if(statusEl)statusEl.style.display='none';
     return data;
@@ -1282,8 +1283,8 @@ function audSetFile(f){
   if(f.type!=='application/pdf'&&!/\.pdf$/i.test(f.name)){
     statusSay($('#audStatus'),'זה לא קובץ PDF. ייצאו את הפרופיל מלינקדאין: More ‏← Save to PDF.','err');return;
   }
-  if(f.size>6*1024*1024){
-    statusSay($('#audStatus'),'הקובץ גדול מדי — יצוא הפרופיל של לינקדאין שוקל הרבה פחות. ודאו שזה הקובץ הנכון.','err');return;
+  if(f.size>2*1024*1024){
+    statusSay($('#audStatus'),'הקובץ גדול מדי (מעל 2MB) — יצוא הפרופיל של לינקדאין שוקל הרבה פחות. ודאו שזה הקובץ הנכון.','err');return;
   }
   const r=new FileReader();
   r.onload=()=>{
@@ -1299,33 +1300,57 @@ audFileInp.addEventListener('change',()=>audSetFile(audFileInp.files[0]));
 ['dragover','dragenter'].forEach(ev=>audDrop.addEventListener(ev,e=>{e.preventDefault();audDrop.classList.add('drag');}));
 ['dragleave','drop'].forEach(ev=>audDrop.addEventListener(ev,e=>{e.preventDefault();audDrop.classList.remove('drag');}));
 audDrop.addEventListener('drop',e=>audSetFile(e.dataTransfer.files&&e.dataTransfer.files[0]));
-let audShots=[];
+let audShots=[],audShrinking=0;
 const audShotsInp=$('#audShots');
 $('#audShotAdd').addEventListener('click',()=>audShotsInp.click());
 audShotsInp.addEventListener('change',async()=>{
   const files=[...audShotsInp.files];
   audShotsInp.value='';
-  for(const f of files){
-    if(audShots.length>=4){statusSay($('#audStatus'),'עד 4 צילומי מסך — הסירו אחד כדי להוסיף אחר.','err');break;}
-    if(!/^image\/(png|jpeg|webp)$/.test(f.type)){statusSay($('#audStatus'),'צילומי המסך חייבים להיות PNG, JPG או WebP.','err');continue;}
-    try{audShots.push(await audShrink(f));}
-    catch(e){statusSay($('#audStatus'),'קובץ התמונה לא נקרא — נסו קובץ אחר.','err');}
-  }
-  audRenderShots();
+  audShrinking++;
+  try{
+    for(const f of files){
+      if(audShots.length>=4){statusSay($('#audStatus'),'עד 4 צילומי מסך — הסירו אחד כדי להוסיף אחר.','err');break;}
+      if(!/^image\/(png|jpeg|webp)$/.test(f.type)){statusSay($('#audStatus'),'צילומי המסך חייבים להיות PNG, JPG או WebP.','err');continue;}
+      try{
+        const r=await audShrink(f,4-audShots.length);
+        /* the slot count may have changed while we were decoding — re-clamp before pushing */
+        const room=4-audShots.length;
+        if(r.shots.length>room)r.shots.length=Math.max(0,room);
+        audShots.push(...r.shots);
+        if(r.truncated)statusSay($('#audStatus'),'הצילום ארוך מאוד — נשלחים רק 4 החלקים העליונים. צלמו את ההמשך בנפרד.');
+        else if(r.shots.length>1)statusSay($('#audStatus'),'צילום ארוך פוצל ל-'+r.shots.length+' חלקים כדי שהטקסט יישאר קריא.');
+      }
+      catch(e){statusSay($('#audStatus'),e&&e.message==='shot-too-big'?'התמונה צפופה מדי גם אחרי דחיסה — נסו לצלם חלק קטן יותר מהעמוד.':'קובץ התמונה לא נקרא — נסו קובץ אחר.','err');}
+    }
+  }finally{audShrinking--;audRenderShots();}
 });
-async function audShrink(f){
+async function audShrink(f,slots){
   const url=URL.createObjectURL(f);
   try{
     const img=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=url;});
-    const MAX=1568,sc=Math.min(1,MAX/Math.max(img.naturalWidth||1,img.naturalHeight||1));
-    const c=document.createElement('canvas');
-    c.width=Math.max(1,Math.round((img.naturalWidth||1)*sc));
-    c.height=Math.max(1,Math.round((img.naturalHeight||1)*sc));
-    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
-    const durl=c.toDataURL('image/jpeg',.85);
-    return {mt:'image/jpeg',b64:durl.split(',')[1]||'',thumb:durl};
+    const W=img.naturalWidth||1,H=img.naturalHeight||1;
+    /* scale by WIDTH so tall full-page captures stay legible, then tile vertically */
+    const sc=Math.min(1,1568/W);
+    const w=Math.max(1,Math.round(W*sc)),fullH=Math.max(1,Math.round(H*sc));
+    const TILE=1568,need=Math.max(1,Math.ceil(fullH/TILE)),tiles=Math.min(Math.max(1,slots),need);
+    const out=[];
+    for(let t=0;t<tiles;t++){
+      const h=Math.min(TILE,fullH-t*TILE);
+      if(h<=0)break;
+      const c=document.createElement('canvas');c.width=w;c.height=h;
+      const g=c.getContext('2d');
+      g.fillStyle='#fff';g.fillRect(0,0,w,h); /* flatten transparency onto white, not black */
+      g.drawImage(img,0,(t*TILE)/sc,W,h/sc,0,0,w,h);
+      let q=.85,b64=c.toDataURL('image/jpeg',q).split(',')[1]||'';
+      while(b64.length>850000&&q>.5){q-=.15;b64=c.toDataURL('image/jpeg',q).split(',')[1]||'';}
+      if(b64.length>900000)throw new Error('shot-too-big');
+      out.push({mt:'image/jpeg',b64,thumb:'data:image/jpeg;base64,'+b64});
+    }
+    return {shots:out,truncated:need>tiles};
   }finally{URL.revokeObjectURL(url);}
 }
+/* a file dropped outside the dropzone must not navigate the tab away */
+['dragover','drop'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 function audRenderShots(){
   const t=$('#audShotThumbs');
   t.innerHTML=audShots.map((sh,i)=>'<span class="shotthumb"><img src="'+sh.thumb+'" alt="צילום מסך '+(i+1)+'"><button type="button" data-rm="'+i+'" aria-label="הסרת צילום המסך">×</button></span>').join('');
@@ -1336,13 +1361,21 @@ $('#audRun').addEventListener('click',async()=>{
   if(audBusy||!AI_ENDPOINT)return;
   const audOut=$('#audOut');audOut.classList.remove('on');audOut.innerHTML='';
   const text=$('#audText').value.trim();
+  if(audShrinking>0){
+    statusSay($('#audStatus'),'צילומי המסך עדיין מעובדים — עוד רגע ונסו שוב.','err');return;
+  }
   if(!audPdf&&!audShots.length&&text.length<200){
     statusSay($('#audStatus'),'צרפו את קובץ ה-PDF, צילומי מסך של הפרופיל, או הדביקו את טקסט העמוד (לפחות 200 תווים).','err');return;
+  }
+  const sendShots=audShots.slice(0,4);
+  const totalB64=(audPdf?audPdf.length:0)+sendShots.reduce((n,sh)=>n+sh.b64.length,0)+text.length;
+  if(totalB64>3800000){
+    statusSay($('#audStatus'),'החומר המצורף כבד מדי ביחד — הסירו צילום מסך או צרפו PDF קטן יותר.','err');return;
   }
   audBusy=true;
   const data=await aiPost({
     mode:'audit',
-    profile:Object.assign(audPdf?{pdf:audPdf}:(text.length>=200?{text}:{}),audShots.length?{shots:audShots.map(sh=>({mt:sh.mt,b64:sh.b64}))}:{}),
+    profile:Object.assign(audPdf?{pdf:audPdf}:(text.length>0?{text}:{}),sendShots.length?{shots:sendShots.map(sh=>({mt:sh.mt,b64:sh.b64}))}:{}),
     items:AUDIT_ITEMS,
     positioning:posPayload()
   },$('#audStatus'),$('#audRun'),'Claude קורא את הפרופיל שלכם…');

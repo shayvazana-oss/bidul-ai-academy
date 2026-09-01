@@ -320,7 +320,9 @@ ok("no assistant prefill", !sent.messages.some((m: any) => m.role === "assistant
 
   // screenshots path: validation + image blocks reach the model (own IP bucket — the section above spent IPA's)
   const IPS = { "x-forwarded-for": "84.0.0.1" };
-  const shot = { mt: "image/jpeg", b64: Buffer.from("fake-jpeg-bytes!").toString("base64") };
+  const jpegB64 = Buffer.concat([Buffer.from([0xff, 0xd8, 0xff, 0xe0]), Buffer.from("fake-jpeg-body")]).toString("base64");
+  const pngB64 = Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), Buffer.from("png-body")]).toString("base64");
+  const shot = { mt: "image/jpeg", b64: jpegB64 };
   ok("audit with non-image shot type rejected 400",
     (await handler(post({ mode: "audit", profile: { shots: [{ mt: "image/gif", b64: shot.b64 }] }, items }, ORIGIN, IPS))).status === 400);
   ok("audit with five shots rejected 400",
@@ -331,6 +333,11 @@ ok("no assistant prefill", !sent.messages.some((m: any) => m.role === "assistant
     (await handler(post({ mode: "audit", profile: { shots: [{ mt: "image/jpeg", b64: "לא-בסיס64" }] }, items }, ORIGIN, IPS))).status === 400);
   ok("audit with empty shot rejected 400",
     (await handler(post({ mode: "audit", profile: { shots: [{ mt: "image/png", b64: "" }] }, items }, ORIGIN, IPS))).status === 400);
+  ok("audit with forged media type (jpeg bytes as png) rejected 400",
+    (await handler(post({ mode: "audit", profile: { shots: [{ mt: "image/png", b64: jpegB64 }] }, items }, ORIGIN, IPS))).status === 400);
+  const bigShot = { mt: "image/jpeg", b64: jpegB64 + "A".repeat(600_000 - jpegB64.length) };
+  ok("audit with combined payload over the platform ceiling rejected 400",
+    (await handler(post({ mode: "audit", profile: { pdf: "A".repeat(2_900_000), shots: [bigShot, bigShot] }, items }, ORIGIN, IPS))).status === 400);
   const AUDIT_MIN = {
     items: [{ id: "foundation-2", status: "כן", note: "" }],
     headline: { found: false, quote: "", critique: "", better: "" },
@@ -340,7 +347,7 @@ ok("no assistant prefill", !sent.messages.some((m: any) => m.role === "assistant
   };
   nextPayload = AUDIT_MIN;
   const sr = await handler(post(
-    { mode: "audit", profile: { shots: [shot, { mt: "image/png", b64: shot.b64 }] }, items }, ORIGIN, IPS));
+    { mode: "audit", profile: { shots: [shot, { mt: "image/png", b64: pngB64 }] }, items }, ORIGIN, IPS));
   ok("audit shots-only returns 200", sr.status === 200, String(sr.status));
   const imgs = lastRequest.body.messages[0].content.filter((c: any) => c.type === "image");
   ok("both screenshots reach the model as image blocks",
