@@ -2,7 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { z } from "zod";
 
-export const config = { runtime: "nodejs", maxDuration: 60 };
+export const config = { maxDuration: 60 };
 
 /** LinkedIn's own hard cap on post length. */
 const MAX_DRAFT_CHARS = 3000;
@@ -466,7 +466,7 @@ function json(body: unknown, status: number, origin: string | null): Response {
   });
 }
 
-export default async function handler(request: Request): Promise<Response> {
+async function handleWeb(request: Request): Promise<Response> {
   const origin = request.headers.get("origin");
 
   if (request.method === "OPTIONS") {
@@ -879,4 +879,45 @@ export default async function handler(request: Request): Promise<Response> {
     console.error("Unexpected error", error);
     return json({ error: "שגיאה לא צפויה בשרת." }, 500, origin);
   }
+}
+
+/**
+ * Entry point that works under both invocation styles: Vercel's Node runtime
+ * hands (IncomingMessage, ServerResponse); tests and web runtimes hand a
+ * standard Request. Adapt the former onto the web handler above.
+ */
+export default async function handler(reqOrRequest: unknown, res?: {
+  statusCode: number;
+  setHeader(k: string, v: string): void;
+  end(b?: Buffer): void;
+}): Promise<Response | void> {
+  if (reqOrRequest instanceof Request) {
+    return handleWeb(reqOrRequest);
+  }
+  const req = reqOrRequest as {
+    method?: string;
+    url?: string;
+    headers: Record<string, string | string[] | undefined>;
+    [Symbol.asyncIterator](): AsyncIterator<Buffer>;
+  };
+  const chunks: Buffer[] = [];
+  const method = req.method ?? "GET";
+  if (!["GET", "HEAD", "OPTIONS"].includes(method)) {
+    for await (const c of req) chunks.push(c);
+  }
+  const headers = new Headers();
+  for (const [k, v] of Object.entries(req.headers)) {
+    if (typeof v === "string") headers.set(k, v);
+    else if (Array.isArray(v)) headers.set(k, v.join(", "));
+  }
+  const request = new Request(`https://${req.headers.host ?? "localhost"}${req.url ?? "/"}`, {
+    method,
+    headers,
+    body: chunks.length ? Buffer.concat(chunks) : undefined,
+  });
+  const out = await handleWeb(request);
+  if (!res) return out;
+  res.statusCode = out.status;
+  out.headers.forEach((v, k) => res.setHeader(k, v));
+  res.end(Buffer.from(await out.arrayBuffer()));
 }
