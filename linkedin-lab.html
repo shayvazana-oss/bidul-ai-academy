@@ -6,7 +6,7 @@
 <!-- ביקורת התוכן עם AI: הדביקו כאן את כתובת ה-endpoint אחרי הפריסה ב-Vercel.
      לדוגמה: content="https://bidul-ai-academy.vercel.app/api/review-post"
      כל עוד השדה ריק, בודק הצורה עובד כרגיל וכפתור ה-AI מסביר מה חסר. -->
-<meta name="lab-api" content="">
+<meta name="lab-api" content="https://linkedin-lab-shaloms-projects-09a5c568.vercel.app/api/lab">
 <title>מעבדת הלינקדאין — שיגור בחמש תחנות</title>
 <meta name="description" content="כלי עבודה חינמי בעברית: אבחון פרופיל משוקלל, אשף מיצוב, 12 תבניות פוסטים מפורטות ופלייבוק צמיחה יומי — בלי טריקים, בלי אוטומציות אסורות.">
 <meta property="og:type" content="website">
@@ -205,6 +205,10 @@ h1.giant .go{color:var(--li)}
 .aud-grid textarea{width:100%;min-height:100px;background:var(--bg);border:1px solid var(--hair-2);border-radius:12px;padding:12px 14px;color:var(--ink);font-family:inherit;font-size:13px;line-height:1.6;resize:vertical}
 .aud-grid textarea:focus{outline:none;border-color:var(--li);background:#fff}
 .aud-note{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.65}
+.bmkbox{margin-top:12px;background:var(--bg);border:1px solid var(--hair);border-radius:10px;padding:12px 15px;font-size:13px;color:var(--ink2);line-height:1.8}
+.bmkbox b{color:var(--ink)}
+a.bmk{display:inline-block;background:#fff;border:1px solid var(--li);color:var(--li);font-weight:600;font-size:12.5px;border-radius:8px;padding:6px 13px;margin:0 4px;cursor:grab;text-decoration:none}
+a.bmk:hover{background:var(--li-soft);text-decoration:none}
 .aud-crit{border:1px solid var(--hair);border-radius:12px;padding:16px 18px;margin-top:10px;background:var(--bg)}
 .aud-crit h4{font-size:13.5px;font-weight:700;color:var(--li);margin-bottom:6px}
 .aud-crit .q{font-size:13px;color:var(--muted);border-inline-start:3px solid var(--hair-2);padding-inline-start:10px;margin-bottom:8px;line-height:1.55}
@@ -819,6 +823,11 @@ footer p{max-width:860px;line-height:1.8}
         <div class="ai-status" id="audStatus" role="status" aria-live="polite" style="display:none;margin-top:0"></div>
       </div>
       <p class="aud-note">היצוא של לינקדאין לא מכיל תמונות (פרופיל ובאנר), Featured, המלצות, נתוני פעילות ועמוד חברה — צרפו צילומי מסך כדי שגם אלה ייבדקו, או עברו עליהם ידנית ברשימה למטה. המסמך נשלח לשרת רק בלחיצה, עובר ל-API של Anthropic לניתוח, ואינו נשמר אצלנו.</p>
+      <div class="bmkbox">
+        <b>⚡ סריקה בלחיצה אחת מהעמוד עצמו:</b> גררו את הכפתור
+        <a class="bmk" href="javascript:(async()=>{const m=document.querySelector('main');const t=((m&&m.innerText)||document.body.innerText||'').slice(0,19000);try{await navigator.clipboard.writeText(t);alert('הטקסט של העמוד הועתק. חזרו למעבדה והדביקו בתיבת הטקסט (Ctrl+V)');}catch(e){prompt('העתיקו ידנית (Ctrl+C ואז Enter):',t.slice(0,3000));}window.open('https://shayvazana-oss.github.io/bidul-ai-academy/linkedin-lab.html%23audit','_blank');})()" onclick="return false" title="גררו אותי לסרגל הסימניות">📋 סריקה למעבדה</a>
+        אל סרגל הסימניות של הדפדפן (Ctrl+Shift+B מציג אותו). מעכשיו, בכל פעם שאתם על עמוד הפרופיל שלכם בלינקדאין — לחיצה אחת על הסימניה מעתיקה את כל טקסט העמוד ופותחת את המעבדה. נשאר רק להדביק כאן. זה שקול להעתקה ידנית — אתם על העמוד, בדפדפן שלכם, בלי אוטומציה ובלי סיכון לחשבון.
+      </div>
       <div class="ai-out" id="audOut"></div>
     </div>
 
