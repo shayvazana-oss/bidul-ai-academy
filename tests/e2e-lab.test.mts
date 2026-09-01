@@ -118,7 +118,10 @@ const site = http.createServer(async (req, res) => {
   }
   let html = fs.readFileSync(PAGE, "utf8");
   if (req.url?.includes("connected")) {
-    html = html.replace('<meta name="lab-api" content="">', '<meta name="lab-api" content="/api/lab">');
+    html = html.replace(/<meta name="lab-api" content="[^"]*">/, '<meta name="lab-api" content="/api/lab">');
+  } else {
+    // the shipped page now carries the real endpoint — blank it for the unconfigured phase
+    html = html.replace(/<meta name="lab-api" content="[^"]*">/, '<meta name="lab-api" content="">');
   }
   res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
   res.end(html);
@@ -458,6 +461,8 @@ const tinyPng = Buffer.from(
 await page.setInputFiles("#audShots", { name: "profile-top.png", mimeType: "image/png", buffer: tinyPng });
 await page.waitForTimeout(600);
 ok("screenshot thumbnail rendered", (await page.locator(".shotthumb").count()) === 1);
+const bmkHref = (await page.getAttribute("a.bmk", "href")) ?? "";
+ok("one-click scan bookmarklet present", bmkHref.startsWith("javascript:") && bmkHref.includes("innerText"));
 let sawShots = false;
 await page.route("**/api/lab", async (route) => {
   const body = JSON.parse(route.request().postData() ?? "{}");
