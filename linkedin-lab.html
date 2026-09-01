@@ -160,6 +160,13 @@ h1.giant .go{color:var(--li)}
 .dropzone b{color:var(--ink)}
 .dropzone .df{display:block;font-size:12px;color:var(--muted);margin-top:4px}
 .dropzone.hasfile{border-style:solid;border-color:var(--green);background:#eefaf4}
+.shotadd{display:inline-flex;align-items:center;gap:8px;border:1.5px dashed var(--hair-2);background:var(--bg);border-radius:10px;padding:9px 14px;font-size:13px;color:var(--ink2);cursor:pointer;transition:border-color .15s,background .15s;text-align:right}
+.shotadd:hover{border-color:var(--li);background:var(--li-soft)}
+.shotadd small{color:var(--muted);font-size:11.5px;display:block}
+.shotthumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.shotthumb{position:relative;width:74px;height:52px;border:1px solid var(--hair);border-radius:8px;overflow:hidden;background:#fff}
+.shotthumb img{width:100%;height:100%;object-fit:cover}
+.shotthumb button{position:absolute;top:2px;inset-inline-end:2px;width:18px;height:18px;border:none;border-radius:50%;background:rgba(21,32,43,.72);color:#fff;font-size:12px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
 .aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
 @media(max-width:760px){.aud-grid{grid-template-columns:1fr}}
 .aud-grid textarea{width:100%;min-height:100px;background:var(--bg);border:1px solid var(--hair-2);border-radius:12px;padding:12px 14px;color:var(--ink);font-family:inherit;font-size:13px;line-height:1.6;resize:vertical}
@@ -725,7 +732,7 @@ footer p{max-width:860px;line-height:1.8}
       <div class="airev-h">
         <div>
           <h3>⚡ אבחון אוטומטי — בלי לעבור שאלה-שאלה</h3>
-          <p>בלי סריקה, בלי תוסף, בלי סיכון לחשבון — משתמשים ביצוא הרשמי של לינקדאין עצמה: בפרופיל שלכם לחצו <b>More ‏← Save to PDF</b>, וגררו את הקובץ לכאן (או הדביקו את טקסט העמוד). Claude ימלא את מה שאפשר לקבוע מהמסמך, יסמן מה נשאר לבדיקה ידנית, וייתן ביקורת ונוסח משופר לכותרת ול-About <b>שלכם בפועל</b>.</p>
+          <p>בלי סריקה, בלי תוסף, בלי סיכון לחשבון — משתמשים ביצוא הרשמי של לינקדאין עצמה: בפרופיל שלכם לחצו <b>More ‏← Save to PDF</b>, וגררו את הקובץ לכאן (או הדביקו את טקסט העמוד). היצוא הזה הוא טקסט בלבד — לכן אפשר לצרף לצדו גם צילומי מסך של העמוד, ו-Claude יבדוק גם את מה שרואים ולא רק את מה שכתוב. Claude ימלא את מה שאפשר לקבוע מהמסמך, יסמן מה נשאר לבדיקה ידנית, וייתן ביקורת ונוסח משופר לכותרת ול-About <b>שלכם בפועל</b>.</p>
         </div>
       </div>
       <div class="aud-grid">
@@ -736,11 +743,16 @@ footer p{max-width:860px;line-height:1.8}
         </div>
         <textarea id="audText" placeholder="…או: פתחו את עמוד הפרופיל שלכם, סמנו הכול (Ctrl+A), העתיקו — והדביקו כאן"></textarea>
       </div>
+      <div style="margin-top:10px">
+        <button type="button" class="shotadd" id="audShotAdd">📷 הוסיפו עד 4 צילומי מסך מהפרופיל<small>לתמונה, לבאנר, ל-Featured, להמלצות ולפעילות — כל מה שה-PDF לא מראה</small></button>
+        <input type="file" id="audShots" accept="image/png,image/jpeg,image/webp" multiple style="display:none">
+        <div class="shotthumbs" id="audShotThumbs"></div>
+      </div>
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px">
         <button class="btn-ai" id="audRun"><span>אבחנו את הפרופיל שלי</span></button>
         <div class="ai-status" id="audStatus" role="status" aria-live="polite" style="display:none;margin-top:0"></div>
       </div>
-      <p class="aud-note">מה היצוא של לינקדאין לא מכיל, ולכן יישאר לבדיקה ידנית קצרה: תמונות (פרופיל ובאנר), Featured, המלצות, הגדרות מעקב, נתוני פעילות ועמוד החברה. המסמך נשלח לשרת רק בלחיצה, עובר ל-API של Anthropic לניתוח, ואינו נשמר אצלנו.</p>
+      <p class="aud-note">היצוא של לינקדאין לא מכיל תמונות (פרופיל ובאנר), Featured, המלצות, נתוני פעילות ועמוד חברה — צרפו צילומי מסך כדי שגם אלה ייבדקו, או עברו עליהם ידנית ברשימה למטה. המסמך נשלח לשרת רק בלחיצה, עובר ל-API של Anthropic לניתוח, ואינו נשמר אצלנו.</p>
       <div class="ai-out" id="audOut"></div>
     </div>
 
@@ -1287,18 +1299,50 @@ audFileInp.addEventListener('change',()=>audSetFile(audFileInp.files[0]));
 ['dragover','dragenter'].forEach(ev=>audDrop.addEventListener(ev,e=>{e.preventDefault();audDrop.classList.add('drag');}));
 ['dragleave','drop'].forEach(ev=>audDrop.addEventListener(ev,e=>{e.preventDefault();audDrop.classList.remove('drag');}));
 audDrop.addEventListener('drop',e=>audSetFile(e.dataTransfer.files&&e.dataTransfer.files[0]));
+let audShots=[];
+const audShotsInp=$('#audShots');
+$('#audShotAdd').addEventListener('click',()=>audShotsInp.click());
+audShotsInp.addEventListener('change',async()=>{
+  const files=[...audShotsInp.files];
+  audShotsInp.value='';
+  for(const f of files){
+    if(audShots.length>=4){statusSay($('#audStatus'),'עד 4 צילומי מסך — הסירו אחד כדי להוסיף אחר.','err');break;}
+    if(!/^image\/(png|jpeg|webp)$/.test(f.type)){statusSay($('#audStatus'),'צילומי המסך חייבים להיות PNG, JPG או WebP.','err');continue;}
+    try{audShots.push(await audShrink(f));}
+    catch(e){statusSay($('#audStatus'),'קובץ התמונה לא נקרא — נסו קובץ אחר.','err');}
+  }
+  audRenderShots();
+});
+async function audShrink(f){
+  const url=URL.createObjectURL(f);
+  try{
+    const img=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=url;});
+    const MAX=1568,sc=Math.min(1,MAX/Math.max(img.naturalWidth||1,img.naturalHeight||1));
+    const c=document.createElement('canvas');
+    c.width=Math.max(1,Math.round((img.naturalWidth||1)*sc));
+    c.height=Math.max(1,Math.round((img.naturalHeight||1)*sc));
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    const durl=c.toDataURL('image/jpeg',.85);
+    return {mt:'image/jpeg',b64:durl.split(',')[1]||'',thumb:durl};
+  }finally{URL.revokeObjectURL(url);}
+}
+function audRenderShots(){
+  const t=$('#audShotThumbs');
+  t.innerHTML=audShots.map((sh,i)=>'<span class="shotthumb"><img src="'+sh.thumb+'" alt="צילום מסך '+(i+1)+'"><button type="button" data-rm="'+i+'" aria-label="הסרת צילום המסך">×</button></span>').join('');
+  t.querySelectorAll('[data-rm]').forEach(b=>b.addEventListener('click',()=>{audShots.splice(+b.dataset.rm,1);audRenderShots();}));
+}
 let audBusy=false;
 $('#audRun').addEventListener('click',async()=>{
   if(audBusy||!AI_ENDPOINT)return;
   const audOut=$('#audOut');audOut.classList.remove('on');audOut.innerHTML='';
   const text=$('#audText').value.trim();
-  if(!audPdf&&text.length<200){
-    statusSay($('#audStatus'),'צרפו את קובץ ה-PDF או הדביקו את טקסט הפרופיל (לפחות 200 תווים).','err');return;
+  if(!audPdf&&!audShots.length&&text.length<200){
+    statusSay($('#audStatus'),'צרפו את קובץ ה-PDF, צילומי מסך של הפרופיל, או הדביקו את טקסט העמוד (לפחות 200 תווים).','err');return;
   }
   audBusy=true;
   const data=await aiPost({
     mode:'audit',
-    profile:audPdf?{pdf:audPdf}:{text},
+    profile:Object.assign(audPdf?{pdf:audPdf}:(text.length>=200?{text}:{}),audShots.length?{shots:audShots.map(sh=>({mt:sh.mt,b64:sh.b64}))}:{}),
     items:AUDIT_ITEMS,
     positioning:posPayload()
   },$('#audStatus'),$('#audRun'),'Claude קורא את הפרופיל שלכם…');

@@ -440,6 +440,28 @@ await page.click("#audRun");
 await page.waitForSelector("#audOut.on", { timeout: 20000 });
 ok("pdf reaches the API as base64", sawPdf);
 await page.unroute("**/api/lab");
+// screenshots path: thumbnail renders, request carries a downscaled jpeg, shot is removable
+const tinyPng = Buffer.from(
+  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
+  "base64",
+);
+await page.setInputFiles("#audShots", { name: "profile-top.png", mimeType: "image/png", buffer: tinyPng });
+await page.waitForTimeout(600);
+ok("screenshot thumbnail rendered", (await page.locator(".shotthumb").count()) === 1);
+let sawShots = false;
+await page.route("**/api/lab", async (route) => {
+  const body = JSON.parse(route.request().postData() ?? "{}");
+  const sh = body?.profile?.shots;
+  sawShots = Array.isArray(sh) && sh.length === 1 && sh[0].mt === "image/jpeg" && typeof sh[0].b64 === "string" && sh[0].b64.length > 10;
+  await route.fallback();
+});
+await page.click("#audRun");
+await page.waitForSelector("#audOut.on", { timeout: 20000 });
+ok("screenshot reaches the API as downscaled jpeg", sawShots);
+await page.unroute("**/api/lab");
+await page.click(".shotthumb button");
+await page.waitForTimeout(200);
+ok("screenshot removable from the strip", (await page.locator(".shotthumb").count()) === 0);
 // reset clears the marks
 await page.click("#auditReset");
 await page.waitForTimeout(200);

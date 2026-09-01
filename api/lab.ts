@@ -348,6 +348,10 @@ const VOICE_SYSTEM = `אתה בלשן סגנון. קיבלת 1–5 פוסטים 
 const MAX_PDF_B64 = 9_000_000;
 const MAX_PROFILE_TEXT = 20_000;
 const MIN_PROFILE_TEXT = 200;
+/** Screenshots are downscaled client-side to ~1568px JPEG; this cap only blocks abuse. */
+const MAX_SHOT_B64 = 1_500_000;
+const MAX_SHOTS = 4;
+const SHOT_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 const AuditOut = z.object({
   items: z
@@ -408,6 +412,8 @@ function normalizeAudit(r: AuditOutT, validIds: Set<string>) {
 const AUDIT_SYSTEM = `אתה מאבחן פרופילי לינקדאין עבור "מעבדת הלינקדאין". קיבלת את הפרופיל של הכותב כפי שהוא ייצא אותו בעצמו (PDF של לינקדאין או טקסט מודבק), ורשימת פריטי בדיקה עם id לכל אחד.
 
 הכלל שמעל הכול: אתה שופט אך ורק לפי מה שמופיע במסמך. מה שהמסמך לא מראה — הסטטוס הוא "אין מידע", לא ניחוש. יצוא ה-PDF של לינקדאין בדרך כלל לא כולל: תמונת פרופיל, באנר, סקשן Featured, המלצות, הגדרות כפתור, נתוני פעילות ועמוד חברה — צפה לסמן שם "אין מידע".
+
+אם מצורפים צילומי מסך של הפרופיל, הם מקור שווה־ערך: שפוט לפיהם גם את הפריטים הוויזואליים שהיצוא אינו מכיל — תמונת פרופיל, באנר, Featured, המלצות ופעילות. רכיב שנראה בצילום מסך גובר על היעדרו מה-PDF. מה שלא נראה באף מקור נשאר "אין מידע".
 
 לכל פריט ברשימה החזר את ה-id המדויק שנמסר, סטטוס אחד ("כן" / "לא" / "חלקי" / "אין מידע") והערה קצרה שמסבירה על סמך מה.
 
@@ -629,9 +635,29 @@ export default async function handler(request: Request): Promise<Response> {
       if (pdf && !(pdf.length % 4 === 0 && /^[A-Za-z0-9+/]+={0,2}$/.test(pdf))) {
         return json({ error: "הקובץ שהתקבל אינו PDF תקין." }, 400, origin);
       }
-      if (!pdf && text.length < MIN_PROFILE_TEXT) {
+      const rawShots = Array.isArray(prof.shots) ? prof.shots : [];
+      if (rawShots.length > MAX_SHOTS) {
+        return json({ error: `אפשר לצרף עד ${MAX_SHOTS} צילומי מסך.` }, 400, origin);
+      }
+      const shots: { mt: "image/jpeg" | "image/png" | "image/webp"; b64: string }[] = [];
+      for (const s of rawShots) {
+        const o = (s ?? {}) as Record<string, unknown>;
+        const mt = typeof o.mt === "string" ? o.mt : "";
+        const b64 = typeof o.b64 === "string" ? o.b64.replace(/\s/g, "") : "";
+        if (!SHOT_TYPES.has(mt)) {
+          return json({ error: "צילומי המסך חייבים להיות JPG, PNG או WebP." }, 400, origin);
+        }
+        if (!b64 || b64.length > MAX_SHOT_B64) {
+          return json({ error: "אחד מצילומי המסך ריק או גדול מדי." }, 400, origin);
+        }
+        if (!(b64.length % 4 === 0 && /^[A-Za-z0-9+/]+={0,2}$/.test(b64))) {
+          return json({ error: "אחד הקבצים שהתקבלו אינו תמונה תקינה." }, 400, origin);
+        }
+        shots.push({ mt: mt as "image/jpeg" | "image/png" | "image/webp", b64 });
+      }
+      if (!pdf && !shots.length && text.length < MIN_PROFILE_TEXT) {
         return json(
-          { error: "אין מספיק חומר לאבחון — צרפו את קובץ ה-PDF מלינקדאין או הדביקו את טקסט הפרופיל (לפחות 200 תווים)." },
+          { error: "אין מספיק חומר לאבחון — צרפו את קובץ ה-PDF מלינקדאין, צילומי מסך של הפרופיל, או הדביקו את טקסט הפרופיל (לפחות 200 תווים)." },
           400,
           origin,
         );
@@ -651,13 +677,26 @@ export default async function handler(request: Request): Promise<Response> {
         return json({ error: "חסרה רשימת פריטי הבדיקה (items) בבקשה." }, 400, origin);
       }
       const validIds = new Set(items.map((i) => i.id));
-      const instruction = `המיצוב שהכותב הגדיר לעצמו (אם מולא):\n${context}\n\nפריטי הבדיקה:\n${items.map((i) => `- ${i.id} · ${i.q}`).join("\n")}\n\nשפוט כל פריט לפי המסמך בלבד ותן ביקורת לפי הסכימה.`;
-      const content: Anthropic.ContentBlockParam[] = pdf
-        ? [
-            { type: "document", source: { type: "base64", media_type: "application/pdf", data: pdf } },
-            { type: "text", text: instruction },
-          ]
-        : [{ type: "text", text: `הפרופיל כפי שהודבק ע"י הכותב:\n"""\n${text}\n"""\n\n${instruction}` }];
+      const srcBits = [
+        shots.length ? `${shots.length} צילומי מסך של הפרופיל` : "",
+        pdf ? "יצוא ה-PDF הרשמי" : "",
+      ].filter(Boolean);
+      const instruction = `${srcBits.length ? `מקורות מצורפים: ${srcBits.join(" + ")}.\n\n` : ""}המיצוב שהכותב הגדיר לעצמו (אם מולא):\n${context}\n\nפריטי הבדיקה:\n${items.map((i) => `- ${i.id} · ${i.q}`).join("\n")}\n\nשפוט כל פריט לפי המקורות בלבד ותן ביקורת לפי הסכימה.`;
+      const content: Anthropic.ContentBlockParam[] = shots.map(
+        (s): Anthropic.ContentBlockParam => ({
+          type: "image",
+          source: { type: "base64", media_type: s.mt, data: s.b64 },
+        }),
+      );
+      if (pdf) {
+        content.push({ type: "document", source: { type: "base64", media_type: "application/pdf", data: pdf } });
+      }
+      content.push({
+        type: "text",
+        text: !pdf && text.length >= MIN_PROFILE_TEXT
+          ? `הפרופיל כפי שהודבק ע"י הכותב:\n"""\n${text}\n"""\n\n${instruction}`
+          : instruction,
+      });
       const response = await client.messages.parse({
         model: "claude-opus-5",
         max_tokens: 8000,
