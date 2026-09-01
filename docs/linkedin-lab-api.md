@@ -107,10 +107,10 @@ vercel dev            # מגיש את האתר ואת הפונקציה יחד ע
 
 ```bash
 npm run typecheck   # בדיקת טיפוסים לפונקציה
-npm test            # 100 בדיקות לפונקציה מול Messages API מדומה
+npm test            # 104 בדיקות לפונקציה מול Messages API מדומה
 
 npx playwright install chromium      # פעם אחת בלבד, להורדת הדפדפן
-npx tsx tests/e2e-lab.test.mts    # 113 בדיקות דפדפן מקצה לקצה
+npx tsx tests/e2e-lab.test.mts    # 120 בדיקות דפדפן מקצה לקצה
 ```
 
 הבדיקות אינן צורכות מכסת API — הן עובדות מול שרת מדומה.

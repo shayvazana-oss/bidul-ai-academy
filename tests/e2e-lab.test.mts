@@ -309,8 +309,18 @@ await page.fill("#w-קהל", "יועצים עצמאיים");
 await page.waitForTimeout(200);
 await go("content");
 await page.fill("#ideasFocus", "תמחור");
+ok("mic capture button present", (await page.locator("#micBtn").count()) === 1);
+await page.fill("#ideasMaterial", "לקוח שאל אותי השבוע למה ההצעה שלי יקרה יותר מהמתחרה");
+let sawMaterial = "";
+await page.route("**/api/lab", async (route) => {
+  const body = JSON.parse(route.request().postData() ?? "{}");
+  if (body.mode === "ideas") sawMaterial = body.material ?? "";
+  await route.fallback();
+});
 await page.click("#ideasRun");
 await page.waitForSelector(".idea", { timeout: 20000 });
+await page.unroute("**/api/lab");
+ok("raw material reaches the ideas API", sawMaterial.includes("למה ההצעה שלי יקרה"));
 ok("9 idea cards rendered", (await page.locator(".idea").count()) === 9);
 ok("idea shows the client question", ((await page.textContent(".idea .iq")) ?? "").includes("באמת שואל"));
 ok("idea maps to a framework", ((await page.textContent(".idea .tag")) ?? "").includes("הטעות הנפוצה"));
@@ -546,6 +556,8 @@ ok("first slide styled as hook", await page.locator("#carSlides .carslide").firs
 ok("last slide styled as closer", await page.locator("#carSlides .carslide").last().evaluate((e) => e.classList.contains("c-last")));
 ok("slides are editable", (await page.locator('#carSlides .carslide[contenteditable="true"]').count()) === 4);
 ok("print button revealed", await page.locator("#carPrintBtn").isVisible());
+ok("last slide carries the builder credit",
+  ((await page.textContent("#carSlides .carslide:last-child .car-credit")) ?? "").includes("שלום ואזנה"));
 
 // voice profile: distill via mocked API, stored, threaded into review
 await go("position");
@@ -603,6 +615,17 @@ await page.waitForSelector("#weeklyOut.on", { timeout: 15000 });
 const wkTxt = (await page.textContent("#weeklyOut")) ?? "";
 ok("weekly reading renders all three sections", wkTxt.includes("מה המספרים אומרים") && wkTxt.includes("האבחנה") && wkTxt.includes("הניסוי לשבוע הבא"));
 ok("weekly reading carries the mock verdict", wkTxt.includes("הפרופיל לא ממיר"));
+// conversation meter: appears from the second saved week, sums the convos column
+await page.fill("#t-views", "150");
+await page.fill("#t-convos", "3");
+await page.click("#trackAdd");
+await page.waitForTimeout(250);
+ok("conversation meter sums the last weeks", ((await page.textContent("#convoLine")) ?? "").includes("4 שיחות ענייניות"));
+// builder credit: home card + footer link
+await go("home");
+ok("builder card on home names the builder", ((await page.textContent(".builder")) ?? "").includes("שלום ואזנה"));
+ok("builder card links to the LinkedIn profile", (await page.locator('.builder a[href*="shalom-vazana"]').count()) === 1);
+ok("footer credits the builder with a link", (await page.locator('footer a[href*="shalom-vazana"]').count()) === 2);
 
 // === 8. unconfigured page hides AI-only entry points ===
 await page.goto("http://127.0.0.1:8787/lab", { waitUntil: "domcontentloaded" });

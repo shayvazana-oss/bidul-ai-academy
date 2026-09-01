@@ -233,6 +233,15 @@ ok("no assistant prefill", !sent.messages.some((m: any) => m.role === "assistant
   const ib: any = await ir.json();
   ok("ideas returns 200 with 9 ideas", ir.status === 200 && ib.ideas?.length === 9, String(ir.status));
   ok("unknown frameworkId normalized to empty", ib.ideas?.[0]?.frameworkId === "" && ib.ideas?.[1]?.frameworkId === "common-mistake");
+  // raw material (voice transcript) threads into the prompt, capped at 4000 chars
+  const mr = await handler(post(
+    { mode: "ideas", frameworks: fws, positioning: { קהל: "בעלי עסקים" }, material: "לקוח שאל אותי למה ההצעה יקרה. " + "מ".repeat(5000) },
+    ORIGIN, IPI));
+  ok("ideas with material returns 200", mr.status === 200, String(mr.status));
+  const ideaMsg = JSON.stringify(lastRequest.body.messages);
+  ok("material reaches the model as quoted raw text", ideaMsg.includes("לקוח שאל אותי למה ההצעה יקרה") && ideaMsg.includes("חומר גלם"));
+  ok("material capped at 4000 chars", !ideaMsg.includes("מ".repeat(4100)));
+  ok("ideas system prefers material-grounded ideas", String(lastRequest.body.system).includes("חומר גלם"));
 }
 
 // === normalization for the new modes (wire schema enforces none of this) ===

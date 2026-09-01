@@ -249,6 +249,23 @@ h1.giant .go{color:var(--li)}
 .ideasbox input:focus{outline:none;border-color:var(--li);background:#fff}
 .ideasbox .isub{font-size:13px;color:var(--ink2);margin-top:8px;max-width:640px}
 .ideasbox .isub b{color:var(--ink)}
+.matbox{margin-top:14px;border-top:1px solid var(--hair);padding-top:14px}
+.matbox textarea{width:100%;min-height:76px;background:var(--bg);border:1px solid var(--hair-2);border-radius:10px;padding:10px 13px;color:var(--ink);font-family:inherit;font-size:13.5px;resize:vertical;margin-top:8px}
+.matbox textarea:focus{outline:none;border-color:var(--li);background:#fff}
+.mic-hint{font-size:12.5px;color:var(--muted)}
+#micBtn.rec{border-color:#c22a2a;color:#c22a2a}
+#micBtn.rec i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#c22a2a;margin-inline-end:6px;animation:micPulse 1.2s ease-in-out infinite}
+@keyframes micPulse{50%{opacity:.25}}
+@media(prefers-reduced-motion:reduce){#micBtn.rec i{animation:none}}
+.convo-line{font-size:13px;color:var(--ink2);margin-top:10px;background:var(--li-soft);border-radius:10px;padding:9px 14px}
+.convo-line b{color:var(--ink)}
+.builder{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--panel);border:1px solid var(--hair);border-radius:var(--r);padding:18px 22px;box-shadow:var(--shadow-sm);margin-top:14px}
+.builder .bav{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--li),#79b8ef);color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.builder .bt{flex:1 1 260px}
+.builder .bt b{display:block;font-size:14.5px;color:var(--ink)}
+.builder .bt span{font-size:13px;color:var(--ink2)}
+.car-credit{display:block;margin-top:auto;padding-top:10px;font-size:10px;color:inherit;opacity:.55;letter-spacing:.04em}
+@media print{#carPrint .car-credit{font-size:9pt}}
 .ideas-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:16px}
 @media(max-width:940px){.ideas-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.ideas-grid{grid-template-columns:1fr}}
@@ -720,6 +737,14 @@ footer p{max-width:860px;line-height:1.8}
         </div>
       </div>
     </div>
+    <div class="builder rv">
+      <span class="bav" aria-hidden="true">שו</span>
+      <div class="bt">
+        <b>המעבדה נבנתה על ידי שלום ואזנה</b>
+        <span>איש פיתוח עסקי ושותפויות אסטרטגיות. בניתי אותה לשימוש שלי — ופתחתי אותה לכולם, בחינם.</span>
+      </div>
+      <a class="btn-g" href="https://www.linkedin.com/in/shalom-vazana-522152154" target="_blank" rel="noopener" style="font-size:13px;padding:10px 16px">דברו איתי בלינקדאין ←</a>
+    </div>
   </div>
 </section>
 
@@ -853,6 +878,13 @@ footer p{max-width:860px;line-height:1.8}
         <button class="btn-ai" id="ideasRun"><span>הציעו לי רעיונות</span></button>
       </div>
       <p class="isub">כל רעיון נטוע במיצוב שהגדרתם בתחנה 2, ממופה לאחת מ-12 המסגרות, ובנוי כך שתוכלו לכתוב אותו <b>מהניסיון שלכם בלבד</b> — בלי להמציא נתונים. לחיצה על רעיון פותחת כתיבה מודרכת.</p>
+      <div class="matbox">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <button type="button" class="btn-g" id="micBtn" style="font-size:13px;padding:9px 14px"><i hidden></i>🎙️ ספרו במקום להקליד</button>
+          <span class="mic-hint" id="micHint">שתי דקות על משהו שקרה השבוע עם לקוח — והרעיונות יצמחו מזה, לא מגנריקה</span>
+        </div>
+        <textarea id="ideasMaterial" placeholder="…או כתבו כאן חומר גלם: שיחת לקוח מהשבוע, שאלה שנשאלתם, טעות שראיתם אצל מישהו. ההקלטה מומרת לטקסט בדפדפן שלכם — אפשר לערוך לפני שליחה."></textarea>
+      </div>
       <div class="ai-status" id="ideasStatus" role="status" aria-live="polite" style="display:none"></div>
       <div class="ideas-grid" id="ideasGrid"></div>
     </div>
@@ -1071,6 +1103,7 @@ footer p{max-width:860px;line-height:1.8}
           <tbody id="trackRows"></tbody>
         </table>
       </div>
+      <p class="convo-line" id="convoLine" style="display:none"></p>
       <div style="margin-top:16px;border-top:1px solid var(--hair);padding-top:14px">
         <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between">
           <p class="csub" style="margin:0;max-width:640px"><b>מה המספרים אומרים?</b> טבלה לבד לא עונה על זה — והרגע שבו מספרים נמוכים נקראים כ"כישלון" הוא הרגע שבו רוב האנשים מוותרים. Claude קורא את המגמה מול בנצ'מרקים כנים של חשבון קטן, מאבחן איפה המשפך נתקע, ומציע ניסוי אחד לשבוע הבא.</p>
@@ -1125,7 +1158,7 @@ footer p{max-width:860px;line-height:1.8}
 <footer>
   <div class="wrap">
     <p><b>על השיטה:</b> המעבדה מבוססת על הפרקטיקות המשותפות לבוני נוכחות מקצועית מובילים בלינקדאין — מיצוב ממוקד-לקוח, עקביות על פני ויראליות, תגובות כמנוע חשיפה, והוכחות במקום הצהרות — ועל הניסיון המצטבר בליווי מקצוענים ועסקים ישראליים. אין בה נתוני "אחוזי הצלחה" כי אין דרך ישרה למדוד אותם מראש. כל הנתונים שתזינו נשמרים בדפדפן שלכם בלבד ואינם נשלחים לשום שרת.</p>
-    <p style="margin-top:10px">מעבדת הלינקדאין · אוגוסט 2026</p>
+    <p style="margin-top:10px">מעבדת הלינקדאין · נבנתה על ידי <a href="https://www.linkedin.com/in/shalom-vazana-522152154" target="_blank" rel="noopener"><b>שלום ואזנה</b></a> · ספטמבר 2026 · שאלות או עזרה ביישום? <a href="https://www.linkedin.com/in/shalom-vazana-522152154" target="_blank" rel="noopener">שלחו לי הודעה בלינקדאין</a></p>
   </div>
 </footer>
 
@@ -1637,6 +1670,41 @@ $('#writerRun').addEventListener('click',async()=>{
   $('#writerToDrawer').addEventListener('click',()=>saveDraft(w.post));
 });
 
+/* ---------- voice capture: browser speech-to-text feeding the ideas engine ---------- */
+const micBtn=$('#micBtn'),micMat=$('#ideasMaterial'),micHint=$('#micHint');
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let micRec=null,micOn=false;
+function micUI(){
+  micBtn.classList.toggle('rec',micOn);
+  micBtn.innerHTML=micOn?'<i></i>⏹ עצרו — הטקסט כבר בתיבה':'<i hidden></i>🎙️ ספרו במקום להקליד';
+}
+if(!SR){
+  micBtn.disabled=true;
+  micHint.textContent='הדפדפן הזה לא תומך בזיהוי דיבור (נסו Chrome) — כתבו בתיבה במקום';
+}else{
+  micBtn.addEventListener('click',()=>{
+    if(micOn){try{micRec.stop();}catch(e){}return;}
+    micRec=new SR();
+    micRec.lang='he-IL';micRec.continuous=true;micRec.interimResults=false;
+    let base=micMat.value.trim();
+    micRec.onresult=e=>{
+      for(let i=e.resultIndex;i<e.results.length;i++){
+        if(e.results[i].isFinal)base=(base+' '+e.results[i][0].transcript).trim();
+      }
+      micMat.value=base.slice(0,4000);
+    };
+    micRec.onerror=ev=>{
+      micOn=false;micUI();
+      micHint.textContent=ev.error==='not-allowed'||ev.error==='service-not-allowed'
+        ?'אין הרשאת מיקרופון — אפשרו גישה בדפדפן, או כתבו בתיבה'
+        :'ההקלטה נעצרה ('+ev.error+') — נסו שוב או כתבו בתיבה';
+    };
+    micRec.onend=()=>{micOn=false;micUI();};
+    try{micRec.start();micOn=true;micUI();micHint.textContent='מקליט… דברו חופשי, הטקסט נערם בתיבה למטה';}
+    catch(e){micHint.textContent='לא הצלחנו להפעיל את המיקרופון — כתבו בתיבה';}
+  });
+}
+
 /* ---------- ideas engine ---------- */
 let lastIdeas=[];
 $('#ideasRun').addEventListener('click',async()=>{
@@ -1645,6 +1713,7 @@ $('#ideasRun').addEventListener('click',async()=>{
   const data=await aiPost({
     mode:'ideas',
     focus:$('#ideasFocus').value.trim(),
+    material:$('#ideasMaterial').value.trim().slice(0,4000),
     positioning:posPayload(),
     frameworks:LAB.posts.frameworks.map(f=>({id:f.id,name:f.name,pillar:f.pillar}))
   },$('#ideasStatus'),$('#ideasRun'),'Claude חושב על רעיונות מהמיצוב שלכם…');
@@ -2068,6 +2137,17 @@ function renderTrack(){
     return `<tr><td><b>${esc(w.d)}</b></td>${cells}<td><button class="tdel" data-i="${i}" title="מחיקת שורה">×</button></td></tr>`;
   }).reverse().join('');
 }
+function convoLine(){
+  const el=$('#convoLine');if(!el)return;
+  if(track.length<2){el.style.display='none';return;}
+  const c=track.map(w=>+w.v[3]||0);
+  const last=c.slice(-4),prev=c.slice(-8,-4);
+  const sL=last.reduce((a,b)=>a+b,0),sP=prev.reduce((a,b)=>a+b,0);
+  let msg='<b>מד השיחות:</b> '+sL+' שיחות ענייניות ב-'+last.length+' השבועות האחרונים';
+  if(prev.length)msg+=' · לעומת '+sP+' ב-'+prev.length+' שלפניהם';
+  msg+=' — זה המספר שממנו מגיעים לקוחות, וכל השאר רק מוביל אליו.';
+  el.innerHTML=msg;el.style.display='';
+}
 $('#trackAdd').addEventListener('click',()=>{
   const v=TKEYS.map(k=>{
     const el=document.getElementById('t-'+k);
@@ -2078,15 +2158,15 @@ $('#trackAdd').addEventListener('click',()=>{
   const d=new Date();
   track.push({d:d.getDate()+'.'+(d.getMonth()+1)+'.'+String(d.getFullYear()).slice(2),v});
   store.set('lab-track',track);
-  renderTrack();toast('✓ השבוע נשמר');
+  renderTrack();convoLine();toast('✓ השבוע נשמר');
 });
 $('#trackRows').addEventListener('click',e=>{
   const b=e.target.closest('.tdel');if(!b)return;
   track.splice(+b.dataset.i,1);
   store.set('lab-track',track);
-  renderTrack();
+  renderTrack();convoLine();
 });
-renderTrack();
+renderTrack();convoLine();
 
 /* ---------- voice profile ---------- */
 function renderVoice(){
@@ -2203,6 +2283,12 @@ function carBuild(){
     d.contentEditable='true';
     d.setAttribute('data-n',(i+1)+' / '+parts.length);
     d.textContent=t;
+    if(i===parts.length-1){
+      const cr=document.createElement('span');
+      cr.className='car-credit';cr.contentEditable='false';
+      cr.textContent='נוצר במעבדת הלינקדאין של שלום ואזנה';
+      d.appendChild(cr);
+    }
     wrap.appendChild(d);
   });
   $('#carPrintBtn').style.display=parts.length?'':'none';
