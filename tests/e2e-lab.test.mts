@@ -440,6 +440,49 @@ await page.click("#audRun");
 await page.waitForSelector("#audOut.on", { timeout: 20000 });
 ok("pdf reaches the API as base64", sawPdf);
 await page.unroute("**/api/lab");
+// screenshots path: thumbnail renders, request carries a downscaled jpeg, shot is removable
+const tinyPng = Buffer.from(
+  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
+  "base64",
+);
+await page.setInputFiles("#audShots", { name: "profile-top.png", mimeType: "image/png", buffer: tinyPng });
+await page.waitForTimeout(600);
+ok("screenshot thumbnail rendered", (await page.locator(".shotthumb").count()) === 1);
+let sawShots = false;
+await page.route("**/api/lab", async (route) => {
+  const body = JSON.parse(route.request().postData() ?? "{}");
+  const sh = body?.profile?.shots;
+  sawShots = Array.isArray(sh) && sh.length === 1 && sh[0].mt === "image/jpeg" && typeof sh[0].b64 === "string" && sh[0].b64.length > 10;
+  await route.fallback();
+});
+await page.click("#audRun");
+await page.waitForSelector("#audOut.on", { timeout: 20000 });
+ok("screenshot reaches the API as downscaled jpeg", sawShots);
+await page.unroute("**/api/lab");
+await page.click(".shotthumb button");
+await page.waitForTimeout(200);
+ok("screenshot removable from the strip", (await page.locator(".shotthumb").count()) === 0);
+// tall full-page capture: width-scaled and tiled instead of squashed to illegibility
+const tallB64 = await page.evaluate(`(()=>{
+  const c=document.createElement('canvas');c.width=400;c.height=6000;
+  const g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,400,6000);
+  g.fillStyle='#000';g.font='20px sans-serif';
+  for(let y=40;y<6000;y+=60)g.fillText('שורה '+y,20,y);
+  return c.toDataURL('image/png').split(',')[1];
+})()`) as string;
+await page.setInputFiles("#audShots", { name: "full-page.png", mimeType: "image/png", buffer: Buffer.from(tallB64, "base64") });
+await page.waitForTimeout(1200);
+ok("tall capture tiled into 4 slot-capped chunks", (await page.locator(".shotthumb").count()) === 4);
+const tileDims = await page.evaluate(`(()=>{const i=document.querySelector('.shotthumb img');
+  return new Promise(res=>{const im=new Image();im.onload=()=>res(im.naturalWidth+'x'+im.naturalHeight);im.src=i.src;});})()`) as string;
+ok("tiles keep full width (400px), not squashed", tileDims.startsWith("400x"), tileDims);
+for (let i = 0; i < 4; i++) {
+  if (await page.locator(".shotthumb button").count()) {
+    await page.locator(".shotthumb button").first().click();
+    await page.waitForTimeout(120);
+  }
+}
+ok("all tiles removable one by one", (await page.locator(".shotthumb").count()) === 0);
 // reset clears the marks
 await page.click("#auditReset");
 await page.waitForTimeout(200);
