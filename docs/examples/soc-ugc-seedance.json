@@ -1,0 +1,9 @@
+{
+  "model": "seedance-2.0",
+  "productId": "REPLACE_WITH_YOUR_PRODUCT_ID",
+  "prompt": "15 second UGC career-change video, filmed on a smartphone, natural late-afternoon window light, handheld selfie angle. A woman in her early 30s, dark brown hair in a claw clip, natural skin with visible pores and slight undereye shadows, olive t-shirt, on her couch - open laptop on the coffee table, blanket bunched beside her, a lanyard badge on the armrest. She speaks Hebrew with a natural Israeli accent.\n\nOpens cross-legged, phone in one hand, half-smiling: \"לפני שנה מכרתי נעליים בקניון. היום אני אנליסטית SOC בתעשייה האווירית.\"\n\nQuick jump cut - closer to the lens, she tilts her head, counts on two fingers: \"למדתי שם סייבר. כיתה פיזית, מדריכים מהתעשייה.\"\n\nJump cut - close-up, she slowly turns the laptop toward the camera, glances at the screen, exhales, shrugs. No dialogue.\n\nJump cut - back to the first angle, she leans in, eyebrows up: \"אמרו לי שבגיל שלי מאוחר מדי. זה היה הכי לא מאוחר שעשיתי.\" She laughs quietly and it cuts.\n\nTone is grounded, a little surprised at herself, warm - she breathes between sentences, leaves a beat of silence after each line, unhurried. Each cut is slightly closer or at a different angle, like several takes edited together.\n\nSoft daylight, no ring light, no filters, one side of her face in shadow. Natural phone quality, not color graded, slight motion blur, grain in the corners. Sound direct from the phone mic - her voice, room ambience, no music. Keep her face and t-shirt consistent across cuts, steady motion, no distortion.\n\nHonest, understated, quietly proud - like a friend answering \"so what do you do now?\"",
+  "aspectRatio": "9:16",
+  "duration": 15,
+  "resolution": "720p",
+  "audioEnabled": true
+}
