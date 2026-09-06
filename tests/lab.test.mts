@@ -143,7 +143,7 @@ ok("returns usage", typeof goodBody?.usage?.output_tokens === "number");
 const sent = lastRequest.body;
 ok("model is claude-opus-5", sent.model === "claude-opus-5", sent.model);
 ok("no budget_tokens sent", !JSON.stringify(sent).includes("budget_tokens"));
-ok("effort inside output_config", sent.output_config?.effort === "medium", String(sent.output_config?.effort));
+ok("effort inside output_config", sent.output_config?.effort === "low", String(sent.output_config?.effort));
 ok("format inside output_config", sent.output_config?.format?.type === "json_schema");
 ok("schema is strict", sent.output_config?.format?.schema?.additionalProperties === false);
 ok("max_tokens bounded", sent.max_tokens === 8000, String(sent.max_tokens));
