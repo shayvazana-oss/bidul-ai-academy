@@ -38,6 +38,13 @@ function envInt(name: string, fallback: number): number {
 }
 const RATE_LIMIT = envInt("RATE_LIMIT_PER_HOUR", 12);
 /**
+ * How long a single model call may run. Reasoning models routinely spend more
+ * than half a minute on these prompts, and a call cut short costs the user the
+ * wait and returns nothing, so the ceiling sits just under the platform's
+ * maxDuration rather than at a conservative default.
+ */
+const MODEL_TIMEOUT_MS = envInt("MODEL_TIMEOUT_MS", 55_000);
+/**
  * Instance-wide ceiling. The per-IP cap below can only be as trustworthy as the
  * header it keys on, and off-Vercel nothing stops a caller forging a fresh IP
  * per request. This ceiling doesn't depend on any header, so it bounds the bill
@@ -441,8 +448,13 @@ const AUDIT_SYSTEM = `אתה מאבחן פרופילי לינקדאין עבור
 const EFFORTS = ["low", "medium", "high", "xhigh", "max"] as const satisfies readonly NonNullable<
   Anthropic.OutputConfig["effort"]
 >[];
-/** Thinking tokens bill as output, so the default trades a little depth for predictable cost. */
-const EFFORT = EFFORTS.find((e) => e === process.env.REVIEW_EFFORT?.trim()) ?? "medium";
+/**
+ * Thinking tokens bill as output and, more pressingly, as latency: the whole
+ * call has to finish inside the platform's maxDuration, and a call that runs
+ * over returns nothing at all. The default therefore buys reliability, and
+ * REVIEW_EFFORT raises it wherever the ceiling is generous enough to allow it.
+ */
+const EFFORT = EFFORTS.find((e) => e === process.env.REVIEW_EFFORT?.trim()) ?? "low";
 
 function cap(v: unknown, max: number): string {
   return typeof v === "string" ? cut(v.trim(), max) : "";
@@ -536,9 +548,12 @@ async function handleWeb(request: Request): Promise<Response> {
     ? `\n\nתעודת הקול של הכותב — כך הוא באמת כותב. שמור על הסגנון הזה:\n"""\n${voice}\n"""`
     : "";
 
-  // timeout x (maxRetries + 1) must fit inside maxDuration, or Vercel kills the
-  // invocation mid-retry and the friendly 504 below never gets to run.
-  const client = new Anthropic({ timeout: 25_000, maxRetries: 1 });
+  // One attempt, given almost the whole invocation window. Splitting the window
+  // between a first try and a retry is worse than useless here: every call slow
+  // enough to trip the timeout trips it twice, so the caller waits two full
+  // windows to receive the same failure. timeout must stay inside the
+  // maxDuration in vercel.json, with room for the response to be written.
+  const client = new Anthropic({ timeout: MODEL_TIMEOUT_MS, maxRetries: 0 });
 
   /** Shared call wrapper: same stop-reason handling for every mode. The output
    *  type is inferred from the schema, so a system/schema mixup cannot compile. */
