@@ -212,6 +212,7 @@ a.bmk:hover{background:var(--li-soft);text-decoration:none}
 .aud-crit{border:1px solid var(--hair);border-radius:12px;padding:16px 18px;margin-top:10px;background:var(--bg)}
 .aud-crit h4{font-size:13.5px;font-weight:700;color:var(--li);margin-bottom:6px}
 .aud-crit .q{font-size:13px;color:var(--muted);border-inline-start:3px solid var(--hair-2);padding-inline-start:10px;margin-bottom:8px;line-height:1.55}
+.aud-crit .q.gone{color:#a8442f;border-inline-start-color:#e8b4a6;font-weight:600}
 .aud-crit p{font-size:13.5px;color:var(--ink2);line-height:1.65;margin-bottom:8px}
 .aud-crit .bt{background:#eefaf4;border:1px solid #bfe6d4;border-radius:10px;padding:11px 14px;font-size:13.5px;color:var(--ink);line-height:1.7;white-space:pre-line}
 .audit-grid{display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start;margin-top:22px}
@@ -1489,14 +1490,14 @@ function applyAudit(a){
   });
   store.set('lab-audit',auditState);
   renderAudit();
-  const crit=(title,found,quote,critique,better,copyLabel)=>found?
-    `<div class="aud-crit"><h4>${title}</h4>${quote?'<div class="q">❝ '+esc(quote)+'</div>':''}<p>${esc(critique)}</p>${better?'<div class="bt">'+esc(better)+'</div><div style="margin-top:8px"><button class="copybtn" data-copy="'+esc(better)+'">'+copyLabel+'</button></div>':''}</div>`:'';
+  const crit=(title,found,quote,critique,better,copyLabel,missing)=>(critique||better)?
+    `<div class="aud-crit"><h4>${title}</h4>${found&&quote?'<div class="q">❝ '+esc(quote)+'</div>':''}${found?'':'<div class="q gone">'+esc(missing)+'</div>'}<p>${esc(critique)}</p>${better?'<div class="bt">'+esc(better)+'</div><div style="margin-top:8px"><button class="copybtn" data-copy="'+esc(better)+'">'+copyLabel+'</button></div>':''}</div>`:'';
   const audOut=$('#audOut');
   audOut.innerHTML=`
     <p class="ai-headline" style="font-size:15px">${esc(a.summary||'')}</p>
     <div class="ai-sec"><h4>מה קרה עכשיו</h4><p style="font-size:13px;color:var(--ink2)">✓ ${auto} פריטים סומנו אוטומטית לפי המסמך · ${no} זוהו כחסרים · ${manual} נשארו לבדיקה ידנית קצרה (מה שהיצוא לא מכיל). טעינו? אפשר לתקן כל סימון בלחיצה על השורה.</p></div>
-    ${crit('הכותרת (Headline) שלכם',a.headline&&a.headline.found,a.headline?a.headline.quote:'',a.headline?a.headline.critique:'',a.headline?a.headline.better:'','העתקת הנוסח המשופר')}
-    ${crit('ה-About שלכם',a.about&&a.about.found,'',a.about?a.about.critique:'',a.about?a.about.betterOpening:'','העתקת הפתיחה המשופרת')}
+    ${crit('הכותרת (Headline) שלכם',a.headline&&a.headline.found,a.headline?a.headline.quote:'',a.headline?a.headline.critique:'',a.headline?a.headline.better:'','העתקת הנוסח המשופר','לא נמצאה כותרת במסמך — הנוסח שלמטה נבנה מהחומר שכן נמצא בו.')}
+    ${crit('ה-About שלכם',a.about&&a.about.found,'',a.about?a.about.critique:'',a.about?a.about.betterOpening:'','העתקת הפתיחה המשופרת','אין About בפרופיל שלכם — וזה החלק הכי משתלם למלא. הפתיחה שלמטה נכתבה מהחומר שבמסמך.')}
     ${a.experience&&a.experience.critique?'<div class="aud-crit"><h4>סקשן הניסיון</h4><p>'+esc(a.experience.critique)+'</p></div>':''}`;
   audOut.classList.add('on');
 }
