@@ -426,6 +426,37 @@ await page.waitForSelector("#audOut.on", { timeout: 20000 });
 ok("summary rendered", ((await page.textContent("#audOut")) ?? "").includes("להחליף את הכותרת"));
 ok("headline critique with rewrite", ((await page.textContent("#audOut")) ?? "").includes("כאוס תזרימי"));
 ok("about rewrite rendered", ((await page.textContent("#audOut")) ?? "").includes("החור בתזרים"));
+// a section the profile does not have is exactly when the rewrite matters most
+await page.route("**/api/lab", async (route) => {
+  const b = JSON.parse(route.request().postData() ?? "{}");
+  if (b.mode !== "audit") return route.fallback();
+  await route.fulfill({
+    status: 200,
+    contentType: "application/json; charset=utf-8",
+    body: JSON.stringify({
+      audit: {
+        ...AUDIT_RESP,
+        about: { found: false, critique: "אין About בכלל.", betterOpening: "פתיחה שנבנתה מהניסיון שבמסמך בלבד." },
+      },
+      usage: { input_tokens: 10, output_tokens: 10 },
+    }),
+  });
+});
+await page.click("#audRun");
+let absentRendered = false;
+try {
+  await page.waitForFunction(
+    "document.querySelector('#audOut').innerText.includes('פתיחה שנבנתה מהניסיון')",
+    null,
+    { timeout: 20000 },
+  );
+  absentRendered = true;
+} catch {}
+ok("absent About still renders its rewrite", absentRendered);
+ok("absent About is named as absent", ((await page.textContent("#audOut")) ?? "").includes("אין About בפרופיל שלכם"));
+await page.unroute("**/api/lab");
+await page.click("#audRun");
+await page.waitForFunction("document.querySelector('#audOut').innerText.includes('החור בתזרים')", null, { timeout: 20000 });
 // items applied to the checklist
 const marked = await page.evaluate(`(() => ({
   f2done: document.querySelector('.aitem[data-k="foundation-2"]').classList.contains("done"),
