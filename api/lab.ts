@@ -2,7 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { z } from "zod";
 
-export const config = { maxDuration: 60 };
+export const config = { maxDuration: 300 };
 
 /** LinkedIn's own hard cap on post length. */
 const MAX_DRAFT_CHARS = 3000;
@@ -43,7 +43,7 @@ const RATE_LIMIT = envInt("RATE_LIMIT_PER_HOUR", 12);
  * wait and returns nothing, so the ceiling sits just under the platform's
  * maxDuration rather than at a conservative default.
  */
-const MODEL_TIMEOUT_MS = envInt("MODEL_TIMEOUT_MS", 55_000);
+const MODEL_TIMEOUT_MS = envInt("MODEL_TIMEOUT_MS", 150_000);
 /**
  * Instance-wide ceiling. The per-IP cap below can only be as trustworthy as the
  * header it keys on, and off-Vercel nothing stops a caller forging a fresh IP
