@@ -426,6 +426,9 @@ await page.waitForSelector("#audOut.on", { timeout: 20000 });
 ok("summary rendered", ((await page.textContent("#audOut")) ?? "").includes("להחליף את הכותרת"));
 ok("headline critique with rewrite", ((await page.textContent("#audOut")) ?? "").includes("כאוס תזרימי"));
 ok("about rewrite rendered", ((await page.textContent("#audOut")) ?? "").includes("החור בתזרים"));
+// the client must outwait the server, or it discards an answer already paid for
+const clientCeiling = await page.evaluate("AI_CLIENT_TIMEOUT_MS");
+ok("client waits longer than the server ceiling", Number(clientCeiling) > 150000, String(clientCeiling));
 // a section the profile does not have is exactly when the rewrite matters most
 await page.route("**/api/lab", async (route) => {
   const b = JSON.parse(route.request().postData() ?? "{}");
