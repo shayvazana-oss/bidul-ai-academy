@@ -1237,6 +1237,12 @@ let toastT;
 function toast(msg){const t=$('#toast');t.textContent=msg||'✓ הועתק';t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1800);}
 /* ---------- shared AI plumbing (used by review / writer / ideas) ---------- */
 const AI_ENDPOINT=(document.querySelector('meta[name="lab-api"]')?.content||'').trim();
+/* Must stay ABOVE the server's own ceiling (MODEL_TIMEOUT_MS, 150s by default).
+   Aborting first would replace the server's specific, actionable error with a
+   generic "it didn't come back" — and would throw away an answer already paid
+   for. Measured live: weekly 25s, review 48s, a profile audit 55s, and an audit
+   with screenshots attached runs longer still. */
+const AI_CLIENT_TIMEOUT_MS=165000;
 function statusSay(el,msg,kind){
   el.style.display='flex';
   el.className='ai-status'+(kind==='err'?' err':'');
@@ -1249,7 +1255,7 @@ async function aiPost(payload,statusEl,btn,waitMsg){
   const tick=statusEl?setInterval(()=>statusSay(statusEl,waitMsg+' '+Math.round((Date.now()-t0)/1000)+' שניות','wait'),1000):null;
   if(btn){btn.disabled=true;btn.setAttribute('aria-busy','true');}
   const ctl=new AbortController();
-  const kill=setTimeout(()=>ctl.abort(),65000);
+  const kill=setTimeout(()=>ctl.abort(),AI_CLIENT_TIMEOUT_MS);
   try{
     const res=await fetch(AI_ENDPOINT,{
       method:'POST',headers:{'Content-Type':'application/json'},signal:ctl.signal,
