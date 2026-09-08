@@ -170,7 +170,35 @@ const cut = (s: string, n: number): string => {
   if (c >= 0xd800 && c <= 0xdbff) t = t.slice(0, -1);
   return t;
 };
-const clip = (s: string, n: number): string => (s.length > n ? cut(s, n).trimEnd() + "…" : s);
+/**
+ * The model occasionally emits a field as escaped text — literal `\u05de`
+ * sequences, a stray form feed, a transliteration fragment — instead of the
+ * Hebrew it meant. Seen live: an idea whose angle began with `\x0c` and ran
+ * on as `\u05de\u05e0…` for its entire length. Rendering that verbatim is
+ * worse than showing nothing, so every output field is normalised here first.
+ */
+const CONTROL_CHARS = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g;
+const ESCAPED_UNICODE = /\\u[0-9a-fA-F]{4}/;
+/** True when a field carries the tell-tale signs of a mangled generation. */
+const mangled = (s: string): boolean => CONTROL_CHARS.test(s) || ESCAPED_UNICODE.test(s);
+function sanitize(s: string): string {
+  let out = s.replace(CONTROL_CHARS, "");
+  if (ESCAPED_UNICODE.test(out)) {
+    try {
+      // Let the JSON parser decode the escapes; quotes and backslashes that are
+      // not part of an escape are protected first so the parse cannot fail on them.
+      const guarded = out.replace(/\\(?!u[0-9a-fA-F]{4})/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n");
+      out = JSON.parse(`"${guarded}"`);
+    } catch {
+      /* leave the text as it is — clipped and control-free is still better than nothing */
+    }
+  }
+  return out;
+}
+const clip = (s: string, n: number): string => {
+  const t = sanitize(s);
+  return t.length > n ? cut(t, n).trimEnd() + "…" : t;
+};
 
 /** The schema cannot enforce its own limits, so clamp everything before it ships. */
 function normalize(r: ReviewOut) {
@@ -284,7 +312,10 @@ type IdeasOutT = z.infer<typeof IdeasOut>;
 
 function normalizeIdeas(r: IdeasOutT, validIds: Set<string>) {
   return {
-    ideas: r.ideas.slice(0, 9).map((i) => ({
+    ideas: r.ideas
+      .filter((i) => !mangled(`${i.title}${i.angle}${i.question}`))
+      .slice(0, 9)
+      .map((i) => ({
       title: clip(i.title, 200),
       angle: clip(i.angle, 300),
       frameworkId: validIds.has(i.frameworkId.trim()) ? i.frameworkId.trim() : "",
