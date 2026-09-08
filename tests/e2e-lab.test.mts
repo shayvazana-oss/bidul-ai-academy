@@ -44,6 +44,15 @@ const AUDIT_RESP = {
   summary: "יש בסיס טוב. הצעד המשתלם עכשיו: להחליף את הכותרת.",
 };
 
+const PROFILE_RESP = {
+  about: "ארגונים רוצים להכשיר עובדים לסייבר — ולא יודעים שאפשר במימון ממשלתי.\n\nב-TESI אני בונה את השותפויות שמביאות את זה.\n\nרוצים להתחיל? [הצעד הראשון].",
+  roles: [
+    { title: "VP Business Development · TESI", lines: ["בניתי שותפויות עם IAI/אלתא", "[מספר המשתתפים בפועל]"] },
+    { title: "Rain Makers", lines: ["[מה השתנה בתפקיד הזה — שורה אחת]"] },
+  ],
+  missing: ["הצעד הראשון שאתם מציעים", "מספר המשתתפים בפועל"],
+};
+
 const WRITE_RESP = {
   post: "רוב היועצים מתמחרים לפי שעה.\n\nאצלי המעבר לפרויקטים לקח [פרק הזמן האמיתי].\n\nניסיתם?",
   missing: ["פרק הזמן האמיתי של המעבר"],
@@ -72,13 +81,15 @@ const upstream = http.createServer((req, res) => {
   let raw = "";
   req.on("data", (c) => (raw += c));
   req.on("end", () => {
-    const schema = raw.includes('"betterOpening"') ? "audit"
+    const schema = raw.includes('"roles"') ? "profile"
+      : raw.includes('"betterOpening"') ? "audit"
       : raw.includes('"altHooks"') ? "write"
       : raw.includes('"ideas"') ? "ideas"
       : raw.includes('"experiment"') ? "weekly"
       : raw.includes('"profile"') ? "voice"
       : "review";
-    const payload = schema === "audit" ? AUDIT_RESP
+    const payload = schema === "profile" ? PROFILE_RESP
+      : schema === "audit" ? AUDIT_RESP
       : schema === "write" ? WRITE_RESP
       : schema === "ideas" ? IDEAS_RESP
       : schema === "weekly" ? WEEKLY_RESP
@@ -493,6 +504,38 @@ ok("hand tick disclosed as self-reported", st2.unk.includes("6 נק' שסימנ�
 ok("undecided shrinks by the ticked weight", st2.unk.includes("68"), st2.unk);
 await page.click('.aitem[data-k="foundation-0"]');
 ok("hero counts checks, not an invented score", ((await page.textContent(".c-score .sc-num")) ?? "").includes("בדיקות") && !(await page.content()).includes('id="scNum">82'));
+// === profile writer: the audit's prescription, executed from the user's facts ===
+ok("audit result offers the next step", (await page.locator("#profOpen").count()) === 1);
+await page.click("#profOpen");
+await page.waitForTimeout(300);
+ok("profile writer panel opens", await page.evaluate("document.querySelector('#profBox').classList.contains('on')"));
+ok("seven interview questions", (await page.locator("#profQs textarea").count()) === 7);
+ok("first question prefilled from the positioning wizard", ((await page.inputValue("#profQs textarea >> nth=0")) ?? "").length > 0);
+await page.evaluate("[...document.querySelectorAll('#profQs textarea')].forEach(t => { t.value = ''; })");
+await page.click("#profRun");
+await page.waitForTimeout(300);
+ok("profile writer requires an answer", ((await page.textContent("#profStatus")) ?? "").includes("לפחות על שאלה אחת"));
+await page.fill("#profQs textarea >> nth=0", "מנהלי הדרכה בארגונים ביטחוניים, שלא יודעים שיש מימון");
+let sawProfile: any = null;
+await page.route("**/api/lab", async (route) => {
+  const b = JSON.parse(route.request().postData() ?? "{}");
+  if (b.mode === "profile") sawProfile = b;
+  await route.fallback();
+});
+await page.click("#profRun");
+await page.waitForSelector("#profOut.on", { timeout: 20000 });
+await page.unroute("**/api/lab");
+ok("profile request carries the pasted text, the answer and the market", !!sawProfile && typeof sawProfile.profile?.text === "string" && sawProfile.answers?.length === 1 && typeof sawProfile.market === "string", JSON.stringify(sawProfile && { t: !!sawProfile.profile?.text, a: sawProfile.answers?.length, m: sawProfile.market }));
+ok("About rendered", ((await page.textContent("#profOut")) ?? "").includes("ב-TESI אני בונה"));
+ok("role lines rendered per role", (await page.locator("#profOut .prole").count()) === 2);
+ok("missing facts listed", ((await page.textContent("#profOut .wmiss")) ?? "").includes("מספר המשתתפים"));
+const gate = await page.evaluate(`(() => { const b = document.querySelector('#profOut [data-pcopy]'); const h = b.parentElement.querySelector('.phint'); return { disabled: b.disabled, hint: !h.hidden }; })()`) as any;
+ok("copy is blocked while brackets remain", gate.disabled === true && gate.hint === true, JSON.stringify(gate));
+await page.evaluate(`(() => { const ed = document.querySelector('#profOut .pedit'); ed.innerText = ed.innerText.replace('[הצעד הראשון]', 'שיחה של 15 דקות'); ed.dispatchEvent(new Event('input', { bubbles: true })); })()`);
+const gate2 = await page.evaluate(`(() => { const b = document.querySelector('#profOut [data-pcopy]'); const h = b.parentElement.querySelector('.phint'); return { disabled: b.disabled, hint: !h.hidden }; })()`) as any;
+ok("copy opens once the brackets are filled in place", gate2.disabled === false && gate2.hint === false, JSON.stringify(gate2));
+await page.click("#profClose");
+ok("profile writer panel closes", !(await page.evaluate("document.querySelector('#profBox').classList.contains('on')")));
 // pdf path: attach a file and confirm it is accepted + request carries pdf
 const tinyPdf = Buffer.from("%PDF-1.4\n1 0 obj<</Type/Catalog>>endobj\ntrailer<<>>\n%%EOF");
 await page.setInputFiles("#audFile", { name: "Profile.pdf", mimeType: "application/pdf", buffer: tinyPdf });

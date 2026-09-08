@@ -220,6 +220,13 @@ a.bmk:hover{background:var(--li-soft);text-decoration:none}
 .score-unk button{background:none;border:0;padding:0;color:var(--li);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline}
 .fx.unk{opacity:.6}
 .fx.unk b::after{content:' · לא נבדק';font-weight:500;color:var(--muted)}
+.aud-next{margin-top:16px}
+.prole{margin-bottom:12px}
+.prole h4{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.tpl.pedit:focus{outline:2px solid var(--li);outline-offset:1px}
+.pcopy{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:-4px 0 12px}
+.phint{font-size:12px;color:var(--orange)}
+.copybtn[disabled]{opacity:.45;cursor:not-allowed}
 .aud-crit p{font-size:13.5px;color:var(--ink2);line-height:1.65;margin-bottom:8px}
 .aud-crit .bt{background:#eefaf4;border:1px solid #bfe6d4;border-radius:10px;padding:11px 14px;font-size:13.5px;color:var(--ink);line-height:1.7;white-space:pre-line}
 .audit-grid{display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start;margin-top:22px}
@@ -837,6 +844,19 @@ footer p{max-width:860px;line-height:1.8}
         אל סרגל הסימניות של הדפדפן (Ctrl+Shift+B מציג אותו). מעכשיו, בכל פעם שאתם על עמוד הפרופיל שלכם בלינקדאין — לחיצה אחת על הסימניה מעתיקה את כל טקסט העמוד ופותחת את המעבדה. נשאר רק להדביק כאן. זה שקול להעתקה ידנית — אתם על העמוד, בדפדפן שלכם, בלי אוטומציה ובלי סיכון לחשבון.
       </div>
       <div class="ai-out" id="audOut"></div>
+      <div class="writer" id="profBox">
+        <div class="wh">
+          <h3>✍️ כתבו את ה-About ואת שורות התפקידים — מהעובדות שלכם</h3>
+          <button class="wclose" id="profClose" title="סגירה">×</button>
+        </div>
+        <p class="wsub">האבחון אמר מה חסר. כאן ממלאים את זה: שבע שאלות קצרות, ו-Claude כותב About מלא ו-1–3 שורות לכל תפקיד שבמסמך — <b>רק ממה שתענו</b>. מהמסמך הוא לוקח שמות תפקידים ותאריכים בלבד. עובדה שלא סיפקתם נשארת [בסוגריים], לא מומצאת.</p>
+        <div id="profQs"></div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <button class="btn-ai" id="profRun"><span>כתבו לי About ותפקידים</span></button>
+          <div class="ai-status" id="profStatus" role="status" aria-live="polite" style="display:none;margin-top:0"></div>
+        </div>
+        <div class="wout" id="profOut"></div>
+      </div>
     </div>
 
     <div class="audit-grid">
@@ -1539,9 +1559,81 @@ function applyAudit(a){
     <div class="ai-sec"><h4>מה קרה עכשיו</h4><p style="font-size:13px;color:var(--ink2)">✓ ${auto} פריטים סומנו אוטומטית לפי המסמך · ${no} זוהו כחסרים · ${manual} נשארו לבדיקה ידנית קצרה (מה שהיצוא לא מכיל). טעינו? אפשר לתקן כל סימון בלחיצה על השורה.</p></div>
     ${crit('הכותרת (Headline) שלכם',a.headline&&a.headline.found,a.headline?a.headline.quote:'',a.headline?a.headline.critique:'',a.headline?a.headline.better:'','העתקת הנוסח המשופר','לא נמצאה כותרת במסמך — הנוסח שלמטה נבנה מהחומר שכן נמצא בו.')}
     ${crit('ה-About שלכם',a.about&&a.about.found,'',a.about?a.about.critique:'',a.about?a.about.betterOpening:'','העתקת הפתיחה המשופרת','אין About בפרופיל שלכם — וזה החלק הכי משתלם למלא. הפתיחה שלמטה נכתבה מהחומר שבמסמך.')}
-    ${a.experience&&a.experience.critique?'<div class="aud-crit"><h4>סקשן הניסיון</h4><p>'+esc(a.experience.critique)+'</p></div>':''}`;
+    ${a.experience&&a.experience.critique?'<div class="aud-crit"><h4>סקשן הניסיון</h4><p>'+esc(a.experience.critique)+'</p></div>':''}
+    <div class="aud-next"><button type="button" class="btn-g" id="profOpen">הצעד הבא: כתבו את ה-About ואת שורות התפקידים — מהעובדות שלכם ←</button></div>`;
   audOut.classList.add('on');
 }
+
+/* ---------- profile writer: the audit's prescription, executed from the user's facts ---------- */
+const PROF_QS=[
+  {q:'מי מגיע אליכם, ועם איזו בעיה?',pre:()=>[wiz['קהל'],wiz['בעיה']].filter(Boolean).join(' — ')},
+  {q:'מה משתנה אצל הלקוח אחרי שעובדים איתכם — בפועל, לא בסיסמאות?',pre:()=>wiz['תוצאה']||''},
+  {q:'2–3 עובדות שתעמדו מאחוריהן בפגישה ראשונה: מספרים, שותפים, היקפים',pre:()=>wiz['הוכחה']||''},
+  {q:'עברו על התפקידים שבפרופיל. לכל אחד שורה-שתיים: מה עשיתם בפועל ומה יצא מזה'},
+  {q:'הצעד הראשון שאתם מציעים למי שרוצה להתחיל (למשל: שיחה של 15 דקות, בדיקת התאמה)'},
+  {q:'מה אסור שיופיע? לקוחות שאי אפשר לנקוב בשמם, מספרים שלא אושרו'},
+  {q:'עוד משהו שחשוב שייכנס? (לא חובה)'}
+];
+function openProfileWriter(){
+  $('#profQs').innerHTML=PROF_QS.map(x=>`<div class="wq"><label>${esc(x.q)}</label><textarea data-q="${esc(x.q)}" placeholder="מהניסיון שלכם. ריק = יישאר חור בנוסח, לא המצאה">${esc(x.pre?x.pre():'')}</textarea></div>`).join('');
+  const out=$('#profOut');out.classList.remove('on');out.innerHTML='';
+  $('#profStatus').style.display='none';
+  const box=$('#profBox');box.classList.add('on');
+  box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+$('#audOut').addEventListener('click',e=>{if(e.target.closest('#profOpen'))openProfileWriter();});
+$('#profClose').addEventListener('click',()=>$('#profBox').classList.remove('on'));
+const BRACKET=/\[[^\]\n]{1,120}\]/;
+function copyBlock(text,label){
+  const gated=BRACKET.test(text);
+  return `<div class="tpl pedit" contenteditable="true" spellcheck="false">${esc(text)}</div>
+    <div class="pcopy"><button type="button" class="copybtn" data-pcopy${gated?' disabled':''}>${label}</button><span class="phint"${gated?'':' hidden'}>השלימו את [הסוגריים] בטקסט — ההעתקה נפתחת כשלא נשארו</span></div>`;
+}
+function renderProfileOut(p){
+  const roles=(p.roles||[]).filter(r=>r&&r.title).map(r=>`<div class="prole"><h4>${esc(r.title)}</h4>${copyBlock((r.lines||[]).join('\n'),'העתקת שורות התפקיד')}</div>`).join('');
+  const missing=Array.isArray(p.missing)&&p.missing.length
+    ?`<div class="wmiss"><b>מה עוד חסר כדי שזה יעמוד מאחורי עצמו:</b><ul>${p.missing.map(m=>'<li>'+esc(m)+'</li>').join('')}</ul></div>`:'';
+  const out=$('#profOut');
+  out.innerHTML=`<div class="ai-sec"><h4>ה-About</h4>${copyBlock(p.about,'העתקת ה-About')}</div>
+    ${roles?`<div class="ai-sec" style="margin-top:14px"><h4>שורות לתפקידים</h4>${roles}</div>`:''}${missing}
+    <p class="ai-foot">נכתב מהתשובות שלכם בלבד; מהמסמך נלקחו רק שמות תפקידים ותאריכים. [סוגריים מרובעים] הם עובדה שלא סיפקתם — אפשר לערוך כאן ישירות, וההעתקה נפתחת כשלא נשארו סוגריים. הטקסט עבר דרך השרת שלנו ל-API של Anthropic ואינו נשמר אצלנו.</p>`;
+  out.classList.add('on');
+}
+$('#profOut').addEventListener('input',e=>{
+  const ed=e.target.closest('.pedit');if(!ed)return;
+  const wrap=ed.nextElementSibling,btn=wrap&&wrap.querySelector('[data-pcopy]'),hint=wrap&&wrap.querySelector('.phint');
+  const gated=BRACKET.test(ed.innerText);
+  if(btn)btn.disabled=gated;if(hint)hint.hidden=!gated;
+});
+$('#profOut').addEventListener('click',e=>{
+  const btn=e.target.closest('[data-pcopy]');if(!btn||btn.disabled)return;
+  const ed=btn.parentElement.previousElementSibling;
+  copyText(fixRtl(ed.innerText.trim()),btn);
+});
+let profBusy=false;
+$('#profRun').addEventListener('click',async()=>{
+  if(profBusy||!AI_ENDPOINT)return;
+  const text=$('#audText').value.trim();
+  const out=$('#profOut');out.classList.remove('on');out.innerHTML='';
+  if(!audPdf&&text.length<200){statusSay($('#profStatus'),'צרפו את קובץ ה-PDF או הדביקו את טקסט הפרופיל למעלה — הכותב לוקח משם את שמות התפקידים והתאריכים.','err');return;}
+  const answers=[...document.querySelectorAll('#profQs textarea')].map(t=>({q:t.dataset.q,a:t.value.trim()})).filter(x=>x.a);
+  if(!answers.length){statusSay($('#profStatus'),'ענו לפחות על שאלה אחת — בלי עובדות שלכם אין ממה לכתוב.','err');return;}
+  profBusy=true;
+  const data=await aiPost({
+    mode:'profile',
+    profile:audPdf?{pdf:audPdf}:{text},
+    answers,
+    lashon:wiz.gender==='f'?'נקבה':'זכר',
+    market:wiz.market||'il',
+    positioning:posPayload(),
+    voice:store.get('lab-voice','')||undefined
+  },$('#profStatus'),$('#profRun'),'Claude כותב מהעובדות שלכם…');
+  profBusy=false;
+  if(!data)return;
+  const p=data.profile;
+  if(!p||typeof p.about!=='string'||!p.about.trim()){statusSay($('#profStatus'),'התקבלה תשובה ריקה מהשרת. נסו שוב.','err');return;}
+  renderProfileOut(p);
+});
 
 /* ---------- station 2: wizard ---------- */
 const FIELDS=['תחום','קהל','בעיה','תוצאה','הוכחה'];
