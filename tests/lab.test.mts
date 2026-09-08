@@ -148,6 +148,10 @@ ok("format inside output_config", sent.output_config?.format?.type === "json_sch
 ok("schema is strict", sent.output_config?.format?.schema?.additionalProperties === false);
 ok("max_tokens bounded", sent.max_tokens === 8000, String(sent.max_tokens));
 ok("system prompt names the allowed enum values", typeof sent.system === "string" && sent.system.includes('"חזק" או "עובד" או "חלש"'));
+// an escaped-unicode field in a text mode is repaired in place, not shipped raw
+nextPayload = { ...REVIEW, headline: "\u000c\\u05d0\\u05d1 שלום — \\u05e9\\u05d5\\u05e8\\u05d4" };
+const escBody: any = await (await handler(post({ draft: GOOD_DRAFT }, ORIGIN, { "x-forwarded-for": "31.0.0.1" }))).json();
+ok("review: escaped unicode decoded and control char stripped", escBody?.review?.headline === "אב שלום — שורה", JSON.stringify(escBody?.review?.headline));
 ok("draft reached the model", JSON.stringify(sent.messages).includes("מתמחרים לפי שעה"));
 ok("positioning reached the model", JSON.stringify(sent.messages).includes("יועצים עצמאיים"));
 ok("no assistant prefill", !sent.messages.some((m: any) => m.role === "assistant"));
@@ -267,6 +271,17 @@ ok("no assistant prefill", !sent.messages.some((m: any) => m.role === "assistant
   };
   const ir: any = await (await handler(post({ mode: "ideas", frameworks: fws, positioning: { קהל: "ק" } }, ORIGIN, IPN))).json();
   ok("ideas: clamped to 9", ir.ideas.length === 9, String(ir.ideas.length));
+  // a mangled generation is dropped, not rendered — fixture is the live defect verbatim
+  const MANGLED_ANGLE = "\u000cicsipur \\u2014 \\u05de\\u05e0\\u05d4\\u05dc\\u05ea \\u05d4\\u05d3\\u05e8\\u05db\\u05d4";
+  nextPayload = {
+    ideas: [
+      { title: "רעיון פגום", angle: MANGLED_ANGLE, frameworkId: "a", question: "ש" },
+      ...Array.from({ length: 8 }, (_, i) => ({ title: `רעיון ${i}`, angle: "זווית", frameworkId: "a", question: "ש" })),
+    ],
+  };
+  const mg: any = await (await handler(post({ mode: "ideas", frameworks: fws, positioning: { קהל: "ק" } }, ORIGIN, IPN))).json();
+  ok("ideas: mangled idea dropped, eight remain", mg.ideas.length === 8, String(mg.ideas.length));
+  ok("ideas: no control chars or escapes survive", JSON.stringify(mg.ideas).indexOf("\\\\u") === -1 && !/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(JSON.stringify(mg.ideas)));
   ok("ideas: titles clipped", ir.ideas.every((i: any) => i.title.length <= 201));
 }
 
