@@ -402,7 +402,7 @@ const ProfileOut = z.object({
           .describe("עד 3 שורות: מה הייתה האחריות, מול מי, ומה השתנה — מהתשובות בלבד. שורה שאין לה עובדה נשארת [בסוגריים]"),
       }),
     )
-    .describe("פריט לכל תפקיד שמופיע במסמך, לפי סדר המסמך, עד 6"),
+    .describe("פריט לכל תפקיד שמופיע במסמך, לפי סדר המסמך, עד 8"),
   missing: z
     .array(z.string())
     .describe("עד 6 עובדות שחסרות כדי שהנוסחים יעמדו מאחורי עצמם — כל [סוגריים] בטקסט מופיעים כאן"),
@@ -412,7 +412,7 @@ type ProfileOutT = z.infer<typeof ProfileOut>;
 function normalizeProfile(r: ProfileOutT) {
   return {
     about: clip(r.about, 2800),
-    roles: r.roles.slice(0, 6).map((x) => ({
+    roles: r.roles.slice(0, 8).map((x) => ({
       title: clip(x.title, 160),
       lines: x.lines.slice(0, 3).map((l) => clip(l, 300)).filter(Boolean),
     })),
