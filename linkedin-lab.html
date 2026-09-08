@@ -213,6 +213,13 @@ a.bmk:hover{background:var(--li-soft);text-decoration:none}
 .aud-crit h4{font-size:13.5px;font-weight:700;color:var(--li);margin-bottom:6px}
 .aud-crit .q{font-size:13px;color:var(--muted);border-inline-start:3px solid var(--hair-2);padding-inline-start:10px;margin-bottom:8px;line-height:1.55}
 .aud-crit .q.gone{color:#a8442f;border-inline-start-color:#e8b4a6;font-weight:600}
+.score-track{position:relative}
+.score-unk-fill{position:absolute;top:0;bottom:0;inset-inline-end:0;width:0;background:repeating-linear-gradient(-45deg,#e6ebf2 0 5px,#f6f8fb 5px 10px);transition:width .5s ease}
+.score-unk{font-size:12.5px;color:var(--ink2);line-height:1.6;margin-top:10px;padding-top:10px;border-top:1px dashed var(--hair-2)}
+.score-unk b{color:var(--ink)}
+.score-unk button{background:none;border:0;padding:0;color:var(--li);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline}
+.fx.unk{opacity:.6}
+.fx.unk b::after{content:' · לא נבדק';font-weight:500;color:var(--muted)}
 .aud-crit p{font-size:13.5px;color:var(--ink2);line-height:1.65;margin-bottom:8px}
 .aud-crit .bt{background:#eefaf4;border:1px solid #bfe6d4;border-radius:10px;padding:11px 14px;font-size:13.5px;color:var(--ink);line-height:1.7;white-space:pre-line}
 .audit-grid{display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start;margin-top:22px}
@@ -630,7 +637,7 @@ footer p{max-width:860px;line-height:1.8}
 @keyframes riseIn{from{opacity:0;transform:translateY(var(--ty,12px))}}
 @keyframes fadeIn{from{opacity:0}}
 @keyframes land{from{opacity:0;translate:0 var(--land-y,34px);scale:.94}}
-@keyframes ringDraw{from{stroke-dashoffset:82}}
+@keyframes ringDraw{from{stroke-dashoffset:100}}
 @keyframes arcDraw{from{stroke-dashoffset:100}}
 @keyframes spark{from{opacity:0;transform:scale(.3)}60%{transform:scale(1.15)}}
 @keyframes pop{from{opacity:0;scale:.4}}
@@ -738,8 +745,8 @@ footer p{max-width:860px;line-height:1.8}
       <span class="rxchip r-3" data-depth="12">🔗</span>
       <div class="li-strip">
         <div class="licard c-score" data-depth="4">
-          <svg viewBox="0 0 84 84" class="sc-ring"><circle cx="42" cy="42" r="36" fill="none" stroke="#e5eaf1" stroke-width="8"/><circle cx="42" cy="42" r="36" fill="none" stroke="#0a66c2" stroke-width="8" stroke-linecap="round" pathLength="100" stroke-dasharray="82 100" transform="rotate(-90 42 42)"/></svg>
-          <div class="sc-num"><span id="scNum">82</span><small>/100</small></div>
+          <svg viewBox="0 0 84 84" class="sc-ring"><circle cx="42" cy="42" r="36" fill="none" stroke="#e5eaf1" stroke-width="8"/><circle cx="42" cy="42" r="36" fill="none" stroke="#0a66c2" stroke-width="8" stroke-linecap="round" pathLength="100" stroke-dasharray="100 100" transform="rotate(-90 42 42)"/></svg>
+          <div class="sc-num"><span id="scNum">17</span><small> בדיקות</small></div>
           <div class="sc-lbl">ציון פרופיל</div>
         </div>
         <div class="licard c-post" data-depth="8">
@@ -837,8 +844,9 @@ footer p{max-width:860px;line-height:1.8}
       <div class="scorebox">
         <div class="sl">SCORE · ציון הפרופיל</div>
         <div class="score-num"><span id="scoreVal">0</span><small>/100</small></div>
-        <div class="score-track"><div class="score-fill" id="scoreFill"></div></div>
+        <div class="score-track"><div class="score-fill" id="scoreFill"></div><div class="score-unk-fill" id="scoreUnkFill"></div></div>
         <span class="score-lvl" id="scoreLvl">עוד לא סומן דבר</span>
+        <p class="score-unk" id="scoreUnk" hidden></p>
         <div class="fixes">
           <h4>מה מתקנים קודם</h4>
           <div id="fixList"></div>
@@ -1293,6 +1301,7 @@ async function copyText(txt,btn){
 
 /* ---------- station 1: audit ---------- */
 const auditState=store.get('lab-audit',{});
+const auditAI=store.get('lab-audit-ai',{});
 const auditWrap=$('#auditGroups');
 LAB.audit.groups.forEach(g=>{
   const div=document.createElement('div');div.className='agroup';
@@ -1316,32 +1325,56 @@ function auditLevel(s){
   if(s>=40)return['נוכחות בסיסית — יש עבודה','var(--orange)'];
   return['פרופיל רדום — מתחילים מהיסודות','var(--pink)'];
 }
+/* Three states, not two. A PDF export cannot show a photo, a banner, Featured,
+   recommendations or activity — 68 of the 100 points. Counting those as failed
+   turns every PDF-only run into "0/100 — dormant", which is false. The score is
+   points verified; the second line says how many points were never decided. */
 function renderAudit(){
-  let score=0;
-  const missing=[];
+  const aiRan=Object.keys(auditAI).length>0;
+  let verified=0,decided=0,handTicked=0;
+  const known=[],unknown=[];
   LAB.audit.groups.forEach(g=>{
     let done=0;
     g.items.forEach((it,i)=>{
-      const key=g.id+'-'+i;
-      if(auditState[key]){score+=it.weight;done++;}
-      else missing.push(it);
+      const key=g.id+'-'+i,ai=auditAI[key],ticked=!!auditState[key];
+      const byAI=ai==='כן'||ai==='לא'||ai==='חלקי';
+      if(ticked){verified+=it.weight;done++;if(ai!=='כן')handTicked+=it.weight;}
+      if(!aiRan){decided+=it.weight;if(!ticked)known.push(it);}
+      else if(ticked||byAI){decided+=it.weight;if(!ticked)known.push(it);}
+      else unknown.push(it);
     });
     const gp=document.querySelector(`[data-gp="${g.id}"]`);
     if(gp)gp.textContent=done+' / '+g.items.length;
   });
-  $('#scoreVal').textContent=score;
-  $('#scoreFill').style.width=score+'%';
+  const undecided=100-decided;
+  $('#scoreVal').textContent=verified;
+  $('#scoreFill').style.width=verified+'%';
+  $('#scoreUnkFill').style.width=(aiRan?undecided:0)+'%';
   const anyMarked=Object.values(auditState).some(Boolean);
-  const lvlEl=$('#scoreLvl');
-  if(!anyMarked){lvlEl.textContent='עוד לא סומן דבר';lvlEl.style.color='var(--muted)';lvlEl.style.borderColor='var(--hair-2)';}
-  else{const[t,c]=auditLevel(score);lvlEl.textContent=t;lvlEl.style.color=c;lvlEl.style.borderColor=c;}
+  const lvlEl=$('#scoreLvl'),unkEl=$('#scoreUnk');
+  if(!anyMarked&&!aiRan){lvlEl.textContent='עוד לא סומן דבר';lvlEl.style.color='var(--muted)';lvlEl.style.borderColor='var(--hair-2)';}
+  else if(aiRan&&decided<60){lvlEl.textContent='נבדקו '+decided+' מתוך 100 נק\' — מוקדם לדרג';lvlEl.style.color='var(--muted)';lvlEl.style.borderColor='var(--hair-2)';}
+  else{const[t,c]=auditLevel(verified);lvlEl.textContent=t;lvlEl.style.color=c;lvlEl.style.borderColor=c;}
+  if(aiRan&&undecided>0){
+    unkEl.hidden=false;
+    unkEl.innerHTML='<b>'+undecided+' נק\'</b> עדיין לא נבדקו — היצוא לא מראה תמונה, באנר, Featured, המלצות ופעילות. <button type="button" id="scoreShots">צרפו צילומי מסך</button> או סמנו ידנית.'
+      +(handTicked?' <span style="color:var(--muted)">· כולל '+handTicked+' נק\' שסימנתם בעצמכם</span>':'');
+  }else if(aiRan&&handTicked){
+    unkEl.hidden=false;
+    unkEl.innerHTML='<span style="color:var(--muted)">כולל '+handTicked+' נק\' שסימנתם בעצמכם — לא אומתו מהמסמך.</span>';
+  }else{unkEl.hidden=true;unkEl.innerHTML='';}
   const fx=$('#fixList');
-  if(!missing.length){fx.innerHTML='<p class="allgood">✓ כל 17 הבדיקות ירוקות. עכשיו זה עניין של שגרה — תחנה 5.</p>';}
+  if(!known.length&&!unknown.length){fx.innerHTML='<p class="allgood">✓ כל 17 הבדיקות ירוקות. עכשיו זה עניין של שגרה — תחנה 5.</p>';}
   else{
-    missing.sort((a,b)=>b.weight-a.weight);
-    fx.innerHTML=missing.slice(0,3).map(it=>`<div class="fx"><b>+${it.weight} נק' · ${esc(it.q)}</b>${esc(it.fix)}</div>`).join('');
+    known.sort((a,b)=>b.weight-a.weight);unknown.sort((a,b)=>b.weight-a.weight);
+    const rows=known.slice(0,3).map(it=>`<div class="fx"><b>+${it.weight} נק' · ${esc(it.q)}</b>${esc(it.fix)}</div>`);
+    if(rows.length<3)unknown.slice(0,3-rows.length).forEach(it=>rows.push(`<div class="fx unk"><b>+${it.weight} נק' · ${esc(it.q)}</b>${esc(it.fix)}</div>`));
+    fx.innerHTML=rows.join('');
   }
 }
+auditWrap.parentElement.addEventListener('click',e=>{
+  if(e.target&&e.target.id==='scoreShots'){const b=$('#audShotAdd');if(b){b.scrollIntoView({block:'center'});b.focus();}}
+});
 auditWrap.addEventListener('click',e=>{
   const row=e.target.closest('.aitem');if(!row)return;
   const k=row.dataset.k;
@@ -1356,7 +1389,8 @@ auditWrap.addEventListener('keydown',e=>{
 });
 $('#auditReset').addEventListener('click',()=>{
   Object.keys(auditState).forEach(k=>delete auditState[k]);
-  store.set('lab-audit',auditState);
+  Object.keys(auditAI).forEach(k=>delete auditAI[k]);
+  store.set('lab-audit',auditState);store.set('lab-audit-ai',auditAI);
   document.querySelectorAll('.aitem').forEach(r=>{r.classList.remove('done');r.setAttribute('aria-checked','false');});
   document.querySelectorAll('.aitem .amark').forEach(m=>m.remove());
   renderAudit();
@@ -1480,6 +1514,7 @@ function applyAudit(a){
   let auto=0,no=0,manual=0;
   document.querySelectorAll('.aitem').forEach(row=>{
     const k=row.dataset.k,r=byId[k];
+    auditAI[k]=r&&['כן','לא','חלקי'].includes(r.status)?r.status:'אין מידע';
     const old=row.querySelector('.amark');if(old)old.remove();
     const mark=document.createElement('span');mark.className='amark';
     if(r&&r.status==='כן'){
@@ -1494,7 +1529,7 @@ function applyAudit(a){
     }
     row.insertBefore(mark,row.querySelector('.aw'));
   });
-  store.set('lab-audit',auditState);
+  store.set('lab-audit',auditState);store.set('lab-audit-ai',auditAI);
   renderAudit();
   const crit=(title,found,quote,critique,better,copyLabel,missing)=>(critique||better)?
     `<div class="aud-crit"><h4>${title}</h4>${found&&quote?'<div class="q">❝ '+esc(quote)+'</div>':''}${found?'':'<div class="q gone">'+esc(missing)+'</div>'}<p>${esc(critique)}</p>${better?'<div class="bt">'+esc(better)+'</div><div style="margin-top:8px"><button class="copybtn" data-copy="'+esc(better)+'">'+copyLabel+'</button></div>':''}</div>`:'';
@@ -2380,13 +2415,13 @@ function runScore(){
   scNumEl.textContent='0';
   const step=now=>{
     const p=Math.min(1,Math.max(0,(now-t0)/D));
-    scNumEl.textContent=Math.round(82*(1-Math.pow(1-p,3)));
+    scNumEl.textContent=Math.round(17*(1-Math.pow(1-p,3)));
     if(p<1)scRaf=requestAnimationFrame(step);
   };
   scRaf=requestAnimationFrame(step);
 }
 function launchHero(){
-  if(mRed.matches||heroPlayed){heroEl.classList.remove('launch');scNumEl.textContent='82';return;}
+  if(mRed.matches||heroPlayed){heroEl.classList.remove('launch');scNumEl.textContent='17';return;}
   heroPlayed=true;
   heroEl.classList.add('launch');
   runScore();

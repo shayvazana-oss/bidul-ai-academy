@@ -472,6 +472,27 @@ ok("'כן' items auto-checked", marked.f2done === true && marked.f2mark === "ז�
 ok("score updated from auto-check", Number(marked.score) > 0, `score ${marked.score}`);
 ok("'לא' item marked missing, not checked", marked.a2mark === "חסר לפי המסמך");
 ok("no-info item marked manual", marked.act0mark === "לבדיקה ידנית");
+// three-state score: verified points, decided points, and what the export could not show
+const st = await page.evaluate(`(() => ({
+  score: document.querySelector("#scoreVal").textContent,
+  lvl: document.querySelector("#scoreLvl").textContent,
+  unkHidden: document.querySelector("#scoreUnk").hidden,
+  unk: document.querySelector("#scoreUnk").textContent,
+  unkFill: document.querySelector("#scoreUnkFill").style.width,
+}))()`) as any;
+ok("score is verified points only (11+10)", st.score === "21", st.score);
+ok("level withheld while most points are undecided", st.lvl.includes("מוקדם לדרג") && st.lvl.includes("26"), st.lvl);
+ok("undecided points named, not counted as failed", !st.unkHidden && st.unk.includes("74"), st.unk);
+ok("undecided segment drawn on the track", st.unkFill === "74%", st.unkFill);
+ok("fix list leads with the known gap", ((await page.textContent("#fixList")) ?? "").includes("תוצאות שהשגת"));
+// a hand tick on an undecided item counts as decided — and is labelled as self-reported
+await page.click('.aitem[data-k="foundation-0"]');
+const st2 = await page.evaluate(`(() => ({ score: document.querySelector("#scoreVal").textContent, unk: document.querySelector("#scoreUnk").textContent }))()`) as any;
+ok("hand tick adds its points", st2.score === "27", st2.score);
+ok("hand tick disclosed as self-reported", st2.unk.includes("6 נק' שסימנתם"), st2.unk);
+ok("undecided shrinks by the ticked weight", st2.unk.includes("68"), st2.unk);
+await page.click('.aitem[data-k="foundation-0"]');
+ok("hero counts checks, not an invented score", ((await page.textContent(".c-score .sc-num")) ?? "").includes("בדיקות") && !(await page.content()).includes('id="scNum">82'));
 // pdf path: attach a file and confirm it is accepted + request carries pdf
 const tinyPdf = Buffer.from("%PDF-1.4\n1 0 obj<</Type/Catalog>>endobj\ntrailer<<>>\n%%EOF");
 await page.setInputFiles("#audFile", { name: "Profile.pdf", mimeType: "application/pdf", buffer: tinyPdf });
