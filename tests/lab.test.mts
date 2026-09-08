@@ -36,6 +36,15 @@ const IDEAS_RESP = {
   })),
 };
 
+const PROFILE_RESP = {
+  about: "ארגונים רוצים להכשיר עובדים לסייבר.\n\nב-[שם הארגון] אני בונה את זה.\n\nרוצים להתחיל? [הצעד הראשון].",
+  roles: Array.from({ length: 8 }, (_, i) => ({
+    title: `תפקיד ${i}`,
+    lines: Array.from({ length: 5 }, (_, j) => `שורה ${j} של תפקיד ${i}`),
+  })),
+  missing: Array.from({ length: 9 }, (_, i) => `עובדה חסרה ${i}`),
+};
+
 const WEEKLY_RESP = {
   reading: "המספרים יציבים — נורמלי לחשבון קטן.",
   diagnosis: "צפיות עולות אבל שיחות לא — הפרופיל לא ממיר.",
@@ -55,7 +64,8 @@ const mock = http.createServer((req, res) => {
     lastRequest = { url: req.url, body: JSON.parse(raw) };
     // Branch on the requested output schema so each mode gets a matching reply.
     const schema = JSON.stringify(lastRequest.body?.output_config?.format?.schema ?? {});
-    const auto = schema.includes('"altHooks"') ? WRITE_RESP
+    const auto = schema.includes('"roles"') ? PROFILE_RESP
+      : schema.includes('"altHooks"') ? WRITE_RESP
       : schema.includes('"ideas"') ? IDEAS_RESP
       : schema.includes('"experiment"') ? WEEKLY_RESP
       : schema.includes('"profile"') ? VOICE_RESP
@@ -382,6 +392,36 @@ ok("no assistant prefill", !sent.messages.some((m: any) => m.role === "assistant
   ok("audit pdf+shots returns 200", br.status === 200, String(br.status));
   const kinds = lastRequest.body.messages[0].content.map((c: any) => c.type).join(",");
   ok("image blocks precede the pdf document", kinds === "image,document,text", kinds);
+}
+
+// === mode: profile — About + role lines from the user's facts ===
+{
+  const IPP = { "x-forwarded-for": "85.0.0.1" };
+  const TEXT = "שלום ואזנה. VP Business Development @ TESI. ".repeat(8);
+  const ANS = [{ q: "מי מגיע אליכם?", a: "מנהלי הדרכה בארגונים ביטחוניים" }];
+  const noMat = await handler(post({ mode: "profile", answers: ANS }, ORIGIN, IPP));
+  ok("profile without material rejected 400", noMat.status === 400 && ((await noMat.json()) as any).error.includes("לכתיבה"), String(noMat.status));
+  const noAns = await handler(post({ mode: "profile", profile: { text: TEXT } }, ORIGIN, IPP));
+  ok("profile without answers rejected 400", noAns.status === 400, String(noAns.status));
+  const pr = await handler(post({ mode: "profile", profile: { text: TEXT }, answers: ANS, market: "mix", lashon: "נקבה" }, ORIGIN, IPP));
+  const pb: any = await pr.json();
+  ok("profile returns 200 with about", pr.status === 200 && typeof pb.profile?.about === "string" && pb.profile.about.includes("[הצעד הראשון]"), String(pr.status));
+  ok("profile: roles clamped to 6", pb.profile?.roles?.length === 6, String(pb.profile?.roles?.length));
+  ok("profile: lines clamped to 3 per role", pb.profile?.roles?.every((r: any) => r.lines.length === 3));
+  ok("profile: missing clamped to 6", pb.profile?.missing?.length === 6, String(pb.profile?.missing?.length));
+  const sentP = lastRequest.body;
+  ok("profile: system forbids invention and demands brackets", String(sentP.system).includes("סוגריים מרובעים") && String(sentP.system).includes("אסור להמציא"));
+  const userText = JSON.stringify(sentP.messages[0].content);
+  ok("profile: answers, market and lashon reach the model", userText.includes("מנהלי הדרכה") && userText.includes("שוק: mix") && userText.includes("לשון הכתיבה: נקבה"));
+  ok("profile: pasted text is quoted as raw material", userText.includes("הפרופיל כפי שהודבק"));
+  // a PDF becomes a document block; screenshots are ignored by this mode
+  const pdfB64 = Buffer.from("%PDF-1.4 fake").toString("base64");
+  const pngB64 = Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), Buffer.alloc(16)]).toString("base64");
+  const pp = await handler(post({ mode: "profile", profile: { pdf: pdfB64, shots: [{ mt: "image/png", b64: pngB64 }] }, answers: ANS }, ORIGIN, IPP));
+  ok("profile with pdf returns 200", pp.status === 200, String(pp.status));
+  const blocks = lastRequest.body.messages[0].content as any[];
+  ok("profile: pdf sent as a document block", Array.isArray(blocks) && blocks.some((b) => b.type === "document"));
+  ok("profile: screenshots not forwarded", Array.isArray(blocks) && !blocks.some((b) => b.type === "image"));
 }
 
 // === mode: weekly ===
