@@ -38,7 +38,7 @@ const IDEAS_RESP = {
 
 const PROFILE_RESP = {
   about: "ארגונים רוצים להכשיר עובדים לסייבר.\n\nב-[שם הארגון] אני בונה את זה.\n\nרוצים להתחיל? [הצעד הראשון].",
-  roles: Array.from({ length: 8 }, (_, i) => ({
+  roles: Array.from({ length: 10 }, (_, i) => ({
     title: `תפקיד ${i}`,
     lines: Array.from({ length: 5 }, (_, j) => `שורה ${j} של תפקיד ${i}`),
   })),
@@ -406,7 +406,7 @@ ok("no assistant prefill", !sent.messages.some((m: any) => m.role === "assistant
   const pr = await handler(post({ mode: "profile", profile: { text: TEXT }, answers: ANS, market: "mix", lashon: "נקבה" }, ORIGIN, IPP));
   const pb: any = await pr.json();
   ok("profile returns 200 with about", pr.status === 200 && typeof pb.profile?.about === "string" && pb.profile.about.includes("[הצעד הראשון]"), String(pr.status));
-  ok("profile: roles clamped to 6", pb.profile?.roles?.length === 6, String(pb.profile?.roles?.length));
+  ok("profile: roles clamped to 8", pb.profile?.roles?.length === 8, String(pb.profile?.roles?.length));
   ok("profile: lines clamped to 3 per role", pb.profile?.roles?.every((r: any) => r.lines.length === 3));
   ok("profile: missing clamped to 6", pb.profile?.missing?.length === 6, String(pb.profile?.missing?.length));
   const sentP = lastRequest.body;
