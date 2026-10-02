@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8">
+<title>Claude runs Meta ads</title>
+<link href="https://fonts.googleapis.com/css2?family=Karantina:wght@700&family=Amatic+SC:wght@700&family=Heebo:wght@400;500;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F2EA;--ink:#141416;--or:#E95223;--soft:#FBE3D8;--mut:#8A857C;--line:#E4DDD0;--meta:#0866FF}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1080px;background:#ccc}
+.s{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--bg);font-family:Heebo,sans-serif;color:var(--ink)}
+/* graph-paper ground + orange corner blob: a different world from the blurred-desk look */
+.s:before{content:"";position:absolute;inset:0;background-image:linear-gradient(#0000000b 1px,transparent 1px),linear-gradient(90deg,#0000000b 1px,transparent 1px);background-size:54px 54px}
+.blob{position:absolute;width:620px;height:620px;border-radius:50%;background:radial-gradient(#E9522330,#E9522300 68%);left:-260px;top:-240px}
+.num{position:absolute;left:44px;top:40px;font:700 330px/0.8 Karantina;color:transparent;-webkit-text-stroke:5px var(--or);direction:ltr;opacity:.9}
+.tag{position:absolute;right:64px;top:72px;font:800 30px Heebo;background:var(--ink);color:#fff;border-radius:40px;padding:6px 26px}
+.tag b{color:var(--or)}
+h1{position:absolute;right:64px;top:132px;width:760px;font:700 150px/0.88 Karantina;text-align:right}
+h1 .o{color:var(--or)}
+.sub{position:absolute;right:64px;width:820px;font:700 38px/1.38 Heebo;text-align:right;color:#2A2723}
+.sub b{color:var(--or);font-weight:900}
+.hand{position:absolute;font:700 64px/1 'Amatic SC';color:#211D19}
+/* app window */
+.win{position:absolute;background:#fff;border-radius:26px;border:3px solid var(--ink);box-shadow:12px 12px 0 var(--or);overflow:hidden}
+.bar{height:58px;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 22px;direction:ltr;font:700 22px Heebo;color:var(--mut)}
+.bar i{width:15px;height:15px;border-radius:50%;display:block}
+.bar span{margin-left:auto;display:flex;align-items:center;gap:8px;color:var(--ink)}
+.body{padding:26px 30px;display:flex;flex-direction:column;gap:18px}
+.me{align-self:flex-start;max-width:86%;background:#F0ECE4;border-radius:22px 22px 22px 6px;padding:16px 22px;font:500 29px/1.4 Heebo}
+.cl{display:flex;gap:14px;align-items:flex-start;font:500 28px/1.45 Heebo}
+.row{display:flex;align-items:center;gap:16px;border:2px solid var(--line);border-radius:16px;padding:14px 18px;font:700 27px Heebo;background:#fff}
+.ok{margin-right:auto;background:#E7F7EC;color:#178A3C;border-radius:30px;padding:4px 16px;font:800 22px Heebo}
+.mono{font-family:'JetBrains Mono',monospace;direction:ltr;unicode-bidi:isolate}
+.ic{display:inline-block;background:var(--or);-webkit-mask:var(--u) center/contain no-repeat;mask:var(--u) center/contain no-repeat;flex:none}
+.brand{display:inline-block;-webkit-mask:var(--u) center/contain no-repeat;mask:var(--u) center/contain no-repeat;flex:none}
+.foot{position:absolute;left:56px;right:56px;bottom:40px;direction:ltr;display:flex;justify-content:space-between;align-items:center}
+.foot .h{display:flex;align-items:center;gap:12px;font:800 30px Heebo}
+.foot .sv{display:flex;align-items:center;gap:10px;font:800 28px Heebo;direction:rtl}
+.dots{position:absolute;bottom:52px;left:50%;transform:translateX(-50%);display:flex;gap:10px;direction:ltr}
+.pix{position:absolute}
+</style></head><body><div id="root"></div>
+<script>
+// ===== SETTINGS: your handle and accent colour =====
+const HANDLE='@your_handle';
+const OR='#E95223';
+const ICON=n=>`https://cdn.jsdelivr.net/npm/lucide-static@0.469.0/icons/${n}.svg`;
+const ic=(n,s=40,c)=>`<span class="ic" style="--u:url(${ICON(n)});width:${s}px;height:${s}px;${c?'background:'+c:''}"></span>`;
+const meta=(s=40)=>`<span class="brand" style="--u:url(icons/meta.svg);width:${s}px;height:${s}px;background:#0866FF"></span>`;
+const claude=(s=40)=>`<span class="brand" style="--u:url(icons/claude.svg);width:${s}px;height:${s}px;background:${OR}"></span>`;
+const IG=`<span class="brand" style="--u:url(icons/instagram.svg);width:34px;height:34px;background:#141416"></span>`;
+const BM=`<svg width="28" height="34" viewBox="0 0 24 28"><path d="M3 2h18v24l-9-6-9 6z" fill="none" stroke="#141416" stroke-width="2.6" stroke-linejoin="round"/></svg>`;
+const foot=(i,n)=>`<div class="foot"><div class="h">${IG}${HANDLE}</div>${i<n?`<div class="sv">${BM}שמרו לאחר כך</div>`:''}</div>`;
+const UL=(x,y,w)=>`<svg style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:30px" viewBox="0 0 300 30" preserveAspectRatio="none"><path d="M4 18 C 70 6, 140 26, 210 12 S 280 14, 296 16" stroke="${OR}" stroke-width="10" fill="none" stroke-linecap="round"/></svg>`;
+const arrow=(x,y,w,rot=0,flip=false)=>`<svg style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${w}px;transform:rotate(${rot}deg) ${flip?'scaleX(-1)':''}" viewBox="0 0 100 100"><path d="M10 88 C 18 44, 46 20, 84 18" stroke="#211D19" stroke-width="5.5" fill="none" stroke-linecap="round"/><path d="M68 5 L86 18 L70 33" stroke="#211D19" stroke-width="5.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const win=(x,y,w,title,inner,h)=>`<div class="win" style="left:${x}px;top:${y}px;width:${w}px;${h?'height:'+h+'px':''}"><div class="bar"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i><span>${title}</span></div><div class="body">${inner}</div></div>`;
+// 8-bit mascot (same character, new poses)
+const PAL={k:'#1B1A1F',s:'#F3C49C',S:'#D99B72',h:'#3B2A1E',o:'#E95223',d:'#B83A15',g:'#8E8E93',w:'#FFFFFF',y:'#FFD34E',x:'#2C2C30',b:'#0866FF'};
+const GUY=['....hhhhhhh.....','...hhhhhhhhh....','...khhhhhhhhk...','...kssssssssk...','...ksskssksk....','...ksskssksk....','...kssssssssk...','...kssSkkSssk...','....kssssssk....','...doooooooood..','..doooooooooood.','..dooodooodoood.','..soood....oods.','..ss.dooooood.ss','.....oooooooo...','.....gggggggg...','.....ggg..ggg...','.....ggg..ggg...','.....sss..sss...','....kkkk..kkkk..'];
+const WAVE=GUY.map((r,i)=>i===9?'...doooooooood.s':i===10?'..doooooooooodss':i===12?'..soood....ood..':i===13?'..ss.dooooood...':r);
+const P={plug:['kk......','kxk.....','.kxk....','..kxxxxx','...kxxxx','....kkkk'],glass:['..kkkk..','.kbbbbk.','kbwbbbbk','kbbbbbbk','kbbbbbbk','.kbbbbk.','..kkkkkk','......kk'],pencil:['......kk','.....kyk','....kyk.','...kyk..','..kyk...','.kyk....','kSk.....','kk......'],list:['kkkkkkk','kwwwwwk','kokwkwk','kwwwwwk','kokwkwk','kwwwwwk','kkkkkkk'],cam:['..kkk...','kkkkkkkk','kxxxxxxk','kxxwwxxk','kxwbbwxk','kxxwwxxk','kkkkkkkk'],cup:['.w.w..','......','kkkkk.','kwwwkk','kwwwk.k','kwwwkk','.kkk..']};
+const CRIT=['..o..o..','.oooooo.','oowoowoo','oookkooo','oooooooo','.o.oo.o.'];
+function spr(rows,px){const w=rows[0].length,h=rows.length;let r='';rows.forEach((row,y)=>[...row].forEach((c,x)=>{if(PAL[c])r+=`<rect x="${x}" y="${y}" width="1.02" height="1.02" fill="${PAL[c]}"/>`}));return `<svg width="${w*px}" height="${h*px}" viewBox="0 0 ${w} ${h}" shape-rendering="crispEdges">${r}</svg>`}
+function guy(x,y,px,prop,wave,crit=true){let h=`<div class="pix" style="left:${x}px;top:${y}px">${spr(wave?WAVE:GUY,px)}</div>`;if(prop){const p=P[prop];h+=`<div class="pix" style="left:${x+14*px}px;top:${y+(9-p.length/2)*px+20}px">${spr(p,px)}</div>`}if(crit)h+=`<div class="pix" style="left:${x-9*px}px;top:${y+14*px}px">${spr(CRIT,px*.9)}</div>`;return h}
+
+const N=7,S=[];
+// 1 COVER
+S.push(`<div class="tag" style="top:84px">מדריך קצר · <b>5 שלבים</b></div>
+<h1 style="top:160px;width:952px;font-size:176px">איך לתת לקלוד<br>להריץ בשבילכם<br><span class="o">פרסומות במטא</span></h1>
+${UL(470,622,540)}
+${win(330,720,690,`${claude(26)} Claude`,`<div class="me">תריץ לי קמפיין לקולקציה החדשה, תקציב 100 ₪ ליום</div><div class="cl">${claude(42)}<div>הכנתי את הקמפיין במטא. הוא <b>מושהה</b> עד שתאשר:</div></div><div class="row">${meta(40)}<span>קמפיין לידים · קולקציה חדשה</span><span class="ok" style="background:#FFF0E9;color:${OR}">⏸ מושהה</span></div>`)}
+<div class="hand" style="left:74px;top:690px;width:250px;text-align:center;font-size:66px">אתם רק<br>מאשרים</div>${arrow(200,840,120,110)}
+${guy(80,1000,13,'cup',false)}${foot(1,N)}`);
+// 2 CONNECT
+S.push(`<div class="blob"></div><div class="num">01</div><div class="tag"><b>שלב 1</b> · חיבור</div>
+<h1>מחברים את<br><span class="o">מטא לקלוד</span></h1>${UL(300,440,420)}
+<div class="sub" style="top:500px">בעמוד החיבורים של קלוד מוסיפים את<br>החיבור הרשמי של מטא, ומתחברים עם משתמש<br>שיש לו <b>גישה לחשבון הפרסום</b></div>
+${win(150,760,870,`<span class="mono" style="font-size:20px">claude.ai/customize/connectors</span>`,`<div style="font:800 30px Heebo">חיבורים</div><div class="row">${meta(44)}<div style="display:flex;flex-direction:column"><span>Meta Ads</span><span class="mono" style="font:500 20px JetBrains Mono;color:#8A857C;text-align:right">mcp.facebook.com/ads</span></div><span class="ok">✓ מחובר</span></div><div class="row" style="opacity:.45">${ic('plus',36,'#141416')}<span>הוספת חיבור</span></div>`)}
+<div class="hand" style="right:64px;top:1150px;font-size:54px">בחשבון צוות אולי צריך מנהל מערכת</div>
+${guy(70,1100,7,'plug',false,false)}${foot(2,N)}`);
+// 3 VERIFY
+S.push(`<div class="blob"></div><div class="num">02</div><div class="tag"><b>שלב 2</b> · בדיקה</div>
+<h1>בודקים<br><span class="o">שהכל מחובר</span></h1>${UL(260,440,460)}
+<div class="sub" style="top:500px">בקלוד קוד, עם <b>אותו חשבון מנוי</b>, כותבים <span class="mono" style="font-weight:700">/mcp</span><br>ואז מבקשים לראות את חשבון הפרסום</div>
+<div class="win" style="left:150px;top:680px;width:870px;background:#18181B;border-color:#18181B"><div class="bar" style="border-color:#2C2C30;color:#9A9AA0"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i><span style="color:#fff">Claude Code</span></div>
+<div class="mono" style="padding:24px 30px;color:#EDEDED;font:500 26px/1.7 JetBrains Mono"><span style="color:${OR}">&gt;</span> /mcp<br><span style="color:#5FD38A">●</span> meta-ads <span style="color:#8A8A90">connected</span><br><span style="color:${OR}">&gt;</span> <span style="font-family:Heebo;font-weight:500;unicode-bidi:plaintext">הצג את חשבונות הפרסום, כולל המזהה והמטבע, בלי לשנות דבר</span><br><span style="color:#9A9AA0">  ad account · 123456789012345 · ILS</span></div></div>
+<div class="hand" style="right:64px;top:1080px;width:560px;text-align:right;font-size:56px">משווים את המזהה<br>למנהל המודעות</div>${arrow(470,1040,90,-30,true)}
+<div class="hand" style="left:60px;top:1196px;font-size:44px;color:#6B655C">התחברות עם מפתח API לא טוענת את החיבור</div>
+${guy(60,1000,8,'glass',false,false)}${foot(3,N)}`);
+// 4 BRIEF
+S.push(`<div class="blob"></div><div class="num">03</div><div class="tag"><b>שלב 3</b> · בריף</div>
+<h1>נותנים<br><span class="o">לקלוד בריף</span></h1>${UL(280,440,430)}
+<div class="sub" style="top:500px">ארבע תשובות, וקלוד מחזיר <b>תוכנית, קופי<br>וכיוון לקריאייטיב</b></div>
+${win(150,680,870,`${claude(26)} Claude`,`<div class="me" style="max-width:100%;font-size:30px;line-height:1.7">${[['package','מה אני מוכר'],['users','למי'],['target','מה המטרה'],['coins','כמה התקציב']].map(([n,t])=>`<div style="display:flex;align-items:center;gap:14px">${ic(n,36)}<b>${t}:</b> <span style="color:#A8A296">_______</span></div>`).join('')}<div style="margin-top:10px;background:#FFE9DF;border-radius:12px;padding:6px 14px;display:inline-block;font-weight:800">"לפני שתתחיל, שאל אותי מה עוד חסר"</div></div>`)}
+<div class="hand" style="left:150px;top:1120px;width:420px;text-align:center;font-size:56px">השורה הזאת משדרגת הכל</div>${arrow(560,1060,80,-80,false)}
+${guy(850,1090,6,'pencil',false,false)}${foot(4,N)}`);
+// 5 PAUSED + CHECK
+S.push(`<div class="blob"></div><div class="num">04</div><div class="tag"><b>שלב 4</b> · הקמה</div>
+<h1>קמפיין מושהה,<br><span class="o">ובודקים</span></h1>${UL(560,440,240)}
+<div class="sub" style="top:500px">מבקשים מקלוד ליצור את הקמפיין <b>במצב מושהה</b>.<br>אם החיבור לא מאפשר יצירה, הוא מכין תוכנית<br>להקמה ידנית</div>
+${win(150,750,870,`${meta(26)} מנהל המודעות`,`<div class="row" style="border-color:${OR}">${ic('circle-pause',40)}<span>הקמפיין נוצר</span><span class="ok" style="background:#FFF0E9;color:${OR}">מושהה</span></div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">${['תקציב','קהל','קופי','קריאייטיב','קישור'].map((t,i)=>`<div class="row" style="padding:10px 14px;font-size:25px">${ic('check',30,'#178A3C')}${t}</div>`).join('')}<div class="row" style="padding:10px 14px;font-size:25px;background:${OR};color:#fff;border-color:${OR};justify-content:center">הפעלה ▶</div></div>`)}
+<div class="hand" style="left:60px;top:1196px;font-size:52px">מפעילים רק אחרי שעברתם על הכל</div>
+${guy(26,1060,5,'list',false,false)}${foot(5,N)}`);
+// 6 BONUS
+const shot=(bg,rot)=>`<div style="width:200px;height:250px;border-radius:18px;background:${bg};border:5px solid #fff;box-shadow:0 10px 22px #0002;transform:rotate(${rot}deg);display:flex;align-items:center;justify-content:center"><div style="width:62px;height:165px;border-radius:22px 22px 14px 14px;background:linear-gradient(90deg,#C2410C,#F97316 45%,#EA580C);position:relative"><i style="position:absolute;top:-22px;left:13px;width:36px;height:26px;border-radius:8px;background:#7C2D12;display:block"></i></div></div>`;
+S.push(`<div class="blob"></div><div class="num" style="font-size:250px">+1</div><div class="tag"><b>בונוס</b> · תמונות</div>
+<h1>גם הקריאייטיב<br><span class="o">מאותה שיחה</span></h1>${UL(320,440,420)}
+<div class="sub" style="top:500px">מחברים גם את Higgsfield לקלוד, מעלים תמונת<br>מוצר, וכותבים מה רוצים לראות</div>
+<div class="mono" style="position:absolute;right:64px;top:640px;font:700 28px JetBrains Mono;background:#fff;border:3px solid var(--ink);border-radius:14px;padding:8px 18px">mcp.higgsfield.ai/mcp</div>
+<div style="position:absolute;right:70px;top:760px;display:flex;gap:26px;direction:ltr">${shot('linear-gradient(160deg,#FFF3E8,#F7D9BF)',-4)}${shot('linear-gradient(160deg,#DDEBFF,#A9C8F5)',3)}${shot('linear-gradient(160deg,#E4F6E7,#B5E2BE)',-2)}</div>
+<div class="hand" style="right:120px;top:1070px;font-size:58px">תמונה אחת, שלוש גרסאות לקמפיין</div>
+${guy(70,1000,9,'cam',false,false)}${foot(6,N)}`);
+// 7 CTA
+S.push(`<div class="blob" style="left:auto;right:-260px;top:auto;bottom:-260px"></div>
+<h1 style="top:110px;right:0;width:1080px;text-align:center;font-size:150px">רוצים את<br>המדריך המלא?</h1>
+<div class="sub" style="top:420px;width:1080px;right:0;text-align:center;font-size:44px">תגיבו את המילה</div>
+<div style="position:absolute;left:0;right:0;top:470px;text-align:center;font:700 300px/1 Karantina;color:${OR}">מטא</div>
+<div class="win" style="left:150px;top:820px;width:780px;box-shadow:12px 12px 0 #141416"><div style="padding:22px 28px;display:flex;align-items:center;gap:18px;direction:ltr"><span style="width:56px;height:56px;border-radius:50%;background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF);display:block"></span><div style="flex:1"><div style="font:800 24px Heebo">you</div><div style="font:700 40px Heebo;direction:rtl;text-align:left">מטא</div></div><svg width="40" height="36" viewBox="0 0 24 22"><path d="M12 21s-9-5.6-9-12a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.4-9 12-9 12z" fill="#FF3040"/></svg></div></div>
+<div class="hand" style="left:0;right:0;top:1000px;text-align:center;font-size:66px">ואשלח לכם אותו בפרטי, בחינם</div>
+${guy(820,1040,9,null,true,true)}${foot(7,N)}`);
+document.getElementById('root').innerHTML=S.map((h,i)=>`<section class="s">${h}</section>`).join('');
+</script></body></html>
