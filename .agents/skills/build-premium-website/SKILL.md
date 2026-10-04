@@ -8,11 +8,11 @@ argument-hint: [business name or industry, optional]
 
 You are an expert at building high-end, animated, single-page marketing websites (React 19 + Vite + Tailwind CSS + GSAP). Your job is to gather business context, then scaffold a complete, responsive, production-quality site that adapts a refined visual system to any industry.
 
-This skill is fully self-contained. A complete reference implementation lives inside the skill at `.claude/skills/build-premium-website/reference/full-reference-app.jsx` (and accompanying `full-reference-*.css/html/json` files). Read those when you need ground-truth markup or component code. Never copy industry-specific copy verbatim — translate every string to match the target business.
+This skill is fully self-contained. A complete reference implementation lives inside the skill at `${CLAUDE_SKILL_DIR}/reference/full-reference-app.jsx` (and accompanying `full-reference-*.css/html/json` files). Read those when you need ground-truth markup or component code. Never copy industry-specific copy verbatim — translate every string to match the target business.
 
 ## Phase 1 — Intake (REQUIRED before any code)
 
-Use `AskUserQuestion` to gather business context. Do not skip this. Batch into ~4 question rounds. See `.claude/skills/build-premium-website/reference/intake-questions.md` for exact question phrasing and option lists.
+Use `AskUserQuestion` to gather business context. Do not skip this. Batch into ~4 question rounds. See `${CLAUDE_SKILL_DIR}/reference/intake-questions.md` for exact question phrasing and option lists.
 
 Collect at minimum:
 - Company name + tagline
@@ -104,22 +104,22 @@ Always re-skin — never just leave the teardrop.
 4. **Preserve the design system intact** — the typography stack, spacing scale, glass/magnetic-btn/grid-bg utilities are what make it look premium. Don't simplify them away.
 5. **All 9 sections by default.** Only drop one if the user explicitly says so.
 6. **Mobile-first.** Test at 375px. Hamburger menu, single-column stack, scaled type.
-7. **Read the bundled reference freely.** When a pattern is unclear, open the in-skill copy at `.claude/skills/build-premium-website/reference/full-reference-app.jsx` (cited by line range in `reference/structure.md`).
+7. **Read the bundled reference freely.** When a pattern is unclear, open the in-skill copy at `${CLAUDE_SKILL_DIR}/reference/full-reference-app.jsx` (cited by line range in `reference/structure.md`).
 8. **Use real images.** Pull Unsplash URLs matching the user's hero terms. Never use placeholder boxes.
 9. **Match icon to service.** Pick semantically correct lucide-react icons. Don't reuse Droplets for a bakery.
 10. **Don't write a README or docs** unless asked. Build the site.
 
 ## Reference files (read lazily as needed)
 
-- `.claude/skills/build-premium-website/reference/intake-questions.md` — exact questions to ask
-- `.claude/skills/build-premium-website/reference/structure.md` — section-by-section anatomy with line citations
-- `.claude/skills/build-premium-website/reference/tech-setup.md` — package.json, configs, index.html
-- `.claude/skills/build-premium-website/reference/design-system.md` — color slots, typography, components
-- `.claude/skills/build-premium-website/reference/animations.md` — GSAP patterns, keyframes, CountUp
-- `.claude/skills/build-premium-website/reference/industry-themes.md` — signature animation per industry
-- `.claude/skills/build-premium-website/reference/logo.md` — logo lockups, icon picker per industry, favicon
-- `.claude/skills/build-premium-website/reference/visual-examples.md` — ASCII mockups of every section + "premium" checklist
-- `.claude/skills/build-premium-website/reference/code-snippets.md` — index.css, key component skeletons
+- `${CLAUDE_SKILL_DIR}/reference/intake-questions.md` — exact questions to ask
+- `${CLAUDE_SKILL_DIR}/reference/structure.md` — section-by-section anatomy with line citations
+- `${CLAUDE_SKILL_DIR}/reference/tech-setup.md` — package.json, configs, index.html
+- `${CLAUDE_SKILL_DIR}/reference/design-system.md` — color slots, typography, components
+- `${CLAUDE_SKILL_DIR}/reference/animations.md` — GSAP patterns, keyframes, CountUp
+- `${CLAUDE_SKILL_DIR}/reference/industry-themes.md` — signature animation per industry
+- `${CLAUDE_SKILL_DIR}/reference/logo.md` — logo lockups, icon picker per industry, favicon
+- `${CLAUDE_SKILL_DIR}/reference/visual-examples.md` — ASCII mockups of every section + "premium" checklist
+- `${CLAUDE_SKILL_DIR}/reference/code-snippets.md` — index.css, key component skeletons
 
 ## Final note
 

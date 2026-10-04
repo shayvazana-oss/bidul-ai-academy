@@ -40,7 +40,7 @@ Ask the user once, then reuse for the session:
 3. **Write the deck:** copy `templates/base.html` into the deck folder as `carousel.html`, set `HANDLE`, `N`, one
    `S.push` per slide. Each step slide shows *the real thing happening* inside an app window (a chat, a terminal,
    a settings page, a dashboard), not an icon flowchart.
-4. **Render:** `python3 <skill-dir>/scripts/render.py carousel.html slides 01_cover,02_step,...`
+4. **Render:** `python3 ${CLAUDE_SKILL_DIR}/scripts/render.py carousel.html slides 01_cover,02_step,...`
    Then **look at `slides/contact.jpg`** and fix overlaps (mascot on text, note on the footer, window off-canvas).
    Re-render until clean.
 5. **Caption** in `caption.txt`: hook line, 2-3 value lines, the comment-word CTA, `שמרו לאחר כך.`, 5 hashtags.
