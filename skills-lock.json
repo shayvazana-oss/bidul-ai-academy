@@ -1,6 +1,18 @@
 {
   "version": 1,
   "skills": {
+    "ai-search-visibility": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/ai-search-visibility/SKILL.md",
+      "computedHash": "a734471713eb3b0557f961815cb1840d8d765b81addf18d4bf6cd2099316158d"
+    },
+    "ai-sounding-post-checker": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/ai-sounding-post-checker/SKILL.md",
+      "computedHash": "0484589b88a8a2646e9b1ac21065efec848d07323e47bcd16129bb5f28078881"
+    },
     "animate": {
       "source": "emilkowalski/skills",
       "sourceType": "github",
@@ -37,6 +49,12 @@
       "skillPath": "skills/taste-skill/SKILL.md",
       "computedHash": "6d838b246d0e35d0b53f4f23f98ba7a1dd561937e64f7d0c7553b0928e376c3e"
     },
+    "devlog-to-linkedin-post": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/devlog-to-linkedin-post/SKILL.md",
+      "computedHash": "caac30c6106925433a69613c41b8c47b4fa59ba590f74726c943c249161a6336"
+    },
     "emil-design-eng": {
       "source": "emilkowalski/skills",
       "sourceType": "github",
@@ -54,6 +72,12 @@
       "sourceType": "github",
       "skillPath": "skills/soft-skill/SKILL.md",
       "computedHash": "7db385e4c5370e5a7fca9704a1361b056e4504ea6a03924bb86f33a4f00b5c73"
+    },
+    "hot-take-risk-check": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/hot-take-risk-check/SKILL.md",
+      "computedHash": "a5870b6351bb3b26de2c0c9745c380f2d4541a876ac4c83aa444d1abde261122"
     },
     "impeccable": {
       "source": "pbakaus/impeccable",
@@ -132,6 +156,168 @@
       "sourceType": "github",
       "skillPath": "skills/li-repurpose/SKILL.md",
       "computedHash": "83769108a0464c5c1b184331d6e136337c887b7a5cfc5dce1636558a15ffeaa3"
+    },
+    "linkedin-about-generator": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-about-generator/SKILL.md",
+      "computedHash": "94ec4304f57db483ad6e14b6eb7cc1155d5aee9146662da9e4d7880db8525b85"
+    },
+    "linkedin-agent": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-agent/SKILL.md",
+      "computedHash": "6aac2175baaada9d055e920b1bcf39a1256150398c65203913a9b099cdcd5d43"
+    },
+    "linkedin-best-time-to-post": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-best-time-to-post/SKILL.md",
+      "computedHash": "5af33e14b0d2c1272631f46c5c74d3259c214d35302e50881b3219428af007f3"
+    },
+    "linkedin-carousel-outline": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-carousel-outline/SKILL.md",
+      "computedHash": "1aab111c3c6e582819ef149603f6a710043f460a21e2ec17d14cd42e3b12e576"
+    },
+    "linkedin-character-limits": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-character-limits/SKILL.md",
+      "computedHash": "8a54bc1852106faa492be84ed23ec185fce57be537a927b2ff4e1086f480b314"
+    },
+    "linkedin-comment-generator": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-comment-generator/SKILL.md",
+      "computedHash": "b0f4ee38ce3fd48ec3a97a91669a1d8e98296ee8db7f62023fa7ed604f65d59b"
+    },
+    "linkedin-contrarian-takes": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-contrarian-takes/SKILL.md",
+      "computedHash": "1d01277e3f4c516270960bea3a6870c345f63379b06e8730f1251dfcac9eaf2b"
+    },
+    "linkedin-engagement-rate": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-engagement-rate/SKILL.md",
+      "computedHash": "4043242284030d0af1611b1a43b44db7045a4f58f715e763bdc11d8922dde68b"
+    },
+    "linkedin-follower-growth": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-follower-growth/SKILL.md",
+      "computedHash": "bc65472cefcfa248a78a04a5dab3e9ca0a3a6df9b8e16c25ad5089da1eaa1833"
+    },
+    "linkedin-ghostwriter-cost": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-ghostwriter-cost/SKILL.md",
+      "computedHash": "e5dfa993ae636b23d26d94130fd2561ce27f8068905d0da0e18c1dfbb800d343"
+    },
+    "linkedin-headline-analyzer": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-headline-analyzer/SKILL.md",
+      "computedHash": "c8b097518e55c4b680df6189cec0ab87c90fb0997a1460d3038fa861f4fb56e9"
+    },
+    "linkedin-headline-generator": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-headline-generator/SKILL.md",
+      "computedHash": "d2972ab6be504ec4f2d353d6b5b12c4b6a6d26c582c4ef7a1e6bb952ec83ba6c"
+    },
+    "linkedin-hook-generator": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-hook-generator/SKILL.md",
+      "computedHash": "9771ec475a9a0624f812989b12d94296656f4ed786843837022de74ada88878c"
+    },
+    "linkedin-image-sizes": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-image-sizes/SKILL.md",
+      "computedHash": "178ae6534b09d7773d33a33f862c3a9356ca7626f6a1b8718104be1c5d8d3893"
+    },
+    "linkedin-line-break-fixer": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-line-break-fixer/SKILL.md",
+      "computedHash": "3fcbd0c18841d43cf38c378197f4300ebf5e5effee6997cff5d576efba44d3d4"
+    },
+    "linkedin-poll-generator": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-poll-generator/SKILL.md",
+      "computedHash": "ed11ccbc2a0f9969cae3e7ef33ed9e6b9306aad6bc0670be653a5e8ad7d86719"
+    },
+    "linkedin-post-analyzer": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-post-analyzer/SKILL.md",
+      "computedHash": "5091f6fdda879a325da67247c80bd88295abdeca62d5860a6c53f4d5f6b2a931"
+    },
+    "linkedin-post-generator": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-post-generator/SKILL.md",
+      "computedHash": "8ff729a515fdd67950da331ef6ee7b04c48adb5231fe8eb8fb4983353ed09e3a"
+    },
+    "linkedin-post-ideas": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-post-ideas/SKILL.md",
+      "computedHash": "57c317d73b315bf960f6138e8187c5b6cfc4669d535bd9a96096e72c24b84ea5"
+    },
+    "linkedin-post-preview": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-post-preview/SKILL.md",
+      "computedHash": "8e2f6db7538d0d29c927017e7a08b5b0ad8cd9fa7e26484fd72371c6a18a4b00"
+    },
+    "linkedin-post-rewriter": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-post-rewriter/SKILL.md",
+      "computedHash": "4a4f1e178f4e50227c2bf3cbf16226874b3ea3a16c6ac3e1c064e17276b34661"
+    },
+    "linkedin-profile-checklist": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-profile-checklist/SKILL.md",
+      "computedHash": "65f7f0666c0313dc0973729244379c14a6a30b12b017ecbcc32e1d6d23028d71"
+    },
+    "linkedin-publish": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-publish/SKILL.md",
+      "computedHash": "fb3d6c5e5345efaff663be7dc383888940afec9a4461e1516b17035f38a39241"
+    },
+    "linkedin-text-formatter": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-text-formatter/SKILL.md",
+      "computedHash": "3f9c3ceac123b7a4ddbaf446af77aeed3e81809c14eab4331897aa220c886100"
+    },
+    "linkedin-to-x": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-to-x/SKILL.md",
+      "computedHash": "6cb77979151d37d34213182e137b9ecfcecc28a008919971e841e46f320d6303"
+    },
+    "linkedin-voice": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-voice/SKILL.md",
+      "computedHash": "50962cf11afde5eea7f5c2f6aaffeb47a6be28c4789e193eebb41b7a8ae7206a"
+    },
+    "meeting-notes-to-linkedin-post": {
+      "source": "liftli-ai/linkedin-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/meeting-notes-to-linkedin-post/SKILL.md",
+      "computedHash": "9c4aac48a08109a847bd489bb5e200d6cc8dfffac4a8dcdc2a68691b91b061ea"
     },
     "pick-ui-library": {
       "source": "emilkowalski/skills",
