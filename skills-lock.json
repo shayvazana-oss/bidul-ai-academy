@@ -67,6 +67,72 @@
       "skillPath": "skills/improve-animations/SKILL.md",
       "computedHash": "eeb219a407e325b687af88db25771cc3018e3148245604112f5ac6990b6fd79c"
     },
+    "li-audit": {
+      "source": "indamatrix/linkedin-agent-skill",
+      "sourceType": "github",
+      "skillPath": "skills/li-audit/SKILL.md",
+      "computedHash": "da1138c3410b3514a0a85b455f3f33f8f44d3ea23f5b2302e2d87b2c42a8e386"
+    },
+    "li-carousel": {
+      "source": "indamatrix/linkedin-agent-skill",
+      "sourceType": "github",
+      "skillPath": "skills/li-carousel/SKILL.md",
+      "computedHash": "51785c82e8e1fbc57dddd120e8e10771d303ff61c7b7a5102107f45e47df2675"
+    },
+    "li-comment": {
+      "source": "indamatrix/linkedin-agent-skill",
+      "sourceType": "github",
+      "skillPath": "skills/li-comment/SKILL.md",
+      "computedHash": "75e8489823f121aa983c776cd4fa88e3a3cc2d1efd3d50fba4d7dea881d5a816"
+    },
+    "li-dm": {
+      "source": "indamatrix/linkedin-agent-skill",
+      "sourceType": "github",
+      "skillPath": "skills/li-dm/SKILL.md",
+      "computedHash": "24ced1e447dea3c6088a70d5400e03e916a195e5f487b6fae5147efc57cf9241"
+    },
+    "li-human": {
+      "source": "indamatrix/linkedin-agent-skill",
+      "sourceType": "github",
+      "skillPath": "skills/li-human/SKILL.md",
+      "computedHash": "2023cd9738e358c0d13ae7b46d8546aebb424fae07167e723bfa98507a519dd0"
+    },
+    "li-inbox": {
+      "source": "indamatrix/linkedin-agent-skill",
+      "sourceType": "github",
+      "skillPath": "skills/li-inbox/SKILL.md",
+      "computedHash": "643b61272b45a6d4378751482b55fbb561b9f759f3aefdd25802e61832db52ca"
+    },
+    "li-plan": {
+      "source": "indamatrix/linkedin-agent-skill",
+      "sourceType": "github",
+      "skillPath": "skills/li-plan/SKILL.md",
+      "computedHash": "332cbc86fea9e5cc0d87b528721636f64c88d7c88210851fe93391c499813d3d"
+    },
+    "li-post": {
+      "source": "indamatrix/linkedin-agent-skill",
+      "sourceType": "github",
+      "skillPath": "skills/li-post/SKILL.md",
+      "computedHash": "ba8a5c83e1f353606d55c733d01a60d3867304936854d8c48d56d33d2f20401e"
+    },
+    "li-profile": {
+      "source": "indamatrix/linkedin-agent-skill",
+      "sourceType": "github",
+      "skillPath": "skills/li-profile/SKILL.md",
+      "computedHash": "f66e23a8f77c0b736e7417ced936552c785e920cf3b9bf185ccd6584d0ac5c90"
+    },
+    "li-reply": {
+      "source": "indamatrix/linkedin-agent-skill",
+      "sourceType": "github",
+      "skillPath": "skills/li-reply/SKILL.md",
+      "computedHash": "a099552c1185854b4e6cc512759d5dc8b2a12cc4fa862d8a1dc89746c615d4e4"
+    },
+    "li-repurpose": {
+      "source": "indamatrix/linkedin-agent-skill",
+      "sourceType": "github",
+      "skillPath": "skills/li-repurpose/SKILL.md",
+      "computedHash": "83769108a0464c5c1b184331d6e136337c887b7a5cfc5dce1636558a15ffeaa3"
+    },
     "pick-ui-library": {
       "source": "emilkowalski/skills",
       "sourceType": "github",
