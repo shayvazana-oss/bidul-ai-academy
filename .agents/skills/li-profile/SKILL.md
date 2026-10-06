@@ -16,10 +16,31 @@ seconds, from the headline and the first two lines of the about.
 
 ## Input
 
-Ask the user to paste: headline, about section, current role and the last two
-experience entries, plus whether they have a banner and featured section. A
-screenshot of the top card is enough for the first pass. Do not log into
-LinkedIn on their behalf.
+Get the profile in this order. Stop at the first source that works.
+
+1. **The user's own browser, if a browser tool is in the session.** When
+   Claude in Chrome (`mcp__claude-in-chrome__*`) or the built-in browser
+   (`mcp__Claude_Browser__*` / `mcp__remote-devices__Claude_Browser__*`) is
+   available, open the profile URL the user gave in a new tab and read the
+   page as text: top card (photo, banner, headline, location, followers),
+   About expanded, Experience, Featured, Skills, recent activity. The user is
+   already signed in there; this is reading their own screen, not logging in
+   for them. Only read the profile the user pointed to. Never type or store
+   credentials, never post, connect, message or change anything.
+2. **Plain fetch** (WebFetch / curl) of the public profile URL. LinkedIn
+   usually answers HTTP 999 or a login wall to automated requests. Try once;
+   if it fails, say so in one line and move on. Do not retry with different
+   headers, proxies or scraping services.
+3. **PDF export.** On the profile: More → Save to PDF. The user uploads it.
+   This carries headline, About, Experience, Education and Skills but not the
+   banner, Featured or activity, so ask about those three.
+4. **Screenshots** of the top card, About, the last two roles and Featured.
+5. **Paste**: headline, About, current role and the last two experience
+   entries, plus whether there is a banner and a Featured section.
+
+Whatever the source, items the source cannot show (banner, Featured,
+recommendations, posting history) are scored from what the user tells you,
+and marked "not verified" in the table.
 
 ## Score it
 
