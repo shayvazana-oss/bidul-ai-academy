@@ -1,0 +1,86 @@
+{
+  "music-minimal-tech-pulse": {
+    "path": "assets/lib/music-minimal-tech-pulse/track.mp3",
+    "kind": "music",
+    "title": "Minimal Tech Pulse",
+    "meta": {
+      "bpm": 110,
+      "mood": "focused",
+      "source": "ElevenLabs Music",
+      "licence": "Generated for Reelkit with ElevenLabs Music",
+      "durationSec": 29.99,
+      "instrumental": true
+    },
+    "gainDb": -2.5
+  },
+  "sfx-ui-soft-whoosh": {
+    "path": "assets/lib/sfx-ui-soft-whoosh/clip.mp3",
+    "kind": "sfx",
+    "title": "Soft UI Whoosh",
+    "meta": {
+      "pack": "Reelkit UI",
+      "length": "hit",
+      "source": "ElevenLabs Sound Effects",
+      "licence": "Generated for Reelkit with ElevenLabs Sound Effects",
+      "category": "Transitions",
+      "durationSec": 0.84
+    },
+    "gainDb": -2.1
+  },
+  "sfx-ui-soft-impact": {
+    "path": "assets/lib/sfx-ui-soft-impact/clip.mp3",
+    "kind": "sfx",
+    "title": "Soft Impact",
+    "meta": {
+      "pack": "Reelkit UI",
+      "length": "hit",
+      "source": "ElevenLabs Sound Effects",
+      "licence": "Generated for Reelkit with ElevenLabs Sound Effects",
+      "category": "Impacts",
+      "durationSec": 0.73
+    },
+    "gainDb": -2.5
+  },
+  "youtube-picks-interface-mouse-click": {
+    "path": "assets/lib/youtube-picks-interface-mouse-click/clip.mp3",
+    "kind": "sfx",
+    "title": "Mouse Click",
+    "meta": {
+      "pack": "YouTube Picks",
+      "length": "hit",
+      "source": "YouTube videos supplied by the project owner (i0DON3AjhW4, OJhWtBBJw10, 92jxKbZslUc, vAisWjP49xA, sX6JxdJZWZo)",
+      "licence": "Not verified: uploaders describe them as free or no-copyright, but no licence is stated on the videos",
+      "category": "Interface",
+      "durationSec": 0.235102
+    },
+    "gainDb": 1.5
+  },
+  "sfx-ui-success-chime": {
+    "path": "assets/lib/sfx-ui-success-chime/clip.mp3",
+    "kind": "sfx",
+    "title": "Success Chime",
+    "meta": {
+      "pack": "Reelkit UI",
+      "length": "hit",
+      "source": "ElevenLabs Sound Effects",
+      "licence": "Generated for Reelkit with ElevenLabs Sound Effects",
+      "category": "Interface",
+      "durationSec": 1.04
+    },
+    "gainDb": 3.1
+  },
+  "sfx-ui-bubble-pop": {
+    "path": "assets/lib/sfx-ui-bubble-pop/clip.mp3",
+    "kind": "sfx",
+    "title": "Bubble Pop",
+    "meta": {
+      "pack": "Reelkit UI",
+      "length": "hit",
+      "source": "ElevenLabs Sound Effects",
+      "licence": "Generated for Reelkit with ElevenLabs Sound Effects",
+      "category": "Interface",
+      "durationSec": 0.52
+    },
+    "gainDb": -2.6
+  }
+}

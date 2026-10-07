@@ -1,0 +1,116 @@
+[
+  {
+    "q": "corporate inspiring technology light electronic, medium tempo",
+    "kind": "music",
+    "at": "2026-10-07T21:31:42.200Z",
+    "top": [
+      {
+        "id": "music-product-film-glide",
+        "match": 0.78
+      },
+      {
+        "id": "music-bright-startup",
+        "match": 0.64
+      },
+      {
+        "id": "music-minimal-tech-pulse",
+        "match": 0.6
+      }
+    ]
+  },
+  {
+    "q": "soft ui whoosh",
+    "kind": "sfx",
+    "at": "2026-10-07T21:31:46.688Z",
+    "top": [
+      {
+        "id": "sfx-ui-soft-whoosh",
+        "match": 0.93
+      },
+      {
+        "id": "quantum-motion-whooshes-flow-whoosh-soft-swipe",
+        "match": 0.7
+      },
+      {
+        "id": "quantum-motion-whooshes-flow-whoosh-soft-subtle",
+        "match": 0.68
+      }
+    ]
+  },
+  {
+    "q": "soft impact",
+    "kind": "sfx",
+    "at": "2026-10-07T21:31:50.497Z",
+    "top": [
+      {
+        "id": "sfx-ui-soft-impact",
+        "match": 0.88
+      },
+      {
+        "id": "hollywood-essentials-short-foley-short-foley-hit-soft",
+        "match": 0.81
+      },
+      {
+        "id": "cinematic-short-foley-short-foley-hit-soft",
+        "match": 0.79
+      }
+    ]
+  },
+  {
+    "q": "mouse click",
+    "kind": "sfx",
+    "at": "2026-10-07T21:31:54.169Z",
+    "top": [
+      {
+        "id": "youtube-picks-interface-mouse-click",
+        "match": 0.86
+      },
+      {
+        "id": "ultimate-social-content-foley-click",
+        "match": 0.58
+      },
+      {
+        "id": "cinematic-short-foley-short-foley-click",
+        "match": 0.55
+      }
+    ]
+  },
+  {
+    "q": "success chime",
+    "kind": "sfx",
+    "at": "2026-10-07T21:31:57.368Z",
+    "top": [
+      {
+        "id": "sfx-ui-success-chime",
+        "match": 0.94
+      },
+      {
+        "id": "ultimate-social-content-foley-ding",
+        "match": 0.34
+      },
+      {
+        "id": "cinematic-tones-tones-hope",
+        "match": 0.22
+      }
+    ]
+  },
+  {
+    "q": "bubble pop",
+    "kind": "sfx",
+    "at": "2026-10-07T21:32:01.120Z",
+    "top": [
+      {
+        "id": "sfx-ui-bubble-pop",
+        "match": 0.95
+      },
+      {
+        "id": "hollywood-essentials-fantasy-fantasy-water-bubbling",
+        "match": 0.18
+      },
+      {
+        "id": "cinematic-hits-hits-boom",
+        "match": 0.12
+      }
+    ]
+  }
+]

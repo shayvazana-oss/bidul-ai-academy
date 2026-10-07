@@ -1,0 +1,507 @@
+{
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "totalFrames": 1488,
+  "captions": "phrase",
+  "soundGain": {
+    "assets/lib/music-minimal-tech-pulse/track.mp3": 0.7499,
+    "assets/lib/sfx-ui-soft-whoosh/clip.mp3": 0.7852,
+    "assets/lib/sfx-ui-soft-impact/clip.mp3": 0.7499,
+    "assets/lib/youtube-picks-interface-mouse-click/clip.mp3": 1.1885,
+    "assets/lib/sfx-ui-success-chime/clip.mp3": 1.4289,
+    "assets/lib/sfx-ui-bubble-pop/clip.mp3": 0.7413
+  },
+  "music": {
+    "key": "assets/lib/music-minimal-tech-pulse/track.mp3",
+    "beatFrames": []
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "startFrame": 0,
+      "durationFrames": 146,
+      "voiceoverKey": "assets/vo-hook.mp3",
+      "words": [
+        {
+          "word": "קורס",
+          "startSec": 0,
+          "endSec": 0.32
+        },
+        {
+          "word": "מדף",
+          "startSec": 0.48,
+          "endSec": 0.88
+        },
+        {
+          "word": "נבנה",
+          "startSec": 1,
+          "endSec": 1.28
+        },
+        {
+          "word": "לכולם.",
+          "startSec": 1.36,
+          "endSec": 2.12
+        },
+        {
+          "word": "הצוות",
+          "startSec": 2.32,
+          "endSec": 2.8
+        },
+        {
+          "word": "שלכם",
+          "startSec": 2.92,
+          "endSec": 3.36
+        },
+        {
+          "word": "הוא",
+          "startSec": 3.52,
+          "endSec": 3.68
+        },
+        {
+          "word": "לא",
+          "startSec": 3.76,
+          "endSec": 3.84
+        },
+        {
+          "word": "כולם.",
+          "startSec": 3.92,
+          "endSec": 4.56
+        }
+      ],
+      "userAssetKeys": [
+        "assets/user/a-7f07093b-hero.webp"
+      ]
+    },
+    {
+      "id": "what",
+      "startFrame": 146,
+      "durationFrames": 261,
+      "voiceoverKey": "assets/vo-what.mp3",
+      "words": [
+        {
+          "word": "לכן",
+          "startSec": 0,
+          "endSec": 0.48
+        },
+        {
+          "word": "המחלקה",
+          "startSec": 0.64,
+          "endSec": 1.2
+        },
+        {
+          "word": "העסקית",
+          "startSec": 1.24,
+          "endSec": 1.68
+        },
+        {
+          "word": "של",
+          "startSec": 1.76,
+          "endSec": 1.84
+        },
+        {
+          "word": "היחידה",
+          "startSec": 1.92,
+          "endSec": 2.32
+        },
+        {
+          "word": "ללימודי",
+          "startSec": 2.36,
+          "endSec": 2.8
+        },
+        {
+          "word": "חוץ",
+          "startSec": 2.88,
+          "endSec": 3.28
+        },
+        {
+          "word": "בונה",
+          "startSec": 3.44,
+          "endSec": 3.68
+        },
+        {
+          "word": "הכשרות",
+          "startSec": 3.72,
+          "endSec": 4.16
+        },
+        {
+          "word": "בבינה",
+          "startSec": 4.24,
+          "endSec": 4.56
+        },
+        {
+          "word": "מלאכותית",
+          "startSec": 4.68,
+          "endSec": 5.2
+        },
+        {
+          "word": "ובסייבר,",
+          "startSec": 5.36,
+          "endSec": 6.32
+        },
+        {
+          "word": "מאפס,",
+          "startSec": 6.4,
+          "endSec": 7.28
+        },
+        {
+          "word": "לכל",
+          "startSec": 7.36,
+          "endSec": 7.68
+        },
+        {
+          "word": "ארגון.",
+          "startSec": 7.92,
+          "endSec": 8.4
+        }
+      ],
+      "userAssetKeys": [
+        "assets/user/a-971a7bac-circuit.webp",
+        "assets/user/a-3805aaf6-grc.webp"
+      ]
+    },
+    {
+      "id": "trust",
+      "startFrame": 407,
+      "durationFrames": 163,
+      "voiceoverKey": "assets/vo-trust.mp3",
+      "words": [
+        {
+          "word": "ארבעה",
+          "startSec": 0,
+          "endSec": 0.44
+        },
+        {
+          "word": "קמפוסים,",
+          "startSec": 0.48,
+          "endSec": 1.44
+        },
+        {
+          "word": "הסמכה",
+          "startSec": 1.52,
+          "endSec": 1.92
+        },
+        {
+          "word": "ממשלתית,",
+          "startSec": 1.96,
+          "endSec": 2.88
+        },
+        {
+          "word": "ואלפי",
+          "startSec": 2.96,
+          "endSec": 3.68
+        },
+        {
+          "word": "לומדים",
+          "startSec": 3.76,
+          "endSec": 4.16
+        },
+        {
+          "word": "בכל",
+          "startSec": 4.24,
+          "endSec": 4.48
+        },
+        {
+          "word": "שנה.",
+          "startSec": 4.56,
+          "endSec": 5.12
+        }
+      ],
+      "userAssetKeys": []
+    },
+    {
+      "id": "diagnose",
+      "startFrame": 570,
+      "durationFrames": 177,
+      "voiceoverKey": "assets/vo-diagnose.mp3",
+      "words": [
+        {
+          "word": "שלב",
+          "startSec": 0,
+          "endSec": 0.32
+        },
+        {
+          "word": "ראשון:",
+          "startSec": 0.44,
+          "endSec": 1.12
+        },
+        {
+          "word": "פגישת",
+          "startSec": 1.2,
+          "endSec": 1.6
+        },
+        {
+          "word": "אבחון.",
+          "startSec": 1.64,
+          "endSec": 2.44
+        },
+        {
+          "word": "מה",
+          "startSec": 2.72,
+          "endSec": 2.88
+        },
+        {
+          "word": "הצוות",
+          "startSec": 2.92,
+          "endSec": 3.28
+        },
+        {
+          "word": "עושה",
+          "startSec": 3.36,
+          "endSec": 3.6
+        },
+        {
+          "word": "היום,",
+          "startSec": 3.64,
+          "endSec": 4.16
+        },
+        {
+          "word": "ואיפה",
+          "startSec": 4.24,
+          "endSec": 4.72
+        },
+        {
+          "word": "הפערים.",
+          "startSec": 4.84,
+          "endSec": 5.6
+        }
+      ],
+      "userAssetKeys": []
+    },
+    {
+      "id": "syllabus",
+      "startFrame": 747,
+      "durationFrames": 233,
+      "voiceoverKey": "assets/vo-syllabus.mp3",
+      "words": [
+        {
+          "word": "שלב",
+          "startSec": 0,
+          "endSec": 0.24
+        },
+        {
+          "word": "שני:",
+          "startSec": 0.32,
+          "endSec": 0.72
+        },
+        {
+          "word": "סילבוס",
+          "startSec": 1.36,
+          "endSec": 1.84
+        },
+        {
+          "word": "שנכתב",
+          "startSec": 1.92,
+          "endSec": 2.4
+        },
+        {
+          "word": "על",
+          "startSec": 2.44,
+          "endSec": 2.48
+        },
+        {
+          "word": "הכלים,",
+          "startSec": 2.56,
+          "endSec": 3.28
+        },
+        {
+          "word": "התהליכים",
+          "startSec": 3.4,
+          "endSec": 4.08
+        },
+        {
+          "word": "והדאטה",
+          "startSec": 4.16,
+          "endSec": 4.72
+        },
+        {
+          "word": "שלכם.",
+          "startSec": 4.8,
+          "endSec": 5.36
+        },
+        {
+          "word": "לא",
+          "startSec": 5.76,
+          "endSec": 5.92
+        },
+        {
+          "word": "דוגמאות",
+          "startSec": 6.04,
+          "endSec": 6.4
+        },
+        {
+          "word": "מהאינטרנט.",
+          "startSec": 6.48,
+          "endSec": 7.44
+        }
+      ],
+      "userAssetKeys": []
+    },
+    {
+      "id": "deliver",
+      "startFrame": 980,
+      "durationFrames": 189,
+      "voiceoverKey": "assets/vo-deliver.mp3",
+      "words": [
+        {
+          "word": "שלב",
+          "startSec": 0,
+          "endSec": 0.36
+        },
+        {
+          "word": "שלישי:",
+          "startSec": 0.4,
+          "endSec": 1.36
+        },
+        {
+          "word": "מרצים",
+          "startSec": 1.48,
+          "endSec": 1.76
+        },
+        {
+          "word": "מהתעשייה",
+          "startSec": 1.88,
+          "endSec": 2.64
+        },
+        {
+          "word": "מלמדים",
+          "startSec": 2.76,
+          "endSec": 3.12
+        },
+        {
+          "word": "אצלכם,",
+          "startSec": 3.16,
+          "endSec": 4
+        },
+        {
+          "word": "בקמפוס",
+          "startSec": 4.08,
+          "endSec": 4.88
+        },
+        {
+          "word": "או",
+          "startSec": 4.96,
+          "endSec": 5.12
+        },
+        {
+          "word": "אונליין.",
+          "startSec": 5.2,
+          "endSec": 6
+        }
+      ],
+      "userAssetKeys": [
+        "assets/user/a-a9270a45-lab4.webp"
+      ]
+    },
+    {
+      "id": "result",
+      "startFrame": 1169,
+      "durationFrames": 182,
+      "voiceoverKey": "assets/vo-result.mp3",
+      "words": [
+        {
+          "word": "ובסוף?",
+          "startSec": 0,
+          "endSec": 0.8
+        },
+        {
+          "word": "לא",
+          "startSec": 1.2,
+          "endSec": 1.36
+        },
+        {
+          "word": "עוד",
+          "startSec": 1.44,
+          "endSec": 1.52
+        },
+        {
+          "word": "מצגת.",
+          "startSec": 1.68,
+          "endSec": 2.24
+        },
+        {
+          "word": "כל",
+          "startSec": 2.64,
+          "endSec": 2.8
+        },
+        {
+          "word": "עובד",
+          "startSec": 2.96,
+          "endSec": 3.12
+        },
+        {
+          "word": "יוצא",
+          "startSec": 3.16,
+          "endSec": 3.44
+        },
+        {
+          "word": "עם",
+          "startSec": 3.48,
+          "endSec": 3.52
+        },
+        {
+          "word": "תוצר",
+          "startSec": 3.6,
+          "endSec": 4
+        },
+        {
+          "word": "שעובד,",
+          "startSec": 4.08,
+          "endSec": 4.8
+        },
+        {
+          "word": "ותעודה.",
+          "startSec": 4.88,
+          "endSec": 5.76
+        }
+      ],
+      "userAssetKeys": [
+        "assets/user/a-17626e1a-lab2.webp"
+      ]
+    },
+    {
+      "id": "cta",
+      "startFrame": 1351,
+      "durationFrames": 137,
+      "voiceoverKey": "assets/vo-cta.mp3",
+      "words": [
+        {
+          "word": "רוצים",
+          "startSec": 0,
+          "endSec": 0.4
+        },
+        {
+          "word": "כזה",
+          "startSec": 0.48,
+          "endSec": 0.72
+        },
+        {
+          "word": "לצוות",
+          "startSec": 0.8,
+          "endSec": 1.28
+        },
+        {
+          "word": "שלכם?",
+          "startSec": 1.4,
+          "endSec": 1.84
+        },
+        {
+          "word": "מתחילים",
+          "startSec": 2.16,
+          "endSec": 2.56
+        },
+        {
+          "word": "בפגישת",
+          "startSec": 2.64,
+          "endSec": 3.12
+        },
+        {
+          "word": "אבחון.",
+          "startSec": 3.16,
+          "endSec": 3.84
+        }
+      ],
+      "userAssetKeys": []
+    }
+  ]
+}
