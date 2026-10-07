@@ -1,0 +1,126 @@
+{
+  "title": "המחלקה העסקית: קורסי AI וסייבר לארגונים",
+  "aspect": "9:16",
+  "mode": "motion",
+  "voiceId": "HjnCa0x8VgfBjy158Gpj",
+  "pace": "normal",
+  "gap": "normal",
+  "scenes": [
+    {
+      "id": "hook",
+      "narration": "קורס מדף לא מכיר את הארגון שלכם. אנחנו בונים קורס שכן.",
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "קורס מדף?",
+        "קורס שבנוי עליכם"
+      ],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [
+        "a-7f07093b"
+      ],
+      "notes": "LOOK: house style of the Yehida carousels - dark navy ground (#0A0F1F with a #15214A radial at top), brand blue #4C9BFF and gold #F5B83D, Heebo 800/900, glass cards, one 3D Fluent object per scene, subtle grain. Restrained 'step by step' explainer with a numbered gold step tracker as the visual thread (01-04) that appears in scene 3 and advances each step. ~45s. Hook: the user's top-down desk photo darkened behind; a glass 'off the shelf' box card with a red X stamps on 'מדף', then flips to a gold-edged card 'קורס שבנוי עליכם' on 'שכן'."
+    },
+    {
+      "id": "what",
+      "narration": "המחלקה העסקית של היחידה ללימודי חוץ בונה הכשרות בבינה מלאכותית ובסייבר, בהתאמה מלאה לחברה שלכם.",
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "המחלקה העסקית",
+        "בינה מלאכותית",
+        "סייבר"
+      ],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [
+        "a-971a7bac",
+        "a-3805aaf6"
+      ],
+      "notes": "Label 'המחלקה העסקית' lands on 'העסקית'. Two tall glass cards side by side (right = AI over the circuit photo with a 3D brain, left = cyber over the padlock photo with a 3D shield), each enters on its word. Slow 3% push."
+    },
+    {
+      "id": "diagnose",
+      "narration": "זה מתחיל בפגישת אבחון: מה הצוות עושה היום, ואיפה הפערים.",
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "01",
+        "אבחון צרכים"
+      ],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "The 4-dot gold step tracker appears at top (RTL, step 1 on the right) and lights 01 on 'אבחון'. 3D magnifier sweeps over three glass rows of skills; on 'הפערים' one row turns gold with a gap marker."
+    },
+    {
+      "id": "syllabus",
+      "narration": "משם אנחנו כותבים סילבוס על הכלים, התהליכים והדאטה שלכם. לא דוגמאות כלליות.",
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "02",
+        "סילבוס מותאם"
+      ],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Tracker advances to 02. A glass document card with a 3D page icon; three lines tick in on 'הכלים', 'התהליכים', 'הדאטה'. On 'כלליות' a faded generic line is struck through."
+    },
+    {
+      "id": "deliver",
+      "narration": "המרצים שלנו מגיעים מהתעשייה, ומלמדים אצלכם, בקמפוס או אונליין.",
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "03",
+        "הדרכה",
+        "אצלכם · בקמפוס · אונליין"
+      ],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [
+        "a-a9270a45"
+      ],
+      "notes": "Tracker 03. The user's training photo (two people at laptops) fills the upper frame with a slow pan, darkened at the bottom; three glass pills enter right to left on 'אצלכם', 'בקמפוס', 'אונליין'."
+    },
+    {
+      "id": "result",
+      "narration": "ובסוף? כל עובד יוצא עם תוצר שעובד. ותעודה.",
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "04",
+        "תוצר ותעודה"
+      ],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [
+        "a-17626e1a"
+      ],
+      "notes": "Tracker 04 completes, all four dots gold. Team photo behind, dim; 3D graduation cap and trophy land on 'תוצר' and 'תעודה'. Biggest move of the film: the tracker line fills."
+    },
+    {
+      "id": "cta",
+      "narration": "רוצים כזה לצוות שלכם? דברו איתנו.",
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "לצוות שלכם?",
+        "דברו איתנו"
+      ],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Return to the opening gold-edged card, now titled 'קורס שבנוי עליכם' with a 3D handshake. Gold button 'דברו איתנו' presses on 'איתנו'. Wordmark 'היחידה ללימודי חוץ · המחלקה העסקית' at the bottom (replace with the real logo file if supplied), held 1.5s."
+    }
+  ]
+}

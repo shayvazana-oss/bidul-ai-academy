@@ -1,0 +1,37 @@
+{
+  "assets/user/a-7f07093b-hero.webp": {
+    "textZone": {
+      "region": "bottom",
+      "luminance": 0.044,
+      "busy": 0.165
+    }
+  },
+  "assets/user/a-971a7bac-circuit.webp": {
+    "textZone": {
+      "region": "top",
+      "luminance": 0.306,
+      "busy": 0.699
+    }
+  },
+  "assets/user/a-3805aaf6-grc.webp": {
+    "textZone": {
+      "region": "bottom",
+      "luminance": 0.189,
+      "busy": 0.26
+    }
+  },
+  "assets/user/a-a9270a45-lab4.webp": {
+    "textZone": {
+      "region": "top",
+      "luminance": 0.785,
+      "busy": 0.453
+    }
+  },
+  "assets/user/a-17626e1a-lab2.webp": {
+    "textZone": {
+      "region": "bottom",
+      "luminance": 0.218,
+      "busy": 0.519
+    }
+  }
+}
