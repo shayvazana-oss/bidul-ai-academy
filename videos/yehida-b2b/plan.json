@@ -8,11 +8,11 @@
   "scenes": [
     {
       "id": "hook",
-      "narration": "קורס מדף לא מכיר את הארגון שלכם. אנחנו בונים קורס שכן.",
+      "narration": "קורס מדף נבנה לכולם. הצוות שלכם הוא לא כולם.",
       "treatment": "motion-graphic",
       "onScreenText": [
-        "קורס מדף?",
-        "קורס שבנוי עליכם"
+        "קורס מדף",
+        "הצוות שלכם"
       ],
       "imagePrompt": null,
       "clipPrompt": null,
@@ -21,11 +21,11 @@
       "userAssetIds": [
         "a-7f07093b"
       ],
-      "notes": "LOOK: house style of the Yehida carousels - dark navy ground (#0A0F1F with a #15214A radial at top), brand blue #4C9BFF and gold #F5B83D, Heebo 800/900, glass cards, one 3D Fluent object per scene, subtle grain. Restrained 'step by step' explainer with a numbered gold step tracker as the visual thread (01-04) that appears in scene 3 and advances each step. ~45s. Hook: the user's top-down desk photo darkened behind; a glass 'off the shelf' box card with a red X stamps on 'מדף', then flips to a gold-edged card 'קורס שבנוי עליכם' on 'שכן'."
+      "notes": "LOOK: house style of the Yehida carousels - dark navy ground (#0A0F1F with a #15214A radial at top), brand blue #4C9BFF and gold #F5B83D, Heebo 800/900, glass cards, one 3D Fluent object per scene, subtle grain. Restrained step-by-step explainer. VISUAL THREAD: the gold card - in the hook one card out of a grey row of identical 'generic course' cards turns gold; that gold card becomes the step tracker frame (01-04) and returns as the CTA button. ~45s. Hook: user's dark top-down desk photo behind, dimmed. A shelf of four identical grey glass cards 'קורס מדף' slides in on 'מדף'; on 'הצוות' the second card from the right lifts out, turns gold and reads 'הצוות שלכם'."
     },
     {
       "id": "what",
-      "narration": "המחלקה העסקית של היחידה ללימודי חוץ בונה הכשרות בבינה מלאכותית ובסייבר, בהתאמה מלאה לחברה שלכם.",
+      "narration": "לכן המחלקה העסקית של היחידה ללימודי חוץ בונה הכשרות בבינה מלאכותית ובסייבר, מאפס, לכל ארגון.",
       "treatment": "motion-graphic",
       "onScreenText": [
         "המחלקה העסקית",
@@ -40,11 +40,27 @@
         "a-971a7bac",
         "a-3805aaf6"
       ],
-      "notes": "Label 'המחלקה העסקית' lands on 'העסקית'. Two tall glass cards side by side (right = AI over the circuit photo with a 3D brain, left = cyber over the padlock photo with a 3D shield), each enters on its word. Slow 3% push."
+      "notes": "Label 'המחלקה העסקית' on 'העסקית'. Two tall glass cards: right = AI over the circuit photo with a 3D brain (on 'מלאכותית'), left = cyber over the padlock photo with a 3D shield (on 'ובסייבר'). 'מאפס' stamps small in gold."
+    },
+    {
+      "id": "trust",
+      "narration": "ארבעה קמפוסים, הסמכה ממשלתית, ואלפי לומדים בכל שנה.",
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "4 קמפוסים",
+        "הסמכה ממשלתית",
+        "אלפי לומדים בשנה"
+      ],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Re-hook with proof. Three glass rows tick in right to left on 'קמפוסים', 'ממשלתית', 'לומדים': a big gold 4 that counts up to land on 'ארבעה' with a 3D pin, a 3D check badge, a 3D graduation cap. Facts come from the user's profile, no other figures."
     },
     {
       "id": "diagnose",
-      "narration": "זה מתחיל בפגישת אבחון: מה הצוות עושה היום, ואיפה הפערים.",
+      "narration": "שלב ראשון: פגישת אבחון. מה הצוות עושה היום, ואיפה הפערים.",
       "treatment": "motion-graphic",
       "onScreenText": [
         "01",
@@ -55,11 +71,11 @@
       "shareable": false,
       "imageTags": [],
       "userAssetIds": [],
-      "notes": "The 4-dot gold step tracker appears at top (RTL, step 1 on the right) and lights 01 on 'אבחון'. 3D magnifier sweeps over three glass rows of skills; on 'הפערים' one row turns gold with a gap marker."
+      "notes": "The gold card from the hook docks at the top as a 4-step tracker (RTL, step 1 on the right) and lights 01 on 'ראשון'. 3D magnifier sweeps over three glass skill rows; on 'הפערים' one row turns gold with a gap marker."
     },
     {
       "id": "syllabus",
-      "narration": "משם אנחנו כותבים סילבוס על הכלים, התהליכים והדאטה שלכם. לא דוגמאות כלליות.",
+      "narration": "שלב שני: סילבוס שנכתב על הכלים, התהליכים והדאטה שלכם. לא דוגמאות מהאינטרנט.",
       "treatment": "motion-graphic",
       "onScreenText": [
         "02",
@@ -70,11 +86,11 @@
       "shareable": false,
       "imageTags": [],
       "userAssetIds": [],
-      "notes": "Tracker advances to 02. A glass document card with a 3D page icon; three lines tick in on 'הכלים', 'התהליכים', 'הדאטה'. On 'כלליות' a faded generic line is struck through."
+      "notes": "Tracker 02. A glass document card with a 3D page icon; three lines tick in on 'הכלים', 'התהליכים', 'הדאטה'. On 'מהאינטרנט' a faded generic line is struck through in red."
     },
     {
       "id": "deliver",
-      "narration": "המרצים שלנו מגיעים מהתעשייה, ומלמדים אצלכם, בקמפוס או אונליין.",
+      "narration": "שלב שלישי: מרצים מהתעשייה מלמדים אצלכם, בקמפוס או אונליין.",
       "treatment": "motion-graphic",
       "onScreenText": [
         "03",
@@ -88,14 +104,15 @@
       "userAssetIds": [
         "a-a9270a45"
       ],
-      "notes": "Tracker 03. The user's training photo (two people at laptops) fills the upper frame with a slow pan, darkened at the bottom; three glass pills enter right to left on 'אצלכם', 'בקמפוס', 'אונליין'."
+      "notes": "Tracker 03. The user's training photo fills the upper frame with a slow pan, darkened at the bottom; three glass pills enter right to left on 'אצלכם', 'בקמפוס', 'אונליין'."
     },
     {
       "id": "result",
-      "narration": "ובסוף? כל עובד יוצא עם תוצר שעובד. ותעודה.",
+      "narration": "ובסוף? לא עוד מצגת. כל עובד יוצא עם תוצר שעובד, ותעודה.",
       "treatment": "motion-graphic",
       "onScreenText": [
         "04",
+        "לא עוד מצגת",
         "תוצר ותעודה"
       ],
       "imagePrompt": null,
@@ -105,22 +122,22 @@
       "userAssetIds": [
         "a-17626e1a"
       ],
-      "notes": "Tracker 04 completes, all four dots gold. Team photo behind, dim; 3D graduation cap and trophy land on 'תוצר' and 'תעודה'. Biggest move of the film: the tracker line fills."
+      "notes": "Second re-hook. 'לא עוד מצגת': a grey slide card falls away on 'מצגת'. Tracker 04 completes, all four dots gold - the biggest move of the film. Team photo behind, dim; 3D trophy and certificate land on 'תוצר' and 'ותעודה'."
     },
     {
       "id": "cta",
-      "narration": "רוצים כזה לצוות שלכם? דברו איתנו.",
+      "narration": "רוצים כזה לצוות שלכם? מתחילים בפגישת אבחון.",
       "treatment": "motion-graphic",
       "onScreenText": [
         "לצוות שלכם?",
-        "דברו איתנו"
+        "לקביעת פגישת אבחון"
       ],
       "imagePrompt": null,
       "clipPrompt": null,
       "shareable": false,
       "imageTags": [],
       "userAssetIds": [],
-      "notes": "Return to the opening gold-edged card, now titled 'קורס שבנוי עליכם' with a 3D handshake. Gold button 'דברו איתנו' presses on 'איתנו'. Wordmark 'היחידה ללימודי חוץ · המחלקה העסקית' at the bottom (replace with the real logo file if supplied), held 1.5s."
+      "notes": "Loop back: the gold card from the hook returns centre with a 3D handshake, and becomes the gold button 'לקביעת פגישת אבחון' which presses on 'אבחון'. Logo (or wordmark 'היחידה ללימודי חוץ · המחלקה העסקית') held 1.5s at the end."
     }
   ]
 }
