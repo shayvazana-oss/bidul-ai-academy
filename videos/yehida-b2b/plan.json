@@ -1,143 +1,82 @@
 {
-  "title": "המחלקה העסקית: קורסי AI וסייבר לארגונים",
+  "title": "המחלקה העסקית: הכשרות AI וסייבר לארגונים",
   "aspect": "9:16",
   "mode": "motion",
   "voiceId": "HjnCa0x8VgfBjy158Gpj",
   "pace": "normal",
-  "gap": "normal",
+  "gap": "tight",
   "scenes": [
     {
       "id": "hook",
       "narration": "קורס מדף נבנה לכולם. הצוות שלכם הוא לא כולם.",
-      "treatment": "motion-graphic",
-      "onScreenText": [
-        "קורס מדף",
-        "הצוות שלכם"
-      ],
+      "treatment": "clip",
+      "onScreenText": ["לכולם.", "הצוות שלכם"],
       "imagePrompt": null,
-      "clipPrompt": null,
-      "shareable": false,
-      "imageTags": [],
-      "userAssetIds": [
-        "a-7f07093b"
-      ],
-      "notes": "LOOK: house style of the Yehida carousels - dark navy ground (#0A0F1F with a #15214A radial at top), brand blue #4C9BFF and gold #F5B83D, Heebo 800/900, glass cards, one 3D Fluent object per scene, subtle grain. Restrained step-by-step explainer. VISUAL THREAD: the gold card - in the hook one card out of a grey row of identical 'generic course' cards turns gold; that gold card becomes the step tracker frame (01-04) and returns as the CTA button. ~45s. Hook: user's dark top-down desk photo behind, dimmed. A shelf of four identical grey glass cards 'קורס מדף' slides in on 'מדף'; on 'הצוות' the second card from the right lifts out, turns gold and reads 'הצוות שלכם'."
+      "clipPrompt": "Slow cinematic push-in down a long dim corporate hall filled with identical empty grey desks and chairs in perfect rows, cold blue light, light haze, shallow depth of field, no people, no screens, no text.",
+      "shareable": true,
+      "imageTags": ["office", "empty desks", "corporate", "cinematic", "blue"],
+      "userAssetIds": [],
+      "notes": "LOOK: premium cinematic. Full-bleed generated clips graded deep navy/teal with a single gold accent (#F5B83D), giant Heebo 900 type that fills the frame width and lands on the spoken word, film grain, vignette, hard cuts and whips on the music. No icons, no cards, no stock photos. ~28s. VISUAL THREAD: one gold word per scene, the gold underline that grows under it. Hook: identical rows = 'everyone'; huge white 'לכולם.' on 'לכולם', then a hard cut-in to gold 'הצוות שלכם' on 'הצוות', camera punch."
     },
     {
-      "id": "what",
-      "narration": "לכן המחלקה העסקית של היחידה ללימודי חוץ בונה הכשרות בבינה מלאכותית ובסייבר, מאפס, לכל ארגון.",
-      "treatment": "motion-graphic",
-      "onScreenText": [
-        "המחלקה העסקית",
-        "בינה מלאכותית",
-        "סייבר"
-      ],
+      "id": "ai",
+      "narration": "המחלקה העסקית של היחידה ללימודי חוץ בונה הכשרות בבינה מלאכותית",
+      "treatment": "clip",
+      "onScreenText": ["המחלקה העסקית", "בינה מלאכותית"],
       "imagePrompt": null,
-      "clipPrompt": null,
-      "shareable": false,
-      "imageTags": [],
-      "userAssetIds": [
-        "a-971a7bac",
-        "a-3805aaf6"
-      ],
-      "notes": "Label 'המחלקה העסקית' on 'העסקית'. Two tall glass cards: right = AI over the circuit photo with a 3D brain (on 'מלאכותית'), left = cyber over the padlock photo with a 3D shield (on 'ובסייבר'). 'מאפס' stamps small in gold."
+      "clipPrompt": "Macro shot of glowing blue pulses of light travelling through a dense abstract network of fine fibres and nodes, deep black background, slow forward camera drift, shallow depth of field, cinematic, no text.",
+      "shareable": true,
+      "imageTags": ["ai", "neural network", "abstract", "light", "cinematic"],
+      "userAssetIds": [],
+      "notes": "Small label 'המחלקה העסקית · היחידה ללימודי חוץ' top on 'המחלקה'; giant two-line 'בינה / מלאכותית' lands on 'בבינה' with gold underline."
     },
     {
-      "id": "trust",
-      "narration": "ארבעה קמפוסים, הסמכה ממשלתית, ואלפי לומדים בכל שנה.",
+      "id": "cyber",
+      "narration": "ובסייבר. מאפס, לכל ארגון.",
+      "treatment": "clip",
+      "onScreenText": ["סייבר", "מאפס. לכל ארגון."],
+      "imagePrompt": null,
+      "clipPrompt": "Slow dolly forward down a dark server room aisle between tall racks with small blinking blue and amber lights, light haze, cold cinematic light, symmetrical composition, no people, no text.",
+      "shareable": true,
+      "imageTags": ["server room", "cybersecurity", "data center", "dark", "cinematic"],
+      "userAssetIds": [],
+      "notes": "Whip cut on the beat into the server aisle; giant 'סייבר' on 'ובסייבר'; small gold line 'מאפס. לכל ארגון.' on 'מאפס'."
+    },
+    {
+      "id": "process",
+      "narration": "אבחון. סילבוס על הדאטה שלכם. ומרצים מהתעשייה.",
+      "treatment": "clip",
+      "onScreenText": ["אבחון", "סילבוס", "מרצים מהתעשייה"],
+      "imagePrompt": null,
+      "clipPrompt": "A small team of professionals in a modern glass meeting room at dusk leaning over a table in focused discussion, one gestures toward a whiteboard out of frame, warm practical light, slow handheld push-in, cinematic, faces not in close-up, no readable screens, no text.",
+      "shareable": true,
+      "imageTags": ["team", "meeting", "training", "office", "cinematic"],
+      "userAssetIds": [],
+      "notes": "Three hard word swaps, one per beat of speech: '01 אבחון' on 'אבחון', '02 סילבוס' on 'סילבוס', '03 מרצים מהתעשייה' on 'ומרצים'. Each previous word leaves fast. Small gold step numerals."
+    },
+    {
+      "id": "proof",
+      "narration": "ארבעה קמפוסים. הסמכה ממשלתית. אלפי לומדים בשנה.",
       "treatment": "motion-graphic",
-      "onScreenText": [
-        "4 קמפוסים",
-        "הסמכה ממשלתית",
-        "אלפי לומדים בשנה"
-      ],
+      "onScreenText": ["4 קמפוסים", "הסמכה ממשלתית", "אלפי לומדים בשנה"],
       "imagePrompt": null,
       "clipPrompt": null,
       "shareable": false,
       "imageTags": [],
       "userAssetIds": [],
-      "notes": "Re-hook with proof. Three glass rows tick in right to left on 'קמפוסים', 'ממשלתית', 'לומדים': a big gold 4 that counts up to land on 'ארבעה' with a 3D pin, a 3D check badge, a 3D graduation cap. Facts come from the user's profile, no other figures."
-    },
-    {
-      "id": "diagnose",
-      "narration": "שלב ראשון: פגישת אבחון. מה הצוות עושה היום, ואיפה הפערים.",
-      "treatment": "motion-graphic",
-      "onScreenText": [
-        "01",
-        "אבחון צרכים"
-      ],
-      "imagePrompt": null,
-      "clipPrompt": null,
-      "shareable": false,
-      "imageTags": [],
-      "userAssetIds": [],
-      "notes": "The gold card from the hook docks at the top as a 4-step tracker (RTL, step 1 on the right) and lights 01 on 'ראשון'. 3D magnifier sweeps over three glass skill rows; on 'הפערים' one row turns gold with a gap marker."
-    },
-    {
-      "id": "syllabus",
-      "narration": "שלב שני: סילבוס שנכתב על הכלים, התהליכים והדאטה שלכם. לא דוגמאות מהאינטרנט.",
-      "treatment": "motion-graphic",
-      "onScreenText": [
-        "02",
-        "סילבוס מותאם"
-      ],
-      "imagePrompt": null,
-      "clipPrompt": null,
-      "shareable": false,
-      "imageTags": [],
-      "userAssetIds": [],
-      "notes": "Tracker 02. A glass document card with a 3D page icon; three lines tick in on 'הכלים', 'התהליכים', 'הדאטה'. On 'מהאינטרנט' a faded generic line is struck through in red."
-    },
-    {
-      "id": "deliver",
-      "narration": "שלב שלישי: מרצים מהתעשייה מלמדים אצלכם, בקמפוס או אונליין.",
-      "treatment": "motion-graphic",
-      "onScreenText": [
-        "03",
-        "הדרכה",
-        "אצלכם · בקמפוס · אונליין"
-      ],
-      "imagePrompt": null,
-      "clipPrompt": null,
-      "shareable": false,
-      "imageTags": [],
-      "userAssetIds": [
-        "a-a9270a45"
-      ],
-      "notes": "Tracker 03. The user's training photo fills the upper frame with a slow pan, darkened at the bottom; three glass pills enter right to left on 'אצלכם', 'בקמפוס', 'אונליין'."
-    },
-    {
-      "id": "result",
-      "narration": "ובסוף? לא עוד מצגת. כל עובד יוצא עם תוצר שעובד, ותעודה.",
-      "treatment": "motion-graphic",
-      "onScreenText": [
-        "04",
-        "לא עוד מצגת",
-        "תוצר ותעודה"
-      ],
-      "imagePrompt": null,
-      "clipPrompt": null,
-      "shareable": false,
-      "imageTags": [],
-      "userAssetIds": [
-        "a-17626e1a"
-      ],
-      "notes": "Second re-hook. 'לא עוד מצגת': a grey slide card falls away on 'מצגת'. Tracker 04 completes, all four dots gold - the biggest move of the film. Team photo behind, dim; 3D trophy and certificate land on 'תוצר' and 'ותעודה'."
+      "notes": "Black frame, the team clip blurred far behind. Giant gold '4' counts in on 'ארבעה' with 'קמפוסים'; then 'הסמכה ממשלתית'; then 'אלפי' gold + 'לומדים בשנה'. Each fact replaces the last."
     },
     {
       "id": "cta",
       "narration": "רוצים כזה לצוות שלכם? מתחילים בפגישת אבחון.",
       "treatment": "motion-graphic",
-      "onScreenText": [
-        "לצוות שלכם?",
-        "לקביעת פגישת אבחון"
-      ],
+      "onScreenText": ["לצוות שלכם?", "פגישת אבחון", "היחידה ללימודי חוץ · המחלקה העסקית"],
       "imagePrompt": null,
       "clipPrompt": null,
       "shareable": false,
       "imageTags": [],
       "userAssetIds": [],
-      "notes": "Loop back: the gold card from the hook returns centre with a 3D handshake, and becomes the gold button 'לקביעת פגישת אבחון' which presses on 'אבחון'. Logo (or wordmark 'היחידה ללימודי חוץ · המחלקה העסקית') held 1.5s at the end."
+      "notes": "Music hit. 'לצוות שלכם?' huge, then the gold pill 'לקביעת פגישת אבחון' presses on 'אבחון'. Wordmark small and centred, held to the end."
     }
   ]
 }

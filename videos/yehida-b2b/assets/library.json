@@ -82,5 +82,61 @@
       "durationSec": 0.52
     },
     "gainDb": -2.6
+  },
+  "music-cinematic-rise": {
+    "path": "assets/lib/music-cinematic-rise/track.mp3",
+    "kind": "music",
+    "title": "Cinematic Rise",
+    "meta": {
+      "bpm": 100,
+      "mood": "epic",
+      "source": "ElevenLabs Music",
+      "licence": "Generated for Reelkit with ElevenLabs Music",
+      "durationSec": 29.99,
+      "instrumental": true
+    },
+    "gainDb": -5.1
+  },
+  "quantum-motion-whooshes-flow-whoosh-soft-swipe": {
+    "path": "assets/lib/quantum-motion-whooshes-flow-whoosh-soft-swipe/clip.mp3",
+    "kind": "sfx",
+    "title": "FLOW WHOOSH SOFT Swipe",
+    "meta": {
+      "pack": "Quantum Motion",
+      "length": "hit",
+      "source": "Four Editors - All Sound Effects In One Download",
+      "licence": "Four Editors License Agreement: own-work use; no redistribution or incorporation in a product",
+      "category": "Whooshes",
+      "durationSec": 1.906939
+    },
+    "gainDb": -2.7
+  },
+  "cinematic-hits-hits-boom": {
+    "path": "assets/lib/cinematic-hits-hits-boom/clip.mp3",
+    "kind": "sfx",
+    "title": "Hits Boom",
+    "meta": {
+      "pack": "Cinematic",
+      "length": "phrase",
+      "source": "Four Editors - All Sound Effects In One Download",
+      "licence": "Four Editors License Agreement: own-work use; no redistribution or incorporation in a product",
+      "category": "Hits",
+      "durationSec": 3.369796
+    },
+    "gainDb": 8.3
+  },
+  "invention-impact-impact-cinematic-deep": {
+    "path": "assets/lib/invention-impact-impact-cinematic-deep/clip.mp3",
+    "kind": "sfx",
+    "title": "Impact Cinematic Deep",
+    "meta": {
+      "pack": "Invention",
+      "length": "phrase",
+      "source": "Four Editors - All Sound Effects In One Download",
+      "licence": "Four Editors License Agreement: own-work use; no redistribution or incorporation in a product",
+      "category": "Impact",
+      "durationSec": 7.235918
+    },
+    "gainDb": -8.4
   }
 }

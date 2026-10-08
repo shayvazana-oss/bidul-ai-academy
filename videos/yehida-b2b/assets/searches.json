@@ -112,5 +112,98 @@
         "match": 0.12
       }
     ]
+  },
+  {
+    "q": "dark modern office team working at night, cinematic",
+    "kind": "clip",
+    "at": "2026-10-08T13:49:48.487Z",
+    "top": []
+  },
+  {
+    "q": "abstract neural network light, AI",
+    "kind": "clip",
+    "at": "2026-10-08T13:49:51.379Z",
+    "top": []
+  },
+  {
+    "q": "server room data center, cinematic",
+    "kind": "clip",
+    "at": "2026-10-08T13:49:53.956Z",
+    "top": []
+  },
+  {
+    "q": "cybersecurity hacker code screen dark",
+    "kind": "clip",
+    "at": "2026-10-08T13:49:57.340Z",
+    "top": []
+  },
+  {
+    "q": "hands typing keyboard close up dark",
+    "kind": "clip",
+    "at": "2026-10-08T13:50:00.096Z",
+    "top": []
+  },
+  {
+    "q": "corporate training workshop people",
+    "kind": "clip",
+    "at": "2026-10-08T13:50:03.226Z",
+    "top": []
+  },
+  {
+    "q": "cinematic tech trailer, driving pulse, 120 bpm",
+    "kind": "music",
+    "at": "2026-10-08T13:50:06.226Z",
+    "top": [
+      {
+        "id": "music-glossy-showreel",
+        "match": 0.56
+      },
+      {
+        "id": "music-cinematic-rise",
+        "match": 0.52
+      },
+      {
+        "id": "music-retro-synthwave",
+        "match": 0.49
+      }
+    ]
+  },
+  {
+    "q": "deep cinematic impact boom",
+    "kind": "sfx",
+    "at": "2026-10-08T13:51:42.500Z",
+    "top": [
+      {
+        "id": "ultimate-social-content-impacts-deep-impact-bass",
+        "match": 0.6
+      },
+      {
+        "id": "ultimate-social-content-impacts-deep-bass-impact",
+        "match": 0.6
+      },
+      {
+        "id": "invention-impact-impact-cinematic-deep",
+        "match": 0.58
+      }
+    ]
+  },
+  {
+    "q": "riser whoosh buildup",
+    "kind": "sfx",
+    "at": "2026-10-08T13:51:46.792Z",
+    "top": [
+      {
+        "id": "invention-riser-riser-building-up",
+        "match": 0.69
+      },
+      {
+        "id": "cinematic-whooshes-whoosh-buildup",
+        "match": 0.63
+      },
+      {
+        "id": "invention-riser-riser-tension",
+        "match": 0.55
+      }
+    ]
   }
 ]

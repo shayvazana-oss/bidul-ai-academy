@@ -1,7 +1,7 @@
 {
   "hook": {
     "key": "assets/vo-hook.mp3",
-    "durationSec": 4.56,
+    "durationSec": 4.48,
     "words": [
       {
         "word": "קורס",
@@ -11,42 +11,42 @@
       {
         "word": "מדף",
         "startSec": 0.48,
-        "endSec": 0.88
+        "endSec": 0.8
       },
       {
         "word": "נבנה",
-        "startSec": 1,
-        "endSec": 1.28
+        "startSec": 0.88,
+        "endSec": 1.2
       },
       {
         "word": "לכולם.",
-        "startSec": 1.36,
-        "endSec": 2.12
+        "startSec": 1.28,
+        "endSec": 1.92
       },
       {
         "word": "הצוות",
-        "startSec": 2.32,
-        "endSec": 2.8
+        "startSec": 2.24,
+        "endSec": 2.64
       },
       {
         "word": "שלכם",
-        "startSec": 2.92,
-        "endSec": 3.36
+        "startSec": 2.72,
+        "endSec": 3.28
       },
       {
         "word": "הוא",
-        "startSec": 3.52,
-        "endSec": 3.68
+        "startSec": 3.44,
+        "endSec": 3.6
       },
       {
         "word": "לא",
-        "startSec": 3.76,
-        "endSec": 3.84
+        "startSec": 3.68,
+        "endSec": 3.76
       },
       {
         "word": "כולם.",
-        "startSec": 3.92,
-        "endSec": 4.56
+        "startSec": 3.84,
+        "endSec": 4.48
       }
     ],
     "text": "קורס מדף נבנה לכולם. הצוות שלכם הוא לא כולם.",
@@ -454,7 +454,7 @@
       {
         "word": "שלכם?",
         "startSec": 1.4,
-        "endSec": 1.84
+        "endSec": 2
       },
       {
         "word": "מתחילים",
@@ -464,15 +464,191 @@
       {
         "word": "בפגישת",
         "startSec": 2.64,
-        "endSec": 3.12
+        "endSec": 3.08
       },
       {
         "word": "אבחון.",
-        "startSec": 3.16,
+        "startSec": 3.12,
         "endSec": 3.84
       }
     ],
     "text": "רוצים כזה לצוות שלכם? מתחילים בפגישת אבחון.",
+    "voiceId": "HjnCa0x8VgfBjy158Gpj",
+    "speed": 1
+  },
+  "ai": {
+    "key": "assets/vo-ai.mp3",
+    "durationSec": 5.28,
+    "words": [
+      {
+        "word": "המחלקה",
+        "startSec": 0,
+        "endSec": 0.56
+      },
+      {
+        "word": "העסקית",
+        "startSec": 0.6,
+        "endSec": 1.12
+      },
+      {
+        "word": "של",
+        "startSec": 1.2,
+        "endSec": 1.28
+      },
+      {
+        "word": "היחידה",
+        "startSec": 1.32,
+        "endSec": 1.76
+      },
+      {
+        "word": "ללימודי",
+        "startSec": 1.84,
+        "endSec": 2.32
+      },
+      {
+        "word": "חוץ",
+        "startSec": 2.4,
+        "endSec": 2.8
+      },
+      {
+        "word": "בונה",
+        "startSec": 2.96,
+        "endSec": 3.2
+      },
+      {
+        "word": "הכשרות",
+        "startSec": 3.28,
+        "endSec": 3.92
+      },
+      {
+        "word": "בבינה",
+        "startSec": 4,
+        "endSec": 4.32
+      },
+      {
+        "word": "מלאכותית",
+        "startSec": 4.44,
+        "endSec": 5.28
+      }
+    ],
+    "text": "המחלקה העסקית של היחידה ללימודי חוץ בונה הכשרות בבינה מלאכותית",
+    "voiceId": "HjnCa0x8VgfBjy158Gpj",
+    "speed": 1
+  },
+  "cyber": {
+    "key": "assets/vo-cyber.mp3",
+    "durationSec": 3.28,
+    "words": [
+      {
+        "word": "ובסייבר.",
+        "startSec": 0,
+        "endSec": 1.04
+      },
+      {
+        "word": "מאפס,",
+        "startSec": 1.2,
+        "endSec": 2.04
+      },
+      {
+        "word": "לכל",
+        "startSec": 2.16,
+        "endSec": 2.56
+      },
+      {
+        "word": "ארגון.",
+        "startSec": 2.8,
+        "endSec": 3.28
+      }
+    ],
+    "text": "ובסייבר. מאפס, לכל ארגון.",
+    "voiceId": "HjnCa0x8VgfBjy158Gpj",
+    "speed": 1
+  },
+  "process": {
+    "key": "assets/vo-process.mp3",
+    "durationSec": 4.96,
+    "words": [
+      {
+        "word": "אבחון.",
+        "startSec": 0,
+        "endSec": 0.64
+      },
+      {
+        "word": "סילבוס",
+        "startSec": 1.12,
+        "endSec": 1.6
+      },
+      {
+        "word": "על",
+        "startSec": 1.68,
+        "endSec": 1.76
+      },
+      {
+        "word": "הדאטה",
+        "startSec": 1.8,
+        "endSec": 2.16
+      },
+      {
+        "word": "שלכם.",
+        "startSec": 2.28,
+        "endSec": 2.8
+      },
+      {
+        "word": "ומרצים",
+        "startSec": 3.2,
+        "endSec": 3.92
+      },
+      {
+        "word": "מהתעשייה.",
+        "startSec": 4,
+        "endSec": 4.96
+      }
+    ],
+    "text": "אבחון. סילבוס על הדאטה שלכם. ומרצים מהתעשייה.",
+    "voiceId": "HjnCa0x8VgfBjy158Gpj",
+    "speed": 1
+  },
+  "proof": {
+    "key": "assets/vo-proof.mp3",
+    "durationSec": 4.8,
+    "words": [
+      {
+        "word": "ארבעה",
+        "startSec": 0,
+        "endSec": 0.48
+      },
+      {
+        "word": "קמפוסים.",
+        "startSec": 0.56,
+        "endSec": 1.52
+      },
+      {
+        "word": "הסמכה",
+        "startSec": 1.6,
+        "endSec": 2
+      },
+      {
+        "word": "ממשלתית.",
+        "startSec": 2.04,
+        "endSec": 2.88
+      },
+      {
+        "word": "אלפי",
+        "startSec": 3.2,
+        "endSec": 3.6
+      },
+      {
+        "word": "לומדים",
+        "startSec": 3.68,
+        "endSec": 4.08
+      },
+      {
+        "word": "בשנה.",
+        "startSec": 4.16,
+        "endSec": 4.8
+      }
+    ],
+    "text": "ארבעה קמפוסים. הסמכה ממשלתית. אלפי לומדים בשנה.",
     "voiceId": "HjnCa0x8VgfBjy158Gpj",
     "speed": 1
   }
