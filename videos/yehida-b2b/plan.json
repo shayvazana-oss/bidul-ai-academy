@@ -9,56 +9,73 @@
     {
       "id": "hook",
       "narration": "קורס מדף נבנה לכולם. הצוות שלכם הוא לא כולם.",
-      "treatment": "clip",
-      "onScreenText": ["לכולם.", "הצוות שלכם"],
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "לכולם.",
+        "הצוות שלכם"
+      ],
       "imagePrompt": null,
-      "clipPrompt": "Slow cinematic push-in down a long dim corporate hall filled with identical empty grey desks and chairs in perfect rows, cold blue light, light haze, shallow depth of field, no people, no screens, no text.",
-      "shareable": true,
-      "imageTags": ["office", "empty desks", "corporate", "cinematic", "blue"],
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
       "userAssetIds": [],
-      "notes": "LOOK: premium cinematic. Full-bleed generated clips graded deep navy/teal with a single gold accent (#F5B83D), giant Heebo 900 type that fills the frame width and lands on the spoken word, film grain, vignette, hard cuts and whips on the music. No icons, no cards, no stock photos. ~28s. VISUAL THREAD: one gold word per scene, the gold underline that grows under it. Hook: identical rows = 'everyone'; huge white 'לכולם.' on 'לכולם', then a hard cut-in to gold 'הצוות שלכם' on 'הצוות', camera punch."
+      "notes": "LOOK: premium cinematic. Full-bleed generated clips graded deep navy/teal with a single gold accent (#F5B83D), giant Heebo 900 type that fills the frame width and lands on the spoken word, film grain, vignette, hard cuts and whips on the music. No icons, no cards, no stock photos. ~28s. VISUAL THREAD: one gold word per scene, the gold underline that grows under it. Hook: identical rows = 'everyone'; huge white 'לכולם.' on 'לכולם', then a hard cut-in to gold 'הצוות שלכם' on 'הצוות', camera punch. B-roll clip generated on FAL (MiniMax H3 Max) and stored in assets/broll/."
     },
     {
       "id": "ai",
       "narration": "המחלקה העסקית של היחידה ללימודי חוץ בונה הכשרות בבינה מלאכותית",
-      "treatment": "clip",
-      "onScreenText": ["המחלקה העסקית", "בינה מלאכותית"],
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "המחלקה העסקית",
+        "בינה מלאכותית"
+      ],
       "imagePrompt": null,
-      "clipPrompt": "Macro shot of glowing blue pulses of light travelling through a dense abstract network of fine fibres and nodes, deep black background, slow forward camera drift, shallow depth of field, cinematic, no text.",
-      "shareable": true,
-      "imageTags": ["ai", "neural network", "abstract", "light", "cinematic"],
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
       "userAssetIds": [],
-      "notes": "Small label 'המחלקה העסקית · היחידה ללימודי חוץ' top on 'המחלקה'; giant two-line 'בינה / מלאכותית' lands on 'בבינה' with gold underline."
+      "notes": "Small label 'המחלקה העסקית · היחידה ללימודי חוץ' top on 'המחלקה'; giant two-line 'בינה / מלאכותית' lands on 'בבינה' with gold underline. B-roll clip generated on FAL (MiniMax H3 Max) and stored in assets/broll/."
     },
     {
       "id": "cyber",
       "narration": "ובסייבר. מאפס, לכל ארגון.",
-      "treatment": "clip",
-      "onScreenText": ["סייבר", "מאפס. לכל ארגון."],
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "סייבר",
+        "מאפס. לכל ארגון."
+      ],
       "imagePrompt": null,
-      "clipPrompt": "Slow dolly forward down a dark server room aisle between tall racks with small blinking blue and amber lights, light haze, cold cinematic light, symmetrical composition, no people, no text.",
-      "shareable": true,
-      "imageTags": ["server room", "cybersecurity", "data center", "dark", "cinematic"],
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
       "userAssetIds": [],
-      "notes": "Whip cut on the beat into the server aisle; giant 'סייבר' on 'ובסייבר'; small gold line 'מאפס. לכל ארגון.' on 'מאפס'."
+      "notes": "Whip cut on the beat into the server aisle; giant 'סייבר' on 'ובסייבר'; small gold line 'מאפס. לכל ארגון.' on 'מאפס'. B-roll clip generated on FAL (MiniMax H3 Max) and stored in assets/broll/."
     },
     {
       "id": "process",
       "narration": "אבחון. סילבוס על הדאטה שלכם. ומרצים מהתעשייה.",
-      "treatment": "clip",
-      "onScreenText": ["אבחון", "סילבוס", "מרצים מהתעשייה"],
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "אבחון",
+        "סילבוס",
+        "מרצים מהתעשייה"
+      ],
       "imagePrompt": null,
-      "clipPrompt": "A small team of professionals in a modern glass meeting room at dusk leaning over a table in focused discussion, one gestures toward a whiteboard out of frame, warm practical light, slow handheld push-in, cinematic, faces not in close-up, no readable screens, no text.",
-      "shareable": true,
-      "imageTags": ["team", "meeting", "training", "office", "cinematic"],
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
       "userAssetIds": [],
-      "notes": "Three hard word swaps, one per beat of speech: '01 אבחון' on 'אבחון', '02 סילבוס' on 'סילבוס', '03 מרצים מהתעשייה' on 'ומרצים'. Each previous word leaves fast. Small gold step numerals."
+      "notes": "Three hard word swaps, one per beat of speech: '01 אבחון' on 'אבחון', '02 סילבוס' on 'סילבוס', '03 מרצים מהתעשייה' on 'ומרצים'. Each previous word leaves fast. Small gold step numerals. B-roll clip generated on FAL (MiniMax H3 Max) and stored in assets/broll/."
     },
     {
       "id": "proof",
       "narration": "ארבעה קמפוסים. הסמכה ממשלתית. אלפי לומדים בשנה.",
       "treatment": "motion-graphic",
-      "onScreenText": ["4 קמפוסים", "הסמכה ממשלתית", "אלפי לומדים בשנה"],
+      "onScreenText": [
+        "4 קמפוסים",
+        "הסמכה ממשלתית",
+        "אלפי לומדים בשנה"
+      ],
       "imagePrompt": null,
       "clipPrompt": null,
       "shareable": false,
@@ -70,7 +87,11 @@
       "id": "cta",
       "narration": "רוצים כזה לצוות שלכם? מתחילים בפגישת אבחון.",
       "treatment": "motion-graphic",
-      "onScreenText": ["לצוות שלכם?", "פגישת אבחון", "היחידה ללימודי חוץ · המחלקה העסקית"],
+      "onScreenText": [
+        "לצוות שלכם?",
+        "פגישת אבחון",
+        "היחידה ללימודי חוץ · המחלקה העסקית"
+      ],
       "imagePrompt": null,
       "clipPrompt": null,
       "shareable": false,

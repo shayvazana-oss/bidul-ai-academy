@@ -11,7 +11,10 @@
     "assets/lib/youtube-picks-interface-mouse-click/clip.mp3": 1.1885,
     "assets/lib/sfx-ui-success-chime/clip.mp3": 1.4289,
     "assets/lib/sfx-ui-bubble-pop/clip.mp3": 0.7413,
-    "assets/lib/music-cinematic-rise/track.mp3": 0.5559
+    "assets/lib/music-cinematic-rise/track.mp3": 0.5559,
+    "assets/lib/quantum-motion-whooshes-flow-whoosh-soft-swipe/clip.mp3": 0.7328,
+    "assets/lib/cinematic-hits-hits-boom/clip.mp3": 2.6002,
+    "assets/lib/invention-impact-impact-cinematic-deep/clip.mp3": 0.3802
   },
   "music": {
     "key": "assets/lib/music-cinematic-rise/track.mp3",
