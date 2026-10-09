@@ -401,9 +401,9 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
       <Audio src={urls[MEDIA.soundtrack]} />
       <Sfx src={urls[SFX.glitchAll]} at={0} volume={0.35} />
       <Sfx src={urls[SFX.alarm]} at={6} volume={0.18} />
-      {cuts.map((c) => <Sfx key={`w${c}`} src={urls[SFX.whoosh]} at={c - 7} volume={0.32} />)}
-      {cuts.map((c) => <Sfx key={`g${c}`} src={urls[SFX.glitch]} at={c - 1} volume={0.32} />)}
-      {cuts.filter((c) => c > dropF).map((c) => <Sfx key={`i${c}`} src={urls[SFX.impact]} at={c} volume={0.28} />)}
+      {cuts.map((c) => <Sfx key={`w${c}`} src={urls[SFX.whoosh]} at={c - 7} volume={0.55} />)}
+      {cuts.map((c) => <Sfx key={`g${c}`} src={urls[SFX.glitch]} at={c - 1} volume={0.55} />)}
+      {cuts.filter((c) => c > dropF).map((c) => <Sfx key={`i${c}`} src={urls[SFX.impact]} at={c} volume={0.5} />)}
       <Sfx src={urls[SFX.riser]} at={dropF - 60} volume={0.45} />
       <Sfx src={urls[SFX.drop]} at={dropF - 1} volume={0.6} />
       <Sfx src={urls[SFX.boom]} at={dropF - 1} volume={0.5} />
