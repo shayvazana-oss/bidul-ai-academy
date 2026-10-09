@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, Audio, interpolate, OffthreadVideo, random, Sequence, spring, useCurrentFrame, useVideoConfig } from "reelkit/frame";
+import { AbsoluteFill, Audio, Img, interpolate, OffthreadVideo, random, Sequence, spring, useCurrentFrame, useVideoConfig } from "reelkit/frame";
 import { Captions, ease, font, Grade, Grain, HudOverlay, sceneById, SceneFrame, Sfx, springs, Vignette } from "reelkit/kit";
 import type { VideoProps } from "reelkit/kit";
 
@@ -74,6 +74,12 @@ const MEDIA = {
   network: "assets/broll/network.mp4",
   team: "assets/broll/team.mp4",
   hall: "assets/broll/hall.mp4",
+  lab1: "assets/ad/photos/lab1.jpg",
+  lab2: "assets/ad/photos/lab2.jpg",
+  lab3: "assets/ad/photos/lab3.jpg",
+  lab4: "assets/ad/photos/lab4.jpg",
+  lab5: "assets/ad/photos/lab5.jpg",
+  earth: "assets/ad/photos/earth.jpg",
 };
 const SFX = {
   glitch: "assets/lib/cinematic-glitches-glitch/clip.mp3",
@@ -183,6 +189,22 @@ const Log: React.FC<{ lines: string[]; at: number; every?: number }> = ({ lines,
   );
 };
 
+// A real photo as the picture: a smooth push and drift, punched on a hit.
+const PhotoPlate: React.FC<{ src: string; dim?: number; punches?: number[]; dir?: 1 | -1; blur?: number }> = ({ src, dim = 0.3, punches = [], dir = 1, blur = 0 }) => {
+  const f = useCurrentFrame();
+  const { fps, durationInFrames } = useVideoConfig();
+  const t = interpolate(f, [0, durationInFrames], [0, 1], { ...clamp, easing: ease.out });
+  const k = punches.reduce((a, at) => a + (f >= at ? spring({ frame: f - at, fps, config: { stiffness: 220, damping: 18 } }) * Math.exp(-(f - at) / 14) : 0), 0);
+  return (
+    <AbsoluteFill style={{ overflow: "hidden", background: C.black }}>
+      <Img src={src} style={{ width: "100%", height: "100%", objectFit: "cover", transform: `scale(${1.12 + 0.14 * t + 0.08 * k}) translateX(${dir * (t - 0.5) * 6}%)`, filter: blur ? `blur(${blur}px)` : undefined }} />
+      <AbsoluteFill style={{ background: `rgba(0,0,0,${dim})` }} />
+      <AbsoluteFill style={{ background: "#0A2A55", mixBlendMode: "color", opacity: 0.35 }} />
+      <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(4,6,11,0.65) 0%, rgba(4,6,11,0) 32%, rgba(4,6,11,0) 58%, rgba(4,6,11,0.8) 100%)" }} />
+    </AbsoluteFill>
+  );
+};
+
 // The whole picture shakes on every hit and pulses on every beat after the drop.
 const FX: React.FC<{ hits: number[]; beats: number[]; children: React.ReactNode }> = ({ hits, beats, children }) => {
   const f = useCurrentFrame();
@@ -197,7 +219,7 @@ const FX: React.FC<{ hits: number[]; beats: number[]; children: React.ReactNode 
       rot += (random(`r${h}-${f}`) - 0.5) * 1.6 * a;
     }
   }
-  for (const b of beats) { const d = f - b; if (d >= 0 && d < 8) pulse += 0.03 * Math.exp(-d / 2.5); }
+  for (const b of beats) { const d = f - b; if (d >= 0 && d < 8) pulse += 0.012 * Math.exp(-d / 3); }
   return <AbsoluteFill style={{ transform: `translate(${sx}px, ${sy}px) rotate(${rot}deg) scale(${1.04 + pulse})` }}>{children}</AbsoluteFill>;
 };
 
@@ -243,7 +265,7 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
   const dropF = drop.startFrame;
   const press = say("אבחון");
   const cuts = sc.slice(1).map((s) => s.startFrame);
-  const hits = [...cuts, say("הרשת"), say("יודע"), say("מוכן"), say("ארבעה"), say("הסמכה"), say("אלפי"), say("מוכן", 2), press];
+  const hits = [dropF, say("יודע"), say("מוכן"), say("ארבעה"), say("אלפי"), say("מוכן", 2)];
   // Beats of the music after the drop (measured: every 0.375 s from 7.98 s of the film).
   const beats = Array.from({ length: 40 }, (_, k) => Math.round((7.98 + k * 0.375) * FPS)).filter((b) => b >= dropF - 2 && b < cta.startFrame + 30);
   return (
@@ -293,8 +315,8 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
       </SceneFrame>
 
       {/* ACT 2: the drop */}
-      <SceneFrame from={drop.startFrame} durationInFrames={drop.durationFrames} enter="flash" exit="rgb-whip">
-        <Plate src={urls[MEDIA.soc]} dim={0.1} punches={[0]} zoom={0.08} />
+      <SceneFrame from={drop.startFrame} durationInFrames={drop.durationFrames} enter="flash" exit="whip-left" transitionFrames={8}>
+        <PhotoPlate src={urls[MEDIA.lab4]} dim={0.45} punches={[0]} dir={1} />
         <Center top={0.13} gap={W * 0.015}>
           <Glitch at={L(drop, say("המחלקה"))} seed={10} split={C.gold} from={1.2}><div style={type(W * 0.11)}>המחלקה העסקית</div></Glitch>
           <Glitch at={L(drop, say("היחידה"))} seed={11} split={C.blue} from={1.1}><div style={type(W * 0.07, C.gold, 800)}>היחידה ללימודי חוץ</div></Glitch>
@@ -303,7 +325,7 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
         <Caps s={drop} hl={C.gold} />
       </SceneFrame>
 
-      <SceneFrame from={ai.startFrame} durationInFrames={ai.durationFrames} enter="rgb-whip" exit="cut">
+      <SceneFrame from={ai.startFrame} durationInFrames={ai.durationFrames} enter="whip-left" exit="zoom-through" transitionFrames={8}>
         <Plate src={urls[MEDIA.chip]} dim={0.2} punches={[L(ai, say("בינה"))]} zoom={0.15} />
         <Ghost text="AI" color={C.gold} at={L(ai, say("בינה")) - 2} />
         <Center top={0.36} gap={W * 0.005}>
@@ -313,7 +335,7 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
         <Caps s={ai} hl={C.gold} />
       </SceneFrame>
 
-      <SceneFrame from={cyber.startFrame} durationInFrames={cyber.durationFrames} enter="cut" exit="cut">
+      <SceneFrame from={cyber.startFrame} durationInFrames={cyber.durationFrames} enter="zoom-through" exit="zoom-through" transitionFrames={6}>
         <Plate src={urls[MEDIA.servers]} dim={0.15} punches={[1]} zoom={0.2} />
         <Ghost text="CYBER" color={C.blue} at={0} />
         <Center top={0.38}>
@@ -322,7 +344,7 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
         <Caps s={cyber} hl={C.gold} />
       </SceneFrame>
 
-      <SceneFrame from={custom.startFrame} durationInFrames={custom.durationFrames} enter="cut" exit="cut">
+      <SceneFrame from={custom.startFrame} durationInFrames={custom.durationFrames} enter="zoom-through" exit="whip-left" transitionFrames={8}>
         <Plate src={urls[MEDIA.network]} dim={0.2} zoom={0.15} punches={[L(custom, say("לארגון"))]} />
         <Center top={0.26} gap={W * 0.01}>
           <Glitch at={L(custom, say("שנבנות"))} seed={15} from={1.1}><div style={type(W * 0.085, C.ink, 700)}>נבנות במיוחד</div></Glitch>
@@ -332,8 +354,8 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
         <Caps s={custom} hl={C.gold} />
       </SceneFrame>
 
-      <SceneFrame from={campuses.startFrame} durationInFrames={campuses.durationFrames} enter="cut" exit="rgb-whip">
-        <Plate src={urls[MEDIA.hall]} dim={0.55} blur={4} punches={[L(campuses, say("ארבעה"))]} />
+      <SceneFrame from={campuses.startFrame} durationInFrames={campuses.durationFrames} enter="whip-left" exit="whip-left" transitionFrames={8}>
+        <PhotoPlate src={urls[MEDIA.earth]} dim={0.35} punches={[L(campuses, say("ארבעה"))]} dir={-1} />
         <Center top={0.2}>
           <Glitch at={L(campuses, say("ארבעה"))} seed={18} from={1.7} split={C.blue}><div style={{ ...type(W * 0.62, C.gold), fontFamily: orbit, direction: "ltr", lineHeight: 0.9 }}>4</div></Glitch>
           <Glitch at={L(campuses, say("קמפוסים"))} seed={19}><div style={type(W * 0.14)}>קמפוסים</div></Glitch>
@@ -341,8 +363,8 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
         <Caps s={campuses} hl={C.gold} />
       </SceneFrame>
 
-      <SceneFrame from={gov.startFrame} durationInFrames={gov.durationFrames} enter="rgb-whip" exit="rgb-whip">
-        <Plate src={urls[MEDIA.team]} dim={0.55} blur={4} punches={[L(gov, say("הסמכה"))]} />
+      <SceneFrame from={gov.startFrame} durationInFrames={gov.durationFrames} enter="whip-left" exit="whip-left" transitionFrames={8}>
+        <PhotoPlate src={urls[MEDIA.lab1]} dim={0.55} blur={2} punches={[L(gov, say("הסמכה"))]} dir={1} />
         <Center top={0.3} gap={W * 0.01}>
           <Glitch at={L(gov, say("הסמכה"))} seed={20}><div style={type(W * 0.19)}>הסמכה</div></Glitch>
           <Glitch at={L(gov, say("ממשלתית"))} seed={21} split={C.gold}><div style={type(W * 0.19, C.gold)}>ממשלתית</div></Glitch>
@@ -350,8 +372,8 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
         <Caps s={gov} hl={C.gold} />
       </SceneFrame>
 
-      <SceneFrame from={learners.startFrame} durationInFrames={learners.durationFrames} enter="rgb-whip" exit="cut">
-        <Plate src={urls[MEDIA.soc]} dim={0.6} blur={5} punches={[L(learners, say("אלפי"))]} />
+      <SceneFrame from={learners.startFrame} durationInFrames={learners.durationFrames} enter="whip-left" exit="zoom-through" transitionFrames={8}>
+        <PhotoPlate src={urls[MEDIA.lab5]} dim={0.5} blur={1} punches={[L(learners, say("אלפי"))]} dir={-1} />
         <Center top={0.26} gap={W * 0.01}>
           <Glitch at={L(learners, say("אלפי"))} seed={22} from={1.6} split={C.blue}><div style={type(W * 0.3, C.gold)}>אלפי</div></Glitch>
           <Glitch at={L(learners, say("לומדים"))} seed={23}><div style={type(W * 0.12)}>לומדים בשנה</div></Glitch>
@@ -359,8 +381,8 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
         <Caps s={learners} hl={C.gold} />
       </SceneFrame>
 
-      <SceneFrame from={ready.startFrame} durationInFrames={ready.durationFrames} enter="cut" exit="flash">
-        <Plate src={urls[MEDIA.hero]} dim={0.1} zoom={0.12} punches={[L(ready, say("מוכן", 2))]} />
+      <SceneFrame from={ready.startFrame} durationInFrames={ready.durationFrames} enter="zoom-through" exit="flash">
+        <PhotoPlate src={urls[MEDIA.lab3]} dim={0.3} punches={[L(ready, say("מוכן", 2))]} dir={1} />
         <Center top={0.12} gap={W * 0.01}>
           <Glitch at={L(ready, say("הצוות"))} seed={24} from={1.15}><div style={type(W * 0.12)}>הצוות שלכם.</div></Glitch>
         </Center>
@@ -387,7 +409,7 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
       </SceneFrame>
 
       </FX>
-      <CutFX cuts={cuts} drop={dropF} />
+      <CutFX cuts={cuts.filter((c) => c <= dropF)} drop={dropF} />
 
       {/* HUD per act */}
       <Sequence from={0} durationInFrames={dropF}>
@@ -401,9 +423,9 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
       <Audio src={urls[MEDIA.soundtrack]} />
       <Sfx src={urls[SFX.glitchAll]} at={0} volume={0.35} />
       <Sfx src={urls[SFX.alarm]} at={6} volume={0.18} />
-      {cuts.map((c) => <Sfx key={`w${c}`} src={urls[SFX.whoosh]} at={c - 7} volume={0.55} />)}
-      {cuts.map((c) => <Sfx key={`g${c}`} src={urls[SFX.glitch]} at={c - 1} volume={0.55} />)}
-      {cuts.filter((c) => c > dropF).map((c) => <Sfx key={`i${c}`} src={urls[SFX.impact]} at={c} volume={0.5} />)}
+      {cuts.map((c) => <Sfx key={`w${c}`} src={urls[SFX.whoosh]} at={c - 6} volume={0.45} />)}
+      {cuts.filter((c) => c <= dropF).map((c) => <Sfx key={`g${c}`} src={urls[SFX.glitch]} at={c - 1} volume={0.5} />)}
+      
       <Sfx src={urls[SFX.riser]} at={dropF - 60} volume={0.45} />
       <Sfx src={urls[SFX.drop]} at={dropF - 1} volume={0.6} />
       <Sfx src={urls[SFX.boom]} at={dropF - 1} volume={0.5} />
