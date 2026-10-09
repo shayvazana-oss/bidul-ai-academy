@@ -205,5 +205,100 @@
         "match": 0.55
       }
     ]
+  },
+  {
+    "q": "digital glitch",
+    "kind": "sfx",
+    "at": "2026-10-09T07:50:17.017Z",
+    "top": [
+      {
+        "id": "cinematic-glitches-glitch",
+        "match": 0.79
+      },
+      {
+        "id": "invention-glitch-glitch-error",
+        "match": 0.74
+      },
+      {
+        "id": "cinematic-glitches-glitch-all-over",
+        "match": 0.74
+      }
+    ]
+  },
+  {
+    "q": "alarm beep alert",
+    "kind": "sfx",
+    "at": "2026-10-09T07:50:22.763Z",
+    "top": [
+      {
+        "id": "cinematic-alarms-and-beeps-alarm-message",
+        "match": 0.79
+      },
+      {
+        "id": "hollywood-essentials-alarms-and-beeps-alarm-message",
+        "match": 0.78
+      },
+      {
+        "id": "cinematic-alarms-and-beeps-alarm-clock",
+        "match": 0.71
+      }
+    ]
+  },
+  {
+    "q": "riser whoosh short",
+    "kind": "sfx",
+    "at": "2026-10-09T07:50:26.464Z",
+    "top": [
+      {
+        "id": "hollywood-essentials-fantasy-fantasy-short-riser",
+        "match": 0.52
+      },
+      {
+        "id": "sfx-ui-riser-short",
+        "match": 0.5
+      },
+      {
+        "id": "cinematic-whooshes-whoosh-rise",
+        "match": 0.37
+      }
+    ]
+  },
+  {
+    "q": "bass drop impact",
+    "kind": "sfx",
+    "at": "2026-10-09T07:50:30.878Z",
+    "top": [
+      {
+        "id": "sfx-ui-bass-drop",
+        "match": 0.79
+      },
+      {
+        "id": "ultimate-social-content-impacts-deep-bass-impact",
+        "match": 0.76
+      },
+      {
+        "id": "ultimate-social-content-impacts-deep-impact-bass",
+        "match": 0.74
+      }
+    ]
+  },
+  {
+    "q": "camera shutter hit",
+    "kind": "sfx",
+    "at": "2026-10-09T07:50:35.125Z",
+    "top": [
+      {
+        "id": "sfx-ui-camera-shutter",
+        "match": 0.9
+      },
+      {
+        "id": "synths-of-the-past-camera-digital-digital-cam-shot",
+        "match": 0.31
+      },
+      {
+        "id": "synths-of-the-past-camera-old-camera-camera-shot",
+        "match": 0.26
+      }
+    ]
   }
 ]

@@ -1,103 +1,177 @@
 {
-  "title": "המחלקה העסקית: הכשרות AI וסייבר לארגונים",
+  "title": "המחלקה העסקית: הצוות שלכם מוכן?",
   "aspect": "9:16",
   "mode": "motion",
-  "voiceId": "HjnCa0x8VgfBjy158Gpj",
-  "pace": "normal",
-  "gap": "tight",
+  "voice": "none",
   "scenes": [
     {
-      "id": "hook",
-      "narration": "קורס מדף נבנה לכולם. הצוות שלכם הוא לא כולם.",
+      "id": "alert",
+      "seconds": 1.7,
+      "narration": "",
       "treatment": "motion-graphic",
-      "onScreenText": [
-        "לכולם.",
-        "הצוות שלכם"
-      ],
+      "onScreenText": [],
       "imagePrompt": null,
       "clipPrompt": null,
       "shareable": false,
       "imageTags": [],
       "userAssetIds": [],
-      "notes": "LOOK: premium cinematic. Full-bleed generated clips graded deep navy/teal with a single gold accent (#F5B83D), giant Heebo 900 type that fills the frame width and lands on the spoken word, film grain, vignette, hard cuts and whips on the music. No icons, no cards, no stock photos. ~28s. VISUAL THREAD: one gold word per scene, the gold underline that grows under it. Hook: identical rows = 'everyone'; huge white 'לכולם.' on 'לכולם', then a hard cut-in to gold 'הצוות שלכם' on 'הצוות', camera punch. B-roll clip generated on FAL (MiniMax H3 Max) and stored in assets/broll/."
+      "notes": "LOOK: cyber-thriller tech ad. Act 1 red alert (black, #FF2D3D, HUD, glitch RGB-split Hebrew type), drop at 8.1s into blue/gold act 2. Narration is an ElevenLabs v4 voice (Callum) premixed with original ElevenLabs music in assets/ad/soundtrack.mp3; clips from FAL MiniMax H3 in assets/ad and assets/broll. 26s. Eye reflecting red alarms. HUD red. 'שלוש בלילה.'"
+    },
+    {
+      "id": "breach",
+      "seconds": 2.7,
+      "narration": "",
+      "treatment": "motion-graphic",
+      "onScreenText": [],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Hands typing in red light, terminal lines, 'בתוך הרשת שלכם.'"
+    },
+    {
+      "id": "team",
+      "seconds": 2.5,
+      "narration": "",
+      "treatment": "motion-graphic",
+      "onScreenText": [],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Office in red alarm. 'והצוות...' then 'לא יודע.'"
+    },
+    {
+      "id": "unless",
+      "seconds": 1.2,
+      "narration": "",
+      "treatment": "motion-graphic",
+      "onScreenText": [],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Black, glitch. 'אלא אם הוא' then slam 'מוכן.' before the drop."
+    },
+    {
+      "id": "drop",
+      "seconds": 3.2,
+      "narration": "",
+      "treatment": "motion-graphic",
+      "onScreenText": [],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "DROP. SOC woman stands. 'המחלקה העסקית' + gold 'היחידה ללימודי חוץ'."
     },
     {
       "id": "ai",
-      "narration": "המחלקה העסקית של היחידה ללימודי חוץ בונה הכשרות בבינה מלאכותית",
+      "seconds": 1.63,
+      "narration": "",
       "treatment": "motion-graphic",
-      "onScreenText": [
-        "המחלקה העסקית",
-        "בינה מלאכותית"
-      ],
+      "onScreenText": [],
       "imagePrompt": null,
       "clipPrompt": null,
       "shareable": false,
       "imageTags": [],
       "userAssetIds": [],
-      "notes": "Small label 'המחלקה העסקית · היחידה ללימודי חוץ' top on 'המחלקה'; giant two-line 'בינה / מלאכותית' lands on 'בבינה' with gold underline. B-roll clip generated on FAL (MiniMax H3 Max) and stored in assets/broll/."
+      "notes": "AI chip macro, ghost 'AI'. 'בינה מלאכותית'."
     },
     {
       "id": "cyber",
-      "narration": "ובסייבר. מאפס, לכל ארגון.",
+      "seconds": 0.77,
+      "narration": "",
       "treatment": "motion-graphic",
-      "onScreenText": [
-        "סייבר",
-        "מאפס. לכל ארגון."
-      ],
+      "onScreenText": [],
       "imagePrompt": null,
       "clipPrompt": null,
       "shareable": false,
       "imageTags": [],
       "userAssetIds": [],
-      "notes": "Whip cut on the beat into the server aisle; giant 'סייבר' on 'ובסייבר'; small gold line 'מאפס. לכל ארגון.' on 'מאפס'. B-roll clip generated on FAL (MiniMax H3 Max) and stored in assets/broll/."
+      "notes": "Server aisle, ghost 'CYBER'. 'סייבר'."
     },
     {
-      "id": "process",
-      "narration": "אבחון. סילבוס על הדאטה שלכם. ומרצים מהתעשייה.",
+      "id": "custom",
+      "seconds": 2.4,
+      "narration": "",
       "treatment": "motion-graphic",
-      "onScreenText": [
-        "אבחון",
-        "סילבוס",
-        "מרצים מהתעשייה"
-      ],
+      "onScreenText": [],
       "imagePrompt": null,
       "clipPrompt": null,
       "shareable": false,
       "imageTags": [],
       "userAssetIds": [],
-      "notes": "Three hard word swaps, one per beat of speech: '01 אבחון' on 'אבחון', '02 סילבוס' on 'סילבוס', '03 מרצים מהתעשייה' on 'ומרצים'. Each previous word leaves fast. Small gold step numerals. B-roll clip generated on FAL (MiniMax H3 Max) and stored in assets/broll/."
+      "notes": "Neural network. 'במיוחד לארגון שלכם.'"
     },
     {
-      "id": "proof",
-      "narration": "ארבעה קמפוסים. הסמכה ממשלתית. אלפי לומדים בשנה.",
+      "id": "campuses",
+      "seconds": 1.48,
+      "narration": "",
       "treatment": "motion-graphic",
-      "onScreenText": [
-        "4 קמפוסים",
-        "הסמכה ממשלתית",
-        "אלפי לומדים בשנה"
-      ],
+      "onScreenText": [],
       "imagePrompt": null,
       "clipPrompt": null,
       "shareable": false,
       "imageTags": [],
       "userAssetIds": [],
-      "notes": "Black frame, the team clip blurred far behind. Giant gold '4' counts in on 'ארבעה' with 'קמפוסים'; then 'הסמכה ממשלתית'; then 'אלפי' gold + 'לומדים בשנה'. Each fact replaces the last."
+      "notes": "Stat slam '4 קמפוסים'."
+    },
+    {
+      "id": "gov",
+      "seconds": 1.42,
+      "narration": "",
+      "treatment": "motion-graphic",
+      "onScreenText": [],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Stat slam 'הסמכה ממשלתית'."
+    },
+    {
+      "id": "learners",
+      "seconds": 1.8,
+      "narration": "",
+      "treatment": "motion-graphic",
+      "onScreenText": [],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Stat slam 'אלפי לומדים בשנה'."
+    },
+    {
+      "id": "ready",
+      "seconds": 2.15,
+      "narration": "",
+      "treatment": "motion-graphic",
+      "onScreenText": [],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Hero walk. 'הצוות שלכם.' + gold 'מוכן.'"
     },
     {
       "id": "cta",
-      "narration": "רוצים כזה לצוות שלכם? מתחילים בפגישת אבחון.",
+      "seconds": 3.05,
+      "narration": "",
       "treatment": "motion-graphic",
-      "onScreenText": [
-        "לצוות שלכם?",
-        "פגישת אבחון",
-        "היחידה ללימודי חוץ · המחלקה העסקית"
-      ],
+      "onScreenText": [],
       "imagePrompt": null,
       "clipPrompt": null,
       "shareable": false,
       "imageTags": [],
       "userAssetIds": [],
-      "notes": "Music hit. 'לצוות שלכם?' huge, then the gold pill 'לקביעת פגישת אבחון' presses on 'אבחון'. Wordmark small and centred, held to the end."
+      "notes": "End card: 'קבעו פגישת אבחון' button, wordmark."
     }
   ]
 }

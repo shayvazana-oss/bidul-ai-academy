@@ -138,5 +138,103 @@
       "durationSec": 7.235918
     },
     "gainDb": -8.4
+  },
+  "cinematic-glitches-glitch": {
+    "path": "assets/lib/cinematic-glitches-glitch/clip.mp3",
+    "kind": "sfx",
+    "title": "Glitch",
+    "meta": {
+      "pack": "Cinematic",
+      "length": "hit",
+      "source": "Four Editors - All Sound Effects In One Download",
+      "licence": "Four Editors License Agreement: own-work use; no redistribution or incorporation in a product",
+      "category": "Glitches",
+      "durationSec": 0.705306
+    },
+    "gainDb": -1
+  },
+  "cinematic-glitches-glitch-all-over": {
+    "path": "assets/lib/cinematic-glitches-glitch-all-over/clip.mp3",
+    "kind": "sfx",
+    "title": "Glitch All Over",
+    "meta": {
+      "pack": "Cinematic",
+      "length": "hit",
+      "source": "Four Editors - All Sound Effects In One Download",
+      "licence": "Four Editors License Agreement: own-work use; no redistribution or incorporation in a product",
+      "category": "Glitches",
+      "durationSec": 1.410612
+    },
+    "gainDb": -2
+  },
+  "cinematic-alarms-and-beeps-alarm-message": {
+    "path": "assets/lib/cinematic-alarms-and-beeps-alarm-message/clip.mp3",
+    "kind": "sfx",
+    "title": "Alarm Message",
+    "meta": {
+      "pack": "Cinematic",
+      "length": "phrase",
+      "source": "Four Editors - All Sound Effects In One Download",
+      "licence": "Four Editors License Agreement: own-work use; no redistribution or incorporation in a product",
+      "category": "Alarms & Beeps",
+      "durationSec": 4.04898
+    },
+    "gainDb": -2.8
+  },
+  "sfx-ui-riser-short": {
+    "path": "assets/lib/sfx-ui-riser-short/clip.mp3",
+    "kind": "sfx",
+    "title": "Short Riser",
+    "meta": {
+      "pack": "Reelkit UI",
+      "length": "phrase",
+      "source": "ElevenLabs Sound Effects",
+      "licence": "Generated for Reelkit with ElevenLabs Sound Effects",
+      "category": "Transitions",
+      "durationSec": 2.04
+    },
+    "gainDb": -3
+  },
+  "sfx-ui-bass-drop": {
+    "path": "assets/lib/sfx-ui-bass-drop/clip.mp3",
+    "kind": "sfx",
+    "title": "Sub Bass Drop",
+    "meta": {
+      "pack": "Reelkit UI",
+      "length": "hit",
+      "source": "ElevenLabs Sound Effects",
+      "licence": "Generated for Reelkit with ElevenLabs Sound Effects",
+      "category": "Impacts",
+      "durationSec": 1.41
+    },
+    "gainDb": -3
+  },
+  "cinematic-impacts-impact-bass": {
+    "path": "assets/lib/cinematic-impacts-impact-bass/clip.mp3",
+    "kind": "sfx",
+    "title": "Impact Bass",
+    "meta": {
+      "pack": "Cinematic",
+      "length": "hit",
+      "source": "Four Editors - All Sound Effects In One Download",
+      "licence": "Four Editors License Agreement: own-work use; no redistribution or incorporation in a product",
+      "category": "Impacts",
+      "durationSec": 1.880816
+    },
+    "gainDb": 6.7
+  },
+  "sfx-ui-camera-shutter": {
+    "path": "assets/lib/sfx-ui-camera-shutter/clip.mp3",
+    "kind": "sfx",
+    "title": "Camera Shutter",
+    "meta": {
+      "pack": "Reelkit UI",
+      "length": "hit",
+      "source": "ElevenLabs Sound Effects",
+      "licence": "Generated for Reelkit with ElevenLabs Sound Effects",
+      "category": "Interface",
+      "durationSec": 0.52
+    },
+    "gainDb": -3
   }
 }

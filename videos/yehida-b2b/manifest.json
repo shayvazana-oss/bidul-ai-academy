@@ -2,8 +2,8 @@
   "fps": 30,
   "width": 1080,
   "height": 1920,
-  "totalFrames": 858,
-  "captions": "phrase",
+  "totalFrames": 783,
+  "captions": "none",
   "soundGain": {
     "assets/lib/music-minimal-tech-pulse/track.mp3": 0.7499,
     "assets/lib/sfx-ui-soft-whoosh/clip.mp3": 0.7852,
@@ -14,335 +14,105 @@
     "assets/lib/music-cinematic-rise/track.mp3": 0.5559,
     "assets/lib/quantum-motion-whooshes-flow-whoosh-soft-swipe/clip.mp3": 0.7328,
     "assets/lib/cinematic-hits-hits-boom/clip.mp3": 2.6002,
-    "assets/lib/invention-impact-impact-cinematic-deep/clip.mp3": 0.3802
-  },
-  "music": {
-    "key": "assets/lib/music-cinematic-rise/track.mp3",
-    "bpm": 100.1,
-    "beatFrames": [
-      2,
-      20,
-      38,
-      56,
-      74,
-      92,
-      110,
-      128,
-      146,
-      164,
-      182,
-      200,
-      218,
-      236,
-      254,
-      272,
-      290,
-      308,
-      326,
-      344,
-      362,
-      380,
-      398,
-      416,
-      433,
-      451,
-      469,
-      487,
-      505,
-      523,
-      541,
-      559,
-      577,
-      595,
-      613,
-      631,
-      649,
-      667,
-      685,
-      703,
-      721,
-      739,
-      757,
-      775,
-      793,
-      811,
-      829,
-      847
-    ]
+    "assets/lib/invention-impact-impact-cinematic-deep/clip.mp3": 0.3802,
+    "assets/lib/cinematic-glitches-glitch/clip.mp3": 0.8913,
+    "assets/lib/cinematic-glitches-glitch-all-over/clip.mp3": 0.7943,
+    "assets/lib/cinematic-alarms-and-beeps-alarm-message/clip.mp3": 0.7244,
+    "assets/lib/sfx-ui-riser-short/clip.mp3": 0.7079,
+    "assets/lib/sfx-ui-bass-drop/clip.mp3": 0.7079,
+    "assets/lib/cinematic-impacts-impact-bass/clip.mp3": 2.1627,
+    "assets/lib/sfx-ui-camera-shutter/clip.mp3": 0.7079
   },
   "scenes": [
     {
-      "id": "hook",
+      "id": "alert",
       "startFrame": 0,
-      "durationFrames": 141,
-      "voiceoverKey": "assets/vo-hook.mp3",
-      "words": [
-        {
-          "word": "קורס",
-          "startSec": 0,
-          "endSec": 0.32
-        },
-        {
-          "word": "מדף",
-          "startSec": 0.48,
-          "endSec": 0.8
-        },
-        {
-          "word": "נבנה",
-          "startSec": 0.88,
-          "endSec": 1.2
-        },
-        {
-          "word": "לכולם.",
-          "startSec": 1.28,
-          "endSec": 1.92
-        },
-        {
-          "word": "הצוות",
-          "startSec": 2.24,
-          "endSec": 2.64
-        },
-        {
-          "word": "שלכם",
-          "startSec": 2.72,
-          "endSec": 3.28
-        },
-        {
-          "word": "הוא",
-          "startSec": 3.44,
-          "endSec": 3.6
-        },
-        {
-          "word": "לא",
-          "startSec": 3.68,
-          "endSec": 3.76
-        },
-        {
-          "word": "כולם.",
-          "startSec": 3.84,
-          "endSec": 4.48
-        }
-      ],
+      "durationFrames": 51,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "breach",
+      "startFrame": 51,
+      "durationFrames": 81,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "team",
+      "startFrame": 132,
+      "durationFrames": 75,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "unless",
+      "startFrame": 207,
+      "durationFrames": 36,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "drop",
+      "startFrame": 243,
+      "durationFrames": 96,
+      "words": [],
       "userAssetKeys": []
     },
     {
       "id": "ai",
-      "startFrame": 141,
-      "durationFrames": 167,
-      "voiceoverKey": "assets/vo-ai.mp3",
-      "words": [
-        {
-          "word": "המחלקה",
-          "startSec": 0,
-          "endSec": 0.56
-        },
-        {
-          "word": "העסקית",
-          "startSec": 0.6,
-          "endSec": 1.12
-        },
-        {
-          "word": "של",
-          "startSec": 1.2,
-          "endSec": 1.28
-        },
-        {
-          "word": "היחידה",
-          "startSec": 1.32,
-          "endSec": 1.76
-        },
-        {
-          "word": "ללימודי",
-          "startSec": 1.84,
-          "endSec": 2.32
-        },
-        {
-          "word": "חוץ",
-          "startSec": 2.4,
-          "endSec": 2.8
-        },
-        {
-          "word": "בונה",
-          "startSec": 2.96,
-          "endSec": 3.2
-        },
-        {
-          "word": "הכשרות",
-          "startSec": 3.28,
-          "endSec": 3.92
-        },
-        {
-          "word": "בבינה",
-          "startSec": 4,
-          "endSec": 4.32
-        },
-        {
-          "word": "מלאכותית",
-          "startSec": 4.44,
-          "endSec": 5.28
-        }
-      ],
+      "startFrame": 339,
+      "durationFrames": 49,
+      "words": [],
       "userAssetKeys": []
     },
     {
       "id": "cyber",
-      "startFrame": 308,
-      "durationFrames": 108,
-      "voiceoverKey": "assets/vo-cyber.mp3",
-      "words": [
-        {
-          "word": "ובסייבר.",
-          "startSec": 0,
-          "endSec": 1.04
-        },
-        {
-          "word": "מאפס,",
-          "startSec": 1.2,
-          "endSec": 2.04
-        },
-        {
-          "word": "לכל",
-          "startSec": 2.16,
-          "endSec": 2.56
-        },
-        {
-          "word": "ארגון.",
-          "startSec": 2.8,
-          "endSec": 3.28
-        }
-      ],
+      "startFrame": 388,
+      "durationFrames": 24,
+      "words": [],
       "userAssetKeys": []
     },
     {
-      "id": "process",
-      "startFrame": 416,
-      "durationFrames": 155,
-      "voiceoverKey": "assets/vo-process.mp3",
-      "words": [
-        {
-          "word": "אבחון.",
-          "startSec": 0,
-          "endSec": 0.64
-        },
-        {
-          "word": "סילבוס",
-          "startSec": 1.12,
-          "endSec": 1.6
-        },
-        {
-          "word": "על",
-          "startSec": 1.68,
-          "endSec": 1.76
-        },
-        {
-          "word": "הדאטה",
-          "startSec": 1.8,
-          "endSec": 2.16
-        },
-        {
-          "word": "שלכם.",
-          "startSec": 2.28,
-          "endSec": 2.8
-        },
-        {
-          "word": "ומרצים",
-          "startSec": 3.2,
-          "endSec": 3.92
-        },
-        {
-          "word": "מהתעשייה.",
-          "startSec": 4,
-          "endSec": 4.96
-        }
-      ],
+      "id": "custom",
+      "startFrame": 412,
+      "durationFrames": 72,
+      "words": [],
       "userAssetKeys": []
     },
     {
-      "id": "proof",
-      "startFrame": 571,
-      "durationFrames": 150,
-      "voiceoverKey": "assets/vo-proof.mp3",
-      "words": [
-        {
-          "word": "ארבעה",
-          "startSec": 0,
-          "endSec": 0.48
-        },
-        {
-          "word": "קמפוסים.",
-          "startSec": 0.56,
-          "endSec": 1.52
-        },
-        {
-          "word": "הסמכה",
-          "startSec": 1.6,
-          "endSec": 2
-        },
-        {
-          "word": "ממשלתית.",
-          "startSec": 2.04,
-          "endSec": 2.88
-        },
-        {
-          "word": "אלפי",
-          "startSec": 3.2,
-          "endSec": 3.6
-        },
-        {
-          "word": "לומדים",
-          "startSec": 3.68,
-          "endSec": 4.08
-        },
-        {
-          "word": "בשנה.",
-          "startSec": 4.16,
-          "endSec": 4.8
-        }
-      ],
+      "id": "campuses",
+      "startFrame": 484,
+      "durationFrames": 45,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "gov",
+      "startFrame": 529,
+      "durationFrames": 43,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "learners",
+      "startFrame": 572,
+      "durationFrames": 54,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "ready",
+      "startFrame": 626,
+      "durationFrames": 65,
+      "words": [],
       "userAssetKeys": []
     },
     {
       "id": "cta",
-      "startFrame": 721,
-      "durationFrames": 137,
-      "voiceoverKey": "assets/vo-cta.mp3",
-      "words": [
-        {
-          "word": "רוצים",
-          "startSec": 0,
-          "endSec": 0.4
-        },
-        {
-          "word": "כזה",
-          "startSec": 0.48,
-          "endSec": 0.72
-        },
-        {
-          "word": "לצוות",
-          "startSec": 0.8,
-          "endSec": 1.28
-        },
-        {
-          "word": "שלכם?",
-          "startSec": 1.4,
-          "endSec": 2
-        },
-        {
-          "word": "מתחילים",
-          "startSec": 2.16,
-          "endSec": 2.56
-        },
-        {
-          "word": "בפגישת",
-          "startSec": 2.64,
-          "endSec": 3.08
-        },
-        {
-          "word": "אבחון.",
-          "startSec": 3.12,
-          "endSec": 3.84
-        }
-      ],
+      "startFrame": 691,
+      "durationFrames": 92,
+      "words": [],
       "userAssetKeys": []
     }
   ]
