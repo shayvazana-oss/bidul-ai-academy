@@ -1,6 +1,6 @@
 import React from "react";
-import { AbsoluteFill, Audio, interpolate, random, Sequence, spring, useCurrentFrame, useVideoConfig } from "reelkit/frame";
-import { Captions, ClipLayer, ease, font, Grade, Grain, HudOverlay, sceneById, SceneFrame, Sfx, springs, Vignette } from "reelkit/kit";
+import { AbsoluteFill, Audio, interpolate, OffthreadVideo, random, Sequence, spring, useCurrentFrame, useVideoConfig } from "reelkit/frame";
+import { Captions, ease, font, Grade, Grain, HudOverlay, sceneById, SceneFrame, Sfx, springs, Vignette } from "reelkit/kit";
 import type { VideoProps } from "reelkit/kit";
 
 // Narration word timings (ElevenLabs v4 take, measured with Scribe), in seconds from the start of the film.
@@ -117,8 +117,8 @@ const Glitch: React.FC<{ at: number; out?: number; seed: number; split?: string;
   const p = spring({ frame: t, fps, config: { stiffness: 420, damping: 28 } });
   const flicker = t < 4 ? [1, 0.25, 1, 0.6][t] : 1;
   const x = out === undefined ? 0 : interpolate(f, [out, out + 5], [0, 1], clamp);
-  const amp = (t < 7 ? 1 - t / 7 : 0) + x;
-  const jx = (random(`${seed}-${f}`) - 0.5) * W * 0.05 * amp;
+  const amp = (t < 10 ? 1 - t / 10 : 0) + x;
+  const jx = (random(`${seed}-${f}`) - 0.5) * W * 0.08 * amp;
   const d = W * (0.003 + 0.02 * amp);
   return (
     <div style={{
@@ -129,15 +129,16 @@ const Glitch: React.FC<{ at: number; out?: number; seed: number; split?: string;
 };
 
 // The clip as the picture: muted, pushed in slowly, punched on a hit, tinted toward the act's colour.
-const Plate: React.FC<{ src: string; dim?: number; tint?: string; tintOpacity?: number; punches?: number[]; blur?: number; zoom?: number }> = ({ src, dim = 0.25, tint, tintOpacity = 0.35, punches = [], blur = 0, zoom = 0.1 }) => {
+const Plate: React.FC<{ src: string; dim?: number; tint?: string; tintOpacity?: number; punches?: number[]; blur?: number; zoom?: number; rate?: number }> = ({ src, dim = 0.25, tint, tintOpacity = 0.35, punches = [], blur = 0, zoom = 0.1, rate = 1.3 }) => {
   const f = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
   const push = interpolate(f, [0, durationInFrames], [1.04, 1.04 + zoom], clamp);
   const k = punches.reduce((a, at) => a + (f >= at ? spring({ frame: f - at, fps, config: { stiffness: 300, damping: 14 } }) * Math.exp(-(f - at) / 10) : 0), 0);
   return (
     <AbsoluteFill style={{ overflow: "hidden", background: C.black }}>
-      <AbsoluteFill style={{ transform: `scale(${push + 0.12 * k})`, filter: blur ? `blur(${blur}px)` : undefined }}>
-        <ClipLayer src={src} muted dim={dim} />
+      <AbsoluteFill style={{ transform: `scale(${push + 0.16 * k})`, filter: blur ? `blur(${blur}px)` : undefined }}>
+        <OffthreadVideo src={src} muted playbackRate={rate} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        {dim > 0 ? <AbsoluteFill style={{ background: `rgba(0,0,0,${dim})` }} /> : null}
       </AbsoluteFill>
       {tint ? <AbsoluteFill style={{ background: tint, mixBlendMode: "color", opacity: tintOpacity }} /> : null}
       <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(4,6,11,0.6) 0%, rgba(4,6,11,0) 30%, rgba(4,6,11,0) 60%, rgba(4,6,11,0.75) 100%)" }} />
@@ -182,6 +183,48 @@ const Log: React.FC<{ lines: string[]; at: number; every?: number }> = ({ lines,
   );
 };
 
+// The whole picture shakes on every hit and pulses on every beat after the drop.
+const FX: React.FC<{ hits: number[]; beats: number[]; children: React.ReactNode }> = ({ hits, beats, children }) => {
+  const f = useCurrentFrame();
+  const { width: W } = useVideoConfig();
+  let sx = 0, sy = 0, rot = 0, pulse = 0;
+  for (const h of hits) {
+    const d = f - h;
+    if (d >= 0 && d < 10) {
+      const a = Math.exp(-d / 3);
+      sx += (random(`sx${h}-${f}`) - 0.5) * W * 0.05 * a;
+      sy += (random(`sy${h}-${f}`) - 0.5) * W * 0.05 * a;
+      rot += (random(`r${h}-${f}`) - 0.5) * 1.6 * a;
+    }
+  }
+  for (const b of beats) { const d = f - b; if (d >= 0 && d < 8) pulse += 0.03 * Math.exp(-d / 2.5); }
+  return <AbsoluteFill style={{ transform: `translate(${sx}px, ${sy}px) rotate(${rot}deg) scale(${1.04 + pulse})` }}>{children}</AbsoluteFill>;
+};
+
+// On every cut: a short flash and torn glitch bars, red before the drop, cyan and gold after it.
+const CutFX: React.FC<{ cuts: number[]; drop: number }> = ({ cuts, drop }) => {
+  const f = useCurrentFrame();
+  const { width: W, height: H } = useVideoConfig();
+  const c = cuts.find((x) => f >= x - 1 && f <= x + 3);
+  if (c === undefined) return null;
+  const d = f - c;
+  const act2 = c >= drop;
+  const flash = d <= 1 ? (act2 ? 0.55 : 0.4) * (d === 0 ? 1 : 0.5) : 0;
+  const bars = Array.from({ length: 7 }, (_, i) => {
+    const y = random(`by${c}-${i}-${f}`) * H;
+    const h = H * (0.008 + random(`bh${c}-${i}-${f}`) * 0.05);
+    const x = (random(`bx${c}-${i}-${f}`) - 0.5) * W * 0.4;
+    const col = act2 ? (i % 2 ? C.cyan : C.gold) : (i % 2 ? C.red : "#ffffff");
+    return <div key={i} style={{ position: "absolute", left: x, top: y, width: W * 1.2, height: h, background: col, opacity: 0.55, mixBlendMode: "screen" }} />;
+  });
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none" }}>
+      {bars}
+      {flash > 0 ? <AbsoluteFill style={{ background: act2 ? "#ffffff" : C.red, opacity: flash }} /> : null}
+    </AbsoluteFill>
+  );
+};
+
 const Center: React.FC<{ top: number; gap?: number; children: React.ReactNode }> = ({ top, gap = 0, children }) => {
   const { height: H } = useVideoConfig();
   return <div style={{ position: "absolute", left: 0, right: 0, top: H * top, display: "flex", flexDirection: "column", alignItems: "center", gap }}>{children}</div>;
@@ -199,11 +242,16 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
   const L = (s: Scene, abs: number) => abs - s.startFrame; // scene-local frame
   const dropF = drop.startFrame;
   const press = say("אבחון");
+  const cuts = sc.slice(1).map((s) => s.startFrame);
+  const hits = [...cuts, say("הרשת"), say("יודע"), say("מוכן"), say("ארבעה"), say("הסמכה"), say("אלפי"), say("מוכן", 2), press];
+  // Beats of the music after the drop (measured: every 0.375 s from 7.98 s of the film).
+  const beats = Array.from({ length: 40 }, (_, k) => Math.round((7.98 + k * 0.375) * FPS)).filter((b) => b >= dropF - 2 && b < cta.startFrame + 30);
   return (
     <AbsoluteFill style={{ background: C.black }}>
+      <FX hits={hits} beats={beats}>
       {/* ACT 1: the breach */}
       <SceneFrame from={alert.startFrame} durationInFrames={alert.durationFrames} enter="cut" exit="cut">
-        <Plate src={urls[MEDIA.eye]} dim={0.15} tint={C.red} tintOpacity={0.45} zoom={0.18} />
+        <Plate src={urls[MEDIA.eye]} dim={0.15} rate={1} tint={C.red} tintOpacity={0.45} zoom={0.18} />
         <Alarm />
         <Center top={0.2} gap={W * 0.02}>
           <Glitch at={2} seed={1}><div style={{ ...type(W * 0.2, C.red), fontFamily: mono, direction: "ltr", letterSpacing: W * 0.004 }}>03:00</div></Glitch>
@@ -213,7 +261,7 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
       </SceneFrame>
 
       <SceneFrame from={breach.startFrame} durationInFrames={breach.durationFrames} enter="cut" exit="cut">
-        <Plate src={urls[MEDIA.hands]} dim={0.2} tint={C.red} tintOpacity={0.3} punches={[L(breach, say("הרשת"))]} />
+        <Plate src={urls[MEDIA.hands]} dim={0.2} rate={1} tint={C.red} tintOpacity={0.3} punches={[L(breach, say("הרשת"))]} />
         <Alarm period={12} />
         <Center top={0.18} gap={W * 0.01}>
           <Glitch at={L(breach, say("מישהו"))} seed={3} from={1.15}><div style={type(W * 0.075, C.ink, 700)}>מישהו כבר</div></Glitch>
@@ -225,7 +273,7 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
       </SceneFrame>
 
       <SceneFrame from={team.startFrame} durationInFrames={team.durationFrames} enter="cut" exit="cut">
-        <Plate src={urls[MEDIA.alarm]} dim={0.15} tint={C.red} tintOpacity={0.35} punches={[L(team, say("יודע"))]} />
+        <Plate src={urls[MEDIA.alarm]} dim={0.15} rate={1} tint={C.red} tintOpacity={0.35} punches={[L(team, say("יודע"))]} />
         <Alarm period={10} />
         <Center top={0.22} gap={W * 0.02}>
           <Glitch at={L(team, say("והצוות"))} seed={6} from={1.1}><div style={type(W * 0.16)}>והצוות...</div></Glitch>
@@ -235,7 +283,7 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
       </SceneFrame>
 
       <SceneFrame from={unless.startFrame} durationInFrames={unless.durationFrames} enter="cut" exit="flash">
-        <Plate src={urls[MEDIA.eye]} dim={0.75} blur={6} zoom={0.3} />
+        <Plate src={urls[MEDIA.eye]} dim={0.75} rate={1} blur={6} zoom={0.3} />
         <Center top={0.3} gap={W * 0.02}>
           <Glitch at={L(unless, say("אלא"))} seed={8} from={1.08} out={L(unless, say("מוכן")) - 2}><div style={type(W * 0.1, C.ink, 700)}>אלא אם הוא</div></Glitch>
         </Center>
@@ -338,6 +386,9 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
         <Caps s={cta} hl={C.gold} />
       </SceneFrame>
 
+      </FX>
+      <CutFX cuts={cuts} drop={dropF} />
+
       {/* HUD per act */}
       <Sequence from={0} durationInFrames={dropF}>
         <HudOverlay labels={["SECURITY ALERT", "NODE-07", "THREAT: HIGH", "LIVE"]} hero={C.red} font={mono} />
@@ -350,15 +401,13 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
       <Audio src={urls[MEDIA.soundtrack]} />
       <Sfx src={urls[SFX.glitchAll]} at={0} volume={0.35} />
       <Sfx src={urls[SFX.alarm]} at={6} volume={0.18} />
-      <Sfx src={urls[SFX.glitch]} at={breach.startFrame - 1} volume={0.3} />
-      <Sfx src={urls[SFX.glitch]} at={team.startFrame - 1} volume={0.3} />
-      <Sfx src={urls[SFX.glitch]} at={unless.startFrame - 1} volume={0.3} />
-      <Sfx src={urls[SFX.riser]} at={dropF - 60} volume={0.35} />
-      <Sfx src={urls[SFX.drop]} at={dropF - 1} volume={0.5} />
-      <Sfx src={urls[SFX.impact]} at={dropF - 1} volume={0.45} />
-      <Sfx src={urls[SFX.whoosh]} at={ai.startFrame - 4} volume={0.3} />
-      <Sfx src={urls[SFX.glitch]} at={cyber.startFrame - 1} volume={0.3} />
-      <Sfx src={urls[SFX.whoosh]} at={custom.startFrame - 4} volume={0.25} />
+      {cuts.map((c) => <Sfx key={`w${c}`} src={urls[SFX.whoosh]} at={c - 7} volume={0.32} />)}
+      {cuts.map((c) => <Sfx key={`g${c}`} src={urls[SFX.glitch]} at={c - 1} volume={0.32} />)}
+      {cuts.filter((c) => c > dropF).map((c) => <Sfx key={`i${c}`} src={urls[SFX.impact]} at={c} volume={0.28} />)}
+      <Sfx src={urls[SFX.riser]} at={dropF - 60} volume={0.45} />
+      <Sfx src={urls[SFX.drop]} at={dropF - 1} volume={0.6} />
+      <Sfx src={urls[SFX.boom]} at={dropF - 1} volume={0.5} />
+      <Sfx src={urls[SFX.glitchAll]} at={say("מוכן") - 1} volume={0.35} />
       <Sfx src={urls[SFX.impact]} at={say("ארבעה")} volume={0.35} />
       <Sfx src={urls[SFX.impact]} at={say("הסמכה")} volume={0.3} />
       <Sfx src={urls[SFX.impact]} at={say("אלפי")} volume={0.35} />
