@@ -80,6 +80,10 @@ const MEDIA = {
   lab4: "assets/ad/photos/lab4.jpg",
   lab5: "assets/ad/photos/lab5.jpg",
   earth: "assets/ad/photos/earth.jpg",
+  live4: "assets/ad/live-lab4.mp4",
+  live1: "assets/ad/live-lab1.mp4",
+  live5: "assets/ad/live-lab5.mp4",
+  live3: "assets/ad/live-lab3.mp4",
 };
 const SFX = {
   glitch: "assets/lib/cinematic-glitches-glitch/clip.mp3",
@@ -91,6 +95,7 @@ const SFX = {
   boom: "assets/lib/cinematic-hits-hits-boom/clip.mp3",
   shutter: "assets/lib/sfx-ui-camera-shutter/clip.mp3",
   whoosh: "assets/lib/quantum-motion-whooshes-flow-whoosh-soft-swipe/clip.mp3",
+  thud: "assets/lib/sfx-ui-soft-impact/clip.mp3",
 };
 
 type Scene = VideoProps["manifest"]["scenes"][number];
@@ -135,7 +140,7 @@ const Glitch: React.FC<{ at: number; out?: number; seed: number; split?: string;
 };
 
 // The clip as the picture: muted, pushed in slowly, punched on a hit, tinted toward the act's colour.
-const Plate: React.FC<{ src: string; dim?: number; tint?: string; tintOpacity?: number; punches?: number[]; blur?: number; zoom?: number; rate?: number }> = ({ src, dim = 0.25, tint, tintOpacity = 0.35, punches = [], blur = 0, zoom = 0.1, rate = 1.3 }) => {
+const Plate: React.FC<{ src: string; dim?: number; tint?: string; tintOpacity?: number; punches?: number[]; blur?: number; zoom?: number; rate?: number; pos?: string }> = ({ src, dim = 0.25, tint, tintOpacity = 0.35, punches = [], blur = 0, zoom = 0.1, rate = 1.3, pos = "50% 50%" }) => {
   const f = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
   const push = interpolate(f, [0, durationInFrames], [1.04, 1.04 + zoom], clamp);
@@ -143,7 +148,7 @@ const Plate: React.FC<{ src: string; dim?: number; tint?: string; tintOpacity?: 
   return (
     <AbsoluteFill style={{ overflow: "hidden", background: C.black }}>
       <AbsoluteFill style={{ transform: `scale(${push + 0.16 * k})`, filter: blur ? `blur(${blur}px)` : undefined }}>
-        <OffthreadVideo src={src} muted playbackRate={rate} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        <OffthreadVideo src={src} muted playbackRate={rate} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: pos }} />
         {dim > 0 ? <AbsoluteFill style={{ background: `rgba(0,0,0,${dim})` }} /> : null}
       </AbsoluteFill>
       {tint ? <AbsoluteFill style={{ background: tint, mixBlendMode: "color", opacity: tintOpacity }} /> : null}
@@ -316,7 +321,7 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
 
       {/* ACT 2: the drop */}
       <SceneFrame from={drop.startFrame} durationInFrames={drop.durationFrames} enter="flash" exit="whip-left" transitionFrames={8}>
-        <PhotoPlate src={urls[MEDIA.lab4]} dim={0.45} punches={[0]} dir={1} />
+        <Plate src={urls[MEDIA.live4]} dim={0.4} punches={[0]} zoom={0.08} pos="68% 50%" tint="#0A2A55" tintOpacity={0.3} rate={1} />
         <Center top={0.13} gap={W * 0.015}>
           <Glitch at={L(drop, say("המחלקה"))} seed={10} split={C.gold} from={1.2}><div style={type(W * 0.11)}>המחלקה העסקית</div></Glitch>
           <Glitch at={L(drop, say("היחידה"))} seed={11} split={C.blue} from={1.1}><div style={type(W * 0.07, C.gold, 800)}>היחידה ללימודי חוץ</div></Glitch>
@@ -364,7 +369,7 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
       </SceneFrame>
 
       <SceneFrame from={gov.startFrame} durationInFrames={gov.durationFrames} enter="whip-left" exit="whip-left" transitionFrames={8}>
-        <PhotoPlate src={urls[MEDIA.lab1]} dim={0.55} blur={2} punches={[L(gov, say("הסמכה"))]} dir={1} />
+        <Plate src={urls[MEDIA.live1]} dim={0.5} blur={1} punches={[L(gov, say("הסמכה"))]} pos="72% 50%" tint="#0A2A55" tintOpacity={0.3} rate={1} />
         <Center top={0.3} gap={W * 0.01}>
           <Glitch at={L(gov, say("הסמכה"))} seed={20}><div style={type(W * 0.19)}>הסמכה</div></Glitch>
           <Glitch at={L(gov, say("ממשלתית"))} seed={21} split={C.gold}><div style={type(W * 0.19, C.gold)}>ממשלתית</div></Glitch>
@@ -373,7 +378,7 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
       </SceneFrame>
 
       <SceneFrame from={learners.startFrame} durationInFrames={learners.durationFrames} enter="whip-left" exit="zoom-through" transitionFrames={8}>
-        <PhotoPlate src={urls[MEDIA.lab5]} dim={0.5} blur={1} punches={[L(learners, say("אלפי"))]} dir={-1} />
+        <Plate src={urls[MEDIA.live5]} dim={0.45} punches={[L(learners, say("אלפי"))]} pos="50% 50%" tint="#0A2A55" tintOpacity={0.3} rate={1} />
         <Center top={0.26} gap={W * 0.01}>
           <Glitch at={L(learners, say("אלפי"))} seed={22} from={1.6} split={C.blue}><div style={type(W * 0.3, C.gold)}>אלפי</div></Glitch>
           <Glitch at={L(learners, say("לומדים"))} seed={23}><div style={type(W * 0.12)}>לומדים בשנה</div></Glitch>
@@ -382,7 +387,7 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
       </SceneFrame>
 
       <SceneFrame from={ready.startFrame} durationInFrames={ready.durationFrames} enter="zoom-through" exit="flash">
-        <PhotoPlate src={urls[MEDIA.lab3]} dim={0.3} punches={[L(ready, say("מוכן", 2))]} dir={1} />
+        <Plate src={urls[MEDIA.live3]} dim={0.3} punches={[L(ready, say("מוכן", 2))]} pos="62% 50%" tint="#0A2A55" tintOpacity={0.3} rate={1} />
         <Center top={0.12} gap={W * 0.01}>
           <Glitch at={L(ready, say("הצוות"))} seed={24} from={1.15}><div style={type(W * 0.12)}>הצוות שלכם.</div></Glitch>
         </Center>
@@ -424,6 +429,7 @@ export const Video: React.FC<VideoProps> = ({ manifest, urls }) => {
       <Sfx src={urls[SFX.glitchAll]} at={0} volume={0.35} />
       <Sfx src={urls[SFX.alarm]} at={6} volume={0.18} />
       {cuts.map((c) => <Sfx key={`w${c}`} src={urls[SFX.whoosh]} at={c - 6} volume={0.45} />)}
+      {cuts.filter((c) => c > dropF).map((c) => <Sfx key={`t${c}`} src={urls[SFX.thud]} at={c - 4} volume={0.5} />)}
       {cuts.filter((c) => c <= dropF).map((c) => <Sfx key={`g${c}`} src={urls[SFX.glitch]} at={c - 1} volume={0.5} />)}
       
       <Sfx src={urls[SFX.riser]} at={dropF - 60} volume={0.45} />
