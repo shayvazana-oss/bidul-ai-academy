@@ -14,13 +14,20 @@
   "homepage": "https://github.com/shayvazana-oss/bidul-ai-academy#readme",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.120.0",
+    "framer-motion": "^14.1.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^26.3.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
     "playwright": "^1.62.1",
     "tsx": "^4.23.12",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4"
   },
   "type": "module",
   "private": true,
