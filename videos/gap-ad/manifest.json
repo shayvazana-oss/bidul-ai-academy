@@ -1,0 +1,52 @@
+{
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "totalFrames": 919,
+  "captions": "none",
+  "soundGain": {
+    "assets/lib/sfx-ui-success-chime/clip.mp3": 1.4289,
+    "assets/lib/youtube-picks-interface-mouse-click/clip.mp3": 1.1885,
+    "assets/lib/sfx-ui-soft-whoosh/clip.mp3": 0.7852,
+    "assets/lib/sfx-ui-soft-impact/clip.mp3": 0.7499,
+    "assets/lib/sfx-ui-bubble-pop/clip.mp3": 0.7413,
+    "assets/lib/invention-impact-impact-cinematic-deep/clip.mp3": 0.3802
+  },
+  "scenes": [
+    {
+      "id": "race",
+      "startFrame": 0,
+      "durationFrames": 318,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "gap",
+      "startFrame": 318,
+      "durationFrames": 177,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "teams",
+      "startFrame": 495,
+      "durationFrames": 90,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "close",
+      "startFrame": 585,
+      "durationFrames": 251,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "cta",
+      "startFrame": 836,
+      "durationFrames": 83,
+      "words": [],
+      "userAssetKeys": []
+    }
+  ]
+}

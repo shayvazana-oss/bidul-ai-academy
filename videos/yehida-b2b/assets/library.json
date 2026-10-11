@@ -1,0 +1,240 @@
+{
+  "music-minimal-tech-pulse": {
+    "path": "assets/lib/music-minimal-tech-pulse/track.mp3",
+    "kind": "music",
+    "title": "Minimal Tech Pulse",
+    "meta": {
+      "bpm": 110,
+      "mood": "focused",
+      "source": "ElevenLabs Music",
+      "licence": "Generated for Reelkit with ElevenLabs Music",
+      "durationSec": 29.99,
+      "instrumental": true
+    },
+    "gainDb": -2.5
+  },
+  "sfx-ui-soft-whoosh": {
+    "path": "assets/lib/sfx-ui-soft-whoosh/clip.mp3",
+    "kind": "sfx",
+    "title": "Soft UI Whoosh",
+    "meta": {
+      "pack": "Reelkit UI",
+      "length": "hit",
+      "source": "ElevenLabs Sound Effects",
+      "licence": "Generated for Reelkit with ElevenLabs Sound Effects",
+      "category": "Transitions",
+      "durationSec": 0.84
+    },
+    "gainDb": -2.1
+  },
+  "sfx-ui-soft-impact": {
+    "path": "assets/lib/sfx-ui-soft-impact/clip.mp3",
+    "kind": "sfx",
+    "title": "Soft Impact",
+    "meta": {
+      "pack": "Reelkit UI",
+      "length": "hit",
+      "source": "ElevenLabs Sound Effects",
+      "licence": "Generated for Reelkit with ElevenLabs Sound Effects",
+      "category": "Impacts",
+      "durationSec": 0.73
+    },
+    "gainDb": -2.5
+  },
+  "youtube-picks-interface-mouse-click": {
+    "path": "assets/lib/youtube-picks-interface-mouse-click/clip.mp3",
+    "kind": "sfx",
+    "title": "Mouse Click",
+    "meta": {
+      "pack": "YouTube Picks",
+      "length": "hit",
+      "source": "YouTube videos supplied by the project owner (i0DON3AjhW4, OJhWtBBJw10, 92jxKbZslUc, vAisWjP49xA, sX6JxdJZWZo)",
+      "licence": "Not verified: uploaders describe them as free or no-copyright, but no licence is stated on the videos",
+      "category": "Interface",
+      "durationSec": 0.235102
+    },
+    "gainDb": 1.5
+  },
+  "sfx-ui-success-chime": {
+    "path": "assets/lib/sfx-ui-success-chime/clip.mp3",
+    "kind": "sfx",
+    "title": "Success Chime",
+    "meta": {
+      "pack": "Reelkit UI",
+      "length": "hit",
+      "source": "ElevenLabs Sound Effects",
+      "licence": "Generated for Reelkit with ElevenLabs Sound Effects",
+      "category": "Interface",
+      "durationSec": 1.04
+    },
+    "gainDb": 3.1
+  },
+  "sfx-ui-bubble-pop": {
+    "path": "assets/lib/sfx-ui-bubble-pop/clip.mp3",
+    "kind": "sfx",
+    "title": "Bubble Pop",
+    "meta": {
+      "pack": "Reelkit UI",
+      "length": "hit",
+      "source": "ElevenLabs Sound Effects",
+      "licence": "Generated for Reelkit with ElevenLabs Sound Effects",
+      "category": "Interface",
+      "durationSec": 0.52
+    },
+    "gainDb": -2.6
+  },
+  "music-cinematic-rise": {
+    "path": "assets/lib/music-cinematic-rise/track.mp3",
+    "kind": "music",
+    "title": "Cinematic Rise",
+    "meta": {
+      "bpm": 100,
+      "mood": "epic",
+      "source": "ElevenLabs Music",
+      "licence": "Generated for Reelkit with ElevenLabs Music",
+      "durationSec": 29.99,
+      "instrumental": true
+    },
+    "gainDb": -5.1
+  },
+  "quantum-motion-whooshes-flow-whoosh-soft-swipe": {
+    "path": "assets/lib/quantum-motion-whooshes-flow-whoosh-soft-swipe/clip.mp3",
+    "kind": "sfx",
+    "title": "FLOW WHOOSH SOFT Swipe",
+    "meta": {
+      "pack": "Quantum Motion",
+      "length": "hit",
+      "source": "Four Editors - All Sound Effects In One Download",
+      "licence": "Four Editors License Agreement: own-work use; no redistribution or incorporation in a product",
+      "category": "Whooshes",
+      "durationSec": 1.906939
+    },
+    "gainDb": -2.7
+  },
+  "cinematic-hits-hits-boom": {
+    "path": "assets/lib/cinematic-hits-hits-boom/clip.mp3",
+    "kind": "sfx",
+    "title": "Hits Boom",
+    "meta": {
+      "pack": "Cinematic",
+      "length": "phrase",
+      "source": "Four Editors - All Sound Effects In One Download",
+      "licence": "Four Editors License Agreement: own-work use; no redistribution or incorporation in a product",
+      "category": "Hits",
+      "durationSec": 3.369796
+    },
+    "gainDb": 8.3
+  },
+  "invention-impact-impact-cinematic-deep": {
+    "path": "assets/lib/invention-impact-impact-cinematic-deep/clip.mp3",
+    "kind": "sfx",
+    "title": "Impact Cinematic Deep",
+    "meta": {
+      "pack": "Invention",
+      "length": "phrase",
+      "source": "Four Editors - All Sound Effects In One Download",
+      "licence": "Four Editors License Agreement: own-work use; no redistribution or incorporation in a product",
+      "category": "Impact",
+      "durationSec": 7.235918
+    },
+    "gainDb": -8.4
+  },
+  "cinematic-glitches-glitch": {
+    "path": "assets/lib/cinematic-glitches-glitch/clip.mp3",
+    "kind": "sfx",
+    "title": "Glitch",
+    "meta": {
+      "pack": "Cinematic",
+      "length": "hit",
+      "source": "Four Editors - All Sound Effects In One Download",
+      "licence": "Four Editors License Agreement: own-work use; no redistribution or incorporation in a product",
+      "category": "Glitches",
+      "durationSec": 0.705306
+    },
+    "gainDb": -1
+  },
+  "cinematic-glitches-glitch-all-over": {
+    "path": "assets/lib/cinematic-glitches-glitch-all-over/clip.mp3",
+    "kind": "sfx",
+    "title": "Glitch All Over",
+    "meta": {
+      "pack": "Cinematic",
+      "length": "hit",
+      "source": "Four Editors - All Sound Effects In One Download",
+      "licence": "Four Editors License Agreement: own-work use; no redistribution or incorporation in a product",
+      "category": "Glitches",
+      "durationSec": 1.410612
+    },
+    "gainDb": -2
+  },
+  "cinematic-alarms-and-beeps-alarm-message": {
+    "path": "assets/lib/cinematic-alarms-and-beeps-alarm-message/clip.mp3",
+    "kind": "sfx",
+    "title": "Alarm Message",
+    "meta": {
+      "pack": "Cinematic",
+      "length": "phrase",
+      "source": "Four Editors - All Sound Effects In One Download",
+      "licence": "Four Editors License Agreement: own-work use; no redistribution or incorporation in a product",
+      "category": "Alarms & Beeps",
+      "durationSec": 4.04898
+    },
+    "gainDb": -2.8
+  },
+  "sfx-ui-riser-short": {
+    "path": "assets/lib/sfx-ui-riser-short/clip.mp3",
+    "kind": "sfx",
+    "title": "Short Riser",
+    "meta": {
+      "pack": "Reelkit UI",
+      "length": "phrase",
+      "source": "ElevenLabs Sound Effects",
+      "licence": "Generated for Reelkit with ElevenLabs Sound Effects",
+      "category": "Transitions",
+      "durationSec": 2.04
+    },
+    "gainDb": -3
+  },
+  "sfx-ui-bass-drop": {
+    "path": "assets/lib/sfx-ui-bass-drop/clip.mp3",
+    "kind": "sfx",
+    "title": "Sub Bass Drop",
+    "meta": {
+      "pack": "Reelkit UI",
+      "length": "hit",
+      "source": "ElevenLabs Sound Effects",
+      "licence": "Generated for Reelkit with ElevenLabs Sound Effects",
+      "category": "Impacts",
+      "durationSec": 1.41
+    },
+    "gainDb": -3
+  },
+  "cinematic-impacts-impact-bass": {
+    "path": "assets/lib/cinematic-impacts-impact-bass/clip.mp3",
+    "kind": "sfx",
+    "title": "Impact Bass",
+    "meta": {
+      "pack": "Cinematic",
+      "length": "hit",
+      "source": "Four Editors - All Sound Effects In One Download",
+      "licence": "Four Editors License Agreement: own-work use; no redistribution or incorporation in a product",
+      "category": "Impacts",
+      "durationSec": 1.880816
+    },
+    "gainDb": 6.7
+  },
+  "sfx-ui-camera-shutter": {
+    "path": "assets/lib/sfx-ui-camera-shutter/clip.mp3",
+    "kind": "sfx",
+    "title": "Camera Shutter",
+    "meta": {
+      "pack": "Reelkit UI",
+      "length": "hit",
+      "source": "ElevenLabs Sound Effects",
+      "licence": "Generated for Reelkit with ElevenLabs Sound Effects",
+      "category": "Interface",
+      "durationSec": 0.52
+    },
+    "gainDb": -3
+  }
+}

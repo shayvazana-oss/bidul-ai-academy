@@ -1,0 +1,119 @@
+{
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "totalFrames": 783,
+  "captions": "none",
+  "soundGain": {
+    "assets/lib/music-minimal-tech-pulse/track.mp3": 0.7499,
+    "assets/lib/sfx-ui-soft-whoosh/clip.mp3": 0.7852,
+    "assets/lib/sfx-ui-soft-impact/clip.mp3": 0.7499,
+    "assets/lib/youtube-picks-interface-mouse-click/clip.mp3": 1.1885,
+    "assets/lib/sfx-ui-success-chime/clip.mp3": 1.4289,
+    "assets/lib/sfx-ui-bubble-pop/clip.mp3": 0.7413,
+    "assets/lib/music-cinematic-rise/track.mp3": 0.5559,
+    "assets/lib/quantum-motion-whooshes-flow-whoosh-soft-swipe/clip.mp3": 0.7328,
+    "assets/lib/cinematic-hits-hits-boom/clip.mp3": 2.6002,
+    "assets/lib/invention-impact-impact-cinematic-deep/clip.mp3": 0.3802,
+    "assets/lib/cinematic-glitches-glitch/clip.mp3": 0.8913,
+    "assets/lib/cinematic-glitches-glitch-all-over/clip.mp3": 0.7943,
+    "assets/lib/cinematic-alarms-and-beeps-alarm-message/clip.mp3": 0.7244,
+    "assets/lib/sfx-ui-riser-short/clip.mp3": 0.7079,
+    "assets/lib/sfx-ui-bass-drop/clip.mp3": 0.7079,
+    "assets/lib/cinematic-impacts-impact-bass/clip.mp3": 2.1627,
+    "assets/lib/sfx-ui-camera-shutter/clip.mp3": 0.7079
+  },
+  "scenes": [
+    {
+      "id": "alert",
+      "startFrame": 0,
+      "durationFrames": 51,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "breach",
+      "startFrame": 51,
+      "durationFrames": 81,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "team",
+      "startFrame": 132,
+      "durationFrames": 75,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "unless",
+      "startFrame": 207,
+      "durationFrames": 36,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "drop",
+      "startFrame": 243,
+      "durationFrames": 96,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "ai",
+      "startFrame": 339,
+      "durationFrames": 49,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "cyber",
+      "startFrame": 388,
+      "durationFrames": 24,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "custom",
+      "startFrame": 412,
+      "durationFrames": 72,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "campuses",
+      "startFrame": 484,
+      "durationFrames": 45,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "gov",
+      "startFrame": 529,
+      "durationFrames": 43,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "learners",
+      "startFrame": 572,
+      "durationFrames": 54,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "ready",
+      "startFrame": 626,
+      "durationFrames": 65,
+      "words": [],
+      "userAssetKeys": []
+    },
+    {
+      "id": "cta",
+      "startFrame": 691,
+      "durationFrames": 92,
+      "words": [],
+      "userAssetKeys": []
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "a-7f07093b",
+    "filename": "hero.webp",
+    "key": "assets/user/a-7f07093b-hero.webp",
+    "kind": "image",
+    "contentType": "image/webp",
+    "bytes": 50046,
+    "width": 2200,
+    "height": 1300,
+    "description": "Top-down dark shot: a person working at a desk with three bright monitors, night office mood",
+    "createdAt": "2026-10-07T21:13:10.711Z"
+  },
+  {
+    "id": "a-971a7bac",
+    "filename": "circuit.webp",
+    "key": "assets/user/a-971a7bac-circuit.webp",
+    "kind": "image",
+    "contentType": "image/webp",
+    "bytes": 140252,
+    "width": 1400,
+    "height": 900,
+    "description": "Glowing white circuit board lines on a dark background, close-up, tech/AI mood",
+    "createdAt": "2026-10-07T21:13:12.101Z"
+  },
+  {
+    "id": "a-3805aaf6",
+    "filename": "grc.webp",
+    "key": "assets/user/a-3805aaf6-grc.webp",
+    "kind": "image",
+    "contentType": "image/webp",
+    "bytes": 39950,
+    "width": 900,
+    "height": 640,
+    "description": "Red padlock lying on a green-lit laptop keyboard, cybersecurity symbol",
+    "createdAt": "2026-10-07T21:13:13.573Z"
+  },
+  {
+    "id": "a-a9270a45",
+    "filename": "lab4.webp",
+    "key": "assets/user/a-a9270a45-lab4.webp",
+    "kind": "image",
+    "contentType": "image/webp",
+    "bytes": 88666,
+    "width": 1200,
+    "height": 900,
+    "description": "Two men working side by side on laptops in a bright office, focused training session",
+    "createdAt": "2026-10-07T21:13:15.038Z"
+  },
+  {
+    "id": "a-17626e1a",
+    "filename": "lab2.webp",
+    "key": "assets/user/a-17626e1a-lab2.webp",
+    "kind": "image",
+    "contentType": "image/webp",
+    "bytes": 60624,
+    "width": 1200,
+    "height": 900,
+    "description": "Team of people working together on laptops around a wooden table, group workshop",
+    "createdAt": "2026-10-07T21:13:16.370Z"
+  }
+]

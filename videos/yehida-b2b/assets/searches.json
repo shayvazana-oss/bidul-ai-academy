@@ -1,0 +1,304 @@
+[
+  {
+    "q": "corporate inspiring technology light electronic, medium tempo",
+    "kind": "music",
+    "at": "2026-10-07T21:31:42.200Z",
+    "top": [
+      {
+        "id": "music-product-film-glide",
+        "match": 0.78
+      },
+      {
+        "id": "music-bright-startup",
+        "match": 0.64
+      },
+      {
+        "id": "music-minimal-tech-pulse",
+        "match": 0.6
+      }
+    ]
+  },
+  {
+    "q": "soft ui whoosh",
+    "kind": "sfx",
+    "at": "2026-10-07T21:31:46.688Z",
+    "top": [
+      {
+        "id": "sfx-ui-soft-whoosh",
+        "match": 0.93
+      },
+      {
+        "id": "quantum-motion-whooshes-flow-whoosh-soft-swipe",
+        "match": 0.7
+      },
+      {
+        "id": "quantum-motion-whooshes-flow-whoosh-soft-subtle",
+        "match": 0.68
+      }
+    ]
+  },
+  {
+    "q": "soft impact",
+    "kind": "sfx",
+    "at": "2026-10-07T21:31:50.497Z",
+    "top": [
+      {
+        "id": "sfx-ui-soft-impact",
+        "match": 0.88
+      },
+      {
+        "id": "hollywood-essentials-short-foley-short-foley-hit-soft",
+        "match": 0.81
+      },
+      {
+        "id": "cinematic-short-foley-short-foley-hit-soft",
+        "match": 0.79
+      }
+    ]
+  },
+  {
+    "q": "mouse click",
+    "kind": "sfx",
+    "at": "2026-10-07T21:31:54.169Z",
+    "top": [
+      {
+        "id": "youtube-picks-interface-mouse-click",
+        "match": 0.86
+      },
+      {
+        "id": "ultimate-social-content-foley-click",
+        "match": 0.58
+      },
+      {
+        "id": "cinematic-short-foley-short-foley-click",
+        "match": 0.55
+      }
+    ]
+  },
+  {
+    "q": "success chime",
+    "kind": "sfx",
+    "at": "2026-10-07T21:31:57.368Z",
+    "top": [
+      {
+        "id": "sfx-ui-success-chime",
+        "match": 0.94
+      },
+      {
+        "id": "ultimate-social-content-foley-ding",
+        "match": 0.34
+      },
+      {
+        "id": "cinematic-tones-tones-hope",
+        "match": 0.22
+      }
+    ]
+  },
+  {
+    "q": "bubble pop",
+    "kind": "sfx",
+    "at": "2026-10-07T21:32:01.120Z",
+    "top": [
+      {
+        "id": "sfx-ui-bubble-pop",
+        "match": 0.95
+      },
+      {
+        "id": "hollywood-essentials-fantasy-fantasy-water-bubbling",
+        "match": 0.18
+      },
+      {
+        "id": "cinematic-hits-hits-boom",
+        "match": 0.12
+      }
+    ]
+  },
+  {
+    "q": "dark modern office team working at night, cinematic",
+    "kind": "clip",
+    "at": "2026-10-08T13:49:48.487Z",
+    "top": []
+  },
+  {
+    "q": "abstract neural network light, AI",
+    "kind": "clip",
+    "at": "2026-10-08T13:49:51.379Z",
+    "top": []
+  },
+  {
+    "q": "server room data center, cinematic",
+    "kind": "clip",
+    "at": "2026-10-08T13:49:53.956Z",
+    "top": []
+  },
+  {
+    "q": "cybersecurity hacker code screen dark",
+    "kind": "clip",
+    "at": "2026-10-08T13:49:57.340Z",
+    "top": []
+  },
+  {
+    "q": "hands typing keyboard close up dark",
+    "kind": "clip",
+    "at": "2026-10-08T13:50:00.096Z",
+    "top": []
+  },
+  {
+    "q": "corporate training workshop people",
+    "kind": "clip",
+    "at": "2026-10-08T13:50:03.226Z",
+    "top": []
+  },
+  {
+    "q": "cinematic tech trailer, driving pulse, 120 bpm",
+    "kind": "music",
+    "at": "2026-10-08T13:50:06.226Z",
+    "top": [
+      {
+        "id": "music-glossy-showreel",
+        "match": 0.56
+      },
+      {
+        "id": "music-cinematic-rise",
+        "match": 0.52
+      },
+      {
+        "id": "music-retro-synthwave",
+        "match": 0.49
+      }
+    ]
+  },
+  {
+    "q": "deep cinematic impact boom",
+    "kind": "sfx",
+    "at": "2026-10-08T13:51:42.500Z",
+    "top": [
+      {
+        "id": "ultimate-social-content-impacts-deep-impact-bass",
+        "match": 0.6
+      },
+      {
+        "id": "ultimate-social-content-impacts-deep-bass-impact",
+        "match": 0.6
+      },
+      {
+        "id": "invention-impact-impact-cinematic-deep",
+        "match": 0.58
+      }
+    ]
+  },
+  {
+    "q": "riser whoosh buildup",
+    "kind": "sfx",
+    "at": "2026-10-08T13:51:46.792Z",
+    "top": [
+      {
+        "id": "invention-riser-riser-building-up",
+        "match": 0.69
+      },
+      {
+        "id": "cinematic-whooshes-whoosh-buildup",
+        "match": 0.63
+      },
+      {
+        "id": "invention-riser-riser-tension",
+        "match": 0.55
+      }
+    ]
+  },
+  {
+    "q": "digital glitch",
+    "kind": "sfx",
+    "at": "2026-10-09T07:50:17.017Z",
+    "top": [
+      {
+        "id": "cinematic-glitches-glitch",
+        "match": 0.79
+      },
+      {
+        "id": "invention-glitch-glitch-error",
+        "match": 0.74
+      },
+      {
+        "id": "cinematic-glitches-glitch-all-over",
+        "match": 0.74
+      }
+    ]
+  },
+  {
+    "q": "alarm beep alert",
+    "kind": "sfx",
+    "at": "2026-10-09T07:50:22.763Z",
+    "top": [
+      {
+        "id": "cinematic-alarms-and-beeps-alarm-message",
+        "match": 0.79
+      },
+      {
+        "id": "hollywood-essentials-alarms-and-beeps-alarm-message",
+        "match": 0.78
+      },
+      {
+        "id": "cinematic-alarms-and-beeps-alarm-clock",
+        "match": 0.71
+      }
+    ]
+  },
+  {
+    "q": "riser whoosh short",
+    "kind": "sfx",
+    "at": "2026-10-09T07:50:26.464Z",
+    "top": [
+      {
+        "id": "hollywood-essentials-fantasy-fantasy-short-riser",
+        "match": 0.52
+      },
+      {
+        "id": "sfx-ui-riser-short",
+        "match": 0.5
+      },
+      {
+        "id": "cinematic-whooshes-whoosh-rise",
+        "match": 0.37
+      }
+    ]
+  },
+  {
+    "q": "bass drop impact",
+    "kind": "sfx",
+    "at": "2026-10-09T07:50:30.878Z",
+    "top": [
+      {
+        "id": "sfx-ui-bass-drop",
+        "match": 0.79
+      },
+      {
+        "id": "ultimate-social-content-impacts-deep-bass-impact",
+        "match": 0.76
+      },
+      {
+        "id": "ultimate-social-content-impacts-deep-impact-bass",
+        "match": 0.74
+      }
+    ]
+  },
+  {
+    "q": "camera shutter hit",
+    "kind": "sfx",
+    "at": "2026-10-09T07:50:35.125Z",
+    "top": [
+      {
+        "id": "sfx-ui-camera-shutter",
+        "match": 0.9
+      },
+      {
+        "id": "synths-of-the-past-camera-digital-digital-cam-shot",
+        "match": 0.31
+      },
+      {
+        "id": "synths-of-the-past-camera-old-camera-camera-shot",
+        "match": 0.26
+      }
+    ]
+  }
+]

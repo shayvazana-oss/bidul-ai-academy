@@ -1,0 +1,103 @@
+{
+  "title": "המחלקה העסקית: הכשרות AI וסייבר לארגונים",
+  "aspect": "9:16",
+  "mode": "motion",
+  "voiceId": "HjnCa0x8VgfBjy158Gpj",
+  "pace": "normal",
+  "gap": "tight",
+  "scenes": [
+    {
+      "id": "hook",
+      "narration": "קורס מדף נבנה לכולם. הצוות שלכם הוא לא כולם.",
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "לכולם.",
+        "הצוות שלכם"
+      ],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "LOOK: premium cinematic. Full-bleed generated clips graded deep navy/teal with a single gold accent (#F5B83D), giant Heebo 900 type that fills the frame width and lands on the spoken word, film grain, vignette, hard cuts and whips on the music. No icons, no cards, no stock photos. ~28s. VISUAL THREAD: one gold word per scene, the gold underline that grows under it. Hook: identical rows = 'everyone'; huge white 'לכולם.' on 'לכולם', then a hard cut-in to gold 'הצוות שלכם' on 'הצוות', camera punch. B-roll clip generated on FAL (MiniMax H3 Max) and stored in assets/broll/."
+    },
+    {
+      "id": "ai",
+      "narration": "המחלקה העסקית של היחידה ללימודי חוץ בונה הכשרות בבינה מלאכותית",
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "המחלקה העסקית",
+        "בינה מלאכותית"
+      ],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Small label 'המחלקה העסקית · היחידה ללימודי חוץ' top on 'המחלקה'; giant two-line 'בינה / מלאכותית' lands on 'בבינה' with gold underline. B-roll clip generated on FAL (MiniMax H3 Max) and stored in assets/broll/."
+    },
+    {
+      "id": "cyber",
+      "narration": "ובסייבר. מאפס, לכל ארגון.",
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "סייבר",
+        "מאפס. לכל ארגון."
+      ],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Whip cut on the beat into the server aisle; giant 'סייבר' on 'ובסייבר'; small gold line 'מאפס. לכל ארגון.' on 'מאפס'. B-roll clip generated on FAL (MiniMax H3 Max) and stored in assets/broll/."
+    },
+    {
+      "id": "process",
+      "narration": "אבחון. סילבוס על הדאטה שלכם. ומרצים מהתעשייה.",
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "אבחון",
+        "סילבוס",
+        "מרצים מהתעשייה"
+      ],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Three hard word swaps, one per beat of speech: '01 אבחון' on 'אבחון', '02 סילבוס' on 'סילבוס', '03 מרצים מהתעשייה' on 'ומרצים'. Each previous word leaves fast. Small gold step numerals. B-roll clip generated on FAL (MiniMax H3 Max) and stored in assets/broll/."
+    },
+    {
+      "id": "proof",
+      "narration": "ארבעה קמפוסים. הסמכה ממשלתית. אלפי לומדים בשנה.",
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "4 קמפוסים",
+        "הסמכה ממשלתית",
+        "אלפי לומדים בשנה"
+      ],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Black frame, the team clip blurred far behind. Giant gold '4' counts in on 'ארבעה' with 'קמפוסים'; then 'הסמכה ממשלתית'; then 'אלפי' gold + 'לומדים בשנה'. Each fact replaces the last."
+    },
+    {
+      "id": "cta",
+      "narration": "רוצים כזה לצוות שלכם? מתחילים בפגישת אבחון.",
+      "treatment": "motion-graphic",
+      "onScreenText": [
+        "לצוות שלכם?",
+        "פגישת אבחון",
+        "היחידה ללימודי חוץ · המחלקה העסקית"
+      ],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Music hit. 'לצוות שלכם?' huge, then the gold pill 'לקביעת פגישת אבחון' presses on 'אבחון'. Wordmark small and centred, held to the end."
+    }
+  ]
+}
