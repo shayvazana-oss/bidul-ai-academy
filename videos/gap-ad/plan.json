@@ -1,0 +1,73 @@
+{
+  "title": "פערי ידע בעידן ה-AI",
+  "aspect": "9:16",
+  "mode": "motion",
+  "voice": "none",
+  "scenes": [
+    {
+      "id": "race",
+      "seconds": 10.6,
+      "narration": "",
+      "treatment": "motion-graphic",
+      "onScreenText": [],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "LOOK: dark navy #0A0F1F, brand blue #4C9BFF, gold #F5B83D, Heebo. Concept: same task, two employees, split screen with timers; the divider line is THE GAP that opens into a chasm, multiplies across teams, then closes. Narration: ElevenLabs v4 (Callum) premixed with original ElevenLabs music in assets/gap/soundtrack.mp3. ~30s. Race: right employee with AI finishes at 00:40, left still scrolling a 40-page PDF."
+    },
+    {
+      "id": "gap",
+      "seconds": 5.9,
+      "narration": "",
+      "treatment": "motion-graphic",
+      "onScreenText": [],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "The divider opens into a glowing gap. 'לא כישרון.' then gold 'זה ידע.'; a dimension line labelled 'פער ידע'."
+    },
+    {
+      "id": "teams",
+      "seconds": 3.0,
+      "narration": "",
+      "treatment": "motion-graphic",
+      "onScreenText": [],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Grid of team tiles, some with red gaps. 'בכמה צוותים?'"
+    },
+    {
+      "id": "close",
+      "seconds": 8.35,
+      "narration": "",
+      "treatment": "motion-graphic",
+      "onScreenText": [],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Gaps close one by one in gold. 'המחלקה העסקית', 'היחידה ללימודי חוץ', 'סוגרים פערי ידע', pills AI / סייבר, 'בהתאמה לארגון שלכם.'"
+    },
+    {
+      "id": "cta",
+      "seconds": 2.75,
+      "narration": "",
+      "treatment": "motion-graphic",
+      "onScreenText": [],
+      "imagePrompt": null,
+      "clipPrompt": null,
+      "shareable": false,
+      "imageTags": [],
+      "userAssetIds": [],
+      "notes": "Gold button 'קבעו פגישת אבחון', wordmark."
+    }
+  ]
+}
