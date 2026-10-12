@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "agent-reach": {
+      "source": "Panniantong/Agent-Reach",
+      "sourceType": "github",
+      "skillPath": "agent_reach/skill/SKILL.md",
+      "computedHash": "338e0a86d096e455666c75e6e9612957cb1e74dfeb7f0b41e03bc4c1930f8b3b"
+    },
     "ai-search-visibility": {
       "source": "liftli-ai/linkedin-agent-skills",
       "sourceType": "github",
