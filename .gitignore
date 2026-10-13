@@ -2,3 +2,9 @@ node_modules/
 .vercel
 .env
 .env.local
+
+# impeccable engine binary (downloaded per machine, see .claude/hooks/session-start.sh)
+.agents/skills/impeccable/scripts/bin/
+# personal Claude Code overrides
+.claude/settings.local.json
+.codex/
