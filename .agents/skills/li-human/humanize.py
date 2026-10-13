@@ -1,22 +1,43 @@
 #!/usr/bin/env python3
-"""Review wording and optionally preview plain punctuation.
-
-Default output preserves the draft. Suggestions need editorial judgment.
-The historical filename is retained for /li-human workflows.
 """
+humanize.py - strip the machine fingerprint out of a draft.
+
+Three passes, in this order:
+
+  1. INVISIBLE   delete or normalise the characters a human keyboard never
+                 produces: zero-width joiners, word joiners, soft hyphens,
+                 BOMs, Unicode tag characters, non-breaking and narrow spaces.
+                 These survive copy-paste and are the most mechanical tell in
+                 any generated text.
+  2. TYPOGRAPHIC em dash -> comma, en dash -> hyphen, curly quotes -> straight,
+                 ellipsis -> three dots, bullet -> hyphen.
+  3. LEXICAL     replace the slop lexicon in slop.json with plain words,
+                 preserving capitalisation and leaving URLs untouched.
+
+Structural tells (rule-of-three, "not just X, it's Y", hashtag walls) are
+REPORTED, never auto-rewritten - rewriting a sentence's shape needs judgement,
+so that is the model's job, not a regex's.
+
+Usage
+  python3 humanize.py draft.txt
+  python3 humanize.py draft.txt --report
+  pbpaste | python3 humanize.py - --report
+  python3 humanize.py draft.txt --json
+  python3 humanize.py draft.txt -o clean.txt
+"""
+
 import argparse
 import json
-from pathlib import Path
+import os
 import re
 import sys
+import unicodedata
 
-LEX = Path(__file__).with_name("slop.json")
+HERE = os.path.dirname(os.path.abspath(__file__))
+LEX = os.path.join(HERE, "slop.json")
+
 URL_RE = re.compile(r"https?://\S+|www\.\S+|\S+@\S+\.\S+")
-# Only visible punctuation, never format characters or mathematical symbols.
-PLAIN_PUNCTUATION = {
-    "\u2014": ", ", "\u2013": "-", "\u2018": "'", "\u2019": "'",
-    "\u201c": '"', "\u201d": '"', "\u2026": "...",
-}
+SENT_RE = re.compile(r"[^.!?\n]+[.!?]*")
 
 
 def load_lexicon(path=LEX):
@@ -24,117 +45,210 @@ def load_lexicon(path=LEX):
         return json.load(fh)
 
 
-def split_links(text):
-    """Yield (content, is_link) without placeholders that could collide."""
-    end = 0
-    for match in URL_RE.finditer(text):
-        yield text[end:match.start()], False
-        yield match.group(), True
-        end = match.end()
-    yield text[end:], False
+def _cp(spec):
+    """'U+200B' -> '\\u200b';  'U+E0000-U+E007F' -> (start, end)."""
+    if "-" in spec:
+        a, b = spec.split("-")
+        return (int(a[2:], 16), int(b[2:], 16))
+    return int(spec[2:], 16)
 
 
-def plain_punctuation(text):
-    changes = []
-    for char, replacement in PLAIN_PUNCTUATION.items():
-        count = text.count(char)
-        if not count:
-            continue
-        changes.append({"from": char, "to": replacement, "count": count})
-        if char == "\u2014":
-            text = re.sub(r"[ \t]*\u2014[ \t]*", replacement, text)
+def protect_urls(text):
+    """Swap URLs for placeholders so no pass rewrites inside a link."""
+    found = []
+
+    def stash(m):
+        found.append(m.group(0))
+        return f"\x00URL{len(found) - 1}\x00"
+
+    return URL_RE.sub(stash, text), found
+
+
+def restore_urls(text, found):
+    for i, url in enumerate(found):
+        text = text.replace(f"\x00URL{i}\x00", url)
+    return text
+
+
+def pass_invisible(text, lex):
+    """Delete or space-normalise invisible characters. Returns (text, hits)."""
+    hits = []
+    for entry in lex["invisible"]:
+        cp = _cp(entry["cp"])
+        if isinstance(cp, tuple):
+            pattern = "[" + re.escape(chr(cp[0])) + "-" + re.escape(chr(cp[1])) + "]"
         else:
-            text = text.replace(char, replacement)
-    return text, changes
+            pattern = re.escape(chr(cp))
+        n = len(re.findall(pattern, text))
+        if n:
+            hits.append({"name": entry["cp"] + " " + entry["name"], "count": n,
+                         "action": entry["action"]})
+            text = re.sub(pattern, "" if entry["action"] == "delete" else " ", text)
+    # Any remaining Cf (format) character is invisible by definition.
+    stray = [c for c in text if unicodedata.category(c) == "Cf"]
+    if stray:
+        hits.append({"name": "other invisible format chars", "count": len(stray),
+                     "action": "delete"})
+        text = "".join(c for c in text if unicodedata.category(c) != "Cf")
+    return text, hits
 
 
-def wording_suggestions(text, lex):
-    suggestions, occupied = [], []
+def pass_typographic(text, lex):
+    hits = []
+    for entry in lex["typographic"]:
+        ch = entry["from"]
+        n = text.count(ch)
+        if not n:
+            continue
+        hits.append({"name": f"{ch} {entry['name']}", "count": n, "to": entry["to"].strip() or "(space)"})
+        if ch == "—":
+            # " word — word " and "word—word" both collapse to a comma + space.
+            text = re.sub(r"\s*—\s*", ", ", text)
+        elif ch == "–":
+            text = re.sub(r"\s*–\s*(?=\d)", "-", text)      # 5–10  -> 5-10
+            text = re.sub(r"\s+–\s+", ", ", text)            # used as em dash
+            text = text.replace("–", "-")
+        else:
+            text = text.replace(ch, entry["to"])
+    # A comma inserted before existing punctuation reads wrong.
+    text = re.sub(r",\s*([,.;:!?])", r"\1", text)
+    text = re.sub(r",\s*\n", "\n", text)
+    return text, hits
+
+
+def _match_case(src, repl):
+    if not repl:
+        return repl
+    if src.isupper() and len(src) > 1:
+        return repl.upper()
+    if src[0].isupper():
+        return repl[0].upper() + repl[1:]
+    return repl
+
+
+def pass_lexical(text, lex):
+    """Replace slop words and phrases. Longest first so phrases win."""
+    hits = []
     entries = sorted(lex["phrases"] + lex["words"],
-                     key=lambda entry: len(entry["find"]), reverse=True)
+                     key=lambda e: len(e["find"]), reverse=True)
     for entry in entries:
-        pattern = re.compile(r"\b" + re.escape(entry["find"]).replace(r"\ ", r"[ \t]+")
-                             + r"\b", re.IGNORECASE)
-        matches = [match for match in pattern.finditer(text)
-                   if not any(match.start() < end and match.end() > start
-                              for start, end in occupied)]
-        if matches:
-            occupied.extend(match.span() for match in matches)
-            suggestions.append({"find": entry["find"], "suggestion": entry["replace"],
-                                "count": len(matches)})
-    return suggestions
+        find = entry["find"]
+        pattern = re.compile(r"\b" + re.escape(find).replace(r"\ ", r"\s+") + r"\b",
+                             re.IGNORECASE)
+        found = pattern.findall(text)
+        if not found:
+            continue
+        hits.append({"find": find, "replace": entry["replace"] or "(deleted)",
+                     "count": len(found), "family": entry["family"]})
+        text = pattern.sub(lambda m: _match_case(m.group(0), entry["replace"]), text)
+    # Clean up after deletions.
+    text = re.sub(r"[ \t]{2,}", " ", text)
+    text = re.sub(r"(?m)^[ \t]*([,.;:])\s*", "", text)
+    text = re.sub(r"\s+([,.;:!?])", r"\1", text)
+    text = re.sub(r"(?m)^[ \t]+$", "", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    # An em dash that became a comma, followed by a sentence connective, leaves
+    # a splice ("is important, also, it's proof"). Promote it to a full stop.
+    text = re.sub(r",\s*(also|so|still|basically|in the end)\s*,\s*",
+                  lambda m: ". " + m.group(1)[0].upper() + m.group(1)[1:] + ", ", text)
+    return text, hits
 
 
 def scan_structures(text, lex):
-    notes = []
-    for entry in lex["structures"]:
-        count = len(re.findall(entry["regex"], text, re.MULTILINE))
-        if count:
-            notes.append({"name": entry["name"], "count": count,
-                          "suggestion": entry["fix"]})
-    return notes
+    flags = []
+    for s in lex["structures"]:
+        try:
+            pattern = re.compile(s["regex"], re.MULTILINE)
+        except re.error:
+            continue
+        found = pattern.findall(text)
+        if found:
+            flags.append({"name": s["name"], "count": len(found), "fix": s["fix"]})
+    # Sentence-length uniformity is structural too.
+    lens = [len(s.split()) for s in SENT_RE.findall(text) if len(s.split()) > 2]
+    if len(lens) >= 4:
+        mean = sum(lens) / len(lens)
+        var = sum((n - mean) ** 2 for n in lens) / len(lens)
+        cv = (var ** 0.5) / mean if mean else 0
+        if cv < 0.35:
+            flags.append({
+                "name": f"Uniform sentence length (variation {cv:.2f})",
+                "count": len(lens),
+                "fix": "Break one sentence in half. Let another run long. Machines write even.",
+            })
+    return flags
 
 
-def humanize(text, lex, *, plain_typography=False):
-    """Return a draft preview and editing notes, without scoring."""
-    output, review_parts, changes = [], [], []
-    for part, is_link in split_links(text):
-        review_parts.append(" " * len(part) if is_link else part)
-        if plain_typography and not is_link:
-            part, part_changes = plain_punctuation(part)
-            changes.extend(part_changes)
-        output.append(part)
-    review_text = "".join(review_parts)
-    return "".join(output), {
-        "typographic": changes,
-        "wording": wording_suggestions(review_text, lex),
-        "structures": scan_structures(review_text, lex),
+def humanize(text, lex):
+    text, urls = protect_urls(text)
+    text, inv = pass_invisible(text, lex)
+    text, typo = pass_typographic(text, lex)
+    text, lexi = pass_lexical(text, lex)
+    text = restore_urls(text, urls)
+    return text.strip() + "\n", {
+        "invisible": inv,
+        "typographic": typo,
+        "lexical": lexi,
+        "structures": scan_structures(text, lex),
     }
 
 
 def render_report(report, out=sys.stderr):
-    print("VOICE EDIT REVIEW", file=out)
-    print("Suggestions are optional. Check meaning and the user's voice before editing.", file=out)
-    for item in report["typographic"]:
-        print(f"  Punctuation: {item['from']!r} -> {item['to']!r} ({item['count']}x)", file=out)
-    for item in report["wording"]:
-        option = repr(item["suggestion"]) if item["suggestion"] else "omit if redundant"
-        print(f"  Wording: {item['find']!r} -> consider {option} ({item['count']}x)", file=out)
-    for item in report["structures"]:
-        print(f"  Structure: {item['name']} ({item['count']}x): {item['suggestion']}", file=out)
+    def head(title):
+        print(f"\n{title}\n" + "-" * len(title), file=out)
+
+    total = sum(h["count"] for h in report["invisible"]) \
+        + sum(h["count"] for h in report["typographic"]) \
+        + sum(h["count"] for h in report["lexical"])
+
+    head("HUMANIZE REPORT")
+    print(f"{total} machine artefacts removed, "
+          f"{len(report['structures'])} structural tells flagged for rewrite", file=out)
+
+    if report["invisible"]:
+        head("1. INVISIBLE CHARACTERS")
+        for h in report["invisible"]:
+            print(f"  {h['count']:>3}x  {h['name']}  -> {h['action']}", file=out)
+    if report["typographic"]:
+        head("2. TYPOGRAPHY")
+        for h in report["typographic"]:
+            print(f"  {h['count']:>3}x  {h['name']}  -> {h['to']}", file=out)
+    if report["lexical"]:
+        head("3. SLOP LEXICON")
+        for h in report["lexical"]:
+            print(f"  {h['count']:>3}x  {h['find']}  -> {h['replace']}   [{h['family']}]", file=out)
+    if report["structures"]:
+        head("4. STRUCTURAL TELLS  (not auto-fixed - rewrite these yourself)")
+        for h in report["structures"]:
+            print(f"  {h['count']:>3}x  {h['name']}\n        {h['fix']}", file=out)
     if not any(report.values()):
-        print("  No editing suggestions from this lexicon.", file=out)
+        head("CLEAN")
+        print("  Nothing to strip.", file=out)
+    print("", file=out)
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Review wording and optionally preview plain punctuation.")
-    ap.add_argument("input", nargs="?", default="-", help="UTF-8 file, or - for stdin")
-    ap.add_argument("-o", "--out", help="write the preview to a new, separate file")
-    ap.add_argument("--report", action="store_true", help="print editing notes to stderr")
+    ap = argparse.ArgumentParser(description="Strip the machine fingerprint out of a draft.")
+    ap.add_argument("input", nargs="?", default="-", help="file, or - for stdin")
+    ap.add_argument("-o", "--out", help="write cleaned text here instead of stdout")
+    ap.add_argument("--report", action="store_true", help="print what changed, to stderr")
     ap.add_argument("--json", action="store_true", help="emit {text, report} as JSON")
-    ap.add_argument("--lexicon", default=LEX, help="path to a user-selected wording lexicon")
-    ap.add_argument("--plain-typography", action="store_true",
-                    help="preview plain punctuation; review the resulting sentence boundaries")
+    ap.add_argument("--lexicon", default=LEX, help="path to slop.json")
     args = ap.parse_args()
-    if args.out and args.input != "-" and Path(args.out).resolve() == Path(args.input).resolve():
-        ap.error("use a separate output file so the original draft is preserved")
-    if args.json and args.out:
-        ap.error("choose --json or --out, not both")
-    if args.input == "-":
-        raw = sys.stdin.read()
-    else:
-        with open(args.input, encoding="utf-8", newline="") as fh:
-            raw = fh.read()
-    preview, report = humanize(raw, load_lexicon(args.lexicon),
-                               plain_typography=args.plain_typography)
+
+    raw = sys.stdin.read() if args.input == "-" else open(args.input, encoding="utf-8").read()
+    lex = load_lexicon(args.lexicon)
+    clean, report = humanize(raw, lex)
+
     if args.json:
-        print(json.dumps({"text": preview, "report": report}, indent=2, ensure_ascii=False))
-    elif args.out:
-        # Exclusive creation also rejects aliases/hard links to the source.
-        with open(args.out, "x", encoding="utf-8", newline="") as fh:
-            fh.write(preview)
+        print(json.dumps({"text": clean, "report": report}, indent=2, ensure_ascii=False))
+        return
+    if args.out:
+        with open(args.out, "w", encoding="utf-8") as fh:
+            fh.write(clean)
+        print(f"wrote {args.out}", file=sys.stderr)
     else:
-        sys.stdout.write(preview)
+        sys.stdout.write(clean)
     if args.report:
         render_report(report)
 

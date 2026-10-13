@@ -79,5 +79,5 @@ Then stop. A third follow-up converts nobody and costs the relationship.
 ## Output
 
 The invite note with its character count, the first message, and both
-follow-ups with the day they go out. All edited for voice and clarity through `/li-human`. The
+follow-ups with the day they go out. All humanized through `/li-human`. The
 user sends every one of them by hand.

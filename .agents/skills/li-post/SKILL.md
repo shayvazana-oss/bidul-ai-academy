@@ -2,7 +2,7 @@
 name: li-post
 description: >-
   Write a LinkedIn post from a raw idea using 21 proven hook formulas, in the
-  user's own voice, edited for clarity and concision. Use whenever the user
+  user's own voice, humanized so it does not read as AI. Use whenever the user
   wants a LinkedIn post, a hook, a draft for the feed, "post about X", "turn
   this into a LinkedIn post", or asks for hook options. Produces three hook
   options, one full draft, and a copy-ready block that is never published
@@ -53,9 +53,9 @@ ship and why, in one sentence.
 
 **2. Draft the full post** on the strongest hook.
 
-**3. Edit for voice and clarity.** Review the draft with `/li-human` before
-showing it. Follow the user's wording and punctuation preferences while
-preserving facts, attribution, and disclosures. Summarize the main edits.
+**3. Humanize it.** Run the draft through `/li-human` before showing it. Every
+post from this skill ships humanized. That is not an optional extra step, it
+is the reason the draft is worth reading.
 
 **4. Print the block.** Copy-ready, in a fenced block, exactly as it should be
 pasted. Then, underneath:
@@ -64,7 +64,7 @@ pasted. Then, underneath:
 POST READY
 hook:      #17 Time Anchor
 length:    1,140 characters
-voice edit: shortened the opening; followed your punctuation preference
+humanizer: 6 artefacts stripped, human score 84 PASS
 post at:   Tuesday 8:15am ET (from your plan)
 
 Reply "yes" to log it, or tell me what to change.

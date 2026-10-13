@@ -47,7 +47,15 @@ if command -v agent-reach >/dev/null 2>&1; then
   agent-reach install --env=auto 2>&1 | tail -3
 fi
 
-# 4. impeccable skill: pre-fetch its engine binary (downloaded on first run)
+# 4. LinkedIn skills (li-*): they read ~/.claude/linkedin/{voice,log,plan}.md.
+#    Keep those in the repo so they persist across sessions and machines.
+LI_DIR="${CLAUDE_PROJECT_DIR:-$PWD}/.claude/linkedin"
+if [ -d "$LI_DIR" ] && [ ! -e "$HOME/.claude/linkedin" ]; then
+  mkdir -p "$HOME/.claude"
+  ln -s "$LI_DIR" "$HOME/.claude/linkedin"
+fi
+
+# 5. impeccable skill: pre-fetch its engine binary (downloaded on first run)
 IMP="${CLAUDE_PROJECT_DIR:-$PWD}/.agents/skills/impeccable/scripts/impeccable"
 if [ -x "$IMP" ] && [ ! -d "$HOME/.impeccable/bin" ]; then
   log "fetching impeccable engine"

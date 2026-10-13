@@ -66,7 +66,6 @@ skill or design system in this project, use it and do not invent a palette.
 The slide-by-slide copy first, as a numbered list the user can read in ten
 seconds. Then the accompanying **post text** - a carousel still needs 2-3
 lines above it, which is the actual hook in the feed. Run both through
-`/li-human` for voice and clarity. Then build the PDF only if the user
-approves the copy.
+`/li-human`. Then build the PDF only if the user approves the copy.
 
 Nothing is uploaded to LinkedIn. The user posts the PDF themselves.

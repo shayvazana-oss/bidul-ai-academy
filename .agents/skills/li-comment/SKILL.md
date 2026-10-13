@@ -1,8 +1,8 @@
 ---
 name: li-comment
 description: >-
-  Write specific, useful comments on other people's LinkedIn posts in the
-  user's own voice. Use when the user pastes a post and wants a comment, says
+  Write comments on other people's LinkedIn posts that read as a person with an
+  opinion, not a bot. Use when the user pastes a post and wants a comment, says
   "comment on this", "engage with this", "what do I say here", or wants a batch
   of comments for their engagement round.
 ---
@@ -55,8 +55,9 @@ Pick by what the post actually is. Never default to type 1.
 ## Output
 
 Give **two options of different types**, labelled, plus a one-line reason for
-the one you would post. Review both with `/li-human` for clarity and the
-user's voice and punctuation preferences. Preserve facts and attribution.
+the one you would post. Run both through `/li-human` first - a comment with an
+em dash in it is more obviously machine-written than a post, because comments
+are short and people read them closely.
 
 ```
 COMMENT OPTIONS  (on @author's post about hiring)
