@@ -46,4 +46,11 @@ fi
 if command -v agent-reach >/dev/null 2>&1; then
   agent-reach install --env=auto 2>&1 | tail -3
 fi
+
+# 4. impeccable skill: pre-fetch its engine binary (downloaded on first run)
+IMP="${CLAUDE_PROJECT_DIR:-$PWD}/.agents/skills/impeccable/scripts/impeccable"
+if [ -x "$IMP" ] && [ ! -d "$HOME/.impeccable/bin" ]; then
+  log "fetching impeccable engine"
+  timeout 120 "$IMP" context >/dev/null 2>&1 || log "WARN: impeccable engine fetch failed"
+fi
 exit 0
